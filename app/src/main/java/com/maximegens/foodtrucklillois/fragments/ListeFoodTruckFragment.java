@@ -1,21 +1,25 @@
 package com.maximegens.foodtrucklillois.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.adapters.ListeFTAdapter;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
+import com.maximegens.foodtrucklillois.utils.Constantes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +29,9 @@ import java.util.List;
  */
 public class ListeFoodTruckFragment extends Fragment {
 
-    ListeFoodTruckFragmentCallback listeFoodTruckFragmentCallback;
+    private ListeFoodTruckFragmentCallback listeFoodTruckFragmentCallback;
     private RecyclerView recyclerViewListeFT;
-    private List<FoodTruck> lesFT = new ArrayList<>();
+    private ListeFTAdapter listeFTAdapter;
 
     /**
      * Creation du Fragment.
@@ -49,6 +53,7 @@ public class ListeFoodTruckFragment extends Fragment {
      */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        this.setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_liste_ft,container,false);
     }
 
@@ -62,8 +67,6 @@ public class ListeFoodTruckFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerViewListeFT = (RecyclerView) view.findViewById(R.id.recyclerView);
 
-        ajouterFT();
-
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
             //définit l'agencement des cellules de façon verticale.
             recyclerViewListeFT.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -71,8 +74,8 @@ public class ListeFoodTruckFragment extends Fragment {
             //définit l'agencement avec 2 cellules par ligne.
             recyclerViewListeFT.setLayoutManager(new GridLayoutManager(getContext(),2));
         }
-
-        recyclerViewListeFT.setAdapter(new ListeFTAdapter(lesFT, getContext()));
+        listeFTAdapter = new ListeFTAdapter(Constantes.lesFTs, getContext());
+        recyclerViewListeFT.setAdapter(listeFTAdapter);
     }
 
 
@@ -100,14 +103,41 @@ public class ListeFoodTruckFragment extends Fragment {
         listeFoodTruckFragmentCallback = null;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_liste_ft, menu);
+        super.onCreateOptionsMenu(menu, inflater);
 
-    private void ajouterFT(){
-        lesFT.add(new FoodTruck("El Camion","4 rue barberousse","logo_el_camion"));
-        lesFT.add(new FoodTruck("Chez Greg","58 rue de l'impasse","logo_chez_greg"));
-        lesFT.add(new FoodTruck("La Marmitte Mobile","58 rue de l'impasse","logo_la_marmitte_mobile"));
-        lesFT.add(new FoodTruck("Peko Peko","55 avenue de la République","logo_peko_peko"));
-        lesFT.add(new FoodTruck("Le Comptoir Volant","12 place Sébastopol","logo_le_comptoir_volant"));
-        lesFT.add(new FoodTruck("Bistro Truck","12 place Sébastopol","logo_bistro_truck"));
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchView.onActionViewCollapsed();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                final List<FoodTruck> filteredModelList = filter(Constantes.lesFTs, s);
+                listeFTAdapter.setModels(filteredModelList);
+                listeFTAdapter.notifyDataSetChanged();
+                return true;
+            }
+        });
+    }
+
+    private List<FoodTruck> filter(List<FoodTruck> models, String query) {
+        query = query.toLowerCase();
+
+        final List<FoodTruck> filteredModelList = new ArrayList<>();
+        for (FoodTruck model : models) {
+            final String text = model.getNom().toLowerCase();
+            if (text.contains(query)) {
+                filteredModelList.add(model);
+            }
+        }
+        return filteredModelList;
     }
 
 }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Food Truck Lillois</string>
+    <string name="action_search">Rechercher un Food Truck</string>
 </resources>

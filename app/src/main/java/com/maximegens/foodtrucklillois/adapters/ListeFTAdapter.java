@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,5 +58,9 @@ public class ListeFTAdapter extends RecyclerView.Adapter<ListeFTHolder> {
     @Override
     public int getItemCount() {
         return lesFT.size();
+    }
+
+    public void setModels(List<FoodTruck> fts) {
+        lesFT = new ArrayList<>(fts);
     }
 }
