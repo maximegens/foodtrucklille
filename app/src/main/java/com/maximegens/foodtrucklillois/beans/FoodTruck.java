@@ -1,5 +1,8 @@
 package com.maximegens.foodtrucklillois.beans;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Bean représantant un Food Truck.
  */
@@ -42,5 +45,24 @@ public class FoodTruck {
 
     public void setLogo(String logo) {
         this.logo = logo;
+    }
+
+    /**
+     * Methode de tri de la liste des Foods Trucks en fonction de la recherche de l'utilisateur.
+     * @param lesFTs La liste des FTS à triée.
+     * @param recherche La recherche de l'utilisateur.
+     * @return La liste des Foods Trucks Triée.
+     */
+    public static List<FoodTruck> filterListeFTs(List<FoodTruck> lesFTs, String recherche) {
+        recherche = recherche.toLowerCase();
+
+        final List<FoodTruck> filteredFTList = new ArrayList<>();
+        for (FoodTruck model : lesFTs) {
+            final String text = model.getNom().toLowerCase();
+            if (text.contains(recherche)) {
+                filteredFTList.add(model);
+            }
+        }
+        return filteredFTList;
     }
 }

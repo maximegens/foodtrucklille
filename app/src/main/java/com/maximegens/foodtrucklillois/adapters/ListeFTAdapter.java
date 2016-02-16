@@ -60,7 +60,7 @@ public class ListeFTAdapter extends RecyclerView.Adapter<ListeFTHolder> {
         return lesFT.size();
     }
 
-    public void setModels(List<FoodTruck> fts) {
+    public void setFTs(List<FoodTruck> fts) {
         lesFT = new ArrayList<>(fts);
     }
 }

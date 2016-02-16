@@ -2,6 +2,7 @@ package com.maximegens.foodtrucklillois.fragments;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -85,7 +86,7 @@ public class ListeFoodTruckFragment extends Fragment {
     public interface ListeFoodTruckFragmentCallback{
 
         /**
-         * Clique sur un Fodd Truck
+         * Clique sur un Food Truck
          */
         void onFoodTruckClicked();
     }
@@ -110,6 +111,7 @@ public class ListeFoodTruckFragment extends Fragment {
 
         final MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -118,26 +120,13 @@ public class ListeFoodTruckFragment extends Fragment {
             }
 
             @Override
-            public boolean onQueryTextChange(String s) {
-                final List<FoodTruck> filteredModelList = filter(Constantes.lesFTs, s);
-                listeFTAdapter.setModels(filteredModelList);
+            public boolean onQueryTextChange(String recherche) {
+                final List<FoodTruck> filteredModelList = FoodTruck.filterListeFTs(Constantes.lesFTs, recherche);
+                listeFTAdapter.setFTs(filteredModelList);
                 listeFTAdapter.notifyDataSetChanged();
                 return true;
             }
         });
-    }
-
-    private List<FoodTruck> filter(List<FoodTruck> models, String query) {
-        query = query.toLowerCase();
-
-        final List<FoodTruck> filteredModelList = new ArrayList<>();
-        for (FoodTruck model : models) {
-            final String text = model.getNom().toLowerCase();
-            if (text.contains(query)) {
-                filteredModelList.add(model);
-            }
-        }
-        return filteredModelList;
     }
 
 }
