@@ -16,7 +16,8 @@
          - cardCornerRadius pour arrondir les angles
      -->
 
-    <LinearLayout
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -25,11 +26,36 @@
          pour avoir une organisation verticale nous devons
          donc rajouter un LinearLayout -->
 
+        <TextView
+            android:id="@+id/ft_le_plus_proche_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="Food Truck le plus proche"
+            android:fontFamily="sans-serif"
+            android:textColor="#333"
+            android:textStyle="bold|italic"
+            android:visibility="gone"
+            android:textSize="16sp" />
+        <TextView
+            android:id="@+id/ft_distance_plus_proche_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="104 m"
+            android:fontFamily="sans-serif"
+            android:textColor="#2E7D32"
+            android:layout_alignParentRight="true"
+            android:textStyle="italic"
+            android:visibility="gone"
+            android:textSize="12sp" />
+
         <ImageView
             android:id="@+id/logo_ft_card_view"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="100dp"
             android:scaleType="centerCrop"
+            android:layout_below="@id/ft_le_plus_proche_tv"
             android:src="@drawable/logo_el_camion"
             />
 
@@ -38,11 +64,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:selectableItemBackground"
-            android:padding="20dp"
+            android:padding="8dp"
             android:text="El Camion"
+            android:layout_below="@id/logo_ft_card_view"
             android:fontFamily="sans-serif"
             android:textColor="#333"
-            android:textSize="18sp" />
-    </LinearLayout>
+            android:textSize="14sp" />
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>

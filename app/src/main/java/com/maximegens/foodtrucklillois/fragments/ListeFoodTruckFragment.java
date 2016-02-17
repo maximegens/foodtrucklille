@@ -2,7 +2,6 @@ package com.maximegens.foodtrucklillois.fragments;
 
 import android.content.Context;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -16,14 +15,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
+import android.widget.TextView;
 
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.adapters.ListeFTAdapter;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.utils.Constantes;
+import com.maximegens.foodtrucklillois.utils.GridLayoutManagerFoodTruck;
 
-import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Class ListeFoodTruckFragment.
@@ -66,15 +68,19 @@ public class ListeFoodTruckFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerViewListeFT = (RecyclerView) view.findViewById(R.id.recyclerView);
 
+        GridLayoutManagerFoodTruck layoutManagerFT = new GridLayoutManagerFoodTruck(getContext());
+        recyclerViewListeFT = (RecyclerView) view.findViewById(R.id.recyclerView);
+        recyclerViewListeFT.setHasFixedSize(true);
+
+        // Creation de l'agencement des Foods Trucks.
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-            //définit l'agencement des cellules de façon verticale.
-            recyclerViewListeFT.setLayoutManager(new LinearLayoutManager(getContext()));
+            recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutPortrait());
         }else{
-            //définit l'agencement avec 2 cellules par ligne.
-            recyclerViewListeFT.setLayoutManager(new GridLayoutManager(getContext(),2));
+            recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutLandscape());
         }
+
+        // Ajout des FTs dans l'adapters de la liste.
         listeFTAdapter = new ListeFTAdapter(Constantes.lesFTs, getContext());
         recyclerViewListeFT.setAdapter(listeFTAdapter);
     }

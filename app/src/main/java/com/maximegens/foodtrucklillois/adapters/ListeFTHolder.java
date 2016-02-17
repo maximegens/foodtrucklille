@@ -18,7 +18,9 @@ import com.maximegens.foodtrucklillois.beans.FoodTruck;
 public class ListeFTHolder extends RecyclerView.ViewHolder {
 
     private Context context;
-    private TextView textViewView;
+    private TextView textViewNom;
+    private TextView textViewPlusProche;
+    private TextView textViewDistancePlusProche;
     private ImageView imageView;
 
     /**
@@ -29,16 +31,25 @@ public class ListeFTHolder extends RecyclerView.ViewHolder {
     public ListeFTHolder(View itemView, Context context) {
         super(itemView);
         this.context = context;
-        textViewView = (TextView) itemView.findViewById(R.id.nom_ft_card_view);
+        textViewNom = (TextView) itemView.findViewById(R.id.nom_ft_card_view);
         imageView = (ImageView) itemView.findViewById(R.id.logo_ft_card_view);
+        textViewPlusProche = (TextView) itemView.findViewById(R.id.ft_le_plus_proche_tv);
+        textViewDistancePlusProche = (TextView) itemView.findViewById(R.id.ft_distance_plus_proche_tv);
+
     }
 
     /**
      * Fonction pour remplir la cellule en fonction d'un FoodTruck.
      */
-    public void bind(FoodTruck ft){
-        textViewView.setText(ft.getNom());
+    public void bind(FoodTruck ft,int position){
+        textViewNom.setText(ft.getNom());
         imageView.setImageDrawable(constructionImage(ft));
+        // Affichage specifique de l'item indiquant le FT le plus proche
+        if(position == 0){
+            textViewPlusProche.setVisibility(View.VISIBLE);
+            textViewDistancePlusProche.setVisibility(View.VISIBLE);
+        }
+
     }
 
     /**

@@ -48,7 +48,7 @@ public class ListeFTAdapter extends RecyclerView.Adapter<ListeFTHolder> {
     @Override
     public void onBindViewHolder(ListeFTHolder holder, int position) {
         FoodTruck ft = lesFT.get(position);
-        holder.bind(ft);
+        holder.bind(ft,position);
     }
 
     /**
