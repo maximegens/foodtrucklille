@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
+import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
  */
 public class ListeFTAdapter extends RecyclerView.Adapter<ListeFTHolder> {
 
+    private RecyclerViewListener callback;
     private List<FoodTruck> lesFT;
     private Context context;
 
@@ -26,6 +28,7 @@ public class ListeFTAdapter extends RecyclerView.Adapter<ListeFTHolder> {
     public ListeFTAdapter(List<FoodTruck> lesFT, Context context) {
         this.lesFT = lesFT;
         this.context = context;
+        this.callback = (RecyclerViewListener) this.context;
     }
 
     /**
@@ -46,9 +49,15 @@ public class ListeFTAdapter extends RecyclerView.Adapter<ListeFTHolder> {
      * @param position La position de l'item.
      */
     @Override
-    public void onBindViewHolder(ListeFTHolder holder, int position) {
-        FoodTruck ft = lesFT.get(position);
+    public void onBindViewHolder(ListeFTHolder holder, final int position) {
+        final FoodTruck ft = lesFT.get(position);
         holder.bind(ft,position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callback.onClickFT(ft);
+            }
+        });
     }
 
     /**

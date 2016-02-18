@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
+import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListener;
 
 /**
  * Holder pour l'affichage de la liste des Foods Trucks.

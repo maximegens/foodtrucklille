@@ -5,8 +5,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
+
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
@@ -15,12 +14,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
-import android.widget.TextView;
 
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.adapters.ListeFTAdapter;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
+import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListener;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.maximegens.foodtrucklillois.utils.GridLayoutManagerFoodTruck;
 
@@ -30,7 +28,7 @@ import java.util.List;
 /**
  * Class ListeFoodTruckFragment.
  */
-public class ListeFoodTruckFragment extends Fragment {
+public class ListeFoodTruckFragment extends Fragment{
 
     private ListeFoodTruckFragmentCallback listeFoodTruckFragmentCallback;
     private RecyclerView recyclerViewListeFT;
@@ -86,17 +84,6 @@ public class ListeFoodTruckFragment extends Fragment {
     }
 
 
-    /**
-     * Interface permettant de communiquer avec l'activity.
-     */
-    public interface ListeFoodTruckFragmentCallback{
-
-        /**
-         * Clique sur un Food Truck
-         */
-        void onFoodTruckClicked();
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -110,6 +97,11 @@ public class ListeFoodTruckFragment extends Fragment {
         listeFoodTruckFragmentCallback = null;
     }
 
+    /**
+     * Gestion du menu
+     * @param menu Le menu
+     * @param inflater L'objet pour inflater.
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_liste_ft, menu);
@@ -133,6 +125,17 @@ public class ListeFoodTruckFragment extends Fragment {
                 return true;
             }
         });
+    }
+
+    /**
+     * Interface permettant de communiquer avec l'activity.
+     */
+    public interface ListeFoodTruckFragmentCallback{
+
+        /**
+         * Notifie l'activity
+         */
+        void notifyActivity();
     }
 
 }

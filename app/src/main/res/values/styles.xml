@@ -1,7 +1,10 @@
 <resources>
 
+    <style name="MyMaterialTheme" parent="MyMaterialTheme.Base" />
+
+
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -18,5 +21,9 @@
     <style name="MyActionBarWidgetTheme" parent="@android:style/Theme.Holo">
         <item name="android:textColorHint">@color/white</item>
     </style>
+
+    <style name="MyMaterialTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="MyMaterialTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
