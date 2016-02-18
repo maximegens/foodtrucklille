@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListener;
+import com.squareup.picasso.Picasso;
 
 /**
  * Holder pour l'affichage de la liste des Foods Trucks.
@@ -44,7 +45,9 @@ public class ListeFTHolder extends RecyclerView.ViewHolder {
      */
     public void bind(FoodTruck ft,int position){
         textViewNom.setText(ft.getNom());
-        imageView.setImageDrawable(constructionImage(ft));
+        Resources res = context.getResources();
+        int resID = res.getIdentifier(ft.getLogo() , "drawable", context.getPackageName());
+        Picasso.with(context).load(resID).fit().centerInside().into(imageView);
         // Affichage specifique de l'item indiquant le FT le plus proche
         if(position == 0){
             textViewPlusProche.setVisibility(View.VISIBLE);
@@ -53,14 +56,4 @@ public class ListeFTHolder extends RecyclerView.ViewHolder {
 
     }
 
-    /**
-     * Construction de l'image.
-     * @param ft Le Food Truck associé.
-     * @return L'image construite.
-     */
-    private Drawable constructionImage(FoodTruck ft) {
-        Resources res = context.getResources();
-        int resID = res.getIdentifier(ft.getLogo() , "drawable", context.getPackageName());
-        return ContextCompat.getDrawable(context, resID);
-    }
 }

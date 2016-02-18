@@ -18,6 +18,7 @@ import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.fragments.DescriptionFoodTruckFragment;
 import com.maximegens.foodtrucklillois.fragments.EmplacementFoodTruckFragment;
 import com.maximegens.foodtrucklillois.fragments.MenuFoodTruckFragment;
+import com.squareup.picasso.Picasso;
 
 public class FoodTruckActivity extends AppCompatActivity {
 
@@ -40,18 +41,22 @@ public class FoodTruckActivity extends AppCompatActivity {
         Resources res = getResources();
         int resID = res.getIdentifier(ft.getLogo() , "drawable", getPackageName());
         fond.setImageDrawable(ContextCompat.getDrawable(this, resID));
+        Picasso.with(getBaseContext()).load(resID).fit().centerInside().into(fond);
 
         // Creation du ViewPager
         ViewPager viewPager;
         TabLayout tabLayout;
         viewPager = (ViewPager) findViewById(R.id.viewpager_food_truck);
         setupViewPager(viewPager);
-
         tabLayout = (TabLayout) findViewById(R.id.tabs_food_truck);
         tabLayout.setupWithViewPager(viewPager);
 
     }
 
+    /**
+     * Ajout des fragments au viewPager.
+     * @param viewPager Le viewPager.
+     */
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(DescriptionFoodTruckFragment.newInstance(), DescriptionFoodTruckFragment.TITLE);
