@@ -64,7 +64,7 @@ public class FoodTruck implements Parcelable{
         final List<FoodTruck> filteredFTList = new ArrayList<>();
         for (FoodTruck model : lesFTs) {
             final String text = model.getNom().toLowerCase();
-            if (text.contains(recherche)) {
+            if (text.startsWith(recherche)) {
                 filteredFTList.add(model);
             }
         }

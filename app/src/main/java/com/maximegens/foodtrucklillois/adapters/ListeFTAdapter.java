@@ -21,13 +21,16 @@ public class ListeFTAdapter extends RecyclerView.Adapter<ListeFTHolder> {
     private RecyclerViewListener callback;
     private List<FoodTruck> lesFT;
     private Context context;
+    private boolean rechercheEnCours;
 
     /**
      * Constructeur prenant en entrée une liste.
+     * rechercheEnCours est à faux lors de la contruction initiale de l'adapter.
      */
     public ListeFTAdapter(List<FoodTruck> lesFT, Context context) {
         this.lesFT = lesFT;
         this.context = context;
+        this.rechercheEnCours = false;
         this.callback = (RecyclerViewListener) this.context;
     }
 
@@ -51,7 +54,7 @@ public class ListeFTAdapter extends RecyclerView.Adapter<ListeFTHolder> {
     @Override
     public void onBindViewHolder(ListeFTHolder holder, final int position) {
         final FoodTruck ft = lesFT.get(position);
-        holder.bind(ft,position);
+        holder.bind(ft,position,rechercheEnCours);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +72,8 @@ public class ListeFTAdapter extends RecyclerView.Adapter<ListeFTHolder> {
         return lesFT.size();
     }
 
-    public void setFTs(List<FoodTruck> fts) {
+    public void setFTs(List<FoodTruck> fts, boolean rechercheEnCours) {
         lesFT = new ArrayList<>(fts);
+        this.rechercheEnCours = rechercheEnCours;
     }
 }

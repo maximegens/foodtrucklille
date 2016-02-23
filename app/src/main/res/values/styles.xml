@@ -4,7 +4,7 @@
 
 
     <!-- Base application theme. -->
-    <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light">
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -18,12 +18,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="MyActionBarWidgetTheme" parent="@android:style/Theme.Holo">
-        <item name="android:textColorHint">@color/white</item>
-    </style>
+    <style name="MyActionBarWidgetTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <style name="MyMaterialTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="MyMaterialTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

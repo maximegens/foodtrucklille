@@ -1,6 +1,7 @@
 package com.maximegens.foodtrucklillois.adapters;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
@@ -24,6 +25,7 @@ public class ListeFTHolder extends RecyclerView.ViewHolder {
     private TextView textViewPlusProche;
     private TextView textViewDistancePlusProche;
     private ImageView imageView;
+    private boolean rechercheEnCours;
 
     /**
      * Le constructeur.
@@ -43,17 +45,40 @@ public class ListeFTHolder extends RecyclerView.ViewHolder {
     /**
      * Fonction pour remplir la cellule en fonction d'un FoodTruck.
      */
-    public void bind(FoodTruck ft,int position){
+    public void bind(FoodTruck ft,int position,boolean rechercheEnCours){
         textViewNom.setText(ft.getNom());
         Resources res = context.getResources();
         int resID = res.getIdentifier(ft.getLogo() , "drawable", context.getPackageName());
         Picasso.with(context).load(resID).fit().centerInside().into(imageView);
-        // Affichage specifique de l'item indiquant le FT le plus proche
-        if(position == 0){
+        // Affichage specifique des premiers et seconds items.
+        if(isFirstItem(position, rechercheEnCours)){
             textViewPlusProche.setVisibility(View.VISIBLE);
-            textViewDistancePlusProche.setVisibility(View.VISIBLE);
+        }
+        if(isSecondItemLandScape(position, rechercheEnCours)){
+            textViewPlusProche.setVisibility(View.INVISIBLE);
         }
 
+    }
+
+    /**
+     * Permet de savoir si il s'agit du 1er item de la liste représentant le ft le plus proche et donc d'afficher correctement le TextView Explicatif.
+     * @param position La position de l'item.
+     * @param rechercheEnCours Savoir si il s'agit d'une recherche ou pas.
+     * @return vrai si il s'agit du bon item.
+     */
+    private boolean isFirstItem(int position, boolean rechercheEnCours) {
+        return position == 0 && !rechercheEnCours;
+    }
+
+    /**
+     * Permet de savoir si il s'agit du second item de la liste uniquement si on est en mode paysage.
+     * Code permettant d'avoir un bon alignement entre le 1er item (avec le textview FT le plus proche) et le second item sur la meme ligne mais sans le textView.
+     * @param position La position de l'item.
+     * @param rechercheEnCours Savoir si il s'agit d'une recherche ou pas.
+     * @return vrai si il s'agit du bon item.
+     */
+    private boolean isSecondItemLandScape(int position, boolean rechercheEnCours) {
+        return position == 1 && !rechercheEnCours && context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
 }
