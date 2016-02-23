@@ -2,6 +2,7 @@ package com.maximegens.foodtrucklillois;
 
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -34,7 +35,11 @@ public class FoodTruckActivity extends AppCompatActivity {
 
         // Recuperation du FoodTruck sélectionné.
         FoodTruck ft = getIntent().getExtras().getParcelable(FoodTruck.KEY_FOOD_TRUCK);
-        setTitle(ft.getNom());
+
+        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_food_truck);
+        collapsingToolbarLayout.setTitle(ft.getNom());
+        collapsingToolbarLayout.setExpandedTitleColor(ContextCompat.getColor(this,android.R.color.transparent));
+
 
         // Ajout de l'image de fond represantant le FoodTruck
         ImageView fond = (ImageView)findViewById(R.id.backgroundImageView_food_truck);
