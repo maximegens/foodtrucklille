@@ -1,75 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/card_view_liste_ft"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    app:cardUseCompatPadding="true"
-    app:cardBackgroundColor="@android:color/white"
-    app:cardElevation="2dp">
+    android:orientation="vertical"
+    >
 
-    <!-- Les CardView possèdent des attributs supplémentaires dont
-         - cardBackgroundColor
-         - cardElevation pour l'élévation (donc aussi l'ombre)
-         - cardCornerRadius pour arrondir les angles
-     -->
+    <TextView
+        android:id="@+id/ft_le_plus_proche_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="Food Truck le plus proche"
+        android:fontFamily="sans-serif"
+        android:textColor="#333"
+        android:textStyle="bold|italic"
+        android:visibility="gone"
+        android:textSize="16sp" />
 
+    <android.support.v7.widget.CardView
 
-    <RelativeLayout
+        android:id="@+id/card_view_liste_ft"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_margin="2dp"
+        app:cardUseCompatPadding="true"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardElevation="2dp">
 
-        <!-- Les CardView agissent comme des FrameLayout,
-         pour avoir une organisation verticale nous devons
-         donc rajouter un LinearLayout -->
+        <!-- Les CardView possèdent des attributs supplémentaires dont
+             - cardBackgroundColor
+             - cardElevation pour l'élévation (donc aussi l'ombre)
+             - cardCornerRadius pour arrondir les angles
+         -->
 
-        <TextView
-            android:id="@+id/ft_le_plus_proche_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="Food Truck le plus proche"
-            android:fontFamily="sans-serif"
-            android:textColor="#333"
-            android:textStyle="bold|italic"
-            android:visibility="gone"
-            android:textSize="16sp" />
-        <TextView
-            android:id="@+id/ft_distance_plus_proche_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="104 m"
-            android:fontFamily="sans-serif"
-            android:textColor="#2E7D32"
-            android:layout_alignParentRight="true"
-            android:textStyle="italic"
-            android:visibility="gone"
-            android:textSize="12sp" />
 
-        <ImageView
-            android:id="@+id/logo_ft_card_view"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:scaleType="centerCrop"
-            android:layout_below="@id/ft_le_plus_proche_tv"
-            android:src="@drawable/logo_el_camion"
-            />
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/nom_ft_card_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:selectableItemBackground"
-            android:padding="8dp"
-            android:text="El Camion"
-            android:layout_below="@id/logo_ft_card_view"
-            android:fontFamily="sans-serif"
-            android:textColor="#333"
-            android:textSize="14sp" />
-    </RelativeLayout>
+            <!-- Les CardView agissent comme des FrameLayout,
+             pour avoir une organisation verticale nous devons
+             donc rajouter un LinearLayout -->
 
-</android.support.v7.widget.CardView>
+            <ImageView
+                android:id="@+id/logo_ft_card_view"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/logo_el_camion"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/logo_ft_card_view"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/nom_ft_card_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?android:selectableItemBackground"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="5dp"
+                    android:text="El Camion"
+                    android:fontFamily="sans-serif"
+                    android:textColor="#333"
+                    android:textSize="14sp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:layout_weight="3"
+                    />
+
+                <TextView
+                    android:id="@+id/ft_distance_plus_proche_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:paddingRight="5dp"
+                    android:text="104m"
+                    android:fontFamily="sans-serif"
+                    android:textColor="#2E7D32"
+                    android:gravity="right"
+                    android:textStyle="italic"
+                    android:singleLine="true"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

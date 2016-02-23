@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements ListeFoodTruckFra
         Intent intent = new Intent(MainActivity.this, FoodTruckActivity.class);
         intent.putExtra(FoodTruck.KEY_FOOD_TRUCK, ft);
         startActivity(intent);
-
     }
 
 }
