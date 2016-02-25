@@ -15,6 +15,8 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
+import retrofit.RestAdapter;
+
 /**
  * Created by Maxime on 25/02/2016.
  */
@@ -23,40 +25,14 @@ public class RetreiveJSONListeFT extends AsyncTask<Void, Integer, FoodTruckApp>{
     @Override
     protected FoodTruckApp doInBackground(Void... params) {
 
-        BufferedReader rd  = null;
-        StringBuilder sb = null;
-        String line = null;
-        FoodTruckApp foodTruckApp = null;
-        String json = null;
-        try {
-            URL url = new URL(Constantes.URL_SERVEUR_FT);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            connection.connect();
-            rd  = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            sb = new StringBuilder();
+        // Creation du restAdapter avec RetroFit.
+        RetreiveListeFTService retreiveListeFTService = new RestAdapter.Builder()
+                .setEndpoint(Constantes.URL_SERVEUR)
+                .build()
+                .create(RetreiveListeFTService.class);
 
-            while ((line = rd.readLine()) != null)
-            {
-                sb.append(line + '\n');
-            }
-
-            if(sb != null){
-                json = sb.toString();
-            }
-            if(json != null && !json.isEmpty()){
-                // Conversion du json en Objet
-                Gson gson = new Gson();
-                foodTruckApp = gson.fromJson(json,FoodTruckApp.class);
-            }
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // Recuperation et conversion du JSON.
+        FoodTruckApp foodTruckApp = retreiveListeFTService.getListFT();
         return foodTruckApp;
     }
 
