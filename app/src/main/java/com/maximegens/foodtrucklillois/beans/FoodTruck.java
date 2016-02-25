@@ -12,20 +12,39 @@ import java.util.List;
 public class FoodTruck implements Parcelable{
 
     public static String KEY_FOOD_TRUCK = "foodtruck";
+    private int id;
     private String nom;
-    private String adresse;
+    private String urlPageFacebook;
+    private String descriptionBreve;
+    private String description;
+    private String gammeDePrixprix;
+    private String tenueVestimentaire;
+    private String moyensDePaiement;
+    private String services;
+    private String specialites;
+    private String cuisine;
+    private String telephone;
+    private String email;
+    private String dateOuverture;
     private String logo;
+    private PlanningFoodTruck planning;
 
     /**
      * Construceur.
      * @param nom Le nom.
-     * @param adresse L'adresse.
      * @param logo Le nom de l'image en interne représentant le logo.
      */
-    public FoodTruck(String nom, String adresse, String logo) {
+    public FoodTruck(String nom, String logo) {
         this.nom = nom;
-        this.adresse = adresse;
         this.logo = logo;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNom() {
@@ -36,12 +55,100 @@ public class FoodTruck implements Parcelable{
         this.nom = nom;
     }
 
-    public String getAdresse() {
-        return adresse;
+    public String getUrlPageFacebook() {
+        return urlPageFacebook;
     }
 
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
+    public void setUrlPageFacebook(String urlPageFacebook) {
+        this.urlPageFacebook = urlPageFacebook;
+    }
+
+    public String getDescriptionBreve() {
+        return descriptionBreve;
+    }
+
+    public void setDescriptionBreve(String descriptionBreve) {
+        this.descriptionBreve = descriptionBreve;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getGammeDePrixprix() {
+        return gammeDePrixprix;
+    }
+
+    public void setGammeDePrixprix(String gammeDePrixprix) {
+        this.gammeDePrixprix = gammeDePrixprix;
+    }
+
+    public String getTenueVestimentaire() {
+        return tenueVestimentaire;
+    }
+
+    public void setTenueVestimentaire(String tenueVestimentaire) {
+        this.tenueVestimentaire = tenueVestimentaire;
+    }
+
+    public String getMoyensDePaiement() {
+        return moyensDePaiement;
+    }
+
+    public void setMoyensDePaiement(String moyensDePaiement) {
+        this.moyensDePaiement = moyensDePaiement;
+    }
+
+    public String getServices() {
+        return services;
+    }
+
+    public void setServices(String services) {
+        this.services = services;
+    }
+
+    public String getSpecialites() {
+        return specialites;
+    }
+
+    public void setSpecialites(String specialites) {
+        this.specialites = specialites;
+    }
+
+    public String getCuisine() {
+        return cuisine;
+    }
+
+    public void setCuisine(String cuisine) {
+        this.cuisine = cuisine;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getDateOuverture() {
+        return dateOuverture;
+    }
+
+    public void setDateOuverture(String dateOuverture) {
+        this.dateOuverture = dateOuverture;
     }
 
     public String getLogo() {
@@ -50,6 +157,14 @@ public class FoodTruck implements Parcelable{
 
     public void setLogo(String logo) {
         this.logo = logo;
+    }
+
+    public PlanningFoodTruck getPlanning() {
+        return planning;
+    }
+
+    public void setPlanning(PlanningFoodTruck planning) {
+        this.planning = planning;
     }
 
     /**
@@ -79,7 +194,6 @@ public class FoodTruck implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(nom);
-        dest.writeString(adresse);
         dest.writeString(logo);
     }
 
@@ -100,7 +214,6 @@ public class FoodTruck implements Parcelable{
 
     public FoodTruck(Parcel in) {
         this.nom = in.readString();
-        this.adresse = in.readString();
         this.logo = in.readString();
     }
 }
