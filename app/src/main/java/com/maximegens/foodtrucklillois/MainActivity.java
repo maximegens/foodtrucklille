@@ -17,6 +17,7 @@ import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.fragments.FavorisFoodTruckFragment;
 import com.maximegens.foodtrucklillois.fragments.ListeFoodTruckFragment;
 import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListener;
+import com.maximegens.foodtrucklillois.network.RetreiveJSONListeFT;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 
 /**
@@ -42,6 +43,9 @@ public class MainActivity extends AppCompatActivity implements ListeFoodTruckFra
         //afficher le bouton retour
         //getSupportActionBar().setHomeButtonEnabled(true);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        RetreiveJSONListeFT retreiveJSONListeFT = new RetreiveJSONListeFT();
+        retreiveJSONListeFT.execute();
 
         // Commit du Fragment des listes des FT
         getSupportFragmentManager().beginTransaction()

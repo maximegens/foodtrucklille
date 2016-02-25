@@ -27,7 +27,7 @@ public class FoodTruck implements Parcelable{
     private String email;
     private String dateOuverture;
     private String logo;
-    private PlanningFoodTruck planning;
+    private List<PlanningFoodTruck> planning;
 
     /**
      * Construceur.
@@ -159,11 +159,11 @@ public class FoodTruck implements Parcelable{
         this.logo = logo;
     }
 
-    public PlanningFoodTruck getPlanning() {
+    public List<PlanningFoodTruck> getPlanning() {
         return planning;
     }
 
-    public void setPlanning(PlanningFoodTruck planning) {
+    public void setPlanning(List<PlanningFoodTruck> planning) {
         this.planning = planning;
     }
 

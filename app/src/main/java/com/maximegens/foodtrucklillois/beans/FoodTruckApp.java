@@ -8,17 +8,7 @@ import java.util.List;
  */
 public class FoodTruckApp {
 
-    private String nom;
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    /*    private List<Ville> villes = new ArrayList<>();
+    private List<Ville> villes = new ArrayList<>();
 
     public List<Ville> getVilles() {
         return villes;
@@ -26,5 +16,5 @@ public class FoodTruckApp {
 
     public void setVilles(List<Ville> villes) {
         this.villes = villes;
-    }*/
+    }
 }

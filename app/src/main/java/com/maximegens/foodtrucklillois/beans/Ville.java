@@ -9,7 +9,7 @@ import java.util.List;
 public class Ville {
 
     private String nom;
-  /*  private List<EnseigneFoodTrucks> lesEnseignesFoodTrucks = new ArrayList<>();
+    private List<EnseigneFoodTrucks> lesEnseignesFoodTrucks = new ArrayList<>();
 
     public String getNom() {
         return nom;
@@ -25,5 +25,5 @@ public class Ville {
 
     public void setLesEnseignesFoodTrucks(List<EnseigneFoodTrucks> lesEnseignesFoodTrucks) {
         this.lesEnseignesFoodTrucks = lesEnseignesFoodTrucks;
-    }*/
+    }
 }
