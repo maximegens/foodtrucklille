@@ -19,9 +19,13 @@ import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.fragments.DescriptionFoodTruckFragment;
 import com.maximegens.foodtrucklillois.fragments.EmplacementFoodTruckFragment;
 import com.maximegens.foodtrucklillois.fragments.MenuFoodTruckFragment;
+import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.squareup.picasso.Picasso;
 
 public class FoodTruckActivity extends AppCompatActivity {
+
+    public static String KEY_FOODTRUCK_SELECTIONNER = "FoodTruckSelectionner";
+    private FoodTruck ft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +38,7 @@ public class FoodTruckActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Recuperation du FoodTruck sélectionné.
-        FoodTruck ft = getIntent().getExtras().getParcelable(FoodTruck.KEY_FOOD_TRUCK);
+        ft = getIntent().getExtras().getParcelable(FoodTruck.KEY_FOOD_TRUCK);
 
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_food_truck);
         collapsingToolbarLayout.setTitle(ft.getNom());
@@ -44,7 +48,12 @@ public class FoodTruckActivity extends AppCompatActivity {
         // Ajout de l'image de fond represantant le FoodTruck
         ImageView fond = (ImageView)findViewById(R.id.backgroundImageView_food_truck);
         Resources res = getResources();
-        int resID = res.getIdentifier(ft.getLogo() , "drawable", getPackageName());
+        int resID;
+        if(ft.getLogo() != null) {
+            resID = res.getIdentifier(ft.getLogo(), "drawable", getPackageName());
+        }else{
+            resID = res.getIdentifier(Constantes.PHOTO_NOT_AVAILABLE, "drawable", getPackageName());
+        }
         fond.setImageDrawable(ContextCompat.getDrawable(this, resID));
         Picasso.with(getBaseContext()).load(resID).fit().centerInside().into(fond);
 
@@ -64,7 +73,7 @@ public class FoodTruckActivity extends AppCompatActivity {
      */
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(DescriptionFoodTruckFragment.newInstance(), DescriptionFoodTruckFragment.TITLE);
+        adapter.addFragment(DescriptionFoodTruckFragment.newInstance(ft), DescriptionFoodTruckFragment.TITLE);
         adapter.addFragment(MenuFoodTruckFragment.newInstance(), MenuFoodTruckFragment.TITLE);
         adapter.addFragment(EmplacementFoodTruckFragment.newInstance(), EmplacementFoodTruckFragment.TITLE);
         viewPager.setAdapter(adapter);

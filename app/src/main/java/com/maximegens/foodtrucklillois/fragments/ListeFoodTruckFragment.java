@@ -20,6 +20,8 @@ import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.adapters.ListeFTAdapter;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListener;
+import com.maximegens.foodtrucklillois.network.Internet;
+import com.maximegens.foodtrucklillois.network.RetreiveJSONListeFT;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.maximegens.foodtrucklillois.utils.GridLayoutManagerFoodTruck;
 
@@ -73,6 +75,10 @@ public class ListeFoodTruckFragment extends Fragment{
         recyclerViewListeFT = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerViewListeFT.setHasFixedSize(true);
 
+        // Ajout des FTs interne dans l'adapters de la liste.
+        listeFTAdapter = new ListeFTAdapter(Constantes.lesFTs, getContext());
+        recyclerViewListeFT.setAdapter(listeFTAdapter);
+
         // Creation de l'agencement des Foods Trucks.
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
             recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutPortrait());
@@ -80,9 +86,12 @@ public class ListeFoodTruckFragment extends Fragment{
             recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutLandscape());
         }
 
-        // Ajout des FTs dans l'adapters de la liste.
-        listeFTAdapter = new ListeFTAdapter(Constantes.lesFTs, getContext());
-        recyclerViewListeFT.setAdapter(listeFTAdapter);
+        // Verification de la connexion internet et recuperation Online des données.
+        if(Internet.isNetworkAvailable(getActivity().getApplicationContext())){
+            RetreiveJSONListeFT retreiveJSONListeFT = new RetreiveJSONListeFT(listeFTAdapter);
+            retreiveJSONListeFT.execute();
+        }
+
     }
 
 
@@ -167,5 +176,6 @@ public class ListeFoodTruckFragment extends Fragment{
         listeFTAdapter.setFTs(filteredModelList, !vide);
         listeFTAdapter.notifyDataSetChanged();
     }
+
 
 }

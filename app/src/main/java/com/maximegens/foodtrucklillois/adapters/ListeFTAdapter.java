@@ -72,8 +72,14 @@ public class ListeFTAdapter extends RecyclerView.Adapter<ListeFTHolder> {
         return lesFT.size();
     }
 
+    /**
+     * Modification des foods trucks dans la liste.
+     * @param fts les foods trucks.
+     * @param rechercheEnCours Permet d'indiquer si la liste est mis à jour suite à une recherche utilisateur.
+     */
     public void setFTs(List<FoodTruck> fts, boolean rechercheEnCours) {
         lesFT = new ArrayList<>(fts);
         this.rechercheEnCours = rechercheEnCours;
+        notifyDataSetChanged();
     }
 }

@@ -25,7 +25,6 @@ public class ListeFTHolder extends RecyclerView.ViewHolder {
     private TextView textViewPlusProche;
     private TextView textViewDistancePlusProche;
     private ImageView imageView;
-    private boolean rechercheEnCours;
 
     /**
      * Le constructeur.
@@ -48,8 +47,12 @@ public class ListeFTHolder extends RecyclerView.ViewHolder {
     public void bind(FoodTruck ft,int position,boolean rechercheEnCours){
         textViewNom.setText(ft.getNom());
         Resources res = context.getResources();
-        int resID = res.getIdentifier(ft.getLogo() , "drawable", context.getPackageName());
-        Picasso.with(context).load(resID).fit().centerInside().into(imageView);
+
+        if(ft.getLogo() != null){
+            int resID = res.getIdentifier(ft.getLogo() , "drawable", context.getPackageName());
+            Picasso.with(context).load(resID).fit().centerInside().into(imageView);
+        }
+
         // Affichage specifique des premiers et seconds items.
         if(isFirstItem(position, rechercheEnCours)){
             textViewPlusProche.setVisibility(View.VISIBLE);

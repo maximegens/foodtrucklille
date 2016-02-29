@@ -5,4 +5,21 @@
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="facebook_app_id">1578015025851613</string>
+
+    <!-- Description du Foodtruck -->
+    <string name="description_breve">Description</string>
+    <string name="description_longue">Description longue</string>
+    <string name="ouverture">Ouverture</string>
+    <string name="cuisine">Cuisine</string>
+    <string name="gamme_prix">Gamme de prix</string>
+    <string name="moyen_paiement">Moyen de paiement</string>
+    <string name="telephone">Téléphone</string>
+    <string name="email">Email</string>
+    <string name="site_web">Site Web</string>
+    <string name="tenue_vestimentaire">Tenue vestimentaire</string>
+    <string name="date_ouverture">Date d\'ouverture</string>
+    <string name="specialite">Spécialité</string>
+    <string name="service">Service</string>
 </resources>

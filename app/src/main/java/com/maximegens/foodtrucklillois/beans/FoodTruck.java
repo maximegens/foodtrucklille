@@ -14,9 +14,10 @@ public class FoodTruck implements Parcelable{
     public static String KEY_FOOD_TRUCK = "foodtruck";
     private int id;
     private String nom;
+    private String siteWeb;
     private String urlPageFacebook;
     private String descriptionBreve;
-    private String description;
+    private String descriptionLongue;
     private String gammeDePrixprix;
     private String tenueVestimentaire;
     private String moyensDePaiement;
@@ -55,6 +56,14 @@ public class FoodTruck implements Parcelable{
         this.nom = nom;
     }
 
+    public String getSiteWeb() {
+        return siteWeb;
+    }
+
+    public void setSiteWeb(String siteWeb) {
+        this.siteWeb = siteWeb;
+    }
+
     public String getUrlPageFacebook() {
         return urlPageFacebook;
     }
@@ -71,12 +80,12 @@ public class FoodTruck implements Parcelable{
         this.descriptionBreve = descriptionBreve;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDescriptionLongue() {
+        return descriptionLongue;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescriptionLongue(String description) {
+        this.descriptionLongue = descriptionLongue;
     }
 
     public String getGammeDePrixprix() {
@@ -193,8 +202,24 @@ public class FoodTruck implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
         dest.writeString(nom);
+        dest.writeString(siteWeb);
+        dest.writeString(urlPageFacebook);
+        dest.writeString(descriptionBreve);
+        dest.writeString(descriptionLongue);
+        dest.writeString(gammeDePrixprix);
+        dest.writeString(tenueVestimentaire);
+        dest.writeString(moyensDePaiement);
+        dest.writeString(services);
+        dest.writeString(specialites);
+        dest.writeString(cuisine);
+        dest.writeString(telephone);
+        dest.writeString(email);
+        dest.writeString(dateOuverture);
         dest.writeString(logo);
+        dest.writeTypedList(planning);
+
     }
 
     public static final Parcelable.Creator<FoodTruck> CREATOR = new Parcelable.Creator<FoodTruck>()
@@ -213,7 +238,25 @@ public class FoodTruck implements Parcelable{
     };
 
     public FoodTruck(Parcel in) {
+
+        this.id = in.readInt();
         this.nom = in.readString();
+        this.siteWeb = in.readString();
+        this.urlPageFacebook = in.readString();
+        this.descriptionBreve = in.readString();
+        this.descriptionLongue = in.readString();
+        this.gammeDePrixprix = in.readString();
+        this.tenueVestimentaire = in.readString();
+        this.moyensDePaiement = in.readString();
+        this.services = in.readString();
+        this.specialites = in.readString();
+        this.cuisine = in.readString();
+        this.telephone = in.readString();
+        this.email = in.readString();
+        this.dateOuverture = in.readString();
         this.logo = in.readString();
+        this.planning = new ArrayList<PlanningFoodTruck>();
+        in.readTypedList(planning,PlanningFoodTruck.CREATOR);
+
     }
 }

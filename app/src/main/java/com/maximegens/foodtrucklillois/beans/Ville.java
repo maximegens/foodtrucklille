@@ -9,7 +9,7 @@ import java.util.List;
 public class Ville {
 
     private String nom;
-    private List<EnseigneFoodTrucks> lesEnseignesFoodTrucks = new ArrayList<>();
+    private List<FoodTruck> lesFoodTrucks;
 
     public String getNom() {
         return nom;
@@ -19,11 +19,11 @@ public class Ville {
         this.nom = nom;
     }
 
-    public List<EnseigneFoodTrucks> getLesEnseignesFoodTrucks() {
-        return lesEnseignesFoodTrucks;
+    public List<FoodTruck> getLesFoodTrucks() {
+        return lesFoodTrucks;
     }
 
-    public void setLesEnseignesFoodTrucks(List<EnseigneFoodTrucks> lesEnseignesFoodTrucks) {
-        this.lesEnseignesFoodTrucks = lesEnseignesFoodTrucks;
+    public void setLesEnseignesFoodTrucks(List<FoodTruck> lesFoodTrucks) {
+        this.lesFoodTrucks = lesFoodTrucks;
     }
 }

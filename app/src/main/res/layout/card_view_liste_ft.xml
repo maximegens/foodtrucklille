@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/logo_el_camion"
+                android:src="@drawable/photonotavailable"
                 />
 
             <LinearLayout
@@ -69,7 +69,7 @@
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:paddingLeft="5dp"
-                    android:text="El Camion"
+                    android:text="Le Food truck fictif"
                     android:fontFamily="sans-serif"
                     android:textColor="#333"
                     android:textSize="14sp"
