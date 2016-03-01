@@ -9,8 +9,8 @@
     <dimen name="fab_margin">16dp</dimen>
 
 
-    <dimen name="icon_description_width">48dp</dimen>
-    <dimen name="icon_description_height">48dp</dimen>
+    <dimen name="icon_description_width">28dp</dimen>
+    <dimen name="icon_description_height">28dp</dimen>
 
     <dimen name="text_label">18sp</dimen>
     <dimen name="text_value">14sp</dimen>

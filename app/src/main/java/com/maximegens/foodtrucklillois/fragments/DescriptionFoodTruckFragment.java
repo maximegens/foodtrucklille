@@ -2,11 +2,13 @@ package com.maximegens.foodtrucklillois.fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.maximegens.foodtrucklillois.FoodTruckActivity;
@@ -29,10 +31,13 @@ public class DescriptionFoodTruckFragment extends Fragment {
     private TextView email;
     private TextView siteWeb;
 
-    private TextView tenueVestimentaire;
-    private TextView dateOuverture;
     private TextView specialite;
     private TextView service;
+    private TextView dateOuverture;
+
+    private RelativeLayout zoneTel;
+    private RelativeLayout zoneMail;
+    private RelativeLayout zoneSiteWeb;
 
     /**
      * Creation du Fragment.
@@ -67,10 +72,13 @@ public class DescriptionFoodTruckFragment extends Fragment {
         telephone = (TextView) view.findViewById(R.id.value_telephone);
         email = (TextView) view.findViewById(R.id.value_email);
         siteWeb = (TextView) view.findViewById(R.id.value_site_web);
-        tenueVestimentaire = (TextView) view.findViewById(R.id.value_tenue_vestimentaire);
         dateOuverture = (TextView) view.findViewById(R.id.value_date_ouverture);
         specialite = (TextView) view.findViewById(R.id.value_specialite);
         service = (TextView) view.findViewById(R.id.value_service);
+
+        zoneTel = (RelativeLayout) view.findViewById(R.id.relative_layout_tel);
+        zoneMail = (RelativeLayout) view.findViewById(R.id.relative_layout_mail);
+        zoneSiteWeb = (RelativeLayout) view.findViewById(R.id.relative_layout_site_web);
 
 
         // On rempli les TextView avec les donnees;
@@ -98,9 +106,6 @@ public class DescriptionFoodTruckFragment extends Fragment {
             if(ft.getSiteWeb() != null){
                 siteWeb.setText(ft.getSiteWeb());
             }
-            if(ft.getTenueVestimentaire() != null){
-                tenueVestimentaire.setText(ft.getTenueVestimentaire());
-            }
             if(ft.getDateOuverture() != null){
                 dateOuverture.setText(ft.getDateOuverture());
             }
@@ -110,9 +115,34 @@ public class DescriptionFoodTruckFragment extends Fragment {
             if(ft.getServices() != null){
                 service.setText(ft.getServices());
             }
-
         }
 
+        // Gestion des clics
+        zoneTel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        /** Envoi d'un email au food truck **/
+        zoneMail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent email = new Intent(Intent.ACTION_SEND);
+                email.putExtra(Intent.EXTRA_EMAIL, new String[]{ ft.getEmail()});
+                email.putExtra(Intent.EXTRA_SUBJECT, "Demande de renseignement");
+                email.setType("message/rfc822");
+                startActivity(Intent.createChooser(email, "Choisissez un client Mail"));
+            }
+        });
+
+        zoneSiteWeb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override

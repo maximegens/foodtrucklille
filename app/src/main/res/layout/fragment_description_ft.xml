@@ -30,6 +30,7 @@
                     android:layout_height="@dimen/icon_description_height"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
+                    android:src="@drawable/truck"
                     android:layout_alignParentLeft="true"/>
                 <TextView
                     android:id="@+id/label_description_breve"
@@ -133,6 +134,7 @@
                     android:layout_height="@dimen/icon_description_height"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
+                    android:src="@drawable/euro"
                     android:layout_alignParentLeft="true"/>
                 <TextView
                     android:id="@+id/label_gamme_prix"
@@ -196,6 +198,7 @@
 
             <!-- Telephone  -->
             <RelativeLayout
+                android:id="@+id/relative_layout_tel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp">
@@ -205,6 +208,7 @@
                     android:layout_height="@dimen/icon_description_height"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
+                    android:src="@drawable/online_support"
                     android:layout_alignParentLeft="true"/>
                 <TextView
                     android:id="@+id/label_telephone"
@@ -227,6 +231,7 @@
 
             <!-- Email  -->
             <RelativeLayout
+                android:id="@+id/relative_layout_mail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp">
@@ -258,6 +263,7 @@
 
             <!-- SiteWeb  -->
             <RelativeLayout
+                android:id="@+id/relative_layout_site_web"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp">
@@ -297,68 +303,6 @@
             android:showDividers="end"
             android:orientation="vertical">
 
-            <!-- tenue vestimentaire  -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp">
-                <ImageView
-                    android:id="@+id/icon_tenue_vestimentaire"
-                    android:layout_width="@dimen/icon_description_width"
-                    android:layout_height="@dimen/icon_description_height"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_alignParentLeft="true"/>
-                <TextView
-                    android:id="@+id/label_tenue_vestimentaire"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/icon_tenue_vestimentaire"
-                    android:text="@string/tenue_vestimentaire"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_label"
-                    android:layout_marginBottom="6dp"/>
-                <TextView
-                    android:id="@+id/value_tenue_vestimentaire"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/icon_tenue_vestimentaire"
-                    android:layout_below="@id/label_tenue_vestimentaire"
-                    android:textSize="@dimen/text_value"
-                    android:text="None"/>
-            </RelativeLayout>
-
-            <!-- date ouverture  -->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp">
-                <ImageView
-                    android:id="@+id/icon_date_ouverture"
-                    android:layout_width="@dimen/icon_description_width"
-                    android:layout_height="@dimen/icon_description_height"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_alignParentLeft="true"/>
-                <TextView
-                    android:id="@+id/label_date_ouverture"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/icon_date_ouverture"
-                    android:text="@string/date_ouverture"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_label"
-                    android:layout_marginBottom="6dp"/>
-                <TextView
-                    android:id="@+id/value_date_ouverture"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/icon_date_ouverture"
-                    android:layout_below="@id/label_date_ouverture"
-                    android:textSize="@dimen/text_value"
-                    android:text="None"/>
-            </RelativeLayout>
-
             <!-- Specialite  -->
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -370,6 +314,7 @@
                     android:layout_height="@dimen/icon_description_height"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
+                    android:src="@drawable/info"
                     android:layout_alignParentLeft="true"/>
                 <TextView
                     android:id="@+id/label_specialite"
@@ -417,6 +362,37 @@
                     android:layout_height="match_parent"
                     android:layout_toRightOf="@id/icon_service"
                     android:layout_below="@id/label_service"
+                    android:textSize="@dimen/text_value"
+                    android:text="None"/>
+            </RelativeLayout>
+
+            <!-- date ouverture  -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp">
+                <ImageView
+                    android:id="@+id/icon_date_ouverture"
+                    android:layout_width="@dimen/icon_description_width"
+                    android:layout_height="@dimen/icon_description_height"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_alignParentLeft="true"/>
+                <TextView
+                    android:id="@+id/label_date_ouverture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@id/icon_date_ouverture"
+                    android:text="@string/date_ouverture"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_label"
+                    android:layout_marginBottom="6dp"/>
+                <TextView
+                    android:id="@+id/value_date_ouverture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@id/icon_date_ouverture"
+                    android:layout_below="@id/label_date_ouverture"
                     android:textSize="@dimen/text_value"
                     android:text="None"/>
             </RelativeLayout>

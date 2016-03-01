@@ -35,8 +35,7 @@ public class RetreiveJSONListeFT extends AsyncTask<Void, Integer, FoodTruckApp>{
                 .create(RetreiveListeFTService.class);
 
         // Recuperation et conversion du JSON.
-        FoodTruckApp foodTruckApp = retreiveListeFTService.getListFT();
-        return foodTruckApp;
+        return retreiveListeFTService.getListFT();
     }
 
     @Override
@@ -60,5 +59,6 @@ public class RetreiveJSONListeFT extends AsyncTask<Void, Integer, FoodTruckApp>{
         }
         // Mise à jour de la liste dans l'adapter.
         listeFTAdapter.setFTs(lesFtsOnline,false);
+        Constantes.lesFTs = lesFtsOnline;
     }
 }
