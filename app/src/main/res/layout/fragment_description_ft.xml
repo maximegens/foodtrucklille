@@ -201,6 +201,7 @@
                 android:id="@+id/relative_layout_tel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/selector_layout"
                 android:padding="5dp">
                 <ImageView
                     android:id="@+id/icon_telephone"
@@ -234,6 +235,7 @@
                 android:id="@+id/relative_layout_mail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/selector_layout"
                 android:padding="5dp">
                 <ImageView
                     android:id="@+id/icon_email"
@@ -266,6 +268,7 @@
                 android:id="@+id/relative_layout_site_web"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/selector_layout"
                 android:padding="5dp">
                 <ImageView
                     android:id="@+id/icon_site_web"

@@ -1,9 +1,18 @@
 package com.maximegens.foodtrucklillois.fragments;
 
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Browser;
+import android.support.customtabs.CustomTabsCallback;
+import android.support.customtabs.CustomTabsClient;
+import android.support.customtabs.CustomTabsIntent;
+import android.support.customtabs.CustomTabsServiceConnection;
+import android.support.customtabs.CustomTabsSession;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +28,9 @@ import com.maximegens.foodtrucklillois.beans.FoodTruck;
 public class DescriptionFoodTruckFragment extends Fragment {
 
     public static String TITLE = "Informations";
+
+    private CustomTabsClient mCustomTabsClient;
+
     private FoodTruck ft = null;
     private TextView descriptionBreve;
     private TextView ouverture;
@@ -55,6 +67,7 @@ public class DescriptionFoodTruckFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_description_ft, container, false);
     }
+
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -118,10 +131,16 @@ public class DescriptionFoodTruckFragment extends Fragment {
         }
 
         // Gestion des clics
+
+        /** Appel le food truck **/
         zoneTel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(getContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_TELEPHONY)){
+                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + ft.getTelephone()));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -137,10 +156,17 @@ public class DescriptionFoodTruckFragment extends Fragment {
             }
         });
 
+        //TODO a remplacer par des custom chrome tab
+        /** Lancement du site web du food truck dans le navigateur **/
         zoneSiteWeb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(ft.getSiteWeb() != null){
+                    String url = ft.getSiteWeb();
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    intent.putExtra(Browser.EXTRA_APPLICATION_ID, getActivity().getApplicationContext().getPackageName());
+                    startActivity(intent);
+                }
             }
         });
     }
