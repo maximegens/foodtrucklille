@@ -11,16 +11,10 @@ import java.util.List;
  */
 public class PlageHoraireFoodTruck implements Parcelable{
 
-    private String horaire;
+    private String horaireOuverture;
+    private String horaireFermeture;
     private List<AdresseFoodTruck> adresses;
 
-    public String getHoraire() {
-        return horaire;
-    }
-
-    public void setHoraire(String horaire) {
-        this.horaire = horaire;
-    }
 
     public List<AdresseFoodTruck> getAdresses() {
         return adresses;
@@ -37,7 +31,8 @@ public class PlageHoraireFoodTruck implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(horaire);
+        dest.writeString(horaireOuverture);
+        dest.writeString(horaireFermeture);
         dest.writeTypedList(adresses);
 
     }
@@ -58,9 +53,26 @@ public class PlageHoraireFoodTruck implements Parcelable{
     };
 
     public PlageHoraireFoodTruck(Parcel in) {
-        this.horaire = in.readString();
+        this.horaireOuverture = in.readString();
+        this.horaireFermeture = in.readString();
         this.adresses = new ArrayList<AdresseFoodTruck>();
         in.readTypedList(adresses,AdresseFoodTruck.CREATOR);
 
+    }
+
+    public String getHoraireOuverture() {
+        return horaireOuverture;
+    }
+
+    public void setHoraireOuverture(String horaireOuverture) {
+        this.horaireOuverture = horaireOuverture;
+    }
+
+    public String getHoraireFermeture() {
+        return horaireFermeture;
+    }
+
+    public void setHoraireFermeture(String horaireFermeture) {
+        this.horaireFermeture = horaireFermeture;
     }
 }

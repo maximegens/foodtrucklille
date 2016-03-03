@@ -6,6 +6,8 @@
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="champ_non_communique">Non communiqué</string>
+
     <string name="facebook_app_id">1578015025851613</string>
 
     <!-- Description du Foodtruck -->

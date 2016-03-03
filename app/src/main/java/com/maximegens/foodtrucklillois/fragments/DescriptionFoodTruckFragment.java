@@ -1,18 +1,12 @@
 package com.maximegens.foodtrucklillois.fragments;
 
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Browser;
-import android.support.customtabs.CustomTabsCallback;
-import android.support.customtabs.CustomTabsClient;
-import android.support.customtabs.CustomTabsIntent;
-import android.support.customtabs.CustomTabsServiceConnection;
-import android.support.customtabs.CustomTabsSession;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,12 +18,19 @@ import com.maximegens.foodtrucklillois.FoodTruckActivity;
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+
 
 public class DescriptionFoodTruckFragment extends Fragment {
 
     public static String TITLE = "Informations";
 
-    private CustomTabsClient mCustomTabsClient;
+    private Calendar calendarToday;
 
     private FoodTruck ft = null;
     private TextView descriptionBreve;
@@ -93,14 +94,15 @@ public class DescriptionFoodTruckFragment extends Fragment {
         zoneMail = (RelativeLayout) view.findViewById(R.id.relative_layout_mail);
         zoneSiteWeb = (RelativeLayout) view.findViewById(R.id.relative_layout_site_web);
 
-
         // On rempli les TextView avec les donnees;
         if(ft != null){
             if(ft.getDescriptionBreve() != null){
                 descriptionBreve.setText(ft.getDescriptionBreve());
             }
-            //TODO Gestion de l'heure d'ouverture Ouvert Ferme
-                ouverture.setText("Aujourd'hui jusque 14h30");
+
+            // affichage de l'ouverture du food truck
+            afficheOuverture();
+
             if(ft.getCuisine() != null){
                 cuisine.setText(ft.getCuisine());
             }
@@ -169,6 +171,69 @@ public class DescriptionFoodTruckFragment extends Fragment {
                 }
             }
         });
+    }
+
+    /**
+     * Methode permettant de savoir si le food truc est actuellement ouvert ou fermé.
+     */
+    private void afficheOuverture() {
+
+        // Creation du calendrier et recuperation du numero du jour
+        // 0 = dimanche ; lundi = 1 ...
+        calendarToday = Calendar.getInstance();
+        calendarToday.setTime(new Date());
+        Integer numJour = calendarToday.get(Calendar.DAY_OF_WEEK);
+
+        switch (calendarToday.get(Calendar.DAY_OF_WEEK)){
+            case GregorianCalendar.MONDAY :
+                numJour = 1;
+                break;
+            case GregorianCalendar.TUESDAY :
+                numJour = 2;
+                break;
+            case GregorianCalendar.WEDNESDAY :
+                numJour = 3;
+                break;
+            case GregorianCalendar.THURSDAY :
+                numJour = 4;
+                break;
+            case GregorianCalendar.FRIDAY :
+                numJour = 5;
+                break;
+            case GregorianCalendar.SATURDAY :
+                numJour = 6;
+                break;
+            case GregorianCalendar.SUNDAY :
+                numJour = 7;
+                break;
+        }
+
+        if(ft.getPlanning() != null && ft.getPlanning().get(numJour) != null) {
+            String horaireOuverture = ft.getPlanning().get(numJour).getMidi().getHoraireOuverture();
+            String horaireFermeture = ft.getPlanning().get(numJour).getMidi().getHoraireFermeture();
+            Calendar calendarOuverture = null;
+            Calendar calendarFermeture = null;
+            if(horaireOuverture != null && horaireFermeture != null){
+                try {
+                    calendarOuverture = Calendar.getInstance();
+                    calendarFermeture = Calendar.getInstance();
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRANCE);
+                    calendarOuverture.setTime(sdf.parse(horaireOuverture));
+                    calendarFermeture.setTime(sdf.parse(horaireFermeture));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                if(calendarToday != null && calendarOuverture != null){
+                    if(calendarToday.get(Calendar.HOUR_OF_DAY) > calendarOuverture.get(Calendar.HOUR_OF_DAY)
+                            && calendarToday.get(Calendar.HOUR_OF_DAY) < calendarFermeture.get(Calendar.HOUR_OF_DAY)){
+                        ouverture.setText("Ouvert jusque "+calendarFermeture.get(Calendar.HOUR_OF_DAY)+"h"+String.format("%02d",calendarFermeture.get(Calendar.MINUTE)));
+                    }else{
+                        ouverture.setText("Fermé");
+                    }
+                }
+            }
+        }
     }
 
     @Override
