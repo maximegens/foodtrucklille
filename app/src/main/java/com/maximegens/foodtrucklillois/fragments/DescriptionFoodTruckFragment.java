@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Browser;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import android.widget.TextView;
 import com.maximegens.foodtrucklillois.FoodTruckActivity;
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
+import com.maximegens.foodtrucklillois.utils.Constantes;
+import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,8 +32,6 @@ import java.util.Locale;
 public class DescriptionFoodTruckFragment extends Fragment {
 
     public static String TITLE = "Informations";
-
-    private Calendar calendarToday;
 
     private FoodTruck ft = null;
     private TextView descriptionBreve;
@@ -178,59 +179,25 @@ public class DescriptionFoodTruckFragment extends Fragment {
      */
     private void afficheOuverture() {
 
-        // Creation du calendrier et recuperation du numero du jour
-        // 0 = dimanche ; lundi = 1 ...
-        calendarToday = Calendar.getInstance();
-        calendarToday.setTime(new Date());
-        Integer numJour = calendarToday.get(Calendar.DAY_OF_WEEK);
-
-        switch (calendarToday.get(Calendar.DAY_OF_WEEK)){
-            case GregorianCalendar.MONDAY :
-                numJour = 1;
-                break;
-            case GregorianCalendar.TUESDAY :
-                numJour = 2;
-                break;
-            case GregorianCalendar.WEDNESDAY :
-                numJour = 3;
-                break;
-            case GregorianCalendar.THURSDAY :
-                numJour = 4;
-                break;
-            case GregorianCalendar.FRIDAY :
-                numJour = 5;
-                break;
-            case GregorianCalendar.SATURDAY :
-                numJour = 6;
-                break;
-            case GregorianCalendar.SUNDAY :
-                numJour = 7;
-                break;
-        }
+        // Creation du calendrier
+        Calendar calendarToday = GestionnaireHoraire.createCalendarToday();
+        // Recuperation du numero du jour
+        int numJour = GestionnaireHoraire.getNumeroJourDansLaSemaine(calendarToday);
 
         if(ft.getPlanning() != null && ft.getPlanning().get(numJour) != null) {
             String horaireOuverture = ft.getPlanning().get(numJour).getMidi().getHoraireOuverture();
             String horaireFermeture = ft.getPlanning().get(numJour).getMidi().getHoraireFermeture();
-            Calendar calendarOuverture = null;
-            Calendar calendarFermeture = null;
-            if(horaireOuverture != null && horaireFermeture != null){
-                try {
-                    calendarOuverture = Calendar.getInstance();
-                    calendarFermeture = Calendar.getInstance();
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRANCE);
-                    calendarOuverture.setTime(sdf.parse(horaireOuverture));
-                    calendarFermeture.setTime(sdf.parse(horaireFermeture));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
 
-                if(calendarToday != null && calendarOuverture != null){
-                    if(calendarToday.get(Calendar.HOUR_OF_DAY) > calendarOuverture.get(Calendar.HOUR_OF_DAY)
-                            && calendarToday.get(Calendar.HOUR_OF_DAY) < calendarFermeture.get(Calendar.HOUR_OF_DAY)){
-                        ouverture.setText("Ouvert jusque "+calendarFermeture.get(Calendar.HOUR_OF_DAY)+"h"+String.format("%02d",calendarFermeture.get(Calendar.MINUTE)));
-                    }else{
-                        ouverture.setText("Fermé");
-                    }
+            if(horaireOuverture != null && horaireFermeture != null){
+                Calendar calendarOuverture = GestionnaireHoraire.createCalendar(horaireOuverture);
+                Calendar calendarFermeture = GestionnaireHoraire.createCalendar(horaireFermeture);
+
+                if(GestionnaireHoraire.isOpen(calendarToday,calendarOuverture,calendarFermeture)){
+                    ouverture.setTextColor(ContextCompat.getColor(getContext(), R.color.green));
+                    ouverture.setText("Ouvert jusque "+calendarFermeture.get(Calendar.HOUR_OF_DAY)+"h"+String.format(Constantes.FORMAT_DECIMAL_MINUTE,calendarFermeture.get(Calendar.MINUTE)));
+                }else{
+                    ouverture.setTextColor(ContextCompat.getColor(getContext(), R.color.red));
+                    ouverture.setText("Fermé");
                 }
             }
         }
