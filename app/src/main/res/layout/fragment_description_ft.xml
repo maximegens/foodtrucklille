@@ -49,17 +49,21 @@
                     android:layout_below="@id/label_description_breve"
                     android:textSize="@dimen/text_value"
                     android:text="@string/champ_non_communique"/>
-            </RelativeLayout>
 
-            <!-- Description Longue -->
-            <Button
-                android:id="@+id/button2"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:textColor="@color/black"
-                android:text="Voir description compléte"/>
+                <!-- Description Longue -->
+                <Button
+                    android:id="@+id/button_description_longue"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/value_description_breve"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/size_flat_button"
+                    android:text="@string/voir_description_complete"/>
+
+            </RelativeLayout>
 
 
             <!-- Ouverture  -->
@@ -91,6 +95,19 @@
                     android:layout_below="@id/label_ouverture"
                     android:textSize="@dimen/text_value"
                     android:text="@string/champ_non_communique"/>
+
+                <Button
+                    android:id="@+id/button_horaire_complet"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/value_ouvert"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/size_flat_button"
+                    android:text="@string/consulter_horaire"/>
+
             </RelativeLayout>
 
             <!-- Cuisine  -->

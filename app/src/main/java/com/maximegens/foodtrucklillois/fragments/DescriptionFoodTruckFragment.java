@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.provider.Browser;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -52,6 +54,9 @@ public class DescriptionFoodTruckFragment extends Fragment {
     private RelativeLayout zoneTel;
     private RelativeLayout zoneMail;
     private RelativeLayout zoneSiteWeb;
+
+    private Button consulterHoraire;
+    private Button voirDescriptionLongue;
 
     /**
      * Creation du Fragment.
@@ -95,12 +100,14 @@ public class DescriptionFoodTruckFragment extends Fragment {
         zoneMail = (RelativeLayout) view.findViewById(R.id.relative_layout_mail);
         zoneSiteWeb = (RelativeLayout) view.findViewById(R.id.relative_layout_site_web);
 
+        consulterHoraire = (Button) view.findViewById(R.id.button_horaire_complet);
+        voirDescriptionLongue = (Button) view.findViewById(R.id.button_description_longue);
+
         // On rempli les TextView avec les donnees;
         if(ft != null){
             if(ft.getDescriptionBreve() != null){
                 descriptionBreve.setText(ft.getDescriptionBreve());
             }
-
             // affichage de l'ouverture du food truck
             afficheOuverture();
 
@@ -172,6 +179,25 @@ public class DescriptionFoodTruckFragment extends Fragment {
                 }
             }
         });
+
+        voirDescriptionLongue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder =
+                        new AlertDialog.Builder(getContext(), R.style.AppCompatAlertDialogStyle);
+                builder.setTitle("Description");
+                builder.setMessage(ft.getDescriptionLongue());
+                builder.setPositiveButton("OK", null);
+                builder.show();
+            }
+        });
+
+        consulterHoraire.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                voirHoraires();
+            }
+        });
     }
 
     /**
@@ -201,6 +227,18 @@ public class DescriptionFoodTruckFragment extends Fragment {
                 }
             }
         }
+    }
+
+    /**
+     * Affiche les horaires du food truc dans une alert dialog
+     */
+    private void voirHoraires(){
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(getContext(), R.style.AppCompatAlertDialogStyle);
+        builder.setTitle("Horaires");
+        builder.setMessage("");
+        builder.setPositiveButton("OK", null);
+        builder.show();
     }
 
     @Override

@@ -11,6 +11,7 @@
         <item name="android:textColorPrimary">@color/white</item>
 
         <item name="android:actionBarWidgetTheme">@style/MyActionBarWidgetTheme</item>
+        <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle</item>
 
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -21,5 +22,9 @@
     <style name="MyActionBarWidgetTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <style name="MyMaterialTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/teal_500</item>
+    </style>
 
 </resources>
