@@ -3,7 +3,11 @@ package com.maximegens.foodtrucklillois.beans;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.maximegens.foodtrucklillois.utils.Constantes;
+import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -75,4 +79,23 @@ public class PlageHoraireFoodTruck implements Parcelable{
     public void setHoraireFermeture(String horaireFermeture) {
         this.horaireFermeture = horaireFermeture;
     }
+
+    /**
+     * Donne l'heure d'ouverture en string formatté.
+     * @return l'heure en string (ex : 12h00).
+     */
+    public String getHeureOuvertureEnString() {
+        Calendar calendarOuverture = GestionnaireHoraire.createCalendar(getHoraireOuverture());
+        return calendarOuverture.get(Calendar.HOUR_OF_DAY) + "h"+String.format(Constantes.FORMAT_DECIMAL_MINUTE,calendarOuverture.get(Calendar.MINUTE));
+    }
+
+    /**
+     * Donne l'heure de fermeture en string formatté.
+     * @return l'heure en string (ex : 14h30).
+     */
+    public String getHeureFermetureEnString() {
+        Calendar calendarFermeture = GestionnaireHoraire.createCalendar(getHoraireFermeture());
+        return calendarFermeture.get(Calendar.HOUR_OF_DAY) + "h"+String.format(Constantes.FORMAT_DECIMAL_MINUTE,calendarFermeture.get(Calendar.MINUTE));
+    }
+
 }

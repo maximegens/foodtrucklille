@@ -83,5 +83,5 @@ public class GestionnaireHoraire {
         calendarToday.setTime(new Date());
         return calendarToday;
     }
-    
+
 }

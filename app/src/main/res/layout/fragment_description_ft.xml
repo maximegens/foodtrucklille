@@ -59,7 +59,7 @@
                     android:layout_below="@id/value_description_breve"
                     android:layout_centerHorizontal="true"
                     android:layout_alignParentRight="true"
-                    android:textColor="@color/black"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/size_flat_button"
                     android:text="@string/voir_description_complete"/>
 
@@ -104,7 +104,7 @@
                     android:layout_below="@id/value_ouvert"
                     android:layout_centerHorizontal="true"
                     android:layout_alignParentRight="true"
-                    android:textColor="@color/black"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/size_flat_button"
                     android:text="@string/consulter_horaire"/>
 

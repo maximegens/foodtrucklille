@@ -3,7 +3,10 @@ package com.maximegens.foodtrucklillois.beans;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * Created by Maxime on 25/02/2016.
@@ -86,6 +89,30 @@ public class PlanningFoodTruck implements Parcelable{
         this.midi = in.readParcelable(PlageHoraireFoodTruck.class.getClassLoader());
         this.soir = in.readParcelable(PlageHoraireFoodTruck.class.getClassLoader());
 
-
     }
+
+    /**
+     * Indique si le food truck est fermé sur la journée.
+     * @return true si le food truck est fermé.
+     */
+    public boolean isFermerToday(){
+        return getMidi() == null && getSoir() == null ? true : (isOpenMidi() == false && isOpenSoir() == false);
+    }
+
+    /**
+     * Indique si le Food Truck est ouvert le midi.
+     * @return true si il est ouvert le midi.
+     */
+    public boolean isOpenMidi(){
+        return getMidi() != null && getMidi().getHoraireOuverture() != null && getMidi().getHoraireFermeture() != null;
+    }
+
+    /**
+     * Indique si le Food Truck est ouvert le soir.
+     * @return true si il est ouvert le soir.
+     */
+    public boolean isOpenSoir(){
+        return getSoir() != null && getSoir().getHoraireOuverture() != null && getSoir().getHoraireFermeture() != null;
+    }
+
 }

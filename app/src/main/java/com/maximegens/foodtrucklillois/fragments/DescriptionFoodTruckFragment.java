@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.maximegens.foodtrucklillois.FoodTruckActivity;
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
+import com.maximegens.foodtrucklillois.beans.PlanningFoodTruck;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
 
@@ -210,6 +211,7 @@ public class DescriptionFoodTruckFragment extends Fragment {
         // Recuperation du numero du jour
         int numJour = GestionnaireHoraire.getNumeroJourDansLaSemaine(calendarToday);
 
+        //TODO verifier si on est le midi ou le soir
         if(ft.getPlanning() != null && ft.getPlanning().get(numJour) != null) {
             String horaireOuverture = ft.getPlanning().get(numJour).getMidi().getHoraireOuverture();
             String horaireFermeture = ft.getPlanning().get(numJour).getMidi().getHoraireFermeture();
@@ -220,10 +222,10 @@ public class DescriptionFoodTruckFragment extends Fragment {
 
                 if(GestionnaireHoraire.isOpen(calendarToday,calendarOuverture,calendarFermeture)){
                     ouverture.setTextColor(ContextCompat.getColor(getContext(), R.color.green));
-                    ouverture.setText("Ouvert jusque "+calendarFermeture.get(Calendar.HOUR_OF_DAY)+"h"+String.format(Constantes.FORMAT_DECIMAL_MINUTE,calendarFermeture.get(Calendar.MINUTE)));
+                    ouverture.setText("Ouvert jusque "+ft.getPlanning().get(numJour).getMidi().getHeureFermetureEnString());
                 }else{
                     ouverture.setTextColor(ContextCompat.getColor(getContext(), R.color.red));
-                    ouverture.setText("Fermé");
+                    ouverture.setText(getResources().getText(R.string.fermer));
                 }
             }
         }
@@ -236,9 +238,44 @@ public class DescriptionFoodTruckFragment extends Fragment {
         AlertDialog.Builder builder =
                 new AlertDialog.Builder(getContext(), R.style.AppCompatAlertDialogStyle);
         builder.setTitle("Horaires");
-        builder.setMessage("");
+        builder.setMessage(constructionHoraires());
         builder.setPositiveButton("OK", null);
         builder.show();
+    }
+
+    /**
+     * Construction de l'affichage des horaires du food truck.
+     * @return la chaine contenant les horaires des food trucks.
+     */
+    private String constructionHoraires(){
+        StringBuilder horaires = new StringBuilder("");
+        String fermer = getResources().getText(R.string.fermer).toString();
+
+        if(ft.getPlanning() != null ){
+
+            // Parcours de la liste des jours
+            for(PlanningFoodTruck planning : ft.getPlanning()){
+                // Mise en majuscule de la premier lettre.
+                String jour = planning.getNomJour().substring(0, 1).toUpperCase() + planning.getNomJour().substring(1);
+                horaires.append(jour+" : "+Constantes.RETOUR_CHARIOT);
+                if(planning.isFermerToday()){
+                    horaires.append(Constantes.TABULATION_DOUBLE+ fermer +Constantes.RETOUR_CHARIOT);
+                }else{
+                    if(planning.isOpenMidi()) {
+                        horaires.append(Constantes.TABULATION_DOUBLE+"Midi : "+planning.getMidi().getHeureOuvertureEnString()+" - "+planning.getMidi().getHeureFermetureEnString()+Constantes.RETOUR_CHARIOT);
+                    }else {
+                        horaires.append(Constantes.TABULATION_DOUBLE+"Midi : "+ fermer+ Constantes.RETOUR_CHARIOT);
+                    }
+                    if(planning.isOpenSoir()) {
+                        horaires.append(Constantes.TABULATION_DOUBLE+"Soir : "+planning.getSoir().getHeureOuvertureEnString()+" - "+planning.getSoir().getHeureFermetureEnString()+Constantes.RETOUR_CHARIOT);
+                    }else {
+                        horaires.append(Constantes.TABULATION_DOUBLE+"Soir : "+fermer+Constantes.RETOUR_CHARIOT);
+                    }
+                }
+                horaires.append(Constantes.RETOUR_CHARIOT);
+            }
+        }
+        return horaires.toString();
     }
 
     @Override
