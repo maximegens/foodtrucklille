@@ -14,6 +14,9 @@
 
     <dimen name="text_label">18sp</dimen>
     <dimen name="text_value">14sp</dimen>
+    <dimen name="title_cat_plat">24sp</dimen>
+    <dimen name="title_screen">20sp</dimen>
     <dimen name="size_flat_button">12sp</dimen>
+
 
 </resources>

@@ -8,20 +8,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.maximegens.foodtrucklillois.FoodTruckActivity;
 import com.maximegens.foodtrucklillois.R;
+import com.maximegens.foodtrucklillois.beans.FoodTruck;
 
 
 public class EmplacementFoodTruckFragment extends Fragment {
 
     public static String TITLE = "Lieu";
+    private FoodTruck ft = null;
 
     /**
      * Creation du Fragment.
      * @return Une instance de ListeFoodTruckFragment.
      */
-    public static EmplacementFoodTruckFragment newInstance() {
+    public static EmplacementFoodTruckFragment newInstance(FoodTruck ft) {
         EmplacementFoodTruckFragment fragment = new EmplacementFoodTruckFragment();
         Bundle args = new Bundle();
+        args.putParcelable(FoodTruckActivity.KEY_FOODTRUCK_SELECTIONNER,ft);
         fragment.setArguments(args);
         return fragment;
     }
@@ -34,6 +38,10 @@ public class EmplacementFoodTruckFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if(getArguments() != null){
+            ft = getArguments().getParcelable(FoodTruckActivity.KEY_FOODTRUCK_SELECTIONNER);
+        }
 
     }
 

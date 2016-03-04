@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
-import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListener;
+import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListeFTListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class ListeFTAdapter extends RecyclerView.Adapter<ListeFTHolder> {
 
-    private RecyclerViewListener callback;
+    private RecyclerViewListeFTListener callback;
     private List<FoodTruck> lesFT;
     private Context context;
     private boolean rechercheEnCours;
@@ -31,7 +31,7 @@ public class ListeFTAdapter extends RecyclerView.Adapter<ListeFTHolder> {
         this.lesFT = lesFT;
         this.context = context;
         this.rechercheEnCours = false;
-        this.callback = (RecyclerViewListener) this.context;
+        this.callback = (RecyclerViewListeFTListener) this.context;
     }
 
     /**

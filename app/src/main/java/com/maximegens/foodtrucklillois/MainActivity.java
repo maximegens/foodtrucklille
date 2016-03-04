@@ -9,13 +9,12 @@ import android.widget.Toast;
 
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.fragments.ListeFoodTruckFragment;
-import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListener;
-import com.maximegens.foodtrucklillois.utils.Constantes;
+import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListeFTListener;
 
 /**
  * Class MainAcitivity.
  */
-public class MainActivity extends AppCompatActivity implements ListeFoodTruckFragment.ListeFoodTruckFragmentCallback, RecyclerViewListener {
+public class MainActivity extends AppCompatActivity implements ListeFoodTruckFragment.ListeFoodTruckFragmentCallback, RecyclerViewListeFTListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -69,4 +69,22 @@ public class GridLayoutManagerFoodTruck {
 
     }
 
+    /**
+     * Creation d'un gridLayoutManager pour le mode Portrait des categorie de menu.
+     * @return un gridLayoutManager pour le mode Portrait.
+     */
+    public GridLayoutManager buildGridLayoutPortraitForCatMenu() {
+        // Definit l'agencement pour l'affichage en mode portrait
+        return new GridLayoutManager(ctx, 2, GridLayoutManager.VERTICAL, false);
+    }
+
+    /**
+     * Creation d'un gridLayoutManager pour le mode paysage des categorie de menu.
+     * @return un gridLayoutManager pour le mode paysage.
+     */
+    public GridLayoutManager buildGridLayoutLandscapeForCatMenu(){
+        return new GridLayoutManager(ctx,3,GridLayoutManager.VERTICAL,false);
+
+    }
+
 }

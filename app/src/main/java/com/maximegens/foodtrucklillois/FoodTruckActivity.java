@@ -6,6 +6,8 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -16,13 +18,16 @@ import android.widget.TextView;
 
 import com.maximegens.foodtrucklillois.adapters.ViewPagerAdapter;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
+import com.maximegens.foodtrucklillois.beans.menu.CategoriePlat;
 import com.maximegens.foodtrucklillois.fragments.DescriptionFoodTruckFragment;
 import com.maximegens.foodtrucklillois.fragments.EmplacementFoodTruckFragment;
+import com.maximegens.foodtrucklillois.fragments.MenuDetailFragment;
 import com.maximegens.foodtrucklillois.fragments.MenuFoodTruckFragment;
+import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListeCatePlatListener;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.squareup.picasso.Picasso;
 
-public class FoodTruckActivity extends AppCompatActivity {
+public class FoodTruckActivity extends AppCompatActivity implements RecyclerViewListeCatePlatListener {
 
     public static String KEY_FOODTRUCK_SELECTIONNER = "FoodTruckSelectionner";
     private FoodTruck ft;
@@ -74,9 +79,13 @@ public class FoodTruckActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(DescriptionFoodTruckFragment.newInstance(ft), DescriptionFoodTruckFragment.TITLE);
-        adapter.addFragment(MenuFoodTruckFragment.newInstance(), MenuFoodTruckFragment.TITLE);
-        adapter.addFragment(EmplacementFoodTruckFragment.newInstance(), EmplacementFoodTruckFragment.TITLE);
+        adapter.addFragment(MenuFoodTruckFragment.newInstance(ft), MenuFoodTruckFragment.TITLE);
+        adapter.addFragment(EmplacementFoodTruckFragment.newInstance(ft), EmplacementFoodTruckFragment.TITLE);
         viewPager.setAdapter(adapter);
     }
 
+    @Override
+    public void onClickCatPlat(CategoriePlat catPlat) {
+
+    }
 }
