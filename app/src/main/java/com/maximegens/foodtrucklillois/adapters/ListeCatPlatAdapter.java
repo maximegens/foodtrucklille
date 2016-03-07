@@ -1,6 +1,7 @@
 package com.maximegens.foodtrucklillois.adapters;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,7 +13,6 @@ import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.beans.menu.CategoriePlat;
 import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListeCatePlatListener;
-import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListeFTListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +24,15 @@ public class ListeCatPlatAdapter extends RecyclerView.Adapter<ListeCatPlatAdapte
 
     private RecyclerViewListeCatePlatListener callback;
     private List<CategoriePlat> lesCategories;
-    private Context context;
+    private Fragment context;
 
     /**
      * Constructeur prenant en entrée une liste.
      */
-    public ListeCatPlatAdapter(List<CategoriePlat> lesCategories, Context context) {
+    public ListeCatPlatAdapter(List<CategoriePlat> lesCategories, Fragment context) {
         this.lesCategories = lesCategories;
         this.context = context;
+        this.callback = (RecyclerViewListeCatePlatListener) this.context;
     }
 
     /**

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,19 +14,17 @@ import android.widget.TextView;
 import com.maximegens.foodtrucklillois.FoodTruckActivity;
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.adapters.ListeCatPlatAdapter;
-import com.maximegens.foodtrucklillois.adapters.ListeFTAdapter;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.beans.menu.CategoriePlat;
-import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.maximegens.foodtrucklillois.utils.GridLayoutManagerFoodTruck;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
-public class MenuFoodTruckFragment extends Fragment {
+public class MenuCategorieFragment extends Fragment {
 
     public static String TITLE = "Menu";
+    public static String KEY_CAT_PLAT = "CategoriePlat";
     private TextView informationMenu;
     private TextView descriptionMenu;
     private RecyclerView recyclerViewMenu;
@@ -38,8 +35,8 @@ public class MenuFoodTruckFragment extends Fragment {
      * Creation du Fragment.
      * @return Une instance de ListeFoodTruckFragment.
      */
-    public static MenuFoodTruckFragment newInstance(FoodTruck ft) {
-        MenuFoodTruckFragment fragment = new MenuFoodTruckFragment();
+    public static MenuCategorieFragment newInstance(FoodTruck ft) {
+        MenuCategorieFragment fragment = new MenuCategorieFragment();
         Bundle args = new Bundle();
         args.putParcelable(FoodTruckActivity.KEY_FOODTRUCK_SELECTIONNER, ft);
         fragment.setArguments(args);
@@ -50,7 +47,7 @@ public class MenuFoodTruckFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_menu_ft, container, false);
+        return inflater.inflate(R.layout.fragment_menu_cat_ft, container, false);
     }
 
     @Override
@@ -93,8 +90,9 @@ public class MenuFoodTruckFragment extends Fragment {
         }
 
         // Ajout des categories à la liste.
-        adapterListeCat = new ListeCatPlatAdapter(listCatPlat,getContext());
+        adapterListeCat = new ListeCatPlatAdapter(listCatPlat,getParentFragment());
         recyclerViewMenu.setAdapter(adapterListeCat);
+
 
     }
 
@@ -123,5 +121,6 @@ public class MenuFoodTruckFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
 
 }

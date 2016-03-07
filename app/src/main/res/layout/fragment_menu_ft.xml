@@ -4,55 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/information_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="?android:selectableItemBackground"
-        android:text="Information menu"
-        android:fontFamily="sans-serif"
-        android:textColor="@color/black"
-        android:layout_centerHorizontal="true"
-        android:textSize="@dimen/title_screen"
-        android:ellipsize="end"
-        android:singleLine="true"
-        android:padding="10dp"
-        android:visibility="gone"
-        />
-
-    <TextView
-        android:id="@+id/description_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_below="@id/information_menu"
-        android:background="?android:selectableItemBackground"
-        android:text="Description menu"
-        android:layout_centerHorizontal="true"
-        android:fontFamily="sans-serif"
-        android:textColor="@color/black"
-        android:textSize="@dimen/title_screen"
-        android:ellipsize="end"
-        android:singleLine="true"
-        android:padding="10dp"
-        android:visibility="gone"
-        />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView_menu"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/description_menu"
-        >
-
-    </android.support.v7.widget.RecyclerView>
-
-    <FrameLayout
-        android:id="@+id/menu_detail_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="200dip" />
-
+        android:id="@+id/framelayout_menu"
+        />
 
 </RelativeLayout>

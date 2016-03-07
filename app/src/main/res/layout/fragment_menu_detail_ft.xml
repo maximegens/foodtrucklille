@@ -5,12 +5,12 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/information_menu"
+        android:id="@+id/information_menuu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="?android:selectableItemBackground"
-        android:text="Test"
+        android:text="Test dans frame layout"
         android:fontFamily="sans-serif"
         android:textColor="@color/black"
         android:layout_centerHorizontal="true"
@@ -19,7 +19,6 @@
         android:singleLine="true"
         android:padding="10dp"
         />
-
 
 
 </RelativeLayout>

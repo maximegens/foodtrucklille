@@ -3,34 +3,26 @@ package com.maximegens.foodtrucklillois;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.maximegens.foodtrucklillois.adapters.ViewPagerAdapter;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
-import com.maximegens.foodtrucklillois.beans.menu.CategoriePlat;
 import com.maximegens.foodtrucklillois.fragments.DescriptionFoodTruckFragment;
 import com.maximegens.foodtrucklillois.fragments.EmplacementFoodTruckFragment;
-import com.maximegens.foodtrucklillois.fragments.MenuDetailFragment;
-import com.maximegens.foodtrucklillois.fragments.MenuFoodTruckFragment;
-import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListeCatePlatListener;
+import com.maximegens.foodtrucklillois.fragments.MenuFragment;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.squareup.picasso.Picasso;
 
-public class FoodTruckActivity extends AppCompatActivity implements RecyclerViewListeCatePlatListener {
+public class FoodTruckActivity extends AppCompatActivity{
 
     public static String KEY_FOODTRUCK_SELECTIONNER = "FoodTruckSelectionner";
     private FoodTruck ft;
+    ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +55,6 @@ public class FoodTruckActivity extends AppCompatActivity implements RecyclerView
         Picasso.with(getBaseContext()).load(resID).fit().centerInside().into(fond);
 
         // Creation du ViewPager
-        ViewPager viewPager;
         TabLayout tabLayout;
         viewPager = (ViewPager) findViewById(R.id.viewpager_food_truck);
         setupViewPager(viewPager);
@@ -79,13 +70,9 @@ public class FoodTruckActivity extends AppCompatActivity implements RecyclerView
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(DescriptionFoodTruckFragment.newInstance(ft), DescriptionFoodTruckFragment.TITLE);
-        adapter.addFragment(MenuFoodTruckFragment.newInstance(ft), MenuFoodTruckFragment.TITLE);
+        adapter.addFragment(MenuFragment.newInstance(ft), MenuFragment.TITLE);
         adapter.addFragment(EmplacementFoodTruckFragment.newInstance(ft), EmplacementFoodTruckFragment.TITLE);
         viewPager.setAdapter(adapter);
     }
 
-    @Override
-    public void onClickCatPlat(CategoriePlat catPlat) {
-
-    }
 }
