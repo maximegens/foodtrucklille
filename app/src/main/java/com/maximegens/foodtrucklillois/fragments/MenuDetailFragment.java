@@ -10,7 +10,7 @@ import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.menu.CategoriePlat;
 
 /**
- * Created by a627520 on 04/03/2016.
+ * Fragment gérant l'affichage des produits contenu dans la catégorie sélectionné.
  */
 public class MenuDetailFragment extends Fragment {
 
@@ -18,7 +18,7 @@ public class MenuDetailFragment extends Fragment {
 
     /**
      * Creation du Fragment.
-     * @return Une instance de ListeFoodTruckFragment.
+     * @return Une instance de MenuDetailFragment.
      */
     public static MenuDetailFragment newInstance(CategoriePlat catPlat) {
         MenuDetailFragment fragment = new MenuDetailFragment();
@@ -28,6 +28,7 @@ public class MenuDetailFragment extends Fragment {
         return fragment;
     }
 
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_menu_detail_ft, container, false);

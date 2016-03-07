@@ -15,7 +15,7 @@ public class FavorisFoodTruckFragment extends Fragment {
 
     /**
      * Creation du Fragment.
-     * @return Une instance de ListeFoodTruckFragment.
+     * @return Une instance de FavorisFoodTruckFragment.
      */
     public static FavorisFoodTruckFragment newInstance() {
         FavorisFoodTruckFragment fragment = new FavorisFoodTruckFragment();

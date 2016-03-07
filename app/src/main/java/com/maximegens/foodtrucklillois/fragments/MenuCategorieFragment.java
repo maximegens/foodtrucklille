@@ -20,10 +20,11 @@ import com.maximegens.foodtrucklillois.utils.GridLayoutManagerFoodTruck;
 
 import java.util.List;
 
-
+/**
+ * Fragment gérant l'affichage des categories du Menu.
+ */
 public class MenuCategorieFragment extends Fragment {
 
-    public static String TITLE = "Menu";
     public static String KEY_CAT_PLAT = "CategoriePlat";
     private TextView informationMenu;
     private TextView descriptionMenu;
@@ -33,7 +34,7 @@ public class MenuCategorieFragment extends Fragment {
 
     /**
      * Creation du Fragment.
-     * @return Une instance de ListeFoodTruckFragment.
+     * @return Une instance de MenuCategorieFragment.
      */
     public static MenuCategorieFragment newInstance(FoodTruck ft) {
         MenuCategorieFragment fragment = new MenuCategorieFragment();
@@ -57,7 +58,6 @@ public class MenuCategorieFragment extends Fragment {
         recyclerViewMenu = (RecyclerView) view.findViewById(R.id.recyclerView_menu);
         informationMenu = (TextView) view.findViewById(R.id.information_menu);
         descriptionMenu = (TextView) view.findViewById(R.id.description_menu);
-
         recyclerViewMenu.setHasFixedSize(true);
 
         if(getArguments() != null){
@@ -92,7 +92,6 @@ public class MenuCategorieFragment extends Fragment {
         // Ajout des categories à la liste.
         adapterListeCat = new ListeCatPlatAdapter(listCatPlat,getParentFragment());
         recyclerViewMenu.setAdapter(adapterListeCat);
-
 
     }
 

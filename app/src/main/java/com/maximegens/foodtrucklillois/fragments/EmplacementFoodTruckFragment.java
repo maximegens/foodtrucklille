@@ -20,7 +20,7 @@ public class EmplacementFoodTruckFragment extends Fragment {
 
     /**
      * Creation du Fragment.
-     * @return Une instance de ListeFoodTruckFragment.
+     * @return Une instance de EmplacementFoodTruckFragment.
      */
     public static EmplacementFoodTruckFragment newInstance(FoodTruck ft) {
         EmplacementFoodTruckFragment fragment = new EmplacementFoodTruckFragment();

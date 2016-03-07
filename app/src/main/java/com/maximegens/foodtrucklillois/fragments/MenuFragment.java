@@ -15,7 +15,7 @@ import com.maximegens.foodtrucklillois.beans.menu.CategoriePlat;
 import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListeCatePlatListener;
 
 /**
- * Created by a627520 on 07/03/2016.
+ * Fragment représentant le menu.
  */
 public class MenuFragment extends Fragment implements RecyclerViewListeCatePlatListener{
 
@@ -24,7 +24,7 @@ public class MenuFragment extends Fragment implements RecyclerViewListeCatePlatL
 
     /**
      * Creation du Fragment.
-     * @return Une instance de ListeFoodTruckFragment.
+     * @return Une instance de MenuFragment.
      */
     public static MenuFragment newInstance(FoodTruck ft) {
         MenuFragment fragment = new MenuFragment();
@@ -48,6 +48,7 @@ public class MenuFragment extends Fragment implements RecyclerViewListeCatePlatL
             ft = getArguments().getParcelable(FoodTruckActivity.KEY_FOODTRUCK_SELECTIONNER);
         }
 
+        // Chargement du fragment affichant les categories du menu.
         MenuCategorieFragment menuCat = MenuCategorieFragment.newInstance(ft);
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.add(R.id.framelayout_menu, menuCat).commit();
@@ -65,11 +66,19 @@ public class MenuFragment extends Fragment implements RecyclerViewListeCatePlatL
         super.onDetach();
     }
 
+    /**
+     * CallBack appelé lors du clique que une catégorie.
+     * @param  catPlat la categorie sélectionnée.
+     */
     @Override
     public void onClickCatPlat(CategoriePlat catPlat) {
         loadMenuDetailFragment(catPlat);
     }
 
+    /**
+     * Remplacament du fragment sur les categorie du menu par celui sur les produits contenu dans la catégorie sélectionnée.
+     * @param catPlat La categorie sélectionnée.
+     */
     public void loadMenuDetailFragment(CategoriePlat catPlat){
         MenuDetailFragment menuDetail = MenuDetailFragment.newInstance(catPlat);
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
