@@ -15,6 +15,7 @@ import com.maximegens.foodtrucklillois.beans.menu.CategoriePlat;
 public class MenuDetailFragment extends Fragment {
 
     private CategoriePlat categoriePlat;
+    public static String TAG_MENU_DETAIL_FRAGMENT = "MenuDetailFragment";
 
     /**
      * Creation du Fragment.

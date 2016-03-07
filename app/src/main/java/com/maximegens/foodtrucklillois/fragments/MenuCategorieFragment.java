@@ -31,6 +31,7 @@ public class MenuCategorieFragment extends Fragment {
     private RecyclerView recyclerViewMenu;
     private ListeCatPlatAdapter adapterListeCat;
     private FoodTruck ft = null;
+    public static String TAG_MENU_DETAIL_FRAGMENT = "MenuCategorieFragment";
 
     /**
      * Creation du Fragment.

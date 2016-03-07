@@ -51,7 +51,8 @@ public class MenuFragment extends Fragment implements RecyclerViewListeCatePlatL
         // Chargement du fragment affichant les categories du menu.
         MenuCategorieFragment menuCat = MenuCategorieFragment.newInstance(ft);
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.add(R.id.framelayout_menu, menuCat).commit();
+        transaction.addToBackStack(null);
+        transaction.add(R.id.framelayout_menu, menuCat,MenuCategorieFragment.TAG_MENU_DETAIL_FRAGMENT).commit();
 
     }
 
@@ -82,6 +83,10 @@ public class MenuFragment extends Fragment implements RecyclerViewListeCatePlatL
     public void loadMenuDetailFragment(CategoriePlat catPlat){
         MenuDetailFragment menuDetail = MenuDetailFragment.newInstance(catPlat);
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.framelayout_menu, menuDetail).commit();
+        transaction.addToBackStack(null);
+        transaction.replace(R.id.framelayout_menu, menuDetail,MenuDetailFragment.TAG_MENU_DETAIL_FRAGMENT).commit();
     }
+
+
+
 }
