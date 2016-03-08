@@ -6,7 +6,7 @@ import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.beans.menu.CategoriePlat;
 
 /**
- * Interface définisant les actions de l'interface de la recyclerView des FT.
+ * Interface définisant les actions de l'interface de la recyclerView des categories du menu.
  */
 public interface RecyclerViewListeCatePlatListener {
 

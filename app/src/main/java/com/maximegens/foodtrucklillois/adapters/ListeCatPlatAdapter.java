@@ -48,7 +48,7 @@ public class ListeCatPlatAdapter extends RecyclerView.Adapter<ListeCatPlatAdapte
     }
 
     /**
-     * Fonction pour remplir la cellule avec les données de chaque FoodTruck.
+     * Fonction pour remplir la cellule avec les données de chaque categorie.
      * @param holder Le holder.
      * @param position La position de l'item.
      */
@@ -71,14 +71,6 @@ public class ListeCatPlatAdapter extends RecyclerView.Adapter<ListeCatPlatAdapte
         return lesCategories.size();
     }
 
-    /**
-     * Modification des foods trucks dans la liste.
-     * @param lesCategories les Categories.
-     */
-    public void setLesCategories(List<FoodTruck> lesCategories) {
-        lesCategories = new ArrayList<>(lesCategories);
-        notifyDataSetChanged();
-    }
 
     /**
      * Class view Holder

@@ -1,13 +1,23 @@
 package com.maximegens.foodtrucklillois.fragments;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.maximegens.foodtrucklillois.R;
+import com.maximegens.foodtrucklillois.adapters.ListeCatPlatAdapter;
+import com.maximegens.foodtrucklillois.adapters.ListePlatMenuAdapter;
 import com.maximegens.foodtrucklillois.beans.menu.CategoriePlat;
+import com.maximegens.foodtrucklillois.beans.menu.Plat;
+import com.maximegens.foodtrucklillois.utils.GridLayoutManagerFoodTruck;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Fragment gérant l'affichage des produits contenu dans la catégorie sélectionné.
@@ -15,6 +25,9 @@ import com.maximegens.foodtrucklillois.beans.menu.CategoriePlat;
 public class MenuDetailFragment extends Fragment {
 
     private CategoriePlat categoriePlat;
+    private RecyclerView recyclerViewPlat;
+    private ListePlatMenuAdapter adapterPlatMenu;
+    private List<Plat> lesPlats = new ArrayList<>();
     public static String TAG_MENU_DETAIL_FRAGMENT = "MenuDetailFragment";
 
     /**
@@ -30,8 +43,7 @@ public class MenuDetailFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_menu_detail_ft, container, false);
     }
 
@@ -39,9 +51,23 @@ public class MenuDetailFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        recyclerViewPlat = (RecyclerView)view.findViewById(R.id.recycler_view_plat_menu);
+
+        // Récuperation de la categorie selectionnée.
         if (getArguments() != null) {
             categoriePlat = getArguments().getParcelable(MenuCategorieFragment.KEY_CAT_PLAT);
         }
+
+        // Récupération des plats de la categorie.
+        if(categoriePlat != null && categoriePlat.getListePlats() != null){
+            lesPlats = categoriePlat.getListePlats();
+        }
+
+        // Ajout des plats à la liste.
+        recyclerViewPlat.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapterPlatMenu = new ListePlatMenuAdapter(lesPlats,getParentFragment());
+        recyclerViewPlat.setAdapter(adapterPlatMenu);
+
     }
 
 }

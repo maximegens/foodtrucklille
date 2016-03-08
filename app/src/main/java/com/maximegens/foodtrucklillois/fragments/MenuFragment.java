@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +13,15 @@ import com.maximegens.foodtrucklillois.FoodTruckActivity;
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.beans.menu.CategoriePlat;
+import com.maximegens.foodtrucklillois.beans.menu.Plat;
 import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListeCatePlatListener;
+import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListePlatListener;
+import com.maximegens.foodtrucklillois.utils.Constantes;
 
 /**
  * Fragment représentant le menu.
  */
-public class MenuFragment extends Fragment implements RecyclerViewListeCatePlatListener{
+public class MenuFragment extends Fragment implements RecyclerViewListeCatePlatListener,RecyclerViewListePlatListener{
 
     public static String TITLE = "Menu";
     private FoodTruck ft = null;
@@ -84,9 +88,22 @@ public class MenuFragment extends Fragment implements RecyclerViewListeCatePlatL
         MenuDetailFragment menuDetail = MenuDetailFragment.newInstance(catPlat);
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.addToBackStack(null);
-        transaction.replace(R.id.framelayout_menu, menuDetail,MenuDetailFragment.TAG_MENU_DETAIL_FRAGMENT).commit();
+        transaction.replace(R.id.framelayout_menu, menuDetail, MenuDetailFragment.TAG_MENU_DETAIL_FRAGMENT).commit();
     }
 
-
-
+    /**
+     * CallBack affichant dans une popup le detail du plat choisi.
+     * @param plat le plat sélectionné.
+     */
+    @Override
+    public void onClickPlat(Plat plat) {
+        if(plat != null){
+            AlertDialog.Builder builder =
+                    new AlertDialog.Builder(getContext(), R.style.AppCompatAlertDialogStyle);
+            builder.setTitle(plat.getNomPlat());
+            builder.setMessage(plat.getDescriptionPlat());
+            builder.setPositiveButton("Good !", null);
+            builder.show();
+        }
+    }
 }

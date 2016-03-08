@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.maximegens.foodtrucklillois.adapters.ViewPagerAdapter;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
+import com.maximegens.foodtrucklillois.beans.menu.Menu;
 import com.maximegens.foodtrucklillois.fragments.DescriptionFoodTruckFragment;
 import com.maximegens.foodtrucklillois.fragments.EmplacementFoodTruckFragment;
 import com.maximegens.foodtrucklillois.fragments.MenuFragment;
@@ -22,7 +23,8 @@ public class FoodTruckActivity extends AppCompatActivity{
 
     public static String KEY_FOODTRUCK_SELECTIONNER = "FoodTruckSelectionner";
     private FoodTruck ft;
-    ViewPager viewPager;
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +57,9 @@ public class FoodTruckActivity extends AppCompatActivity{
         Picasso.with(getBaseContext()).load(resID).fit().centerInside().into(fond);
 
         // Creation du ViewPager
-        TabLayout tabLayout;
+        tabLayout = (TabLayout) findViewById(R.id.tabs_food_truck);
         viewPager = (ViewPager) findViewById(R.id.viewpager_food_truck);
         setupViewPager(viewPager);
-        tabLayout = (TabLayout) findViewById(R.id.tabs_food_truck);
         tabLayout.setupWithViewPager(viewPager);
 
     }

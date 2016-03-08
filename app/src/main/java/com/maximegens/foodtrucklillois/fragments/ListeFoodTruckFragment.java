@@ -69,7 +69,7 @@ public class ListeFoodTruckFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
 
         layoutManagerFT = new GridLayoutManagerFoodTruck(getContext());
-        recyclerViewListeFT = (RecyclerView) view.findViewById(R.id.recyclerView);
+        recyclerViewListeFT = (RecyclerView) view.findViewById(R.id.recycler_view_liste_ft);
         recyclerViewListeFT.setHasFixedSize(true);
 
         // Ajout des FTs interne dans l'adapters de la liste.
