@@ -4,11 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/button_retour_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/retour_menu"
+        android:textColor="@color/white"
+        android:theme="@style/ButtonRetourMenu"
+        android:layout_alignParentLeft="true"/>
+
     <android.support.v7.widget.RecyclerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/recycler_view_plat_menu"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:layout_below="@id/button_retour_menu">
 
     </android.support.v7.widget.RecyclerView>
 

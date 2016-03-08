@@ -3,11 +3,11 @@
     <string name="action_search">Rechercher un Food Truck</string>
     <string name="title_activity_food_truck">FoodTruckActivity</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <!-- String -->
     <string name="champ_non_communique">Non communiqué</string>
     <string name="fermer">Fermé</string>
+    <string name="prix">Prix</string>
+    <string name="prix_en_menu">Prix en menu</string>
 
     <!-- Description du Foodtruck -->
     <string name="description_breve">Description</string>
@@ -26,4 +26,8 @@
 
     <string name="voir_description_complete">Voir description compléte</string>
     <string name="consulter_horaire">Consulter les horaires</string>
+
+    <!-- Button -->
+    <string name="retour_menu">Retour au menu</string>
+
 </resources>

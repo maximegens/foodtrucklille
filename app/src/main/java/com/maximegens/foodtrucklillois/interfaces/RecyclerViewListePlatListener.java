@@ -13,4 +13,9 @@ public interface RecyclerViewListePlatListener {
      * @param plat le plat sélectionné.
      */
     void onClickPlat(Plat plat);
+
+    /**
+     * Methode permettant de revenir à la liste des catégories.
+     */
+    void retourListeCategorie();
 }

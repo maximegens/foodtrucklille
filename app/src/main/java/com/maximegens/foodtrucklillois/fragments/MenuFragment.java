@@ -8,6 +8,8 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.maximegens.foodtrucklillois.FoodTruckActivity;
 import com.maximegens.foodtrucklillois.R;
@@ -17,6 +19,7 @@ import com.maximegens.foodtrucklillois.beans.menu.Plat;
 import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListeCatePlatListener;
 import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListePlatListener;
 import com.maximegens.foodtrucklillois.utils.Constantes;
+import com.squareup.picasso.Picasso;
 
 /**
  * Fragment représentant le menu.
@@ -53,10 +56,7 @@ public class MenuFragment extends Fragment implements RecyclerViewListeCatePlatL
         }
 
         // Chargement du fragment affichant les categories du menu.
-        MenuCategorieFragment menuCat = MenuCategorieFragment.newInstance(ft);
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.addToBackStack(null);
-        transaction.add(R.id.framelayout_menu, menuCat,MenuCategorieFragment.TAG_MENU_DETAIL_FRAGMENT).commit();
+        loadMenuCategorieFragment(ft);
 
     }
 
@@ -72,16 +72,18 @@ public class MenuFragment extends Fragment implements RecyclerViewListeCatePlatL
     }
 
     /**
-     * CallBack appelé lors du clique que une catégorie.
-     * @param  catPlat la categorie sélectionnée.
+     * Chargement du fragment affichant les categories.
+     * @param ft Le ft sélectionnée.
      */
-    @Override
-    public void onClickCatPlat(CategoriePlat catPlat) {
-        loadMenuDetailFragment(catPlat);
+    public void loadMenuCategorieFragment(FoodTruck ft){
+        MenuCategorieFragment menuCat = MenuCategorieFragment.newInstance(ft);
+        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        transaction.addToBackStack(null);
+        transaction.replace(R.id.framelayout_menu, menuCat,MenuCategorieFragment.TAG_MENU_DETAIL_FRAGMENT).commit();
     }
 
     /**
-     * Remplacament du fragment sur les categorie du menu par celui sur les produits contenu dans la catégorie sélectionnée.
+     * Chargement du fragment affichant les differents plats de la categorie..
      * @param catPlat La categorie sélectionnée.
      */
     public void loadMenuDetailFragment(CategoriePlat catPlat){
@@ -89,6 +91,18 @@ public class MenuFragment extends Fragment implements RecyclerViewListeCatePlatL
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.addToBackStack(null);
         transaction.replace(R.id.framelayout_menu, menuDetail, MenuDetailFragment.TAG_MENU_DETAIL_FRAGMENT).commit();
+    }
+
+
+    // ********************* Les CallBacks ********************* //
+
+    /**
+     * CallBack appelé lors du clique que une catégorie.
+     * @param  catPlat la categorie sélectionnée.
+     */
+    @Override
+    public void onClickCatPlat(CategoriePlat catPlat) {
+        loadMenuDetailFragment(catPlat);
     }
 
     /**
@@ -100,10 +114,52 @@ public class MenuFragment extends Fragment implements RecyclerViewListeCatePlatL
         if(plat != null){
             AlertDialog.Builder builder =
                     new AlertDialog.Builder(getContext(), R.style.AppCompatAlertDialogStyle);
+
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.dialog_detail_plat, null);
+            builder.setView(dialogView);
+
+            ImageView imagePlatDialog = (ImageView) dialogView.findViewById(R.id.image_plat_dialog);
+            TextView description = (TextView) dialogView.findViewById(R.id.description_plat);
+            TextView prix = (TextView) dialogView.findViewById(R.id.prix_value);
+            TextView prixEnMenuLabel = (TextView) dialogView.findViewById(R.id.prix_en_menu_label);
+            TextView prixEnMenuValue = (TextView) dialogView.findViewById(R.id.prix_en_menu_value);
+
+            // Recuperation de la photo
+            String url = plat.getUrlPhoto();
+            if(url != null ){
+                Picasso.with(getActivity())
+                        .load(url)
+                        .placeholder(R.drawable.progress_animation_loader)
+                        .error(R.drawable.photonotavailable)
+                        .fit().centerInside()
+                        .into(imagePlatDialog);
+            }
+
+            // Ajout de la description et du prix
+            description.setText(plat.getDescriptionPlat());
+            prix.setText(String.valueOf(plat.getPrix()));
+
+            // Ajout du prix en menu si il existe
+            Float prixMenu = new Float(plat.getPrixEnMenu());
+            if(prixMenu != null && prixMenu != 0){
+                prixEnMenuLabel.setVisibility(View.VISIBLE);
+                prixEnMenuValue.setVisibility(View.VISIBLE);
+                prixEnMenuValue.setText(String.valueOf(prixMenu));
+
+            }
+
             builder.setTitle(plat.getNomPlat());
-            builder.setMessage(plat.getDescriptionPlat());
             builder.setPositiveButton("Good !", null);
             builder.show();
         }
+    }
+
+    /**
+     * CallBack permettant le retour du fragment sur les produit/plats vers celui sur les categories.
+     */
+    @Override
+    public void retourListeCategorie() {
+        loadMenuCategorieFragment(ft);
     }
 }

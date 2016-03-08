@@ -1,16 +1,19 @@
 package com.maximegens.foodtrucklillois.adapters;
 
+import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.menu.Plat;
 import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListePlatListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -21,15 +24,15 @@ public class ListePlatMenuAdapter extends RecyclerView.Adapter<ListePlatMenuAdap
 
     private RecyclerViewListePlatListener callback;
     private List<Plat> lesPlats;
-    private Fragment context;
+    private Fragment fragment;
 
     /**
      * Constructeur prenant en entrée une liste.
      */
-    public ListePlatMenuAdapter(List<Plat> lesPlats, Fragment context) {
+    public ListePlatMenuAdapter(List<Plat> lesPlats, Fragment fragment) {
         this.lesPlats = lesPlats;
-        this.context = context;
-        this.callback = (RecyclerViewListePlatListener) this.context;
+        this.fragment = fragment;
+        this.callback = (RecyclerViewListePlatListener) this.fragment;
     }
 
     /**
@@ -50,13 +53,28 @@ public class ListePlatMenuAdapter extends RecyclerView.Adapter<ListePlatMenuAdap
      * @param position La position de l'item.
      */
     public void onBindViewHolder(ViewHolder  holder, final int position) {
-        holder.titlePlat.setText(lesPlats.get(position).getNomPlat());
-        holder.cardViewPlat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                callback.onClickPlat(lesPlats.get(position));
+        final Plat plat = lesPlats.get(position);
+
+        if(plat != null){
+            String url = plat.getUrlPhoto();
+            holder.titlePlat.setText(plat.getNomPlat());
+
+            if(url != null && fragment != null){
+                Picasso.with(fragment.getContext())
+                        .load(url)
+                        .placeholder(R.drawable.progress_animation_loader)
+                        .error(R.drawable.photonotavailable)
+                        .fit().centerInside()
+                        .into(holder.imagePlat);
             }
-        });
+
+            holder.cardViewPlat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callback.onClickPlat(plat);
+                }
+            });
+        }
     }
 
     /**
@@ -75,10 +93,12 @@ public class ListePlatMenuAdapter extends RecyclerView.Adapter<ListePlatMenuAdap
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView titlePlat;
         public CardView cardViewPlat;
+        public ImageView imagePlat;
         public ViewHolder(View v) {
             super(v);
             titlePlat = (TextView) v.findViewById(R.id.title_plat_card_view);
             cardViewPlat = (CardView) v.findViewById(R.id.card_view_liste_plat);
+            imagePlat = (ImageView) v.findViewById(R.id.image_plat);
         }
     }
 

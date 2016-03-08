@@ -8,12 +8,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.adapters.ListeCatPlatAdapter;
 import com.maximegens.foodtrucklillois.adapters.ListePlatMenuAdapter;
 import com.maximegens.foodtrucklillois.beans.menu.CategoriePlat;
 import com.maximegens.foodtrucklillois.beans.menu.Plat;
+import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListePlatListener;
 import com.maximegens.foodtrucklillois.utils.GridLayoutManagerFoodTruck;
 
 import java.util.ArrayList;
@@ -24,9 +26,12 @@ import java.util.List;
  */
 public class MenuDetailFragment extends Fragment {
 
+    private Fragment fragment;
+    private Button buttonRetourMenu;
     private CategoriePlat categoriePlat;
     private RecyclerView recyclerViewPlat;
     private ListePlatMenuAdapter adapterPlatMenu;
+    private RecyclerViewListePlatListener callback;
     private List<Plat> lesPlats = new ArrayList<>();
     public static String TAG_MENU_DETAIL_FRAGMENT = "MenuDetailFragment";
 
@@ -39,6 +44,7 @@ public class MenuDetailFragment extends Fragment {
         Bundle args = new Bundle();
         args.putParcelable(MenuCategorieFragment.KEY_CAT_PLAT, catPlat);
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -52,6 +58,8 @@ public class MenuDetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerViewPlat = (RecyclerView)view.findViewById(R.id.recycler_view_plat_menu);
+        buttonRetourMenu = (Button)view.findViewById(R.id.button_retour_menu);
+        callback = (RecyclerViewListePlatListener) getParentFragment();
 
         // Récuperation de la categorie selectionnée.
         if (getArguments() != null) {
@@ -67,6 +75,16 @@ public class MenuDetailFragment extends Fragment {
         recyclerViewPlat.setLayoutManager(new LinearLayoutManager(getContext()));
         adapterPlatMenu = new ListePlatMenuAdapter(lesPlats,getParentFragment());
         recyclerViewPlat.setAdapter(adapterPlatMenu);
+
+        // Clique sur le button retour au menu
+        buttonRetourMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(callback != null){
+                    callback.retourListeCategorie();
+                }
+            }
+        });
 
     }
 

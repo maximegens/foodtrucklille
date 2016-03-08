@@ -27,4 +27,9 @@
         <item name="colorAccent">@color/teal_500</item>
     </style>
 
+    <style name="ButtonRetourMenu" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">@color/purple</item>
+        <item name="colorButtonNormal">@color/orange</item>
+    </style>
+
 </resources>

@@ -53,13 +53,15 @@ public class ListeCatPlatAdapter extends RecyclerView.Adapter<ListeCatPlatAdapte
      * @param position La position de l'item.
      */
     public void onBindViewHolder(ViewHolder  holder, final int position) {
-        holder.titleCat.setText(lesCategories.get(position).getNomCategoriePlat());
-        holder.cardViewCatPlat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                callback.onClickCatPlat(lesCategories.get(position));
-            }
-        });
+        if(lesCategories != null){
+            holder.titleCat.setText(lesCategories.get(position).getNomCategoriePlat());
+            holder.cardViewCatPlat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callback.onClickCatPlat(lesCategories.get(position));
+                }
+            });
+        }
     }
 
     /**
@@ -68,7 +70,7 @@ public class ListeCatPlatAdapter extends RecyclerView.Adapter<ListeCatPlatAdapte
      */
     @Override
     public int getItemCount() {
-        return lesCategories.size();
+        return lesCategories != null ? lesCategories.size() : 0;
     }
 
 

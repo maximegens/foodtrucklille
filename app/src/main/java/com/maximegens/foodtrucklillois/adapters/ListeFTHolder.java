@@ -47,7 +47,13 @@ public class ListeFTHolder extends RecyclerView.ViewHolder {
 
         if(ft.getLogo() != null){
             int resID = res.getIdentifier(ft.getLogo() , "drawable", context.getPackageName());
-            Picasso.with(context).load(resID).fit().centerInside().into(imageView);
+            Picasso.with(context)
+                    .load(resID)
+                    .placeholder(R.drawable.progress_animation_loader)
+                    .error(R.drawable.photonotavailable)
+                    .fit()
+                    .centerInside()
+                    .into(imageView);
         }
 
         // Affichage specifique des premiers et seconds items.
