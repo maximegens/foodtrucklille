@@ -23,4 +23,6 @@ public class Constantes {
 
     public static String LOG_PARSE_DATE = "ERREUR PARSING DATE";
 
+    public static String ERROR_NETWORK = "Erreur Internet";
+
 }

@@ -85,7 +85,7 @@ public class ListeFoodTruckFragment extends Fragment{
 
         // Verification de la connexion internet et recuperation Online des données.
         if(Internet.isNetworkAvailable(getActivity().getApplicationContext())){
-            RetreiveJSONListeFT retreiveJSONListeFT = new RetreiveJSONListeFT(listeFTAdapter);
+            RetreiveJSONListeFT retreiveJSONListeFT = new RetreiveJSONListeFT(listeFTAdapter,getContext());
             retreiveJSONListeFT.execute();
         }
 
