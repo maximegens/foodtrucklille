@@ -4,16 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/emplacement_tv"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="8dp"
-        android:gravity="center"
-        android:text="L'emplacement"
-        android:fontFamily="sans-serif"
-        android:textColor="#333"
-        android:textSize="14sp" />
+        android:id="@+id/framelayout_map"
+        />
 
 
 </RelativeLayout>

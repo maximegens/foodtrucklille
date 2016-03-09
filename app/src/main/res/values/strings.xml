@@ -2,6 +2,7 @@
     <string name="app_name">Food Truck Lillois</string>
     <string name="action_search">Rechercher un Food Truck</string>
     <string name="title_activity_food_truck">FoodTruckActivity</string>
+    <string name="key_api_google_map">AIzaSyDASrlPPti8U3qoqoj8V0O3VVZ-cBCYwkc</string>
 
     <!-- String -->
     <string name="champ_non_communique">Non communiqué</string>

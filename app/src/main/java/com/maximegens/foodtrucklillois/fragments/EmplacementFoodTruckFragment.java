@@ -4,10 +4,20 @@ package com.maximegens.foodtrucklillois.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.maximegens.foodtrucklillois.FoodTruckActivity;
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
@@ -15,8 +25,10 @@ import com.maximegens.foodtrucklillois.beans.FoodTruck;
 
 public class EmplacementFoodTruckFragment extends Fragment {
 
-    public static String TITLE = "Lieu";
+    public static String TITLE = "Map";
     private FoodTruck ft = null;
+    private SupportMapFragment fragmentMap;
+    private GoogleMap googleMap;
 
     /**
      * Creation du Fragment.
@@ -43,6 +55,10 @@ public class EmplacementFoodTruckFragment extends Fragment {
             ft = getArguments().getParcelable(FoodTruckActivity.KEY_FOODTRUCK_SELECTIONNER);
         }
 
+        // Utilisation du Nested Fragment pour afficher le fragment Map dans le fragment Emplacement.
+        FragmentManager fm = getChildFragmentManager();
+        fragmentMap = MapFoodTruckFragment.newInstance(ft);
+        fm.beginTransaction().replace(R.id.framelayout_map, fragmentMap).commit();
     }
 
     @Override
@@ -54,5 +70,6 @@ public class EmplacementFoodTruckFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
 
 }
