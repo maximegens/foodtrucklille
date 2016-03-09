@@ -1,6 +1,5 @@
 package com.maximegens.foodtrucklillois.fragments;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,12 +10,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.maximegens.foodtrucklillois.R;
-import com.maximegens.foodtrucklillois.adapters.ListeCatPlatAdapter;
 import com.maximegens.foodtrucklillois.adapters.ListePlatMenuAdapter;
 import com.maximegens.foodtrucklillois.beans.menu.CategoriePlat;
 import com.maximegens.foodtrucklillois.beans.menu.Plat;
 import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListePlatListener;
-import com.maximegens.foodtrucklillois.utils.GridLayoutManagerFoodTruck;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +23,6 @@ import java.util.List;
  */
 public class MenuDetailFragment extends Fragment {
 
-    private Fragment fragment;
     private Button buttonRetourMenu;
     private CategoriePlat categoriePlat;
     private RecyclerView recyclerViewPlat;
@@ -44,7 +40,6 @@ public class MenuDetailFragment extends Fragment {
         Bundle args = new Bundle();
         args.putParcelable(MenuCategorieFragment.KEY_CAT_PLAT, catPlat);
         fragment.setArguments(args);
-
         return fragment;
     }
 
@@ -85,7 +80,5 @@ public class MenuDetailFragment extends Fragment {
                 }
             }
         });
-
     }
-
 }

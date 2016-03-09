@@ -27,9 +27,8 @@
             android:text="Item"
             android:fontFamily="sans-serif"
             android:textColor="@color/black"
+            android:gravity="center"
             android:textSize="@dimen/title_cat_plat"
-            android:ellipsize="end"
-            android:singleLine="true"
             android:padding="10dp"
             />
 

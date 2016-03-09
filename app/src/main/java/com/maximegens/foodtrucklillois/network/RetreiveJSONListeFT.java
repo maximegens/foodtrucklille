@@ -45,6 +45,8 @@ public class RetreiveJSONListeFT extends AsyncTask<Void, Integer, FoodTruckApp>{
             // Recuperation et conversion du JSON.
             return retreiveListeFTService.getListFT();
         }catch (RetrofitError cause){
+            //TODO gestion des erreurs à améliorer - trop sommaire pour l'instant.
+            // Gestion des erreurs
             if(cause.getCause() instanceof SocketTimeoutException){
                 Log.v(Constantes.ERROR_NETWORK, "Timeout dépassé !");
             }

@@ -12,7 +12,6 @@ import android.widget.ImageView;
 
 import com.maximegens.foodtrucklillois.adapters.ViewPagerAdapter;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
-import com.maximegens.foodtrucklillois.beans.menu.Menu;
 import com.maximegens.foodtrucklillois.fragments.DescriptionFoodTruckFragment;
 import com.maximegens.foodtrucklillois.fragments.EmplacementFoodTruckFragment;
 import com.maximegens.foodtrucklillois.fragments.MenuFragment;
@@ -39,6 +38,7 @@ public class FoodTruckActivity extends AppCompatActivity{
         // Recuperation du FoodTruck sélectionné.
         ft = getIntent().getExtras().getParcelable(FoodTruck.KEY_FOOD_TRUCK);
 
+        // Recuperation du CollapsingToolBarLayout pour la gestion du visuel de l'entete du Food truck.
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_food_truck);
         collapsingToolbarLayout.setTitle(ft.getNom());
         collapsingToolbarLayout.setExpandedTitleColor(ContextCompat.getColor(this,android.R.color.transparent));
@@ -48,7 +48,7 @@ public class FoodTruckActivity extends AppCompatActivity{
         ImageView fond = (ImageView)findViewById(R.id.backgroundImageView_food_truck);
         Resources res = getResources();
         int resID;
-        if(ft.getLogo() != null) {
+        if(ft.getLogo() != null && res != null) {
             resID = res.getIdentifier(ft.getLogo(), "drawable", getPackageName());
         }else{
             resID = res.getIdentifier(Constantes.PHOTO_NOT_AVAILABLE, "drawable", getPackageName());

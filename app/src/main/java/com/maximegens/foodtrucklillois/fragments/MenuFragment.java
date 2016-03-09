@@ -18,7 +18,6 @@ import com.maximegens.foodtrucklillois.beans.menu.CategoriePlat;
 import com.maximegens.foodtrucklillois.beans.menu.Plat;
 import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListeCatePlatListener;
 import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListePlatListener;
-import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -134,6 +133,8 @@ public class MenuFragment extends Fragment implements RecyclerViewListeCatePlatL
                         .error(R.drawable.photonotavailable)
                         .fit().centerInside()
                         .into(imagePlatDialog);
+            }else{
+                imagePlatDialog.setVisibility(View.GONE);
             }
 
             // Ajout de la description et du prix

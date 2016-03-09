@@ -1,6 +1,5 @@
 package com.maximegens.foodtrucklillois.adapters;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -10,11 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.maximegens.foodtrucklillois.R;
-import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.beans.menu.CategoriePlat;
 import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListeCatePlatListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,8 +62,8 @@ public class ListeCatPlatAdapter extends RecyclerView.Adapter<ListeCatPlatAdapte
     }
 
     /**
-     * Donne le nombre de FoodTruck dans la liste.
-     * @return Le nombre de FoodTruck.
+     * Donne le nombre de categorie dans la liste.
+     * @return Le nombre de categorie.
      */
     @Override
     public int getItemCount() {

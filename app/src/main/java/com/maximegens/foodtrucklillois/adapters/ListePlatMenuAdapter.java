@@ -1,6 +1,5 @@
 package com.maximegens.foodtrucklillois.adapters;
 
-import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -22,9 +21,9 @@ import java.util.List;
  */
 public class ListePlatMenuAdapter extends RecyclerView.Adapter<ListePlatMenuAdapter.ViewHolder> {
 
-    private RecyclerViewListePlatListener callback;
-    private List<Plat> lesPlats;
     private Fragment fragment;
+    private List<Plat> lesPlats;
+    private RecyclerViewListePlatListener callback;
 
     /**
      * Constructeur prenant en entrée une liste.
@@ -78,14 +77,13 @@ public class ListePlatMenuAdapter extends RecyclerView.Adapter<ListePlatMenuAdap
     }
 
     /**
-     * Donne le nombre de FoodTruck dans la liste.
-     * @return Le nombre de FoodTruck.
+     * Donne le nombre de plat dans la liste.
+     * @return Le nombre de plat.
      */
     @Override
     public int getItemCount() {
         return lesPlats.size();
     }
-
 
     /**
      * Class view Holder
@@ -101,5 +99,4 @@ public class ListePlatMenuAdapter extends RecyclerView.Adapter<ListePlatMenuAdap
             imagePlat = (ImageView) v.findViewById(R.id.image_plat);
         }
     }
-
 }

@@ -1,8 +1,5 @@
 package com.maximegens.foodtrucklillois.interfaces;
 
-import android.support.v4.app.Fragment;
-
-import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.beans.menu.CategoriePlat;
 
 /**

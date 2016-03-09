@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.adapters.ListeFTAdapter;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
+import com.maximegens.foodtrucklillois.interfaces.ListeFoodTruckFragmentCallback;
 import com.maximegens.foodtrucklillois.network.Internet;
 import com.maximegens.foodtrucklillois.network.RetreiveJSONListeFT;
 import com.maximegens.foodtrucklillois.utils.Constantes;
@@ -27,13 +28,14 @@ import java.util.List;
 
 /**
  * Class ListeFoodTruckFragment.
+ * Fragment gérant l'affichage de la liste des Food trucks.
  */
 public class ListeFoodTruckFragment extends Fragment{
 
-    private ListeFoodTruckFragmentCallback listeFoodTruckFragmentCallback;
-    private GridLayoutManagerFoodTruck layoutManagerFT;
-    private RecyclerView recyclerViewListeFT;
     private ListeFTAdapter listeFTAdapter;
+    private RecyclerView recyclerViewListeFT;
+    private GridLayoutManagerFoodTruck layoutManagerFT;
+    private ListeFoodTruckFragmentCallback listeFoodTruckFragmentCallback;
 
     /**
      * Creation du Fragment.
@@ -106,8 +108,8 @@ public class ListeFoodTruckFragment extends Fragment{
     }
 
     /**
-     * Gestion du menu
-     * @param menu Le menu
+     * Gestion du menu.
+     * @param menu Le menu.
      * @param inflater L'objet pour inflater.
      */
     @Override
@@ -131,17 +133,6 @@ public class ListeFoodTruckFragment extends Fragment{
                 return true;
             }
         });
-    }
-
-    /**
-     * Interface permettant de communiquer avec l'activity.
-     */
-    public interface ListeFoodTruckFragmentCallback{
-
-        /**
-         * Notifie l'activity
-         */
-        void notifyActivity();
     }
 
 
@@ -170,6 +161,7 @@ public class ListeFoodTruckFragment extends Fragment{
             }
         }
 
+        // Mise à jour des FT dans l'adpater.
         listeFTAdapter.setFTs(filteredModelList, !vide);
         listeFTAdapter.notifyDataSetChanged();
     }

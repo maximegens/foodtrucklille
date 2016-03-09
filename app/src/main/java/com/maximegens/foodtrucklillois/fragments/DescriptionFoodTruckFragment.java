@@ -1,6 +1,5 @@
 package com.maximegens.foodtrucklillois.fragments;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -24,12 +23,7 @@ import com.maximegens.foodtrucklillois.beans.PlanningFoodTruck;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
 
 
 public class DescriptionFoodTruckFragment extends Fragment {
@@ -85,6 +79,7 @@ public class DescriptionFoodTruckFragment extends Fragment {
             ft = getArguments().getParcelable(FoodTruckActivity.KEY_FOODTRUCK_SELECTIONNER);
         }
 
+        // Recuperation des informations depuis le xml.
         descriptionBreve = (TextView) view.findViewById(R.id.value_description_breve);
         ouverture = (TextView) view.findViewById(R.id.value_ouvert);
         cuisine = (TextView) view.findViewById(R.id.value_cuisine);
@@ -104,7 +99,7 @@ public class DescriptionFoodTruckFragment extends Fragment {
         consulterHoraire = (Button) view.findViewById(R.id.button_horaire_complet);
         voirDescriptionLongue = (Button) view.findViewById(R.id.button_description_longue);
 
-        // On rempli les TextView avec les donnees;
+        // Remplissage des différents textView avec les informations contenu dans l'objet FoodTruck.
         if(ft != null){
             if(ft.getDescriptionBreve() != null){
                 descriptionBreve.setText(ft.getDescriptionBreve());
@@ -143,7 +138,7 @@ public class DescriptionFoodTruckFragment extends Fragment {
 
         // Gestion des clics
 
-        /** Appel le food truck **/
+        /** Appel le numero de telephone du food truck **/
         zoneTel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -181,6 +176,7 @@ public class DescriptionFoodTruckFragment extends Fragment {
             }
         });
 
+        /** Affiche la description longue du food truck dans une AlertDialog/Popup **/
         voirDescriptionLongue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -193,6 +189,7 @@ public class DescriptionFoodTruckFragment extends Fragment {
             }
         });
 
+        /** Affiche les horaires du food truck dans une AlertDialog/Popup **/
         consulterHoraire.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -232,7 +229,7 @@ public class DescriptionFoodTruckFragment extends Fragment {
     }
 
     /**
-     * Affiche les horaires du food truc dans une alert dialog
+     * Affiche les horaires du food truck dans une alert dialog.
      */
     private void voirHoraires(){
         AlertDialog.Builder builder =
