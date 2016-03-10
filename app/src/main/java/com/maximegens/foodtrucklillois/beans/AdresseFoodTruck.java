@@ -9,6 +9,8 @@ import android.os.Parcelable;
 public class AdresseFoodTruck implements Parcelable{
 
     private String adresse;
+    private String latitude;
+    private String longitude;
     private String map;
 
     public String getAdresse() {
@@ -19,6 +21,14 @@ public class AdresseFoodTruck implements Parcelable{
         this.adresse = adresse;
     }
 
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
     public String getMap() {
         return map;
     }
@@ -27,6 +37,13 @@ public class AdresseFoodTruck implements Parcelable{
         this.map = map;
     }
 
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
 
     @Override
     public int describeContents() {
@@ -36,6 +53,8 @@ public class AdresseFoodTruck implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(adresse);
+        dest.writeString(latitude);
+        dest.writeString(longitude);
         dest.writeString(map);
     }
 
@@ -56,6 +75,8 @@ public class AdresseFoodTruck implements Parcelable{
 
     public AdresseFoodTruck(Parcel in) {
         this.adresse = in.readString();
+        this.latitude = in.readString();
+        this.longitude = in.readString();
         this.map = in.readString();
 
     }

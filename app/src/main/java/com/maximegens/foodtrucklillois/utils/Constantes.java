@@ -1,5 +1,6 @@
 package com.maximegens.foodtrucklillois.utils;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 
 import java.util.ArrayList;
@@ -24,5 +25,14 @@ public class Constantes {
     public static String LOG_PARSE_DATE = "ERREUR PARSING DATE";
 
     public static String ERROR_NETWORK = "Erreur Internet";
+
+    public static String GPS_LILLE_LATITUDE = "50.62925";
+    public static String GPS_LILLE_LONGITUDE = "3.057256000000052";
+
+    public static String GPS_CENTRE_CARTE_MARC_BAROEUL_LATITUDE = "50.659660";
+    public static String GPS_CENTRE_CARTE_MARC_BAROEUL_LONGITUDE = "3.113962";
+
+    public static String MIDI = "midi";
+    public static String SOIR = "soir";
 
 }

@@ -30,6 +30,7 @@ public class FoodTruck implements Parcelable{
     private String email;
     private String dateOuverture;
     private String logo;
+    private String urlLogo;
     private Menu menu;
     private List<PlanningFoodTruck> planning;
 
@@ -171,6 +172,14 @@ public class FoodTruck implements Parcelable{
         this.logo = logo;
     }
 
+    public String getUrlLogo() {
+        return urlLogo;
+    }
+
+    public void setUrlLogo(String urlLogo) {
+        this.urlLogo = urlLogo;
+    }
+
     public Menu getMenu() {
         return menu;
     }
@@ -229,6 +238,7 @@ public class FoodTruck implements Parcelable{
         dest.writeString(email);
         dest.writeString(dateOuverture);
         dest.writeString(logo);
+        dest.writeString(urlLogo);
         dest.writeParcelable(menu, flags);
         dest.writeTypedList(planning);
 
@@ -267,9 +277,9 @@ public class FoodTruck implements Parcelable{
         this.email = in.readString();
         this.dateOuverture = in.readString();
         this.logo = in.readString();
+        this.urlLogo = in.readString();
         this.menu = (Menu)in.readParcelable(Menu.class.getClassLoader());
         this.planning = new ArrayList<PlanningFoodTruck>();
         in.readTypedList(planning,PlanningFoodTruck.CREATOR);
-
     }
 }
