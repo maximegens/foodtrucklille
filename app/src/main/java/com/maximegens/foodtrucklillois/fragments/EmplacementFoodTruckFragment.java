@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -21,11 +22,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.maximegens.foodtrucklillois.FoodTruckActivity;
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
+import com.maximegens.foodtrucklillois.network.Internet;
 
 
 public class EmplacementFoodTruckFragment extends Fragment {
 
     public static String TITLE = "Map";
+    private TextView noConnexion;
     private FoodTruck ft = null;
     private SupportMapFragment fragmentMap;
     private GoogleMap googleMap;
@@ -55,10 +58,17 @@ public class EmplacementFoodTruckFragment extends Fragment {
             ft = getArguments().getParcelable(FoodTruckActivity.KEY_FOODTRUCK_SELECTIONNER);
         }
 
-        // Utilisation du Nested Fragment pour afficher le fragment Map dans le fragment Emplacement.
-        FragmentManager fm = getChildFragmentManager();
-        fragmentMap = MapFoodTruckFragment.newInstance(ft);
-        fm.beginTransaction().replace(R.id.framelayout_map, fragmentMap).commit();
+        // On affiche la map si le device posséde une connexion internet.
+        if(Internet.isNetworkAvailable(getContext())){
+            // Utilisation du Nested Fragment pour afficher le fragment Map dans le fragment Emplacement.
+            FragmentManager fm = getChildFragmentManager();
+            fragmentMap = MapFoodTruckFragment.newInstance(ft);
+            fm.beginTransaction().replace(R.id.framelayout_map, fragmentMap).commit();
+        }else{
+            //TODO ajouter un Broadcast Receiver pour detecter l'apparition d'une connexion et afficher la map
+            noConnexion = (TextView) view.findViewById(R.id.no_connexion_map);
+            noConnexion.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

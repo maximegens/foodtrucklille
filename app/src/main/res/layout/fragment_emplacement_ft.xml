@@ -4,6 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/no_connexion_map"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:padding="5dp"
+        android:text="@string/no_connexion"
+        android:textSize="@dimen/title_screen"
+        android:visibility="gone"/>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
