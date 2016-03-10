@@ -88,12 +88,8 @@ public class ListeFoodTruckFragment extends Fragment{
             recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutLandscape());
         }
 
-        // Verification de la connexion internet et recuperation Online des données.
-        if(Internet.isNetworkAvailable(getActivity().getApplicationContext())){
-            RetreiveJSONListeFT retreiveJSONListeFT = new RetreiveJSONListeFT(listeFTAdapter,getContext());
-            retreiveJSONListeFT.setProgressBar(loader);
-            retreiveJSONListeFT.execute();
-        }
+        // Chargement des données des Foods trucks.
+        loadDataFoodTruck();
 
     }
 
@@ -139,6 +135,14 @@ public class ListeFoodTruckFragment extends Fragment{
         });
     }
 
+    /**
+     * Chargement des données des Food trucks par Internet ou en interne si il n'existe pas de connexion.
+     */
+    private void loadDataFoodTruck() {
+        RetreiveJSONListeFT retreiveJSONListeFT = new RetreiveJSONListeFT(listeFTAdapter,getContext());
+        retreiveJSONListeFT.setProgressBar(loader);
+        retreiveJSONListeFT.execute(Internet.isNetworkAvailable(getActivity().getApplicationContext()));
+    }
 
     /**
      * Mise à jour de la liste des FoodTrucks pendant la recherche.

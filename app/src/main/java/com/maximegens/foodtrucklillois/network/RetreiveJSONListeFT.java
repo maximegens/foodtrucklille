@@ -11,6 +11,7 @@ import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.beans.FoodTruckApp;
 import com.maximegens.foodtrucklillois.beans.Ville;
 import com.maximegens.foodtrucklillois.utils.Constantes;
+import com.maximegens.foodtrucklillois.utils.GestionJsonAPI;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -24,16 +25,18 @@ import retrofit.RetrofitError;
  * AsyncTask permettant de recuperer le JSON et de le convertir.
  * Utilisation de la librairie RetroFit.
  */
-public class RetreiveJSONListeFT extends AsyncTask<Void, Integer, FoodTruckApp>{
+public class RetreiveJSONListeFT extends AsyncTask<Boolean, Integer, FoodTruckApp>{
 
-    ProgressBar loader;
+    private ProgressBar loader;
+    private GestionJsonAPI apiJson;
     private ListeFTAdapter listeFTAdapter = null;
 
     Context ctx;
 
-    public RetreiveJSONListeFT(ListeFTAdapter ListeFTAdapter,Context ctx){
-        this.listeFTAdapter = ListeFTAdapter;
+    public RetreiveJSONListeFT(ListeFTAdapter ListeFTAdapter, Context ctx){
         this.ctx = ctx;
+        this.listeFTAdapter = ListeFTAdapter;
+        apiJson = new GestionJsonAPI(this.ctx);
     }
 
     /**
@@ -51,55 +54,53 @@ public class RetreiveJSONListeFT extends AsyncTask<Void, Integer, FoodTruckApp>{
     }
 
     @Override
-    protected FoodTruckApp doInBackground(Void... params) {
+    protected FoodTruckApp doInBackground(Boolean... param) {
 
-        try{
-            // Creation du restAdapter avec RetroFit.
-            RetreiveListeFTService retreiveListeFTService = new RestAdapter.Builder()
-                    .setEndpoint(Constantes.URL_SERVEUR)
-                    .build()
-                    .create(RetreiveListeFTService.class);
+        boolean online = param[0];
 
-            // Recuperation et conversion du JSON.
-            return retreiveListeFTService.getListFT();
-        }catch (RetrofitError cause){
-            //TODO gestion des erreurs à améliorer - trop sommaire pour l'instant.
-            // Gestion des erreurs
-            if(cause.getCause() instanceof SocketTimeoutException){
-                Log.v(Constantes.ERROR_NETWORK, "Timeout dépassé !");
+        if(online){
+            // Recuperation des données en ligne.
+            try{
+                // Creation du restAdapter avec RetroFit.
+                RetreiveListeFTService retreiveListeFTService = new RestAdapter.Builder()
+                        .setEndpoint(Constantes.URL_SERVEUR)
+                        .build()
+                        .create(RetreiveListeFTService.class);
+
+                // Recuperation et conversion du JSON.
+                return retreiveListeFTService.getListFT();
+            }catch (RetrofitError cause){
+                //TODO gestion des erreurs à améliorer - trop sommaire pour l'instant.
+                // Gestion des erreurs
+                if(cause.getCause() instanceof SocketTimeoutException){
+                    Log.v(Constantes.ERROR_NETWORK, "Timeout dépassé !");
+                }
+                else if(cause.getCause() instanceof ConnectException){
+                    Log.v(Constantes.ERROR_NETWORK,"Pas de connexion !");
+                }else{
+                    Log.v(Constantes.ERROR_NETWORK,"-- Probléme non référencé  --");
+                    cause.getMessage();
+                }
+                return null;
             }
-            else if(cause.getCause() instanceof ConnectException){
-                Log.v(Constantes.ERROR_NETWORK,"Pas de connexion !");
-            }else{
-                Log.v(Constantes.ERROR_NETWORK,"-- Probléme non référencé  --");
-                cause.getMessage();
-            }
-            return null;
+        }else{
+            // Recuperation des données en interne.
+            String json = apiJson.loadJSONFromAsset();
+            return apiJson.parseJsonToFTApp(json);
         }
-    }
 
-    @Override
-    protected void onProgressUpdate(Integer... progress) {
     }
 
     @Override
     protected void onPostExecute(FoodTruckApp foodTruckApp) {
-        List<FoodTruck> lesFtsOnline = new ArrayList<>();
-        Ville ville = null;
-        // Pour le moment on prends la seule ville disponible "Lille"
-        if(foodTruckApp != null && foodTruckApp.getVilles() != null){
-            ville = foodTruckApp.getVilles().get(0);
-        }
 
-        // On recupere la liste des foods truck de la ville
-        if(ville != null){
-            for (FoodTruck ft : ville.getLesFoodTrucks()) {
-                lesFtsOnline.add(ft);
-            }
-        }
+        //TODO refacto pour prendre un compte n'importe qu'elle ville passé en paramétre.
+        // Pour l'instant on sélection la ville de Lille à l'index 0.
+        List<FoodTruck> lesFts = apiJson.getListeFTByVille(foodTruckApp,0);
+
         // Mise à jour de la liste dans l'adapter.
-        listeFTAdapter.setFTs(lesFtsOnline,false);
-        Constantes.lesFTs = lesFtsOnline;
+        listeFTAdapter.setFTs(lesFts,false);
+        Constantes.lesFTs = lesFts;
 
         // On masque le loader
         loader.setVisibility(View.GONE);
