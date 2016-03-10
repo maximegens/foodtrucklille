@@ -3,6 +3,8 @@ package com.maximegens.foodtrucklillois.network;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.maximegens.foodtrucklillois.adapters.ListeFTAdapter;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
@@ -24,12 +26,28 @@ import retrofit.RetrofitError;
  */
 public class RetreiveJSONListeFT extends AsyncTask<Void, Integer, FoodTruckApp>{
 
+    ProgressBar loader;
     private ListeFTAdapter listeFTAdapter = null;
+
     Context ctx;
 
     public RetreiveJSONListeFT(ListeFTAdapter ListeFTAdapter,Context ctx){
         this.listeFTAdapter = ListeFTAdapter;
         this.ctx = ctx;
+    }
+
+    /**
+     * Recupere la progress bar pour l'afficher pendant le téléchargement.
+     * @param loader
+     */
+    public void setProgressBar(ProgressBar loader) {
+        this.loader = loader;
+    }
+
+    @Override
+    protected void onPreExecute(){
+        // On affiche le loader.
+        loader.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -82,5 +100,8 @@ public class RetreiveJSONListeFT extends AsyncTask<Void, Integer, FoodTruckApp>{
         // Mise à jour de la liste dans l'adapter.
         listeFTAdapter.setFTs(lesFtsOnline,false);
         Constantes.lesFTs = lesFtsOnline;
+
+        // On masque le loader
+        loader.setVisibility(View.GONE);
     }
 }

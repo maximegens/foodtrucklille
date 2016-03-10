@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.adapters.ListeFTAdapter;
@@ -32,6 +33,7 @@ import java.util.List;
  */
 public class ListeFoodTruckFragment extends Fragment{
 
+    private ProgressBar loader;
     private ListeFTAdapter listeFTAdapter;
     private RecyclerView recyclerViewListeFT;
     private GridLayoutManagerFoodTruck layoutManagerFT;
@@ -71,6 +73,7 @@ public class ListeFoodTruckFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
 
         layoutManagerFT = new GridLayoutManagerFoodTruck(getContext());
+        loader = (ProgressBar)view.findViewById(R.id.loader_download_ft);
         recyclerViewListeFT = (RecyclerView) view.findViewById(R.id.recycler_view_liste_ft);
         recyclerViewListeFT.setHasFixedSize(true);
 
@@ -88,6 +91,7 @@ public class ListeFoodTruckFragment extends Fragment{
         // Verification de la connexion internet et recuperation Online des données.
         if(Internet.isNetworkAvailable(getActivity().getApplicationContext())){
             RetreiveJSONListeFT retreiveJSONListeFT = new RetreiveJSONListeFT(listeFTAdapter,getContext());
+            retreiveJSONListeFT.setProgressBar(loader);
             retreiveJSONListeFT.execute();
         }
 
