@@ -8,6 +8,7 @@
     <string name="champ_non_communique">Non communiqué</string>
     <string name="no_connexion">Vous ne pouvez pas afficher la carte Google Map sans connexion Internet</string>
     <string name="telechargement_ft_en_cours">Téléchargement des Foods Trucks en cours...</string>
+    <string name="liste_ft_vide">Il n\'y a pas de Foods Trucks</string>
     <string name="fermer">Fermé</string>
     <string name="prix">Prix</string>
     <string name="prix_en_menu">Prix en menu</string>

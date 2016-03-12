@@ -37,6 +37,7 @@ public class ListeFoodTruckFragment extends Fragment{
 
     private ProgressBar loader;
     private TextView indicationChargementFT;
+    private TextView indicationListeFTVide;
     private ListeFTAdapter listeFTAdapter;
     private RecyclerView recyclerViewListeFT;
     private GridLayoutManagerFoodTruck layoutManagerFT;
@@ -79,6 +80,7 @@ public class ListeFoodTruckFragment extends Fragment{
         layoutManagerFT = new GridLayoutManagerFoodTruck(getContext());
         loader = (ProgressBar)view.findViewById(R.id.loader_download_ft);
         indicationChargementFT = (TextView) view.findViewById(R.id.indication_chargement_ft);
+        indicationListeFTVide = (TextView) view.findViewById(R.id.indication_liste_ft_vide);
         recyclerViewListeFT = (RecyclerView) view.findViewById(R.id.recycler_view_liste_ft);
         swipeRefreshLayoutListeFT = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayoutListeFT);
         recyclerViewListeFT.setHasFixedSize(true);
@@ -156,7 +158,7 @@ public class ListeFoodTruckFragment extends Fragment{
      * Chargement des données des Food trucks par Internet ou en interne si il n'existe pas de connexion.
      */
     private void loadDataFoodTruck(boolean bySwiperefresh) {
-        RetreiveJSONListeFT retreiveJSONListeFT = new RetreiveJSONListeFT(listeFTAdapter,getContext(),bySwiperefresh);
+        RetreiveJSONListeFT retreiveJSONListeFT = new RetreiveJSONListeFT(listeFTAdapter,getContext(),bySwiperefresh,indicationListeFTVide);
         retreiveJSONListeFT.setProgressBar(loader,indicationChargementFT);
         retreiveJSONListeFT.setswipeRefresh(swipeRefreshLayoutListeFT);
         retreiveJSONListeFT.execute(Internet.isNetworkAvailable(getActivity().getApplicationContext()));

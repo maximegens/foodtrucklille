@@ -31,6 +31,7 @@ public class RetreiveJSONListeFT extends AsyncTask<Boolean, Integer, FoodTruckAp
 
     private ProgressBar loader;
     private TextView indicationChargementFT;
+    private TextView indicationListeFTVide;
     private GestionJsonAPI apiJson;
     private boolean swipeRefreshActive;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -44,10 +45,11 @@ public class RetreiveJSONListeFT extends AsyncTask<Boolean, Integer, FoodTruckAp
      * @param ctx le context.
      * @param swipeRefreshActive indique si l'utilisateur à lui meme demander le refresh de la liste des FT avec le pull to refresh.
      */
-    public RetreiveJSONListeFT(ListeFTAdapter ListeFTAdapter, Context ctx, boolean swipeRefreshActive){
+    public RetreiveJSONListeFT(ListeFTAdapter ListeFTAdapter, Context ctx, boolean swipeRefreshActive, TextView indicationListeFTVide){
         this.ctx = ctx;
         this.listeFTAdapter = ListeFTAdapter;
         this.swipeRefreshActive = swipeRefreshActive;
+        this.indicationListeFTVide = indicationListeFTVide;
         apiJson = new GestionJsonAPI(this.ctx);
     }
 
@@ -134,6 +136,13 @@ public class RetreiveJSONListeFT extends AsyncTask<Boolean, Integer, FoodTruckAp
             // On masque le loader
             loader.setVisibility(View.GONE);
             indicationChargementFT.setVisibility(View.GONE);
+        }
+
+        // Si il n'y a pas de food trucks dans la liste alors on affiche un message indiquant que la liste est vide.
+        if(foodTruckApp == null || foodTruckApp.getVilles() == null || foodTruckApp.getVilles().isEmpty()){
+            indicationListeFTVide.setVisibility(View.VISIBLE);
+        }else{
+            indicationListeFTVide.setVisibility(View.GONE);
         }
     }
 }
