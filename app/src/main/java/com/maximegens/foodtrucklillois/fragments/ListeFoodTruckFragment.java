@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.adapters.ListeFTAdapter;
@@ -34,9 +36,11 @@ import java.util.List;
 public class ListeFoodTruckFragment extends Fragment{
 
     private ProgressBar loader;
+    private TextView indicationChargementFT;
     private ListeFTAdapter listeFTAdapter;
     private RecyclerView recyclerViewListeFT;
     private GridLayoutManagerFoodTruck layoutManagerFT;
+    private SwipeRefreshLayout swipeRefreshLayoutListeFT;
     private ListeFoodTruckFragmentCallback listeFoodTruckFragmentCallback;
 
     /**
@@ -74,7 +78,9 @@ public class ListeFoodTruckFragment extends Fragment{
 
         layoutManagerFT = new GridLayoutManagerFoodTruck(getContext());
         loader = (ProgressBar)view.findViewById(R.id.loader_download_ft);
+        indicationChargementFT = (TextView) view.findViewById(R.id.indication_chargement_ft);
         recyclerViewListeFT = (RecyclerView) view.findViewById(R.id.recycler_view_liste_ft);
+        swipeRefreshLayoutListeFT = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayoutListeFT);
         recyclerViewListeFT.setHasFixedSize(true);
 
         // Ajout des FTs interne dans l'adapters de la liste.
@@ -88,8 +94,19 @@ public class ListeFoodTruckFragment extends Fragment{
             recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutLandscape());
         }
 
-        // Chargement des données des Foods trucks.
-        loadDataFoodTruck();
+        /**
+         * Implementation de la fonction du SwipeRefresh.
+         */
+        swipeRefreshLayoutListeFT.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Refresh la liste des foods trucks
+                refreshListeFT();
+            }
+        });
+
+        // Chargement des données des Foods trucks automatiquement.
+        loadDataFoodTruck(false);
 
     }
 
@@ -138,11 +155,20 @@ public class ListeFoodTruckFragment extends Fragment{
     /**
      * Chargement des données des Food trucks par Internet ou en interne si il n'existe pas de connexion.
      */
-    private void loadDataFoodTruck() {
-        RetreiveJSONListeFT retreiveJSONListeFT = new RetreiveJSONListeFT(listeFTAdapter,getContext());
-        retreiveJSONListeFT.setProgressBar(loader);
+    private void loadDataFoodTruck(boolean bySwiperefresh) {
+        RetreiveJSONListeFT retreiveJSONListeFT = new RetreiveJSONListeFT(listeFTAdapter,getContext(),bySwiperefresh);
+        retreiveJSONListeFT.setProgressBar(loader,indicationChargementFT);
+        retreiveJSONListeFT.setswipeRefresh(swipeRefreshLayoutListeFT);
         retreiveJSONListeFT.execute(Internet.isNetworkAvailable(getActivity().getApplicationContext()));
     }
+
+    /**
+     * Rafraichie la liste des Foods trucks.
+     */
+    private void refreshListeFT(){
+        loadDataFoodTruck(true);
+    }
+
 
     /**
      * Mise à jour de la liste des FoodTrucks pendant la recherche.

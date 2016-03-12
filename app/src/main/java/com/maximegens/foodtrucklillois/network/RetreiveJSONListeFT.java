@@ -2,9 +2,11 @@ package com.maximegens.foodtrucklillois.network;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.maximegens.foodtrucklillois.adapters.ListeFTAdapter;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
@@ -28,29 +30,52 @@ import retrofit.RetrofitError;
 public class RetreiveJSONListeFT extends AsyncTask<Boolean, Integer, FoodTruckApp>{
 
     private ProgressBar loader;
+    private TextView indicationChargementFT;
     private GestionJsonAPI apiJson;
+    private boolean swipeRefreshActive;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private ListeFTAdapter listeFTAdapter = null;
 
     Context ctx;
 
-    public RetreiveJSONListeFT(ListeFTAdapter ListeFTAdapter, Context ctx){
+    /**
+     * Constructeur de l'asynstack.
+     * @param ListeFTAdapter l'adapter à mettre à jour.
+     * @param ctx le context.
+     * @param swipeRefreshActive indique si l'utilisateur à lui meme demander le refresh de la liste des FT avec le pull to refresh.
+     */
+    public RetreiveJSONListeFT(ListeFTAdapter ListeFTAdapter, Context ctx, boolean swipeRefreshActive){
         this.ctx = ctx;
         this.listeFTAdapter = ListeFTAdapter;
+        this.swipeRefreshActive = swipeRefreshActive;
         apiJson = new GestionJsonAPI(this.ctx);
     }
 
     /**
      * Recupere la progress bar pour l'afficher pendant le téléchargement.
-     * @param loader
+     * @param loader le loader.
      */
-    public void setProgressBar(ProgressBar loader) {
+    public void setProgressBar(ProgressBar loader, TextView indicationChargementFT) {
         this.loader = loader;
+        this.indicationChargementFT = indicationChargementFT;
+    }
+
+    /**
+     * Recupere le swipeRefresh
+     * @param swipeRefreshLayout le SwipeRefreshLayout.
+     */
+    public void setswipeRefresh(SwipeRefreshLayout swipeRefreshLayout) {
+        this.swipeRefreshLayout = swipeRefreshLayout;
     }
 
     @Override
     protected void onPreExecute(){
-        // On affiche le loader.
-        loader.setVisibility(View.VISIBLE);
+
+        // On affiche le loader si il s'agit du chargement automatique.
+        if(swipeRefreshActive == false){
+            loader.setVisibility(View.VISIBLE);
+            indicationChargementFT.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -102,7 +127,13 @@ public class RetreiveJSONListeFT extends AsyncTask<Boolean, Integer, FoodTruckAp
         listeFTAdapter.setFTs(lesFts,false);
         Constantes.lesFTs = lesFts;
 
-        // On masque le loader
-        loader.setVisibility(View.GONE);
+        // On arrete le swipeRefresh si il a était lancé sinon on masque le loader du début de lancement de l'applicaiton.
+        if(swipeRefreshActive){
+            swipeRefreshLayout.setRefreshing(false);
+        }else{
+            // On masque le loader
+            loader.setVisibility(View.GONE);
+            indicationChargementFT.setVisibility(View.GONE);
+        }
     }
 }
