@@ -108,7 +108,9 @@ public class ListeFoodTruckFragment extends Fragment{
         });
 
         // Chargement des données des Foods trucks automatiquement.
-        loadDataFoodTruck(false);
+        if(Constantes.lesFTs == null || Constantes.lesFTs.isEmpty()){
+            loadDataFoodTruck(false);
+        }
 
     }
 
