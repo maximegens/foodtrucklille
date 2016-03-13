@@ -3,10 +3,6 @@ package com.maximegens.foodtrucklillois.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
-
-import com.maximegens.foodtrucklillois.fragments.FavorisFoodTruckFragment;
-import com.maximegens.foodtrucklillois.fragments.ListeFoodTruckFragment;
 
 import java.util.ArrayList;
 import java.util.List;

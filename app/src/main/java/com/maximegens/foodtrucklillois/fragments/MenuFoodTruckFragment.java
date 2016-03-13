@@ -23,7 +23,7 @@ import com.squareup.picasso.Picasso;
 /**
  * Fragment représentant le menu.
  */
-public class MenuFragment extends Fragment implements RecyclerViewListeCatePlatListener,RecyclerViewListePlatListener{
+public class MenuFoodTruckFragment extends Fragment implements RecyclerViewListeCatePlatListener,RecyclerViewListePlatListener{
 
     public static String TITLE = "Menu";
     private FoodTruck ft = null;
@@ -32,14 +32,13 @@ public class MenuFragment extends Fragment implements RecyclerViewListeCatePlatL
      * Creation du Fragment.
      * @return Une instance de MenuFragment.
      */
-    public static MenuFragment newInstance(FoodTruck ft) {
-        MenuFragment fragment = new MenuFragment();
+    public static MenuFoodTruckFragment newInstance(FoodTruck ft) {
+        MenuFoodTruckFragment fragment = new MenuFoodTruckFragment();
         Bundle args = new Bundle();
         args.putParcelable(FoodTruckActivity.KEY_FOODTRUCK_SELECTIONNER, ft);
         fragment.setArguments(args);
         return fragment;
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

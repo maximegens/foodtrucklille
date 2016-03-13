@@ -4,6 +4,10 @@
     <string name="title_activity_food_truck">FoodTruckActivity</string>
     <string name="key_api_google_map">AIzaSyDASrlPPti8U3qoqoj8V0O3VVZ-cBCYwkc</string>
 
+    <string name="openDrawer">Ouverture du menu</string>
+    <string name="closeDrawer">Fermeture du menu</string>
+
+
     <!-- String -->
     <string name="champ_non_communique">Non communiqué</string>
     <string name="no_connexion">Vous ne pouvez pas afficher la carte Google Map sans connexion Internet</string>
@@ -12,6 +16,7 @@
     <string name="fermer">Fermé</string>
     <string name="prix">Prix</string>
     <string name="prix_en_menu">Prix en menu</string>
+
 
     <!-- Description du Foodtruck -->
     <string name="description_breve">Description</string>
@@ -33,5 +38,13 @@
 
     <!-- Button -->
     <string name="retour_menu">Retour au menu</string>
+
+    <!-- Strings du drawer -->
+    <string name="drawer_liste_ft">Voir les Food Trucks</string>
+    <string name="drawer_favoris">Mes Favoris</string>
+    <string name="drawer_emplacement">Emplacement des Food Trucks</string>
+    <string name="drawer_a_propos">A propos</string>
+    <string name="drawer_faire_don">Faire un don</string>
+
 
 </resources>

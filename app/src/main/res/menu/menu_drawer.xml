@@ -1,0 +1,32 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <group
+            android:id="@+id/group_food_trucks"
+            android:checkableBehavior="single">
+                <item
+                    android:id="@+id/navigation_item_liste_ft"
+                    android:checked="false"
+                    android:title="@string/drawer_liste_ft" />
+                <item
+                    android:id="@+id/navigation_item_favori"
+                    android:checked="false"
+                    android:title="@string/drawer_favoris" />
+                <item
+                    android:id="@+id/navigation_item_emplacement"
+                    android:checked="false"
+                    android:title="@string/drawer_emplacement" />
+        </group>
+
+    <group
+        android:id="@+id/group_settings"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/navigation_item_a_propos"
+            android:checked="false"
+            android:title="@string/drawer_a_propos" />
+        <item
+            android:id="@+id/navigation_item_faire_don"
+            android:checked="false"
+            android:title="@string/drawer_faire_don" />
+
+    </group>
+</menu>

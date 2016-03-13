@@ -14,7 +14,7 @@ import com.maximegens.foodtrucklillois.adapters.ViewPagerAdapter;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.fragments.DescriptionFoodTruckFragment;
 import com.maximegens.foodtrucklillois.fragments.EmplacementFoodTruckFragment;
-import com.maximegens.foodtrucklillois.fragments.MenuFragment;
+import com.maximegens.foodtrucklillois.fragments.MenuFoodTruckFragment;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.squareup.picasso.Picasso;
 
@@ -71,7 +71,7 @@ public class FoodTruckActivity extends AppCompatActivity{
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(DescriptionFoodTruckFragment.newInstance(ft), DescriptionFoodTruckFragment.TITLE);
-        adapter.addFragment(MenuFragment.newInstance(ft), MenuFragment.TITLE);
+        adapter.addFragment(MenuFoodTruckFragment.newInstance(ft), MenuFoodTruckFragment.TITLE);
         adapter.addFragment(EmplacementFoodTruckFragment.newInstance(ft), EmplacementFoodTruckFragment.TITLE);
         viewPager.setAdapter(adapter);
     }
