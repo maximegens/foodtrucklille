@@ -21,16 +21,16 @@ public class ListeFTAdapter extends RecyclerView.Adapter<ListeFTHolder> {
     private RecyclerViewListeFTListener callback;
     private List<FoodTruck> lesFT;
     private Context context;
-    private boolean rechercheEnCours;
+    private boolean affichageClassique;
 
     /**
      * Constructeur prenant en entrée une liste.
-     * rechercheEnCours est à faux lors de la contruction initiale de l'adapter.
+     * affichageClassique est à faux lors de la contruction initiale de l'adapter.
      */
     public ListeFTAdapter(List<FoodTruck> lesFT, Context context) {
         this.lesFT = lesFT;
         this.context = context;
-        this.rechercheEnCours = false;
+        this.affichageClassique = false;
         this.callback = (RecyclerViewListeFTListener) this.context;
     }
 
@@ -54,7 +54,7 @@ public class ListeFTAdapter extends RecyclerView.Adapter<ListeFTHolder> {
     @Override
     public void onBindViewHolder(ListeFTHolder holder, final int position) {
         final FoodTruck ft = lesFT.get(position);
-        holder.bind(ft,position,rechercheEnCours);
+        holder.bind(ft,position,affichageClassique);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,11 +75,11 @@ public class ListeFTAdapter extends RecyclerView.Adapter<ListeFTHolder> {
     /**
      * Modification des foods trucks dans la liste.
      * @param fts les foods trucks.
-     * @param rechercheEnCours Permet d'indiquer si la liste est mis à jour suite à une recherche utilisateur.
+     * @param affichageClassique Permet d'indiquer si la liste doit etre afficher de maniére classique ou mise en avant.
      */
-    public void setFTs(List<FoodTruck> fts, boolean rechercheEnCours) {
+    public void setFTs(List<FoodTruck> fts, boolean affichageClassique) {
         lesFT = new ArrayList<>(fts);
-        this.rechercheEnCours = rechercheEnCours;
+        this.affichageClassique = affichageClassique;
         notifyDataSetChanged();
     }
 }

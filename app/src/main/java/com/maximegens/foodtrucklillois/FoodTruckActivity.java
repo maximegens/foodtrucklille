@@ -51,6 +51,7 @@ public class FoodTruckActivity extends AppCompatActivity{
 
         // Récuperation du Floating Action Button
         fabFavorite = (FloatingActionButton) findViewById(R.id.fab_favorite);
+        updateFabFavorite();
         fabFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,6 +92,20 @@ public class FoodTruckActivity extends AppCompatActivity{
     }
 
     /**
+     * Mise à jour de l'icone du FAB.
+     * Icone jaune si le food truck est en favori.
+     * Icone grise si le food truck n'est pas en favori.
+     */
+    private void updateFabFavorite(){
+        SharedPreferences favorites = getSharedPreferences(Constantes.FAVORITE_SHAREPREFERENCE,0);
+        if(ft != null && favorites.contains(String.valueOf(ft.getId()))){
+            fabFavorite.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_favorite_selected_24dp));
+        }else{
+            fabFavorite.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_favorite_24dp));
+        }
+    }
+
+    /**
      * Gestion de l'ajout ou de la suppression du Food Truck aux Favoris.
      */
     private void traitementFavori(){
@@ -102,7 +117,7 @@ public class FoodTruckActivity extends AppCompatActivity{
                 // Le food truck est déja en favorie , donc on le retire de la liste.
                 Snackbar.make(collapsingToolbarLayout,"Retiré des favoris",Snackbar.LENGTH_SHORT).show();
                 fabFavorite.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_favorite_24dp));
-                editor.remove(KEY_ID);
+                editor.remove(KEY_ID).apply();
             }else{
                 // Le food truck n'est pas en favorie , on l'ajoute.
                 Snackbar.make(collapsingToolbarLayout,"Ajouté aux favoris",Snackbar.LENGTH_SHORT).show();

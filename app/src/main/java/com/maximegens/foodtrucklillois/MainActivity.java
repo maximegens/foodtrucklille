@@ -90,24 +90,28 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
                     case R.id.navigation_item_liste_ft:
                         // Commit du Fragment des listes des FT
                         getSupportFragmentManager().beginTransaction()
+                                .addToBackStack(null)
                                 .replace(R.id.fragmentLayout, ListeFoodTruckFragment.newInstance())
                                 .commit();
                         return true;
                     case R.id.navigation_item_favori:
                         // Commit du Fragment des listes des FT
                         getSupportFragmentManager().beginTransaction()
+                                .addToBackStack(null)
                                 .replace(R.id.fragmentLayout, FavorisFragment.newInstance())
                                 .commit();
                         return true;
                     case R.id.navigation_item_emplacement:
                         // Commit du Fragment des listes des FT
                         getSupportFragmentManager().beginTransaction()
+                                .addToBackStack(null)
                                 .replace(R.id.fragmentLayout, EmplacementAllFragment.newInstance())
                                 .commit();
                         return true;
                     case R.id.navigation_item_a_propos:
                         // Commit du Fragment des listes des FT
                         getSupportFragmentManager().beginTransaction()
+                                .addToBackStack(null)
                                 .replace(R.id.fragmentLayout, AProposFragment.newInstance())
                                 .commit();
                         return true;

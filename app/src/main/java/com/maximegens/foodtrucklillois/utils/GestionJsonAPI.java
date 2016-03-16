@@ -80,4 +80,24 @@ public class GestionJsonAPI {
         }
         return lesFoodTrucks;
     }
+
+    /**
+     * Donne le food truck correspond à l'id.
+     * @param app L'objet FoodTruckApp contenant la liste des villes et de leur food trucks.
+     * @param id l'id du food trucks à récupérer..
+     * @return Le food Trucks.
+     */
+    public FoodTruck getFoodTruck(FoodTruckApp app, int id){
+
+        if(app != null && app.getVilles() != null){
+            // On parcours la liste des villes.
+            for (Ville ville : app.getVilles()) {
+                // On parcours la liste des food trucks de la ville.
+                for (FoodTruck ft : ville.getLesFoodTrucks()){
+                    if(ft.getId() == id){return ft;}
+                }
+            }
+        }
+        return null;
+    }
 }
