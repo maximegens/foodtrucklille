@@ -1,13 +1,17 @@
 package com.maximegens.foodtrucklillois;
 
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.maximegens.foodtrucklillois.adapters.ViewPagerAdapter;
@@ -24,6 +28,8 @@ public class FoodTruckActivity extends AppCompatActivity{
     private FoodTruck ft;
     private ViewPager viewPager;
     private TabLayout tabLayout;
+    private FloatingActionButton fabFavorite;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +45,18 @@ public class FoodTruckActivity extends AppCompatActivity{
         ft = getIntent().getExtras().getParcelable(FoodTruck.KEY_FOOD_TRUCK);
 
         // Recuperation du CollapsingToolBarLayout pour la gestion du visuel de l'entete du Food truck.
-        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_food_truck);
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_food_truck);
         collapsingToolbarLayout.setTitle(ft.getNom());
-        collapsingToolbarLayout.setExpandedTitleColor(ContextCompat.getColor(this,android.R.color.transparent));
+        collapsingToolbarLayout.setExpandedTitleColor(ContextCompat.getColor(this, android.R.color.transparent));
 
+        // Récuperation du Floating Action Button
+        fabFavorite = (FloatingActionButton) findViewById(R.id.fab_favorite);
+        fabFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                traitementFavori();
+            }
+        });
 
         // Ajout de l'image de fond represantant le FoodTruck
         ImageView fond = (ImageView)findViewById(R.id.backgroundImageView_food_truck);
@@ -74,6 +88,29 @@ public class FoodTruckActivity extends AppCompatActivity{
         adapter.addFragment(MenuFoodTruckFragment.newInstance(ft), MenuFoodTruckFragment.TITLE);
         adapter.addFragment(EmplacementFoodTruckFragment.newInstance(ft), EmplacementFoodTruckFragment.TITLE);
         viewPager.setAdapter(adapter);
+    }
+
+    /**
+     * Gestion de l'ajout ou de la suppression du Food Truck aux Favoris.
+     */
+    private void traitementFavori(){
+        SharedPreferences favorites = getSharedPreferences(Constantes.FAVORITE_SHAREPREFERENCE,0);
+        SharedPreferences.Editor editor = favorites.edit();
+        if(ft != null){
+            String KEY_ID = String.valueOf(ft.getId());
+            if (favorites.contains(KEY_ID)){
+                // Le food truck est déja en favorie , donc on le retire de la liste.
+                Snackbar.make(collapsingToolbarLayout,"Retiré des favoris",Snackbar.LENGTH_SHORT).show();
+                fabFavorite.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_favorite_24dp));
+                editor.remove(KEY_ID);
+            }else{
+                // Le food truck n'est pas en favorie , on l'ajoute.
+                Snackbar.make(collapsingToolbarLayout,"Ajouté aux favoris",Snackbar.LENGTH_SHORT).show();
+                fabFavorite.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_favorite_selected_24dp));
+                editor.putString(KEY_ID, KEY_ID).apply();
+            }
+        }
+
     }
 
 }

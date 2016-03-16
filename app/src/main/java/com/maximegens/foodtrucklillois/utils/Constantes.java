@@ -16,6 +16,7 @@ public class Constantes {
     public static String URL_SERVEUR_FT = "https://dl.dropboxusercontent.com/u/61408511/FoodTrucksApp.json";
     public static String PHOTO_NOT_AVAILABLE = "photonotavailable";
     public static String FICHIER_JSON_ASSET = "FoodTrucksApp.json";
+    public static String FAVORITE_SHAREPREFERENCE = "FAVORITE";
 
     public static String FORMAT_HORAIRE_FOOD_TRUCK = "yyyy-MM-dd HH:mm:ss";
     public static String FORMAT_DECIMAL_MINUTE = "%02d";
