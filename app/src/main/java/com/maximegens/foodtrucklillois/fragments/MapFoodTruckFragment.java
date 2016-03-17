@@ -105,7 +105,9 @@ public class MapFoodTruckFragment extends SupportMapFragment {
 
             StringBuilder snippet = new StringBuilder();
             snippet.append("Ouvert uniquement le "+planning.getNomJour() + " "+periode);
-            snippet.append(Constantes.RETOUR_CHARIOT+Constantes.RETOUR_CHARIOT+adresse.getAdresse());
+            if(adresse.getAdresse() != null){
+                snippet.append(Constantes.RETOUR_CHARIOT+Constantes.RETOUR_CHARIOT+adresse.getAdresse());
+            }
             markerOptions.snippet(snippet.toString());
             googleMap.setInfoWindowAdapter(new InfoWindowMarkerMapAdapter(getContext()));
             googleMap.addMarker(markerOptions);

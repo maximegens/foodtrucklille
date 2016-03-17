@@ -129,7 +129,7 @@ public class MenuFoodTruckFragment extends Fragment implements RecyclerViewListe
                 Picasso.with(getActivity())
                         .load(url)
                         .placeholder(R.drawable.progress_animation_loader)
-                        .error(R.drawable.photonotavailable)
+                        .error(R.mipmap.photonotavailable)
                         .fit().centerInside()
                         .into(imagePlatDialog);
             }else{

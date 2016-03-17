@@ -46,11 +46,11 @@ public class ListeFTHolder extends RecyclerView.ViewHolder {
         Resources res = context.getResources();
 
         if(ft.getLogo() != null){
-            int resID = res.getIdentifier(ft.getLogo() , "drawable", context.getPackageName());
+            int resID = res.getIdentifier(ft.getLogo() , "mipmap", context.getPackageName());
             Picasso.with(context)
                     .load(resID)
                     .placeholder(R.drawable.progress_animation_loader)
-                    .error(R.drawable.photonotavailable)
+                    .error(R.mipmap.photonotavailable)
                     .fit()
                     .centerInside()
                     .into(imageView);
