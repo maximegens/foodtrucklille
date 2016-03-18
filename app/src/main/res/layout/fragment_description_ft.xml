@@ -30,7 +30,7 @@
                     android:layout_height="@dimen/icon_description_height"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
-                    android:src="@drawable/truck"
+                    android:src="@mipmap/truck"
                     android:layout_alignParentLeft="true"/>
                 <TextView
                     android:id="@+id/label_description_breve"
@@ -162,7 +162,7 @@
                     android:layout_height="@dimen/icon_description_height"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
-                    android:src="@drawable/euro"
+                    android:src="@mipmap/euro"
                     android:layout_alignParentLeft="true"/>
                 <TextView
                     android:id="@+id/label_gamme_prix"
@@ -237,7 +237,7 @@
                     android:layout_height="@dimen/icon_description_height"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
-                    android:src="@drawable/online_support"
+                    android:src="@mipmap/online_support"
                     android:layout_alignParentLeft="true"/>
                 <TextView
                     android:id="@+id/label_telephone"
@@ -345,7 +345,7 @@
                     android:layout_height="@dimen/icon_description_height"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
-                    android:src="@drawable/info"
+                    android:src="@mipmap/info"
                     android:layout_alignParentLeft="true"/>
                 <TextView
                     android:id="@+id/label_specialite"

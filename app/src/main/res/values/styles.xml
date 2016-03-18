@@ -32,4 +32,11 @@
         <item name="colorButtonNormal">@color/orange</item>
     </style>
 
+    <!-- Style pour le spinner permettant de choisir le food truck auquel voir les emplacements.-->
+    <style name="Widget.MyApp.HeaderBar.Spinner" parent="Widget.AppCompat.Light.Spinner.DropDown.ActionBar">
+        <item name="android:background">?android:selectableItemBackground</item>
+        <item name="android:dropDownSelector">?android:selectableItemBackground</item>
+        <item name="android:divider">@null</item>
+    </style>
+
 </resources>

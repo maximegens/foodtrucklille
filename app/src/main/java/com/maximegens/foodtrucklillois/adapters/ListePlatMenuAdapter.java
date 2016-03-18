@@ -62,7 +62,7 @@ public class ListePlatMenuAdapter extends RecyclerView.Adapter<ListePlatMenuAdap
                 Picasso.with(fragment.getContext())
                         .load(url)
                         .placeholder(R.drawable.progress_animation_loader)
-                        .error(R.drawable.photonotavailable)
+                        .error(R.mipmap.photonotavailable)
                         .fit().centerInside()
                         .into(holder.imagePlat);
             }

@@ -64,9 +64,9 @@ public class FoodTruckActivity extends AppCompatActivity{
         Resources res = getResources();
         int resID;
         if(ft.getLogo() != null && res != null) {
-            resID = res.getIdentifier(ft.getLogo(), "drawable", getPackageName());
+            resID = res.getIdentifier(ft.getLogo(), "mipmap", getPackageName());
         }else{
-            resID = res.getIdentifier(Constantes.PHOTO_NOT_AVAILABLE, "drawable", getPackageName());
+            resID = res.getIdentifier(Constantes.PHOTO_NOT_AVAILABLE, "mipmap", getPackageName());
         }
         fond.setImageDrawable(ContextCompat.getDrawable(this, resID));
         Picasso.with(getBaseContext()).load(resID).fit().centerInside().into(fond);

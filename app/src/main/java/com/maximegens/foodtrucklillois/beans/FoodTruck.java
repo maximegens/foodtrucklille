@@ -196,6 +196,11 @@ public class FoodTruck implements Parcelable{
         this.planning = planning;
     }
 
+    @Override
+    public String toString() {
+        return nom;
+    }
+
     /**
      * Methode de tri de la liste des Foods Trucks en fonction de la recherche de l'utilisateur.
      * @param lesFTs La liste des FTS à triée.

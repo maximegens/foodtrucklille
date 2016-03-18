@@ -46,5 +46,8 @@
     <string name="drawer_a_propos">A propos</string>
     <string name="drawer_faire_don">Faire un don</string>
 
+    <!-- Menu -->
+    <string name="menu_title_spinner">Liste des Food Trucks</string>
+
 
 </resources>

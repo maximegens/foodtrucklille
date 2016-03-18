@@ -1,11 +1,11 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="190dp"
+    android:layout_height="192dp"
     android:orientation="vertical">
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/food_truck_logo_drawer"
+        android:background="@mipmap/food_truck_logo_drawer"
         android:scaleType="centerInside" />
     <TextView
         style="@style/TextAppearance.AppCompat.Subhead"

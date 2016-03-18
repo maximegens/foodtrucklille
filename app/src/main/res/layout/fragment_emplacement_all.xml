@@ -5,9 +5,32 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/no_connexion_map_all"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:gravity="center"
         android:layout_centerInParent="true"
-        android:text="Emplacement de tous les food trucs de lille"/>
+        android:padding="5dp"
+        android:text="@string/no_connexion"
+        android:textSize="@dimen/title_screen"
+        android:visibility="gone"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/framelayout_map_all">
+
+        <Button
+            android:id="@+id/button_map_plus_proche"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|top"
+            android:text="Le plus proche"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="10dp"/>
+
+        </FrameLayout>
 
 </RelativeLayout>
