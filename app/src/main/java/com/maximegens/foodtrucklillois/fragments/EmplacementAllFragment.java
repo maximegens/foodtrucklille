@@ -2,6 +2,8 @@ package com.maximegens.foodtrucklillois.fragments;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -20,11 +22,21 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.maximegens.foodtrucklillois.R;
+import com.maximegens.foodtrucklillois.adapters.InfoWindowMarkerMapAdapter;
+import com.maximegens.foodtrucklillois.beans.AdresseFoodTruck;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
+import com.maximegens.foodtrucklillois.beans.PlanningFoodTruck;
 import com.maximegens.foodtrucklillois.network.Internet;
 import com.maximegens.foodtrucklillois.utils.Constantes;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
+import java.io.IOException;
 
 
 public class EmplacementAllFragment extends Fragment implements OnMapReadyCallback, AdapterView.OnItemSelectedListener {
@@ -103,21 +115,173 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
+        // Centre la google Map.
+        centreMap(googleMap);
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        FoodTruck ft = adapter.getItem(position);
+        GoogleMap gMapItem = null;
+
+        // Récuperation de la googleMap
+        if(map != null){
+            gMapItem = map.getMap();
+        }
+
+        if(ft != null && gMapItem != null){
+
+            // Suppresion des précédents markers.
+            gMapItem.clear();
+
+            for(PlanningFoodTruck planning : ft.getPlanning()){
+
+                // Parcours des adresses du food truck pour le midi.
+                for (AdresseFoodTruck adresse : planning.getMidi().getAdresses()){
+                    ajouteMarker(gMapItem, ft, planning, adresse,Constantes.MIDI);
+                }
+                // Parcours des adresses du food truck pour le soir.
+                for (AdresseFoodTruck adresse : planning.getSoir().getAdresses()){
+                    ajouteMarker(gMapItem, ft , planning, adresse,Constantes.SOIR);
+                }
+            }
+            // Centre la google Map.
+            centreMap(gMapItem);
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {}
+
+    /**
+     * Ajout d'un marker sur la google map pour repérer l'emplacement du Food Truck.
+     * @param googleMap LA google map.
+     * @param planning Le planning.
+     * @param adresse L'objet contenant l'adresse du Food Truck.
+     * @param periode La periode en cours : midi ou soir.
+     */
+    private void ajouteMarker(GoogleMap googleMap,FoodTruck ft, PlanningFoodTruck planning, AdresseFoodTruck adresse, String periode) {
+
+        // Verification qu'il existe une latitude et une longitude de renseigné pour pouvoir l'afficher.
+        if(adresse.getLatitude() != null && adresse.getLongitude() != null) {
+
+            final MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.title(ft.getNom());
+
+            Double latitude = new Double(adresse.getLatitude());
+            Double longitude = new Double(adresse.getLongitude());
+
+            markerOptions.title(ft.getNom());
+
+            // Creation de l'icone.
+            if(ft.getLogo() != null){
+                int resID = getResources().getIdentifier(ft.getLogo(), "mipmap", getContext().getPackageName());
+
+                Picasso.with(getContext()).load(resID).resize(100,100).into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_truck));
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                    }
+                });
+            }else{
+                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_truck));
+            }
+
+            markerOptions.position(new LatLng(latitude, longitude));
+
+            StringBuilder snippet = new StringBuilder();
+            snippet.append("Ouvert uniquement le "+planning.getNomJour() + " "+periode);
+            if(adresse.getAdresse() != null){
+                snippet.append(Constantes.RETOUR_CHARIOT+Constantes.RETOUR_CHARIOT+adresse.getAdresse());
+            }
+            markerOptions.snippet(snippet.toString());
+            googleMap.setInfoWindowAdapter(new InfoWindowMarkerMapAdapter(getContext()));
+            googleMap.addMarker(markerOptions);
+        }
+    }
+
+
+    private class PicassoTarget implements  Target{
+
+        Marker mMarker;
+
+        PicassoTarget(Marker marker) {
+            mMarker = marker;
+        }
+
+        @Override
+        public int hashCode() {
+            return mMarker.hashCode();
+        }
+        @Override
+        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+            mMarker.setIcon(BitmapDescriptorFactory.fromBitmap(bitmap));
+        }
+
+        @Override
+        public void onBitmapFailed(Drawable errorDrawable) {
+
+        }
+
+        @Override
+        public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+        }
+    }
+
+
+    /**
+     * Creation de l'icon du fodd truck pour la google Map.
+     * @param ft Le food trucks
+     * @param markerOptions le marker.
+     */
+    private void creationIcon(FoodTruck ft, final MarkerOptions markerOptions) {
+
+        if(ft.getLogo() != null){
+            int resID = getResources().getIdentifier(ft.getLogo(), "mipmap", getContext().getPackageName());
+
+                Picasso.with(getContext()).load(resID).resize(48,48).into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_truck));
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                    }
+                });
+        }else{
+            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_truck));
+        }
+    }
+
+    /**
+     * Centre la Google Map sur Marcq en Baroeul.
+     * @param googleMap
+     */
+    private void centreMap(GoogleMap googleMap) {
         //Ajoute un marker sur Marcq En Baroeul, permet de centrer la vue sur l'agglomeration Lilloise.
         LatLng CENTRE = new LatLng(Double.parseDouble(Constantes.GPS_CENTRE_CARTE_MARC_BAROEUL_LATITUDE),Double.parseDouble(Constantes.GPS_CENTRE_CARTE_MARC_BAROEUL_LONGITUDE));
 
         // Centre la google map avec animation de zoom.
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CENTRE, 11));
     }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        FoodTruck ft = adapter.getItem(position);
-        if(ft != null){
-            //TODO mise à jour de la map.
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {}
 }
