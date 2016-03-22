@@ -24,7 +24,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.adapters.InfoWindowMarkerMapAdapter;
@@ -33,10 +32,12 @@ import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.beans.PlanningFoodTruck;
 import com.maximegens.foodtrucklillois.network.Internet;
 import com.maximegens.foodtrucklillois.utils.Constantes;
+import com.maximegens.foodtrucklillois.utils.PicassoMarker;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class EmplacementAllFragment extends Fragment implements OnMapReadyCallback, AdapterView.OnItemSelectedListener {
@@ -77,7 +78,12 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         // Creation du Spinner pour afficher la liste de Food Trucks.
-        adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,Constantes.lesFTs);
+        List<FoodTruck> lesFts = new ArrayList<>();
+        lesFts.add(new FoodTruck("Tous"));
+        for (FoodTruck ft : Constantes.lesFTs){
+            lesFts.add(ft);
+        }
+        adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,lesFts);
         adapter.setDropDownViewResource(R.layout.layout_drop_list);
         spinnerMap = new Spinner(((AppCompatActivity)getActivity()).getSupportActionBar().getThemedContext());
         spinnerMap.setAdapter(adapter);
@@ -131,7 +137,11 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
             gMapItem = map.getMap();
         }
 
-        if(ft != null && gMapItem != null){
+        // Traitement du premier item " Voir tous"
+        if(position == 0) {
+
+        }
+        else if(ft != null && gMapItem != null){
 
             // Suppresion des précédents markers.
             gMapItem.clear();
@@ -168,78 +178,36 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
         if(adresse.getLatitude() != null && adresse.getLongitude() != null) {
 
             final MarkerOptions markerOptions = new MarkerOptions();
-            markerOptions.title(ft.getNom());
 
             Double latitude = new Double(adresse.getLatitude());
             Double longitude = new Double(adresse.getLongitude());
 
+            // Ajout du nom et de la position du Food Truck.
             markerOptions.title(ft.getNom());
+            markerOptions.position(new LatLng(latitude, longitude));
 
             // Creation de l'icone.
             if(ft.getLogo() != null){
                 int resID = getResources().getIdentifier(ft.getLogo(), "mipmap", getContext().getPackageName());
-
-                Picasso.with(getContext()).load(resID).resize(100,100).into(new Target() {
-                    @Override
-                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
-                    }
-
-                    @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {
-                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_truck));
-                    }
-
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                    }
-                });
+                PicassoMarker picassoMarker  = new PicassoMarker(googleMap.addMarker(markerOptions));
+                Picasso.with(getActivity()).load(resID).resize(100,100).into(picassoMarker);
             }else{
                 markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_truck));
             }
 
-            markerOptions.position(new LatLng(latitude, longitude));
-
+            // Creation du snippet affichant l'adresse et l'ouverture.
             StringBuilder snippet = new StringBuilder();
-            snippet.append("Ouvert uniquement le "+planning.getNomJour() + " "+periode);
+            snippet.append("Ouvert uniquement le " + planning.getNomJour() + " " + periode);
             if(adresse.getAdresse() != null){
                 snippet.append(Constantes.RETOUR_CHARIOT+Constantes.RETOUR_CHARIOT+adresse.getAdresse());
             }
             markerOptions.snippet(snippet.toString());
+
+            // Ajout de l'infoBulle.
             googleMap.setInfoWindowAdapter(new InfoWindowMarkerMapAdapter(getContext()));
-            googleMap.addMarker(markerOptions);
         }
     }
 
-
-    private class PicassoTarget implements  Target{
-
-        Marker mMarker;
-
-        PicassoTarget(Marker marker) {
-            mMarker = marker;
-        }
-
-        @Override
-        public int hashCode() {
-            return mMarker.hashCode();
-        }
-        @Override
-        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-            mMarker.setIcon(BitmapDescriptorFactory.fromBitmap(bitmap));
-        }
-
-        @Override
-        public void onBitmapFailed(Drawable errorDrawable) {
-
-        }
-
-        @Override
-        public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-        }
-    }
 
 
     /**

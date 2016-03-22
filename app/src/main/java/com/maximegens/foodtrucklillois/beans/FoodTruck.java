@@ -35,6 +35,14 @@ public class FoodTruck implements Parcelable{
     private List<PlanningFoodTruck> planning;
 
     /**
+     * Constructeur.
+     * @param nom
+     */
+    public FoodTruck(String nom) {
+        this.nom = nom;
+    }
+
+    /**
      * Construceur.
      * @param nom Le nom.
      * @param logo Le nom de l'image en interne représentant le logo.
