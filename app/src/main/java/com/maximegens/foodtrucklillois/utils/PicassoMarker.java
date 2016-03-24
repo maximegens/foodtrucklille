@@ -35,6 +35,7 @@ public class PicassoMarker implements Target {
     public int hashCode() {
         return mMarker.hashCode();
     }
+
     @Override
     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
         mMarker.setIcon(BitmapDescriptorFactory.fromBitmap(bitmap));

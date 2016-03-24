@@ -140,6 +140,28 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
         // Traitement du premier item " Voir tous"
         if(position == 0) {
 
+            // Suppresion des précédents markers.
+            gMapItem.clear();
+
+            for (FoodTruck left : Constantes.lesFTs) {
+
+                for(PlanningFoodTruck planning : left.getPlanning()){
+
+                    if(planning != null){
+                        // Parcours des adresses du food truck pour le midi.
+                        for (AdresseFoodTruck adresse : planning.getMidi().getAdresses()){
+                            ajouteMarker(gMapItem, left, planning, adresse,Constantes.MIDI);
+                        }
+                        // Parcours des adresses du food truck pour le soir.
+                        for (AdresseFoodTruck adresse : planning.getSoir().getAdresses()){
+                            ajouteMarker(gMapItem, left , planning, adresse,Constantes.SOIR);
+                        }
+                    }
+
+                }
+                // Centre la google Map.
+                centreMap(gMapItem);
+            }
         }
         else if(ft != null && gMapItem != null){
 
@@ -252,4 +274,6 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
         // Centre la google map avec animation de zoom.
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CENTRE, 11));
     }
+
+
 }
