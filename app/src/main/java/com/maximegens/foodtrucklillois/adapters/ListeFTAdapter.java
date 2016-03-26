@@ -21,16 +21,13 @@ public class ListeFTAdapter extends RecyclerView.Adapter<ListeFTHolder> {
     private RecyclerViewListeFTListener callback;
     private List<FoodTruck> lesFT;
     private Context context;
-    private boolean affichageClassique;
 
     /**
      * Constructeur prenant en entrée une liste.
-     * affichageClassique est à faux lors de la contruction initiale de l'adapter.
      */
     public ListeFTAdapter(List<FoodTruck> lesFT, Context context) {
         this.lesFT = lesFT;
         this.context = context;
-        this.affichageClassique = false;
         this.callback = (RecyclerViewListeFTListener) this.context;
     }
 
@@ -54,7 +51,7 @@ public class ListeFTAdapter extends RecyclerView.Adapter<ListeFTHolder> {
     @Override
     public void onBindViewHolder(ListeFTHolder holder, final int position) {
         final FoodTruck ft = lesFT.get(position);
-        holder.bind(ft,position,affichageClassique);
+        holder.bind(ft,position);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,11 +72,9 @@ public class ListeFTAdapter extends RecyclerView.Adapter<ListeFTHolder> {
     /**
      * Modification des foods trucks dans la liste.
      * @param fts les foods trucks.
-     * @param affichageClassique Permet d'indiquer si la liste doit etre afficher de maniére classique ou mise en avant.
      */
-    public void setFTs(List<FoodTruck> fts, boolean affichageClassique) {
+    public void setFTs(List<FoodTruck> fts) {
         lesFT = new ArrayList<>(fts);
-        this.affichageClassique = affichageClassique;
         notifyDataSetChanged();
     }
 }

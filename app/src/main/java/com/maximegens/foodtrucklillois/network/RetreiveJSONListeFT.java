@@ -126,7 +126,7 @@ public class RetreiveJSONListeFT extends AsyncTask<Boolean, Integer, FoodTruckAp
         List<FoodTruck> lesFts = apiJson.getListeFTByVille(foodTruckApp,0);
 
         // Mise à jour de la liste dans l'adapter.
-        listeFTAdapter.setFTs(lesFts,false);
+        listeFTAdapter.setFTs(lesFts);
         Constantes.lesFTs = lesFts;
 
         // On arrete le swipeRefresh si il a était lancé sinon on masque le loader du début de lancement de l'applicaiton.
