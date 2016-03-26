@@ -74,7 +74,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        getActivity().setTitle(R.string.title_map_all);
+        (getActivity()).setTitle(R.string.title_map_all);
 
         plusProche = (Button) view.findViewById(R.id.button_map_plus_proche);
 
@@ -219,38 +219,6 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
     }
 
 
-
-    /**
-     * Creation de l'icon du fodd truck pour la google Map.
-     * @param ft Le food trucks
-     * @param markerOptions le marker.
-     */
-    private void creationIcon(FoodTruck ft, final MarkerOptions markerOptions) {
-
-        if(ft.getLogo() != null){
-            int resID = getResources().getIdentifier(ft.getLogo(), "mipmap", getContext().getPackageName());
-
-                Picasso.with(getContext()).load(resID).resize(48,48).into(new Target() {
-                    @Override
-                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
-                    }
-
-                    @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {
-                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_truck));
-                    }
-
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                    }
-                });
-        }else{
-            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_truck));
-        }
-    }
-
     /**
      * Centre la Google Map sur Marcq en Baroeul.
      * @param googleMap
@@ -259,7 +227,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
         //Ajoute un marker sur Marcq En Baroeul, permet de centrer la vue sur l'agglomeration Lilloise.
         LatLng CENTRE = new LatLng(Double.parseDouble(Constantes.GPS_CENTRE_CARTE_MARC_BAROEUL_LATITUDE),Double.parseDouble(Constantes.GPS_CENTRE_CARTE_MARC_BAROEUL_LONGITUDE));
 
-        //on autorise l'api à afficher le bouton pour accéder à notre position courante
+        // Affiche le bouton permettant de localiser l'utilisateur.
         googleMap.setMyLocationEnabled(true);
 
         // Centre la google map avec animation de zoom.

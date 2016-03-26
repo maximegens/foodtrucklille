@@ -79,7 +79,7 @@ public class ListeFoodTruckFragment extends Fragment{
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ((AppCompatActivity)getActivity()).setTitle(getString(R.string.title_liste_food_truck));
+        getActivity().setTitle(getString(R.string.title_liste_food_truck));
 
 
         layoutManagerFT = new GridLayoutManagerFoodTruck(getContext());
@@ -159,6 +159,7 @@ public class ListeFoodTruckFragment extends Fragment{
                 return true;
             }
         });
+
     }
 
     /**
