@@ -259,6 +259,9 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
         //Ajoute un marker sur Marcq En Baroeul, permet de centrer la vue sur l'agglomeration Lilloise.
         LatLng CENTRE = new LatLng(Double.parseDouble(Constantes.GPS_CENTRE_CARTE_MARC_BAROEUL_LATITUDE),Double.parseDouble(Constantes.GPS_CENTRE_CARTE_MARC_BAROEUL_LONGITUDE));
 
+        //on autorise l'api à afficher le bouton pour accéder à notre position courante
+        googleMap.setMyLocationEnabled(true);
+
         // Centre la google map avec animation de zoom.
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CENTRE, 11));
     }

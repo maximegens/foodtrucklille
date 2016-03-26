@@ -16,19 +16,27 @@ import java.util.List;
 /**
  * Adapter pour l'affichage de la liste des Foods Trucks.
  */
-public class ListeFTAdapter extends RecyclerView.Adapter<ListeFTHolder> {
+public class ListeFTAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private RecyclerViewListeFTListener callback;
     private List<FoodTruck> lesFT;
     private Context context;
+    private boolean affichageClassique;
 
     /**
      * Constructeur prenant en entrée une liste.
+     * affichageClassique est à faux lors de la contruction initiale de l'adapter.
      */
     public ListeFTAdapter(List<FoodTruck> lesFT, Context context) {
         this.lesFT = lesFT;
         this.context = context;
+        this.affichageClassique = false;
         this.callback = (RecyclerViewListeFTListener) this.context;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     /**
@@ -38,9 +46,15 @@ public class ListeFTAdapter extends RecyclerView.Adapter<ListeFTHolder> {
      * @return L'objet ListeFTHolder.
      */
     @Override
-    public ListeFTHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_liste_ft,parent,false);
-        return new ListeFTHolder(view,context);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view;
+        if(viewType == 0){
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_ft_plus_proche,parent,false);
+            return new ListeFTPlusProcheHolder(view,context);
+        }else{
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_liste_ft,parent,false);
+            return new ListeFTHolder(view,context);
+        }
     }
 
     /**
@@ -49,9 +63,16 @@ public class ListeFTAdapter extends RecyclerView.Adapter<ListeFTHolder> {
      * @param position La position de l'item.
      */
     @Override
-    public void onBindViewHolder(ListeFTHolder holder, final int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final FoodTruck ft = lesFT.get(position);
-        holder.bind(ft,position);
+
+        if(holder.getItemViewType() == 0){
+            ListeFTPlusProcheHolder holderFirst = (ListeFTPlusProcheHolder) holder;
+            holderFirst.bind(ft,position,affichageClassique);
+        }else{
+            ListeFTHolder holderFT = (ListeFTHolder) holder;
+            holderFT.bind(ft,position,affichageClassique);
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,9 +93,11 @@ public class ListeFTAdapter extends RecyclerView.Adapter<ListeFTHolder> {
     /**
      * Modification des foods trucks dans la liste.
      * @param fts les foods trucks.
+     * @param affichageClassique Permet d'indiquer si la liste doit etre afficher de maniére classique ou mise en avant.
      */
-    public void setFTs(List<FoodTruck> fts) {
+    public void setFTs(List<FoodTruck> fts, boolean affichageClassique) {
         lesFT = new ArrayList<>(fts);
+        this.affichageClassique = affichageClassique;
         notifyDataSetChanged();
     }
 }

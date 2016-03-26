@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -80,7 +79,8 @@ public class ListeFoodTruckFragment extends Fragment{
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        getActivity().setTitle(getString(R.string.title_liste_food_truck));
+        ((AppCompatActivity)getActivity()).setTitle(getString(R.string.title_liste_food_truck));
+
 
         layoutManagerFT = new GridLayoutManagerFoodTruck(getContext());
         loader = (ProgressBar)view.findViewById(R.id.loader_download_ft);
@@ -96,9 +96,9 @@ public class ListeFoodTruckFragment extends Fragment{
 
         // Creation de l'agencement des Foods Trucks.
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-            recyclerViewListeFT.setLayoutManager(new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false));
-        } else {
-            recyclerViewListeFT.setLayoutManager(new GridLayoutManager(getContext(),3,GridLayoutManager.VERTICAL,false));
+            recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutPortrait());
+        }else{
+            recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutLandscape());
         }
 
         /**
@@ -184,19 +184,28 @@ public class ListeFoodTruckFragment extends Fragment{
      * @param recherche Le contenu de la recherche.
      */
     private void updateRechercheFT(String recherche){
+        boolean vide = recherche.isEmpty();
 
-        final List<FoodTruck> filteredModelList = recherche.isEmpty() ? Constantes.lesFTs : FoodTruck.filterListeFTs(Constantes.lesFTs, recherche);
-        listeFTAdapter.setFTs(filteredModelList);
+        final List<FoodTruck> filteredModelList = vide ? Constantes.lesFTs : FoodTruck.filterListeFTs(Constantes.lesFTs, recherche);
+        listeFTAdapter.setFTs(filteredModelList,true);
 
         // Creation de l'agencement des Foods Trucks.
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-            recyclerViewListeFT.setLayoutManager(new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false));
+            if(vide){
+                recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutPortrait());
+            }else{
+                recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutPortraitAfterRecherche());
+            }
         } else {
-            recyclerViewListeFT.setLayoutManager(new GridLayoutManager(getContext(),3,GridLayoutManager.VERTICAL,false));
+            if(vide){
+                recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutLandscape());
+            }else{
+                recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutLandscapeAfterRecherche());
+            }
         }
 
         // Mise à jour des FT dans l'adpater.
-        listeFTAdapter.setFTs(filteredModelList);
+        listeFTAdapter.setFTs(filteredModelList, !vide);
         listeFTAdapter.notifyDataSetChanged();
     }
 

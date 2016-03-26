@@ -39,8 +39,6 @@
                 android:textStyle="italic"
                 android:visibility="gone"/>
 
-            <include layout="@layout/card_view_ft_plus_proche"/>
-
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view_liste_ft"
                 android:layout_below="@id/linear_plus_proche_ft"
