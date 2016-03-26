@@ -7,9 +7,14 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -42,9 +47,7 @@ import java.util.List;
 
 public class EmplacementAllFragment extends Fragment implements OnMapReadyCallback, AdapterView.OnItemSelectedListener {
 
-    public static String TITLE = "EmplacementAll";
     private  ArrayAdapter<FoodTruck> adapter;
-    private Spinner spinnerMap;
     private GoogleMap googleMap;
     private SupportMapFragment map;
     private TextView noConnexion;
@@ -63,6 +66,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        this.setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_emplacement_all, container, false);
     }
 
@@ -70,25 +74,9 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        getActivity().setTitle(R.string.title_map_all);
+
         plusProche = (Button) view.findViewById(R.id.button_map_plus_proche);
-
-        // On recupere et on masque le titre de la toolbar.
-        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_list_ft);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        // Creation du Spinner pour afficher la liste de Food Trucks.
-        List<FoodTruck> lesFts = new ArrayList<>();
-        lesFts.add(new FoodTruck("Tous"));
-        for (FoodTruck ft : Constantes.lesFTs){
-            lesFts.add(ft);
-        }
-        adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,lesFts);
-        adapter.setDropDownViewResource(R.layout.layout_drop_list);
-        spinnerMap = new Spinner(((AppCompatActivity)getActivity()).getSupportActionBar().getThemedContext());
-        spinnerMap.setAdapter(adapter);
-        spinnerMap.setOnItemSelectedListener(this);
-        toolbar.addView(spinnerMap);
 
         FragmentManager fm = getChildFragmentManager();
         map = SupportMapFragment.newInstance();
@@ -275,5 +263,29 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CENTRE, 11));
     }
 
+    /**
+     * Gestion du menu.
+     * @param menu Le menu.
+     * @param inflater L'objet pour inflater.
+     */
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_map_all, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+
+        MenuItem item = menu.findItem(R.id.action_spinner_ft);
+        Spinner spinnerMap = (Spinner) MenuItemCompat.getActionView(item);
+        // Creation du Spinner pour afficher la liste de Food Trucks.
+        List<FoodTruck> lesFts = new ArrayList<>();
+        lesFts.add(new FoodTruck("Tous"));
+        for (FoodTruck ft : Constantes.lesFTs){
+            lesFts.add(ft);
+        }
+        adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,lesFts);
+        adapter.setDropDownViewResource(R.layout.layout_drop_list);
+        spinnerMap.setAdapter(adapter);
+        spinnerMap.setOnItemSelectedListener(this);
+
+    }
 
 }
