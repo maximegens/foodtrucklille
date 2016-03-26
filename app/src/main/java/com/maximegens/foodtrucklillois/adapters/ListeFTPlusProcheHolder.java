@@ -39,7 +39,7 @@ public class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
     /**
      * Fonction pour remplir la cellule en fonction d'un FoodTruck.
      */
-    public void bind(FoodTruck ft,int position,boolean rechercheEnCours){
+    public void bind(FoodTruck ft,int position){
         textViewNom.setText(ft.getNom());
         Resources res = context.getResources();
 

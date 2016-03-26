@@ -48,7 +48,7 @@ public class ListeFTAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-        if(viewType == 0){
+        if(viewType == 0 && !affichageClassique){
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_ft_plus_proche,parent,false);
             return new ListeFTPlusProcheHolder(view,context);
         }else{
@@ -66,9 +66,9 @@ public class ListeFTAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         final FoodTruck ft = lesFT.get(position);
 
-        if(holder.getItemViewType() == 0){
+        if(holder.getItemViewType() == 0 && !affichageClassique){
             ListeFTPlusProcheHolder holderFirst = (ListeFTPlusProcheHolder) holder;
-            holderFirst.bind(ft,position,affichageClassique);
+            holderFirst.bind(ft,position);
         }else{
             ListeFTHolder holderFT = (ListeFTHolder) holder;
             holderFT.bind(ft,position,affichageClassique);
