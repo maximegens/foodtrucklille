@@ -14,6 +14,13 @@ import java.util.Locale;
  */
 public class GestionnaireHoraire {
 
+    private static final String MIDI_DEBUT = "1990-01-01 11:00:00";
+    private static final String MIDI_FIN = "1990-01-01 15:00:00";
+    private static final String SOIR_DEBUT = "1990-01-01 17:00:00";
+    private static final String SOIR_FIN = "1990-01-01 23:59:59";
+    private static final String MINUIT = "1990-01-01 00:00:00";
+
+
     /**
      * Donne le numero du jour dans la semaine.
      * 1 = lundi; 2 = mardi ...
@@ -42,15 +49,42 @@ public class GestionnaireHoraire {
     }
 
     /**
+     * Donne le numero du jour d'aujourd'hui.
+     * 1 = lundi; 2 = mardi ...
+     * @return l'entier représentant le jour dans la semaine
+     */
+    public static int getNumeroJourDansLaSemaine() {
+        Calendar calendar = createCalendarToday();
+        switch (calendar.get(Calendar.DAY_OF_WEEK)) {
+            case GregorianCalendar.MONDAY:
+                return 1;
+            case GregorianCalendar.TUESDAY:
+                return 2;
+            case GregorianCalendar.WEDNESDAY:
+                return 3;
+            case GregorianCalendar.THURSDAY:
+                return 4;
+            case GregorianCalendar.FRIDAY:
+                return 5;
+            case GregorianCalendar.SATURDAY:
+                return 6;
+            case GregorianCalendar.SUNDAY:
+                return 7;
+            default:
+                return 0;
+        }
+    }
+
+    /**
      * Indique si le foot truck est actuellement ouvert.
      * @param calToday le calendar du jour.
      * @param calFTouverture le calendar de l'heure d'ouverture du food truck.
      * @param calFTFermeture le calendar de l'heure de fermeture du food truck.
      * @return un boolean indiquant true si le food truc est actuellement ouvert.
      */
-    public static boolean isOpen(Calendar calToday, Calendar calFTouverture, Calendar calFTFermeture){
+    public static boolean isOpenBetween(Calendar calToday, Calendar calFTouverture, Calendar calFTFermeture){
         if(calToday != null &&calFTouverture != null && calFTFermeture != null){
-            return calToday.get(Calendar.HOUR_OF_DAY) > calFTouverture.get(Calendar.HOUR_OF_DAY)
+            return calToday.get(Calendar.HOUR_OF_DAY) >= calFTouverture.get(Calendar.HOUR_OF_DAY)
                     && calToday.get(Calendar.HOUR_OF_DAY) < calFTFermeture.get(Calendar.HOUR_OF_DAY);
         }else{
             return false;
@@ -82,6 +116,62 @@ public class GestionnaireHoraire {
         Calendar calendarToday = Calendar.getInstance();
         calendarToday.setTime(new Date());
         return calendarToday;
+    }
+
+    /**
+     * Indique si on est actuellement le midi
+     * @return un boolean vrai si on est le midi.
+     */
+    public static boolean isMidi(){
+        Calendar calendarToday = createCalendarToday();
+        if(calendarToday != null && createCalendar(MIDI_DEBUT) != null && createCalendar(MIDI_FIN) != null){
+            return calendarToday.get(Calendar.HOUR_OF_DAY) >= createCalendar(MIDI_DEBUT).get(Calendar.HOUR_OF_DAY)
+                    && calendarToday.get(Calendar.HOUR_OF_DAY) < createCalendar(MIDI_FIN).get(Calendar.HOUR_OF_DAY);
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * Indique si on est avant le midi
+     * @return un boolean vrai si on est avant le midi.
+     */
+    public static boolean isBeforeMidi(){
+        Calendar calendarToday = createCalendarToday();
+        if(calendarToday != null && createCalendar(MINUIT) != null && createCalendar(MIDI_DEBUT) != null){
+            return calendarToday.get(Calendar.HOUR_OF_DAY) >= createCalendar(MINUIT).get(Calendar.HOUR_OF_DAY)
+                    && calendarToday.get(Calendar.HOUR_OF_DAY) < createCalendar(MIDI_DEBUT).get(Calendar.HOUR_OF_DAY);
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * Indique si on est actuellement le soir
+     * @return un boolean vrai si on est le soir.
+     */
+    public static boolean isSoir(){
+        Calendar calendarToday = createCalendarToday();
+        if(calendarToday != null && createCalendar(SOIR_DEBUT) != null && createCalendar(SOIR_FIN) != null){
+            return calendarToday.get(Calendar.HOUR_OF_DAY) >= createCalendar(SOIR_DEBUT).get(Calendar.HOUR_OF_DAY)
+                    && calendarToday.get(Calendar.HOUR_OF_DAY) < createCalendar(SOIR_FIN).get(Calendar.HOUR_OF_DAY);
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * Indique si on est avant le soir mais apres le midi
+     * @return un boolean vrai si on est avant le soir mais apres .
+     */
+    public static boolean isBeforeSoirButAfterMidi(){
+        Calendar calendarToday = createCalendarToday();
+        if(calendarToday != null && createCalendar(MIDI_FIN) != null && createCalendar(SOIR_FIN) != null){
+            return calendarToday.get(Calendar.HOUR_OF_DAY) >= createCalendar(MIDI_FIN).get(Calendar.HOUR_OF_DAY)
+                    && calendarToday.get(Calendar.HOUR_OF_DAY) < createCalendar(SOIR_FIN).get(Calendar.HOUR_OF_DAY);
+        }else{
+            return false;
+        }
     }
 
 }

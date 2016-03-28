@@ -205,26 +205,47 @@ public class DescriptionFoodTruckFragment extends Fragment {
 
         // Creation du calendrier
         Calendar calendarToday = GestionnaireHoraire.createCalendarToday();
+
+        //Planning
+        PlanningFoodTruck planning;
+
         // Recuperation du numero du jour
         int numJour = GestionnaireHoraire.getNumeroJourDansLaSemaine(calendarToday);
         int numJourTab = numJour - 1;
 
-        //TODO verifier si on est le midi ou le soir
+
         if(ft.getPlanning() != null && ft.getPlanning().get(numJourTab) != null) {
-            String horaireOuverture = ft.getPlanning().get(numJourTab).getMidi().getHoraireOuverture();
-            String horaireFermeture = ft.getPlanning().get(numJourTab).getMidi().getHoraireFermeture();
+
+            planning = ft.getPlanning().get(numJourTab);
+            String horaireOuverture = null;
+            String horaireFermeture = null;
+
+            if((GestionnaireHoraire.isBeforeMidi() || GestionnaireHoraire.isMidi()) && planning.getMidi() != null){
+                horaireOuverture = planning.getMidi().getHoraireOuverture();
+                horaireFermeture = planning.getMidi().getHoraireFermeture();
+            }else if ((GestionnaireHoraire.isBeforeSoirButAfterMidi() || GestionnaireHoraire.isSoir()) && planning.getSoir() != null){
+                horaireOuverture = planning.getSoir().getHoraireOuverture();
+                horaireFermeture = planning.getSoir().getHoraireFermeture();
+            }
 
             if(horaireOuverture != null && horaireFermeture != null){
                 Calendar calendarOuverture = GestionnaireHoraire.createCalendar(horaireOuverture);
                 Calendar calendarFermeture = GestionnaireHoraire.createCalendar(horaireFermeture);
 
-                if(GestionnaireHoraire.isOpen(calendarToday,calendarOuverture,calendarFermeture)){
+                if(GestionnaireHoraire.isOpenBetween(calendarToday, calendarOuverture, calendarFermeture)){
                     ouverture.setTextColor(ContextCompat.getColor(getContext(), R.color.green));
-                    ouverture.setText("Ouvert jusque "+ft.getPlanning().get(numJourTab).getMidi().getHeureFermetureEnString());
+                    if(GestionnaireHoraire.isBeforeMidi() || GestionnaireHoraire.isMidi()){
+                        ouverture.setText("Ouvert jusque "+planning.getMidi().getHeureFermetureEnString());
+                    }else if(GestionnaireHoraire.isBeforeSoirButAfterMidi() || GestionnaireHoraire.isSoir()){
+                        ouverture.setText("Ouvert jusque "+planning.getSoir().getHeureFermetureEnString());
+                    }
                 }else{
                     ouverture.setTextColor(ContextCompat.getColor(getContext(), R.color.red));
                     ouverture.setText(getResources().getText(R.string.fermer));
                 }
+            }else{
+                ouverture.setTextColor(ContextCompat.getColor(getContext(), R.color.red));
+                ouverture.setText(getResources().getText(R.string.fermer));
             }
         }
     }

@@ -1,6 +1,8 @@
 package com.maximegens.foodtrucklillois.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,6 +71,7 @@ public class ListeFTAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if(holder.getItemViewType() == 0 && !affichageClassique){
             ListeFTPlusProcheHolder holderFirst = (ListeFTPlusProcheHolder) holder;
             holderFirst.bind(ft,position);
+
         }else{
             ListeFTHolder holderFT = (ListeFTHolder) holder;
             holderFT.bind(ft,position,affichageClassique);

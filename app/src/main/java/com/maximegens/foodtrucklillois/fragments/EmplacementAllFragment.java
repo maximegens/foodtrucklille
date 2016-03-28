@@ -113,10 +113,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
-        // Centre la google Map.
         centreMap(googleMap);
-
     }
 
     @Override
@@ -188,10 +185,8 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
      */
     private void ajouteMarker(GoogleMap googleMap,FoodTruck ft, PlanningFoodTruck planning, AdresseFoodTruck adresse, String periode) {
 
-
         // Verification qu'il existe une latitude et une longitude de renseigné pour pouvoir l'afficher.
         if(adresse.getLatitude() != null && adresse.getLongitude() != null) {
-
 
             final MarkerOptions markerOptions = new MarkerOptions();
 
