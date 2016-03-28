@@ -4,6 +4,7 @@ package com.maximegens.foodtrucklillois.fragments;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -42,7 +43,9 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 public class EmplacementAllFragment extends Fragment implements OnMapReadyCallback, AdapterView.OnItemSelectedListener {
@@ -52,6 +55,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
     private SupportMapFragment map;
     private TextView noConnexion;
     private Button plusProche;
+    public static final Set<Target> protectedFromGarbageCollectorTargets = new HashSet<>();
 
     /**
      * Creation du Fragment.
@@ -184,8 +188,10 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
      */
     private void ajouteMarker(GoogleMap googleMap,FoodTruck ft, PlanningFoodTruck planning, AdresseFoodTruck adresse, String periode) {
 
+
         // Verification qu'il existe une latitude et une longitude de renseigné pour pouvoir l'afficher.
         if(adresse.getLatitude() != null && adresse.getLongitude() != null) {
+
 
             final MarkerOptions markerOptions = new MarkerOptions();
 
@@ -199,19 +205,12 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
             // Creation de l'icone.
             if(ft.getLogo() != null){
                 int resID = getResources().getIdentifier(ft.getLogo(), "mipmap", getContext().getPackageName());
-                PicassoMarker picassoMarker  = new PicassoMarker(googleMap.addMarker(markerOptions));
+                PicassoMarker picassoMarker  = new PicassoMarker(googleMap.addMarker(markerOptions),planning,adresse,periode);
+                protectedFromGarbageCollectorTargets.add(picassoMarker);
                 Picasso.with(getActivity()).load(resID).resize(100,100).into(picassoMarker);
             }else{
                 markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_truck));
             }
-
-            // Creation du snippet affichant l'adresse et l'ouverture.
-            StringBuilder snippet = new StringBuilder();
-            snippet.append("Ouvert uniquement le " + planning.getNomJour() + " " + periode);
-            if(adresse.getAdresse() != null){
-                snippet.append(Constantes.RETOUR_CHARIOT+Constantes.RETOUR_CHARIOT+adresse.getAdresse());
-            }
-            markerOptions.snippet(snippet.toString());
 
             // Ajout de l'infoBulle.
             googleMap.setInfoWindowAdapter(new InfoWindowMarkerMapAdapter(getContext()));
