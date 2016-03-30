@@ -2,6 +2,8 @@ package com.maximegens.foodtrucklillois;
 
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -59,8 +61,12 @@ public class FoodTruckActivity extends AppCompatActivity{
             }
         });
 
-        // Ajout de l'image de fond represantant le FoodTruck
+        // Ajout de l'image de fond represantant le FoodTruck.
         ImageView fond = (ImageView)findViewById(R.id.backgroundImageView_food_truck);
+
+        // Application du filtre rouge pour le fond.
+        fond.setColorFilter(Color.RED, PorterDuff.Mode.LIGHTEN);
+
         Resources res = getResources();
         int resID;
         if(ft.getLogo() != null && res != null) {
