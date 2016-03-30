@@ -39,6 +39,8 @@ public class FoodTruck implements Parcelable{
     private Menu menu;
     private List<PlanningFoodTruck> planning;
 
+    private float distanceFromUser;
+
     /**
      * Constructeur.
      * @param nom
@@ -209,6 +211,14 @@ public class FoodTruck implements Parcelable{
         this.planning = planning;
     }
 
+    public float getDistanceFromUser() {
+        return distanceFromUser;
+    }
+
+    public void setDistanceFromUser(float distanceFromUser) {
+        this.distanceFromUser = distanceFromUser;
+    }
+
     @Override
     public String toString() {
         return nom;
@@ -259,6 +269,7 @@ public class FoodTruck implements Parcelable{
         dest.writeString(urlLogo);
         dest.writeParcelable(menu, flags);
         dest.writeTypedList(planning);
+        dest.writeFloat(distanceFromUser);
 
     }
 
@@ -299,6 +310,7 @@ public class FoodTruck implements Parcelable{
         this.menu = (Menu)in.readParcelable(Menu.class.getClassLoader());
         this.planning = new ArrayList<PlanningFoodTruck>();
         in.readTypedList(planning,PlanningFoodTruck.CREATOR);
+        this.distanceFromUser = in.readFloat();
     }
 
     /**

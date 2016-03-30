@@ -1,9 +1,15 @@
 package com.maximegens.foodtrucklillois.fragments;
 
+import android.Manifest;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,16 +23,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.adapters.ListeFTAdapter;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
+import com.maximegens.foodtrucklillois.beans.PlanningFoodTruck;
 import com.maximegens.foodtrucklillois.interfaces.ListeFoodTruckFragmentCallback;
 import com.maximegens.foodtrucklillois.network.Internet;
 import com.maximegens.foodtrucklillois.network.RetreiveJSONListeFT;
 import com.maximegens.foodtrucklillois.utils.Constantes;
+import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
 import com.maximegens.foodtrucklillois.utils.GridLayoutManagerFoodTruck;
+import com.maximegens.foodtrucklillois.utils.SortByDistanceFT;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -34,8 +46,9 @@ import java.util.List;
  * Class ListeFoodTruckFragment.
  * Fragment gérant l'affichage de la liste des Food trucks.
  */
-public class ListeFoodTruckFragment extends Fragment{
+public class ListeFoodTruckFragment extends Fragment implements LocationListener{
 
+    private LocationManager locationManager;
     private ProgressBar loader;
     private TextView indicationChargementFT;
     private TextView indicationListeFTVide;
@@ -211,4 +224,86 @@ public class ListeFoodTruckFragment extends Fragment{
         listeFTAdapter.notifyDataSetChanged();
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        if ( !locationManager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ){
+            Toast.makeText(getContext(), "GPS is disabled!", Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(getContext(), "GPS is enabled!", Toast.LENGTH_LONG).show();
+        }
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            // Demande de permission pour Android 6.0 (API 23).
+            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, Constantes.TIME_BETWEEN_UPDATE_GPS, 0, this);
+        }
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, Constantes.TIME_BETWEEN_UPDATE_GPS, 0, this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        // Demande de permission pour Android 6.0 (API 23).
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        locationManager.removeUpdates(this);
+    }
+
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+        // Demande de permission pour Android 6.0 (API 23).
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+
+        //TODO a mettre dans une asyntasck
+        // Pour chaque Food Truck on calcul sa distance par rapport à l'utilisateur.
+        for (FoodTruck ft: Constantes.lesFTs) {
+            Location loc = new Location("");
+            PlanningFoodTruck planning = ft.getPlaningToday();
+            if(planning != null){
+                if(GestionnaireHoraire.isMidiOrBeforeMidi()){
+                    if(planning.getMidi() != null && planning.getMidi().getAdresses() != null && planning.getMidi().getAdresses().get(0) != null
+                            && planning.getMidi().getAdresses().get(0).getLatitude() != null && planning.getMidi().getAdresses().get(0).getLongitude() != null){
+                        loc.setLatitude(Double.parseDouble(planning.getMidi().getAdresses().get(0).getLatitude()));
+                        loc.setLongitude(Double.parseDouble(planning.getMidi().getAdresses().get(0).getLongitude()));
+                    }
+                }else if(GestionnaireHoraire.isSoirOrBeforeSoirButAfterMidi()){
+                    if(planning.getSoir() != null && planning.getSoir().getAdresses() != null && planning.getSoir().getAdresses().get(0) != null
+                            && planning.getSoir().getAdresses().get(0).getLatitude() != null && planning.getSoir().getAdresses().get(0).getLongitude() != null){
+                        loc.setLatitude(Double.parseDouble(planning.getSoir().getAdresses().get(0).getLatitude()));
+                        loc.setLongitude(Double.parseDouble(planning.getSoir().getAdresses().get(0).getLongitude()));
+                    }
+                }
+                // On ajout la distance depuis l'utilisateur au Food truck.
+                ft.setDistanceFromUser(location.distanceTo(loc));
+            }
+        }
+        Collections.sort(Constantes.lesFTs, new SortByDistanceFT());
+        listeFTAdapter.setFTs(Constantes.lesFTs, false);
+        listeFTAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
 }

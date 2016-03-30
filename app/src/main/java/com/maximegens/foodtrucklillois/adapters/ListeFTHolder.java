@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
+import com.maximegens.foodtrucklillois.utils.Constantes;
+import com.maximegens.foodtrucklillois.utils.Utils;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -20,6 +22,7 @@ public class ListeFTHolder extends RecyclerView.ViewHolder {
     private Context context;
     private TextView textViewNom;
     private ImageView imageView;
+    private TextView distance;
 
     /**
      * Le constructeur.
@@ -31,6 +34,7 @@ public class ListeFTHolder extends RecyclerView.ViewHolder {
         this.context = context;
         textViewNom = (TextView) itemView.findViewById(R.id.nom_ft_card_view);
         imageView = (ImageView) itemView.findViewById(R.id.logo_ft_card_view);
+        distance = (TextView) itemView.findViewById(R.id.ft_distance_tv);
 
     }
 
@@ -40,6 +44,8 @@ public class ListeFTHolder extends RecyclerView.ViewHolder {
     public void bind(FoodTruck ft,int position,boolean rechercheEnCours){
         textViewNom.setText(ft.getNom());
         Resources res = context.getResources();
+
+        distance.setText(String.valueOf(Utils.metreToKm(ft.getDistanceFromUser()))+ Constantes.KM);
 
         if(ft.getLogo() != null){
             int resID = res.getIdentifier(ft.getLogo() , "mipmap", context.getPackageName());

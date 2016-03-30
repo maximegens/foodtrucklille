@@ -16,7 +16,9 @@ import android.widget.TextView;
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.beans.PlanningFoodTruck;
+import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
+import com.maximegens.foodtrucklillois.utils.Utils;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -28,6 +30,7 @@ public class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
     private TextView textViewNom;
     private Button go;
     private TextView ouverture;
+    private TextView distance;
     private ImageView imageView;
 
     /**
@@ -41,6 +44,7 @@ public class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
         textViewNom = (TextView) itemView.findViewById(R.id.nom_ft_plus_proche_card_view);
         imageView = (ImageView) itemView.findViewById(R.id.logo_ft_plus_proche_card_view);
         ouverture = (TextView) itemView.findViewById(R.id.ouverture_ft_plus_proche_card_view);
+        distance = (TextView) itemView.findViewById(R.id.ft_distance_plus_proche_tv);
         go = (Button) itemView.findViewById(R.id.button_ft_go);
     }
 
@@ -61,6 +65,8 @@ public class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
                     .centerInside()
                     .into(imageView);
         }
+
+        distance.setText(String.valueOf(Utils.metreToKm(ft.getDistanceFromUser()))+ Constantes.KM);
 
         // Indique si le food truck le plus proche est actuellement ouvert ou fermé.
         if(ft.isOpenNow()){
