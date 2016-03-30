@@ -2,6 +2,7 @@ package com.maximegens.foodtrucklillois.utils;
 
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class Constantes {
 
     public static String GPS_LILLE_LATITUDE = "50.62925";
     public static String GPS_LILLE_LONGITUDE = "3.057256000000052";
+    public static long TIME_BETWEEN_UPDATE_GPS = 5000;
 
     public static String GPS_CENTRE_CARTE_MARC_BAROEUL_LATITUDE = "50.659660";
     public static String GPS_CENTRE_CARTE_MARC_BAROEUL_LONGITUDE = "3.113962";
@@ -35,5 +37,17 @@ public class Constantes {
     public static String MIDI = "midi";
     public static String SOIR = "soir";
     public static String FERMER = "Fermé";
+
+    /**
+     * Convertie la distance de métre en kilométre.
+     * @param metre La distance en métre
+     * @return float La distance en kilométre.
+     */
+    public static float metreToKm(float metre){
+        String result;
+        DecimalFormat df = new DecimalFormat("#####.##");
+        result = df.format(metre * 0.001);
+        return Float.parseFloat(result.replace(',', '.'));
+    }
 
 }

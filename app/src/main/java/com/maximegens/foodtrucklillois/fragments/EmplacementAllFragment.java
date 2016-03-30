@@ -127,7 +127,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
         }
 
         // Traitement du premier item " Voir tous"
-        if(position == 0) {
+        if(position == 0 && gMapItem != null) {
 
             // Suppresion des précédents markers.
             gMapItem.clear();
