@@ -12,10 +12,16 @@
     <string name="openDrawer">Ouverture du menu</string>
     <string name="closeDrawer">Fermeture du menu</string>
 
+    <string name="ok">OK</string>
+    <string name="oui_faim">Oui j\'ai faim</string>
+    <string name="oui">Oui</string>
+    <string name="non">Non</string>
+
 
     <!-- String -->
     <string name="champ_non_communique">Non communiqué</string>
     <string name="no_connexion">Vous ne pouvez pas afficher la carte Google Map sans connexion Internet</string>
+    <string name="erreur_localisation_ft">Désolé, impossible de récupérer l\'adresse précise du Food Truck d\'aujoud\'hui pour calculer l\'itinéraire.</string>
     <string name="telechargement_ft_en_cours">Téléchargement des Foods Trucks en cours...</string>
     <string name="liste_ft_vide">Il n\'y a pas de Foods Trucks</string>
     <string name="fermer">Fermé</string>

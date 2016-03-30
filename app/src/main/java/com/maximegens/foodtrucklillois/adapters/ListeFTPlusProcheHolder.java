@@ -1,10 +1,12 @@
 package com.maximegens.foodtrucklillois.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -78,8 +80,9 @@ public class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
                 String longitude = null;
                 PlanningFoodTruck planning = ft.getPlanning().get(GestionnaireHoraire.getNumeroJourDansLaSemaine() - 1);
 
+                // Recuperation de la latitude et de la longitude.
                 if(GestionnaireHoraire.isMidiOrBeforeMidi()) {
-                    //TODO remplacer par l'adresse la plus proche.
+                    //TODO remplacer par l'adresse la plus proche, pour l'instant parmis toutes les adresses ont prends la premiere (.get(0)).
                     if(planning != null && planning.getMidi() != null && planning.getMidi().getAdresses() != null){
                         latitude = planning.getMidi().getAdresses().get(0).getLatitude();
                         longitude = planning.getMidi().getAdresses().get(0).getLongitude();
@@ -91,15 +94,66 @@ public class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
                     }
                 }
 
+                // Verification que la latitude et la longitude sont différent de nul.
                 if(latitude != null && longitude != null){
-                    Uri gmmIntentUri = Uri.parse("google.navigation:q="+latitude+","+longitude);
-                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                    mapIntent.setPackage("com.google.android.apps.maps");
-                    context.startActivity(mapIntent);
+                    if(ft.isOpenNow()){
+                        lanceItineraire(latitude,longitude);
+                    }else{
+                        affichePopupFoodTruckFermer(ft, latitude , longitude);
+                    }
+                }else{
+                    affichePopupErreurLocalisation(ft);
                 }
             }
         });
 
+    }
+
+    /**
+     * Affichage d'une popup d'information indiquant qu'il a été impossible de récupérer les coordonnées exactes du Food trucks.
+     * pour calculer son itinéraire.
+     * @param ft Le food truck.
+     */
+    public void affichePopupErreurLocalisation(FoodTruck ft){
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle);
+        builder.setTitle(ft.getNom());
+        builder.setMessage(context.getString(R.string.erreur_localisation_ft));
+        builder.setPositiveButton(context.getString(R.string.ok), null);
+        builder.show();
+    }
+
+    /**
+     * Demande a l'utilisateur si il souhaite bien consulter l'itinéraire même si le Food truck est actuellement fermé.
+     * @param ft Le food truck.
+     * @param latitude La latitude de la position.
+     * @param longitude La longitude de la position.
+     */
+    public void affichePopupFoodTruckFermer(FoodTruck ft, final String latitude, final String longitude){
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle);
+        builder.setTitle(ft.getNom());
+        builder.setMessage("Attention le Food truck " + ft.getNom() + " est actuellement fermé\n\nSouhaitez vous quand même voir l'itinéraire ?");
+        builder.setPositiveButton(context.getString(R.string.oui_faim), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                lanceItineraire(latitude, longitude);
+            }
+        });
+        builder.setNegativeButton(context.getString(R.string.non), null);
+        builder.show();
+    }
+
+    /**
+     * Lance l'itineraire vers la position renseigné.
+     * @param latitude La latitude de la position.
+     * @param longitude La longitude de la position.
+     */
+    public void lanceItineraire(String latitude,String longitude){
+        Uri gmmIntentUri = Uri.parse("google.navigation:q="+latitude+","+longitude);
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        context.startActivity(mapIntent);
     }
 
 }

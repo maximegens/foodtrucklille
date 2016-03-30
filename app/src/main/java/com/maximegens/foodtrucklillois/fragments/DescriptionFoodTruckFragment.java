@@ -231,7 +231,7 @@ public class DescriptionFoodTruckFragment extends Fragment {
                 new AlertDialog.Builder(getContext(), R.style.AppCompatAlertDialogStyle);
         builder.setTitle("Horaires");
         builder.setMessage(ft.constructionHoraires());
-        builder.setPositiveButton("OK", null);
+        builder.setPositiveButton(getString(R.string.ok), null);
         builder.show();
     }
 
