@@ -12,6 +12,8 @@
     <string name="openDrawer">Ouverture du menu</string>
     <string name="closeDrawer">Fermeture du menu</string>
 
+    <string name="aucun_favori">il n\'y a aucun favoris</string>
+
     <string name="ok">OK</string>
     <string name="oui_faim">Oui j\'ai faim</string>
     <string name="go_faim">GO j\'ai faim !</string>

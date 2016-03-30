@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.adapters.ListeFTAdapter;
@@ -32,6 +33,7 @@ public class FavorisFragment extends Fragment {
 
     private ListeFTAdapter listeFTAdapter;
     private RecyclerView recyclerViewFavoris;
+    private TextView aucunFavoris;
 
     /**
      * Creation du Fragment.
@@ -56,6 +58,7 @@ public class FavorisFragment extends Fragment {
         getActivity().setTitle(getString(R.string.title_favoris));
 
         recyclerViewFavoris = (RecyclerView) view.findViewById(R.id.recycler_view_liste_ft_favorite);
+        aucunFavoris = (TextView) view.findViewById(R.id.aucun_favoris);
         recyclerViewFavoris.setHasFixedSize(true);
 
         // Creation de l'adapter.
@@ -80,6 +83,15 @@ public class FavorisFragment extends Fragment {
         // Creation de l'agencement des Foods Trucks en fonction de l'orientation ( Portrait : par 2 - Paysage : par 3)
         int nombreColonne = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? 2 : 3;
         recyclerViewFavoris.setLayoutManager(new GridLayoutManager(getContext(), nombreColonne));
+
+        // On indique a l'utilisateur qu'il n'y a pas de Favoris si la liste est vide.
+        if(lesFTFavoris.isEmpty()){
+            aucunFavoris.setVisibility(View.VISIBLE);
+            recyclerViewFavoris.setVisibility(View.GONE);
+        }else{
+            aucunFavoris.setVisibility(View.GONE);
+            recyclerViewFavoris.setVisibility(View.VISIBLE);
+        }
 
     }
 
