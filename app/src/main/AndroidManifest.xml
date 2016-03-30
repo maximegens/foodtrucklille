@@ -19,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme">
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:label="@string/title_main_activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

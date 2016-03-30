@@ -1,37 +1,22 @@
 <resources>
-    <string name="app_name">Food Truck Lillois</string>
-    <string name="title_liste_food_truck">Les Foods Trucks</string>
-    <string name="title_favoris">Mes Favoris</string>
-    <string name="title_map_all">Map</string>
-    <string name="title_a_propos">A propos</string>
 
-    <string name="action_search">Rechercher un Food Truck</string>
+    <!-- String technique de l'application -->
+    <string name="app_name">Food Truck Lillois</string>
+    <string name="title_main_activity">MainActivity</string>
     <string name="title_activity_food_truck">FoodTruckActivity</string>
     <string name="key_api_google_map">AIzaSyDASrlPPti8U3qoqoj8V0O3VVZ-cBCYwkc</string>
 
-    <string name="openDrawer">Ouverture du menu</string>
-    <string name="closeDrawer">Fermeture du menu</string>
-
-    <string name="aucun_favori">il n\'y a aucun favoris</string>
-
-    <string name="ok">OK</string>
-    <string name="oui_faim">Oui j\'ai faim</string>
-    <string name="go_faim">GO j\'ai faim !</string>
-    <string name="oui">Oui</string>
-    <string name="non">Non</string>
-
-
-    <!-- String -->
-    <string name="champ_non_communique">Non communiqué</string>
-    <string name="no_connexion">Vous ne pouvez pas afficher la carte Google Map sans connexion Internet</string>
-    <string name="erreur_localisation_ft">Désolé, impossible de récupérer l\'adresse précise du Food Truck d\'aujoud\'hui pour calculer l\'itinéraire.</string>
-    <string name="telechargement_ft_en_cours">Téléchargement des Foods Trucks en cours...</string>
-    <string name="liste_ft_vide">Il n\'y a pas de Foods Trucks</string>
+    <!-- String globaux-->
     <string name="fermer">Fermé</string>
     <string name="ouvert">Ouvert</string>
     <string name="prix">Prix</string>
     <string name="prix_en_menu">Prix en menu</string>
 
+    <!-- String liste des food trucks-->
+    <string name="title_liste_food_truck">Les Food Trucks</string>
+    <string name="telechargement_ft_en_cours">Téléchargement des Food Trucks en cours...</string>
+    <string name="liste_ft_vide">Il n\'y a pas de Food Trucks</string>
+    <string name="erreur_localisation_ft">Désolé, impossible de récupérer l\'adresse précise du Food Truck d\'aujoud\'hui pour calculer l\'itinéraire.</string>
 
     <!-- Description du Foodtruck -->
     <string name="description_breve">Description</string>
@@ -47,12 +32,28 @@
     <string name="date_ouverture">Date d\'ouverture</string>
     <string name="specialite">Spécialité</string>
     <string name="service">Service</string>
-
     <string name="voir_description_complete">Voir description compléte</string>
     <string name="consulter_horaire">Consulter les horaires</string>
+    <string name="champ_non_communique">Non communiqué</string>
+
+    <!-- String Favoris -->
+    <string name="title_favoris">Mes Favoris</string>
+    <string name="aucun_favori">il n\'y a aucun favoris</string>
+
+    <!-- String Emplacement des food trucks. -->
+    <string name="title_map_all">Map</string>
+    <string name="no_connexion">Vous ne pouvez pas afficher la carte Google Map sans connexion Internet</string>
+
+    <!-- String A Propos -->
+    <string name="title_a_propos">A propos</string>
 
     <!-- Button -->
     <string name="retour_menu">Retour au menu</string>
+    <string name="ok">OK</string>
+    <string name="oui_faim">Oui j\'ai faim</string>
+    <string name="go_faim">GO j\'ai faim !</string>
+    <string name="oui">Oui</string>
+    <string name="non">Non</string>
 
     <!-- Strings du drawer -->
     <string name="drawer_liste_ft">Voir les Food Trucks</string>
@@ -60,9 +61,11 @@
     <string name="drawer_emplacement">Emplacement des Food Trucks</string>
     <string name="drawer_a_propos">A propos</string>
     <string name="drawer_faire_don">Faire un don</string>
+    <string name="openDrawer">Ouverture du menu</string>
+    <string name="closeDrawer">Fermeture du menu</string>
 
     <!-- Menu -->
     <string name="menu_title_spinner">Liste des Food Trucks</string>
-
+    <string name="action_search">Rechercher un Food Truck</string>
 
 </resources>
