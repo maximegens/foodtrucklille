@@ -20,6 +20,32 @@ public class GestionnaireHoraire {
     private static final String SOIR_FIN = "1990-01-01 23:59:59";
     private static final String MINUIT = "1990-01-01 00:00:00";
 
+    /**
+     * Creation d'un objet Calendar à la date du jour.
+     * @return un Calendar a la date du jour.
+     */
+    public static Calendar createCalendarToday(){
+        Calendar calendarToday = Calendar.getInstance();
+        calendarToday.setTime(new Date());
+        return calendarToday;
+    }
+
+    /**
+     * Creation d'un objet Calendar avec le format de date passé en paramétre.
+     * @param dateEnString le format de date en string.
+     * @return un Calendar avec le format de la date donné.
+     */
+    public static Calendar createCalendar(String dateEnString){
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat(Constantes.FORMAT_HORAIRE_FOOD_TRUCK, Locale.FRANCE);
+        try {
+            calendar.setTime(sdf.parse(dateEnString));
+        } catch (ParseException e) {
+            Log.v(Constantes.LOG_PARSE_DATE,"Erreur lors du parsing de la date : "+dateEnString);
+            e.printStackTrace();
+        }
+        return calendar;
+    }
 
     /**
      * Donne le numero du jour dans la semaine.
@@ -75,48 +101,6 @@ public class GestionnaireHoraire {
         }
     }
 
-    /**
-     * Indique si le foot truck est actuellement ouvert.
-     * @param calToday le calendar du jour.
-     * @param calFTouverture le calendar de l'heure d'ouverture du food truck.
-     * @param calFTFermeture le calendar de l'heure de fermeture du food truck.
-     * @return un boolean indiquant true si le food truc est actuellement ouvert.
-     */
-    public static boolean isOpenBetween(Calendar calToday, Calendar calFTouverture, Calendar calFTFermeture){
-        if(calToday != null &&calFTouverture != null && calFTFermeture != null){
-            return calToday.get(Calendar.HOUR_OF_DAY) >= calFTouverture.get(Calendar.HOUR_OF_DAY)
-                    && calToday.get(Calendar.HOUR_OF_DAY) < calFTFermeture.get(Calendar.HOUR_OF_DAY);
-        }else{
-            return false;
-        }
-    }
-
-    /**
-     * Creation d'un objet Calendar avec le format de date passé en paramétre.
-     * @param dateEnString le format de date en string.
-     * @return un Calendar avec le format de la date donné.
-     */
-    public static Calendar createCalendar(String dateEnString){
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat(Constantes.FORMAT_HORAIRE_FOOD_TRUCK, Locale.FRANCE);
-        try {
-            calendar.setTime(sdf.parse(dateEnString));
-        } catch (ParseException e) {
-            Log.v(Constantes.LOG_PARSE_DATE,"Erreur lors du parsing de la date : "+dateEnString);
-            e.printStackTrace();
-        }
-        return calendar;
-    }
-
-    /**
-     * Creation d'un objet Calendar à la date du jour.
-     * @return un Calendar a la date du jour.
-     */
-    public static Calendar createCalendarToday(){
-        Calendar calendarToday = Calendar.getInstance();
-        calendarToday.setTime(new Date());
-        return calendarToday;
-    }
 
     /**
      * Indique si on est actuellement le midi
@@ -169,6 +153,38 @@ public class GestionnaireHoraire {
         if(calendarToday != null && createCalendar(MIDI_FIN) != null && createCalendar(SOIR_FIN) != null){
             return calendarToday.get(Calendar.HOUR_OF_DAY) >= createCalendar(MIDI_FIN).get(Calendar.HOUR_OF_DAY)
                     && calendarToday.get(Calendar.HOUR_OF_DAY) < createCalendar(SOIR_FIN).get(Calendar.HOUR_OF_DAY);
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * Permet de savoir si on se trouve a midi ou avant midi ( si on est entre minuit et 15h)
+     * @return vrai si on est avant 15h
+     */
+    public static boolean isMidiOrBeforeMidi(){
+        return isMidi() || isBeforeMidi();
+    }
+
+    /**
+     * Permet de savoir si on se trouve en soirée ou juste avant ( si on est entre 15h et 23h59:59)
+     * @return vrai si on est entre 15h et 23h59.
+     */
+    public static boolean isSoirOrBeforeSoirButAfterMidi(){
+        return isSoir() || isBeforeSoirButAfterMidi();
+    }
+
+    /**
+     * Indique si le foot truck est actuellement ouvert.
+     * @param calToday le calendar du jour.
+     * @param calFTouverture le calendar de l'heure d'ouverture du food truck.
+     * @param calFTFermeture le calendar de l'heure de fermeture du food truck.
+     * @return un boolean indiquant true si le food truc est actuellement ouvert.
+     */
+    public static boolean isOpenBetween(Calendar calToday, Calendar calFTouverture, Calendar calFTFermeture){
+        if(calToday != null &&calFTouverture != null && calFTFermeture != null){
+            return calToday.get(Calendar.HOUR_OF_DAY) >= calFTouverture.get(Calendar.HOUR_OF_DAY)
+                    && calToday.get(Calendar.HOUR_OF_DAY) < calFTFermeture.get(Calendar.HOUR_OF_DAY);
         }else{
             return false;
         }

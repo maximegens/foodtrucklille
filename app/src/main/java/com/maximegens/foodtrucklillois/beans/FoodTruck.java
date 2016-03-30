@@ -2,10 +2,15 @@ package com.maximegens.foodtrucklillois.beans;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.v4.content.ContextCompat;
 
+import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.menu.Menu;
+import com.maximegens.foodtrucklillois.utils.Constantes;
+import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -294,5 +299,91 @@ public class FoodTruck implements Parcelable{
         this.menu = (Menu)in.readParcelable(Menu.class.getClassLoader());
         this.planning = new ArrayList<PlanningFoodTruck>();
         in.readTypedList(planning,PlanningFoodTruck.CREATOR);
+    }
+
+    /**
+     * Construction de l'affichage des horaires du food truck.
+     * @return la chaine contenant les horaires des food trucks.
+     */
+    public String constructionHoraires(){
+        StringBuilder horaires = new StringBuilder("");
+        String fermer = Constantes.FERMER;
+
+        if(getPlanning() != null ){
+
+            // Parcours de la liste des jours
+            for(PlanningFoodTruck planning : getPlanning()){
+                // Mise en majuscule de la premier lettre.
+                String jour = planning.getNomJour().substring(0, 1).toUpperCase() + planning.getNomJour().substring(1);
+                horaires.append(jour+" : "+ Constantes.RETOUR_CHARIOT);
+                if(planning.isFermerToday()){
+                    horaires.append(Constantes.TABULATION_DOUBLE+ fermer +Constantes.RETOUR_CHARIOT);
+                }else{
+                    if(planning.isOpenMidi()) {
+                        horaires.append(Constantes.TABULATION_DOUBLE+"Midi : "+planning.getMidi().getHeureOuvertureEnString()+" - "+planning.getMidi().getHeureFermetureEnString()+Constantes.RETOUR_CHARIOT);
+                    }else {
+                        horaires.append(Constantes.TABULATION_DOUBLE+"Midi : "+ fermer+ Constantes.RETOUR_CHARIOT);
+                    }
+                    if(planning.isOpenSoir()) {
+                        horaires.append(Constantes.TABULATION_DOUBLE+"Soir : "+planning.getSoir().getHeureOuvertureEnString()+" - "+planning.getSoir().getHeureFermetureEnString()+Constantes.RETOUR_CHARIOT);
+                    }else {
+                        horaires.append(Constantes.TABULATION_DOUBLE+"Soir : "+fermer+Constantes.RETOUR_CHARIOT);
+                    }
+                }
+                horaires.append(Constantes.RETOUR_CHARIOT);
+            }
+        }
+        return horaires.toString();
+    }
+
+    /**
+     * Methode permettant de savoir si le food truc est actuellement ouvert ou fermé.
+     */
+    public boolean isOpenNow() {
+
+        PlanningFoodTruck planning = getPlaningToday();
+        String horaireOuverture = null;
+        String horaireFermeture = null;
+
+        if (planning != null) {
+
+            // On verifie si on se trouve le midi ou le soir afin de récupérer les horaires d"ouverture correspondant.
+            if (planning.getMidi() != null && GestionnaireHoraire.isMidiOrBeforeMidi()) {
+                horaireOuverture = planning.getMidi().getHoraireOuverture();
+                horaireFermeture = planning.getMidi().getHoraireFermeture();
+            } else if (planning.getSoir() != null && GestionnaireHoraire.isSoirOrBeforeSoirButAfterMidi()) {
+                horaireOuverture = planning.getSoir().getHoraireOuverture();
+                horaireFermeture = planning.getSoir().getHoraireFermeture();
+            }
+
+            // On verifie si le food truck est actutellement ouvert entre les deux horaires récupérés.
+            if (horaireOuverture != null && horaireFermeture != null) {
+                Calendar calendarOuverture = GestionnaireHoraire.createCalendar(horaireOuverture);
+                Calendar calendarFermeture = GestionnaireHoraire.createCalendar(horaireFermeture);
+                return GestionnaireHoraire.isOpenBetween(GestionnaireHoraire.createCalendarToday(), calendarOuverture, calendarFermeture);
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * Donne le planing du jour en cours.
+     * @return
+     */
+    public PlanningFoodTruck getPlaningToday(){
+
+        // Creation du calendrier
+        Calendar calendarToday = GestionnaireHoraire.createCalendarToday();
+        // Recuperation du numero du jour
+        int numJourTab = GestionnaireHoraire.getNumeroJourDansLaSemaine(calendarToday) - 1;
+
+        if (getPlanning() != null && getPlanning().get(numJourTab) != null){
+            return getPlanning().get(numJourTab);
+        }else{
+            return null;
+        }
     }
 }

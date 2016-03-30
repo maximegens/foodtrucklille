@@ -19,6 +19,7 @@
     <string name="telechargement_ft_en_cours">Téléchargement des Foods Trucks en cours...</string>
     <string name="liste_ft_vide">Il n\'y a pas de Foods Trucks</string>
     <string name="fermer">Fermé</string>
+    <string name="ouvert">Ouvert</string>
     <string name="prix">Prix</string>
     <string name="prix_en_menu">Prix en menu</string>
 

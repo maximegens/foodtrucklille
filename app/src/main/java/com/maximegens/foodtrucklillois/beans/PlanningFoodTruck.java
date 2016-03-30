@@ -3,6 +3,8 @@ package com.maximegens.foodtrucklillois.beans;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.maximegens.foodtrucklillois.R;
+import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
 
 import java.util.ArrayList;
@@ -114,5 +116,4 @@ public class PlanningFoodTruck implements Parcelable{
     public boolean isOpenSoir(){
         return getSoir() != null && getSoir().getHoraireOuverture() != null && getSoir().getHoraireFermeture() != null;
     }
-
 }

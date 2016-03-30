@@ -36,5 +36,6 @@ public class Constantes {
 
     public static String MIDI = "midi";
     public static String SOIR = "soir";
+    public static String FERMER = "Fermé";
 
 }

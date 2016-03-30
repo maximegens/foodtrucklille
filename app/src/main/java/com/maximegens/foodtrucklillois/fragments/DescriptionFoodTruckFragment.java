@@ -203,50 +203,23 @@ public class DescriptionFoodTruckFragment extends Fragment {
      */
     private void afficheOuverture() {
 
-        // Creation du calendrier
-        Calendar calendarToday = GestionnaireHoraire.createCalendarToday();
+        PlanningFoodTruck planning = ft.getPlaningToday();
+        String ouvert = getString(R.string.ouvert);
 
-        //Planning
-        PlanningFoodTruck planning;
-
-        // Recuperation du numero du jour
-        int numJour = GestionnaireHoraire.getNumeroJourDansLaSemaine(calendarToday);
-        int numJourTab = numJour - 1;
-
-
-        if(ft.getPlanning() != null && ft.getPlanning().get(numJourTab) != null) {
-
-            planning = ft.getPlanning().get(numJourTab);
-            String horaireOuverture = null;
-            String horaireFermeture = null;
-
-            if((GestionnaireHoraire.isBeforeMidi() || GestionnaireHoraire.isMidi()) && planning.getMidi() != null){
-                horaireOuverture = planning.getMidi().getHoraireOuverture();
-                horaireFermeture = planning.getMidi().getHoraireFermeture();
-            }else if ((GestionnaireHoraire.isBeforeSoirButAfterMidi() || GestionnaireHoraire.isSoir()) && planning.getSoir() != null){
-                horaireOuverture = planning.getSoir().getHoraireOuverture();
-                horaireFermeture = planning.getSoir().getHoraireFermeture();
-            }
-
-            if(horaireOuverture != null && horaireFermeture != null){
-                Calendar calendarOuverture = GestionnaireHoraire.createCalendar(horaireOuverture);
-                Calendar calendarFermeture = GestionnaireHoraire.createCalendar(horaireFermeture);
-
-                if(GestionnaireHoraire.isOpenBetween(calendarToday, calendarOuverture, calendarFermeture)){
-                    ouverture.setTextColor(ContextCompat.getColor(getContext(), R.color.green));
-                    if(GestionnaireHoraire.isBeforeMidi() || GestionnaireHoraire.isMidi()){
-                        ouverture.setText("Ouvert jusque "+planning.getMidi().getHeureFermetureEnString());
-                    }else if(GestionnaireHoraire.isBeforeSoirButAfterMidi() || GestionnaireHoraire.isSoir()){
-                        ouverture.setText("Ouvert jusque "+planning.getSoir().getHeureFermetureEnString());
-                    }
-                }else{
-                    ouverture.setTextColor(ContextCompat.getColor(getContext(), R.color.red));
-                    ouverture.setText(getResources().getText(R.string.fermer));
+        if(ft.isOpenNow()){
+            ouverture.setTextColor(ContextCompat.getColor(getContext(), R.color.colorOuverture));
+            if(planning != null){
+                if(GestionnaireHoraire.isBeforeMidi() || GestionnaireHoraire.isMidi()){
+                    ouverture.setText(ouvert+" jusque "+planning.getMidi().getHeureFermetureEnString());
+                }else if(GestionnaireHoraire.isBeforeSoirButAfterMidi() || GestionnaireHoraire.isSoir()){
+                    ouverture.setText(ouvert+" jusque "+planning.getSoir().getHeureFermetureEnString());
                 }
             }else{
-                ouverture.setTextColor(ContextCompat.getColor(getContext(), R.color.red));
-                ouverture.setText(getResources().getText(R.string.fermer));
+                ouverture.setText(ouvert);
             }
+        }else{
+            ouverture.setTextColor(ContextCompat.getColor(getContext(), R.color.colorFermeture));
+            ouverture.setText(getResources().getText(R.string.fermer));
         }
     }
 
@@ -257,45 +230,11 @@ public class DescriptionFoodTruckFragment extends Fragment {
         AlertDialog.Builder builder =
                 new AlertDialog.Builder(getContext(), R.style.AppCompatAlertDialogStyle);
         builder.setTitle("Horaires");
-        builder.setMessage(constructionHoraires());
+        builder.setMessage(ft.constructionHoraires());
         builder.setPositiveButton("OK", null);
         builder.show();
     }
 
-    /**
-     * Construction de l'affichage des horaires du food truck.
-     * @return la chaine contenant les horaires des food trucks.
-     */
-    private String constructionHoraires(){
-        StringBuilder horaires = new StringBuilder("");
-        String fermer = getResources().getText(R.string.fermer).toString();
-
-        if(ft.getPlanning() != null ){
-
-            // Parcours de la liste des jours
-            for(PlanningFoodTruck planning : ft.getPlanning()){
-                // Mise en majuscule de la premier lettre.
-                String jour = planning.getNomJour().substring(0, 1).toUpperCase() + planning.getNomJour().substring(1);
-                horaires.append(jour+" : "+Constantes.RETOUR_CHARIOT);
-                if(planning.isFermerToday()){
-                    horaires.append(Constantes.TABULATION_DOUBLE+ fermer +Constantes.RETOUR_CHARIOT);
-                }else{
-                    if(planning.isOpenMidi()) {
-                        horaires.append(Constantes.TABULATION_DOUBLE+"Midi : "+planning.getMidi().getHeureOuvertureEnString()+" - "+planning.getMidi().getHeureFermetureEnString()+Constantes.RETOUR_CHARIOT);
-                    }else {
-                        horaires.append(Constantes.TABULATION_DOUBLE+"Midi : "+ fermer+ Constantes.RETOUR_CHARIOT);
-                    }
-                    if(planning.isOpenSoir()) {
-                        horaires.append(Constantes.TABULATION_DOUBLE+"Soir : "+planning.getSoir().getHeureOuvertureEnString()+" - "+planning.getSoir().getHeureFermetureEnString()+Constantes.RETOUR_CHARIOT);
-                    }else {
-                        horaires.append(Constantes.TABULATION_DOUBLE+"Soir : "+fermer+Constantes.RETOUR_CHARIOT);
-                    }
-                }
-                horaires.append(Constantes.RETOUR_CHARIOT);
-            }
-        }
-        return horaires.toString();
-    }
 
     @Override
     public void onAttach(Context context) {

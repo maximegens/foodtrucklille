@@ -2,9 +2,9 @@ package com.maximegens.foodtrucklillois.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -25,7 +25,7 @@ public class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
     private Context context;
     private TextView textViewNom;
     private Button go;
-
+    private TextView ouverture;
     private ImageView imageView;
 
     /**
@@ -38,6 +38,7 @@ public class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
         this.context = context;
         textViewNom = (TextView) itemView.findViewById(R.id.nom_ft_plus_proche_card_view);
         imageView = (ImageView) itemView.findViewById(R.id.logo_ft_plus_proche_card_view);
+        ouverture = (TextView) itemView.findViewById(R.id.ouverture_ft_plus_proche_card_view);
         go = (Button) itemView.findViewById(R.id.button_ft_go);
     }
 
@@ -59,6 +60,15 @@ public class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
                     .into(imageView);
         }
 
+        // Indique si le food truck le plus proche est actuellement ouvert ou fermé.
+        if(ft.isOpenNow()){
+            ouverture.setText(context.getString(R.string.ouvert));
+            ouverture.setTextColor(ContextCompat.getColor(context, R.color.colorOuverture));
+        }else{
+            ouverture.setText(context.getString(R.string.fermer));
+            ouverture.setTextColor(ContextCompat.getColor(context, R.color.colorFermeture));
+        }
+
         // Clique sur le boutton 'GO' permettant d'afficher l'itinéaire vers le food truck".
         go.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,13 +78,13 @@ public class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
                 String longitude = null;
                 PlanningFoodTruck planning = ft.getPlanning().get(GestionnaireHoraire.getNumeroJourDansLaSemaine() - 1);
 
-                if(GestionnaireHoraire.isBeforeMidi() || GestionnaireHoraire.isMidi()) {
+                if(GestionnaireHoraire.isMidiOrBeforeMidi()) {
                     //TODO remplacer par l'adresse la plus proche.
                     if(planning != null && planning.getMidi() != null && planning.getMidi().getAdresses() != null){
                         latitude = planning.getMidi().getAdresses().get(0).getLatitude();
                         longitude = planning.getMidi().getAdresses().get(0).getLongitude();
                     }
-                }if(GestionnaireHoraire.isBeforeSoirButAfterMidi() || GestionnaireHoraire.isSoir()){
+                }if(GestionnaireHoraire.isSoirOrBeforeSoirButAfterMidi()){
                     if(planning != null && planning.getSoir() != null && planning.getSoir().getAdresses() != null){
                         latitude = planning.getSoir().getAdresses().get(0).getLatitude();
                         longitude = planning.getSoir().getAdresses().get(0).getLongitude();
