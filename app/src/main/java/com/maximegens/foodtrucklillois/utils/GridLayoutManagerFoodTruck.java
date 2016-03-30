@@ -54,7 +54,7 @@ public class GridLayoutManagerFoodTruck {
         gridLayoutManagerLandscape.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                return position == 0 ? 2 : 1;
+                return position == 0 ? 3 : 1;
             }
         });
         return gridLayoutManagerLandscape;
