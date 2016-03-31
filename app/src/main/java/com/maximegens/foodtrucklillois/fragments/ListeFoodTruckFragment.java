@@ -23,7 +23,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.adapters.ListeFTAdapter;
@@ -37,7 +36,6 @@ import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
 import com.maximegens.foodtrucklillois.utils.GridLayoutManagerFoodTruck;
 import com.maximegens.foodtrucklillois.utils.SortByDistanceFT;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 

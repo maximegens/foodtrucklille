@@ -205,7 +205,9 @@ public class DescriptionFoodTruckFragment extends Fragment {
 
         PlanningFoodTruck planning = ft.getPlaningToday();
         String ouvert = getString(R.string.ouvert);
+        String fermer = getString(R.string.fermer);
 
+        // Si le Food truck est actuellement ouvert.
         if(ft.isOpenNow()){
             ouverture.setTextColor(ContextCompat.getColor(getContext(), R.color.colorOuverture));
             if(planning != null){
@@ -217,9 +219,19 @@ public class DescriptionFoodTruckFragment extends Fragment {
             }else{
                 ouverture.setText(ouvert);
             }
+        // Si le Food truck est fermé mais ouvres aujourd'hui.
+        }else if(ft.isOpenToday()) {
+            ouverture.setTextColor(ContextCompat.getColor(getContext(), R.color.colorFermeture));
+            if (GestionnaireHoraire.isBeforeMidi()) {
+                ouverture.setText(fermer + " : ouverture à " + planning.getMidi().getHeureOuvertureEnString());
+            } else if (GestionnaireHoraire.isBeforeSoirButAfterMidi()) {
+                ouverture.setText(fermer + " : ouverture à " + planning.getSoir().getHeureOuvertureEnString());
+            } else {
+                ouverture.setText(fermer);
+            }
         }else{
             ouverture.setTextColor(ContextCompat.getColor(getContext(), R.color.colorFermeture));
-            ouverture.setText(getResources().getText(R.string.fermer));
+            ouverture.setText(fermer+ " aujourd'hui");
         }
     }
 

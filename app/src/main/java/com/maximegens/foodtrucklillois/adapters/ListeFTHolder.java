@@ -46,7 +46,7 @@ public class ListeFTHolder extends RecyclerView.ViewHolder {
         textViewNom.setText(ft.getNom());
         Resources res = context.getResources();
 
-        if(ft.getDistanceFromUser() != 0){
+        if(ft.getDistanceFromUser() != Constantes.FT_FERMER_DISTANCE){
             distance.setText(String.valueOf(Utils.metreToKm(ft.getDistanceFromUser()))+ Constantes.KM);
         }else{
             distance.setTextColor(ContextCompat.getColor(context, R.color.colorFermeture));

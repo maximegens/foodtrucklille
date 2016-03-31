@@ -55,6 +55,7 @@ public class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
         textViewNom.setText(ft.getNom());
         Resources res = context.getResources();
 
+        // Affichage du logo.
         if(ft.getLogo() != null){
             int resID = res.getIdentifier(ft.getLogo() , "mipmap", context.getPackageName());
             Picasso.with(context)
@@ -66,13 +67,16 @@ public class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
                     .into(imageView);
         }
 
-        if(ft.getDistanceFromUser() == 0 && ft.isOpenNow()){
+        // Affichage de la distance entre l'utilisateur et le food truck le plsu proche.
+        if(ft.getDistanceFromUser() == Constantes.FT_FERMER_DISTANCE && ft.isOpenToday()){
             distance.setText(context.getString(R.string.calcul_distance_en_cours));
-        }else{
+        }else if (ft.getDistanceFromUser() != Constantes.FT_FERMER_DISTANCE && ft.isOpenToday()){
             distance.setText(String.valueOf(Utils.metreToKm(ft.getDistanceFromUser()))+ Constantes.KM);
+        }else{
+            distance.setText("");
         }
 
-        // Indique si le food truck le plus proche est actuellement ouvert ou fermé.
+        // Affichage de l'ouverture du Food Truck.
         if(ft.isOpenNow()){
             ouverture.setText(context.getString(R.string.ouvert));
             ouverture.setTextColor(ContextCompat.getColor(context, R.color.colorOuverture));
@@ -104,7 +108,7 @@ public class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
                     }
                 }
 
-                // Verification que la latitude et la longitude sont différent de nul.
+                // Verification que la latitude et la longitude sont différent de null.
                 if(latitude != null && longitude != null){
                     if(ft.isOpenNow()){
                         lanceItineraire(latitude,longitude);
