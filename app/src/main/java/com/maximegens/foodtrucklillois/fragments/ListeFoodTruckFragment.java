@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
@@ -44,10 +45,11 @@ import java.util.List;
  * Class ListeFoodTruckFragment.
  * Fragment gérant l'affichage de la liste des Food trucks.
  */
-public class ListeFoodTruckFragment extends Fragment implements LocationListener{
+public class ListeFoodTruckFragment extends Fragment implements LocationListener {
 
     private LocationManager locationManager;
     private ProgressBar loader;
+    private boolean isAffichageClassique;
     private TextView indicationChargementFT;
     private TextView indicationListeFTVide;
     private ListeFTAdapter listeFTAdapter;
@@ -77,7 +79,7 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.fragment_liste_ft,container,false);
+        return inflater.inflate(R.layout.fragment_liste_ft, container, false);
     }
 
     /**
@@ -90,26 +92,33 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         super.onViewCreated(view, savedInstanceState);
 
         getActivity().setTitle(getString(R.string.title_liste_food_truck));
-
-
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         layoutManagerFT = new GridLayoutManagerFoodTruck(getContext());
-        loader = (ProgressBar)view.findViewById(R.id.loader_download_ft);
+        loader = (ProgressBar) view.findViewById(R.id.loader_download_ft);
         indicationChargementFT = (TextView) view.findViewById(R.id.indication_chargement_ft);
         indicationListeFTVide = (TextView) view.findViewById(R.id.indication_liste_ft_vide);
         recyclerViewListeFT = (RecyclerView) view.findViewById(R.id.recycler_view_liste_ft);
         swipeRefreshLayoutListeFT = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayoutListeFT);
         recyclerViewListeFT.setHasFixedSize(true);
 
-        // Ajout des FTs interne dans l'adapters de la liste.
-        listeFTAdapter = new ListeFTAdapter(Constantes.lesFTs, getContext());
-        recyclerViewListeFT.setAdapter(listeFTAdapter);
-
-        // Creation de l'agencement des Foods Trucks.
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-            recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutPortrait());
-        }else{
-            recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutLandscape());
+        // Creation de l'agencement des Foods Trucks en fonction de l'activation du GPS.
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            isAffichageClassique = false;
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutPortrait());
+            } else {
+                recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutLandscape());
+            }
+        } else {
+            isAffichageClassique = true;
+            // Creation de l'agencement des Foods Trucks en fonction de l'orientation ( Portrait : par 2 - Paysage : par 3)
+            int nombreColonne = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? 2 : 3;
+            recyclerViewListeFT.setLayoutManager(new GridLayoutManager(getContext(), nombreColonne));
         }
+
+        // Ajout des FTs interne dans l'adapters de la liste.
+        listeFTAdapter = new ListeFTAdapter(Constantes.lesFTs, getContext(), isAffichageClassique);
+        recyclerViewListeFT.setAdapter(listeFTAdapter);
 
         /**
          * Implementation de la fonction du SwipeRefresh.
@@ -123,13 +132,34 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         });
 
         // Chargement des données des Foods trucks automatiquement.
-        if(Constantes.lesFTs == null || Constantes.lesFTs.isEmpty()){
+        if (Constantes.lesFTs == null || Constantes.lesFTs.isEmpty()) {
             loadDataFoodTruck(false);
         }
 
     }
 
+    /**
+     * OnResume.
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        addUpdatesLocation();
+    }
 
+    /**
+     * OnPause.
+     */
+    @Override
+    public void onPause() {
+        super.onPause();
+        removeUpdatesLocation();
+    }
+
+    /**
+     * OnAttach.
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -137,6 +167,9 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
             listeFoodTruckFragmentCallback = (ListeFoodTruckFragmentCallback) context;
     }
 
+    /**
+     * OnDetach.
+     */
     @Override
     public void onDetach() {
         super.onDetach();
@@ -172,14 +205,57 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
             }
         });
 
+        // traitement lorsque la recherche est activé.
+        MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                removeUpdatesLocation();
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                addUpdatesLocation();
+                return true;
+            }
+        });
+
+    }
+
+    /**
+     * Mise à jour de la liste des FoodTrucks pendant la recherche.
+     * @param recherche Le contenu de la recherche.
+     */
+    private void updateRechercheFT(String recherche) {
+        boolean vide = recherche.isEmpty();
+        final List<FoodTruck> filteredModelList = vide ? Constantes.lesFTs : FoodTruck.filterListeFTs(Constantes.lesFTs, recherche);
+
+        // Creation de l'agencement des Foods Trucks en fonction de l'orientation ( Portrait : par 2 - Paysage : par 3)
+        int nombreColonne = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? 2 : 3;
+
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && vide) {
+            isAffichageClassique = false;
+            if (nombreColonne == 2) {
+                recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutPortrait());
+            } else {
+                recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutLandscape());
+            }
+        } else {
+            isAffichageClassique = true;
+            recyclerViewListeFT.setLayoutManager(new GridLayoutManager(getContext(), nombreColonne));
+        }
+
+        // Mise à jour des FT dans l'adpater.
+        listeFTAdapter.setFTs(filteredModelList, isAffichageClassique);
+        listeFTAdapter.notifyDataSetChanged();
     }
 
     /**
      * Chargement des données des Food trucks par Internet ou en interne si il n'existe pas de connexion.
      */
     private void loadDataFoodTruck(boolean bySwiperefresh) {
-        RetreiveJSONListeFT retreiveJSONListeFT = new RetreiveJSONListeFT(listeFTAdapter,getContext(),bySwiperefresh,indicationListeFTVide);
-        retreiveJSONListeFT.setProgressBar(loader,indicationChargementFT);
+        RetreiveJSONListeFT retreiveJSONListeFT = new RetreiveJSONListeFT(listeFTAdapter, getContext(), bySwiperefresh, indicationListeFTVide, getContext());
+        retreiveJSONListeFT.setProgressBar(loader, indicationChargementFT);
         retreiveJSONListeFT.setswipeRefresh(swipeRefreshLayoutListeFT);
         retreiveJSONListeFT.execute(Internet.isNetworkAvailable(getActivity().getApplicationContext()));
     }
@@ -187,45 +263,27 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
     /**
      * Rafraichie la liste des Foods trucks.
      */
-    private void refreshListeFT(){
+    private void refreshListeFT() {
         loadDataFoodTruck(true);
     }
 
-
     /**
-     * Mise à jour de la liste des FoodTrucks pendant la recherche.
-     * @param recherche Le contenu de la recherche.
+     * Supprimes la mise a jour de la postion du GPS.
      */
-    private void updateRechercheFT(String recherche){
-        boolean vide = recherche.isEmpty();
-
-        final List<FoodTruck> filteredModelList = vide ? Constantes.lesFTs : FoodTruck.filterListeFTs(Constantes.lesFTs, recherche);
-        listeFTAdapter.setFTs(filteredModelList,true);
-
-        // Creation de l'agencement des Foods Trucks.
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-            if(vide){
-                recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutPortrait());
-            }else{
-                recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutPortraitAfterRecherche());
+    public void removeUpdatesLocation() {
+        if(locationManager != null){
+            // Demande de permission pour Android 6.0 (API 23).
+            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
             }
-        } else {
-            if(vide){
-                recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutLandscape());
-            }else{
-                recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutLandscapeAfterRecherche());
-            }
+            locationManager.removeUpdates(this);
         }
-
-        // Mise à jour des FT dans l'adpater.
-        listeFTAdapter.setFTs(filteredModelList, !vide);
-        listeFTAdapter.notifyDataSetChanged();
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
+    /**
+     * Ajoute la mise à jour de la position du GPS.
+     */
+    public void addUpdatesLocation() {
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             // Demande de permission pour Android 6.0 (API 23).
@@ -237,15 +295,6 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, Constantes.TIME_BETWEEN_UPDATE_GPS, 0, this);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        // Demande de permission pour Android 6.0 (API 23).
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        locationManager.removeUpdates(this);
-    }
 
 
     @Override
@@ -258,22 +307,22 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
 
         //TODO a mettre dans une asyntasck
         // Pour chaque Food Truck on calcul sa distance par rapport à l'utilisateur.
-        for (FoodTruck ft: Constantes.lesFTs) {
+        for (FoodTruck ft : Constantes.lesFTs) {
 
             //On verifie si le food truck est ouvert aujoud'hui.
-            if(ft.isOpenToday()){
+            if (ft.isOpenToday()) {
                 Location loc = new Location("");
                 PlanningFoodTruck planning = ft.getPlaningToday();
-                if(planning != null){
-                    if(GestionnaireHoraire.isMidiOrBeforeMidi()){
-                        if(planning.getMidi() != null && planning.getMidi().getAdresses() != null && planning.getMidi().getAdresses().get(0) != null
-                                && planning.getMidi().getAdresses().get(0).getLatitude() != null && planning.getMidi().getAdresses().get(0).getLongitude() != null){
+                if (planning != null) {
+                    if (GestionnaireHoraire.isMidiOrBeforeMidi()) {
+                        if (planning.getMidi() != null && planning.getMidi().getAdresses() != null && planning.getMidi().getAdresses().get(0) != null
+                                && planning.getMidi().getAdresses().get(0).getLatitude() != null && planning.getMidi().getAdresses().get(0).getLongitude() != null) {
                             loc.setLatitude(Double.parseDouble(planning.getMidi().getAdresses().get(0).getLatitude()));
                             loc.setLongitude(Double.parseDouble(planning.getMidi().getAdresses().get(0).getLongitude()));
                         }
-                    }else if(GestionnaireHoraire.isSoirOrBeforeSoirButAfterMidi()){
-                        if(planning.getSoir() != null && planning.getSoir().getAdresses() != null && planning.getSoir().getAdresses().get(0) != null
-                                && planning.getSoir().getAdresses().get(0).getLatitude() != null && planning.getSoir().getAdresses().get(0).getLongitude() != null){
+                    } else if (GestionnaireHoraire.isSoirOrBeforeSoirButAfterMidi()) {
+                        if (planning.getSoir() != null && planning.getSoir().getAdresses() != null && planning.getSoir().getAdresses().get(0) != null
+                                && planning.getSoir().getAdresses().get(0).getLatitude() != null && planning.getSoir().getAdresses().get(0).getLongitude() != null) {
                             loc.setLatitude(Double.parseDouble(planning.getSoir().getAdresses().get(0).getLatitude()));
                             loc.setLongitude(Double.parseDouble(planning.getSoir().getAdresses().get(0).getLongitude()));
                         }
@@ -281,7 +330,7 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
                     // On calcul et on ajout la distance depuis l'utilisateur au Food truck.
                     ft.setDistanceFromUser(location.distanceTo(loc));
                 }
-            }else{
+            } else {
                 ft.setDistanceFromUser(Constantes.FT_FERMER_DISTANCE);
             }
         }
@@ -307,4 +356,5 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
     public void onProviderDisabled(String provider) {
 
     }
+
 }

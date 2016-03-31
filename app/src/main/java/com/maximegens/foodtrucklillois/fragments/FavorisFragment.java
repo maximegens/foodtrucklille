@@ -62,7 +62,7 @@ public class FavorisFragment extends Fragment {
         recyclerViewFavoris.setHasFixedSize(true);
 
         // Creation de l'adapter.
-        listeFTAdapter = new ListeFTAdapter(null, getContext());
+        listeFTAdapter = new ListeFTAdapter(null, getContext(),true);
         recyclerViewFavoris.setAdapter(listeFTAdapter);
 
         // Récupération des Foods Trucks mis en favoris.

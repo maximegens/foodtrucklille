@@ -2,6 +2,7 @@ package com.maximegens.foodtrucklillois.utils;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.location.LocationManager;
 import android.support.v7.widget.GridLayoutManager;
 
 /**

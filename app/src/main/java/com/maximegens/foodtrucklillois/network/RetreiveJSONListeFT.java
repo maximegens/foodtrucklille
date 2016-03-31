@@ -1,6 +1,7 @@
 package com.maximegens.foodtrucklillois.network;
 
 import android.content.Context;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -36,6 +37,7 @@ public class RetreiveJSONListeFT extends AsyncTask<Boolean, Integer, FoodTruckAp
     private boolean swipeRefreshActive;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ListeFTAdapter listeFTAdapter = null;
+    private Context context;
 
     Context ctx;
 
@@ -45,11 +47,12 @@ public class RetreiveJSONListeFT extends AsyncTask<Boolean, Integer, FoodTruckAp
      * @param ctx le context.
      * @param swipeRefreshActive indique si l'utilisateur à lui meme demander le refresh de la liste des FT avec le pull to refresh.
      */
-    public RetreiveJSONListeFT(ListeFTAdapter ListeFTAdapter, Context ctx, boolean swipeRefreshActive, TextView indicationListeFTVide){
+    public RetreiveJSONListeFT(ListeFTAdapter ListeFTAdapter, Context ctx, boolean swipeRefreshActive, TextView indicationListeFTVide, Context context){
         this.ctx = ctx;
         this.listeFTAdapter = ListeFTAdapter;
         this.swipeRefreshActive = swipeRefreshActive;
         this.indicationListeFTVide = indicationListeFTVide;
+        this.context = context;
         apiJson = new GestionJsonAPI(this.ctx);
     }
 
@@ -125,8 +128,15 @@ public class RetreiveJSONListeFT extends AsyncTask<Boolean, Integer, FoodTruckAp
         // Pour l'instant on sélection la ville de Lille à l'index 0.
         List<FoodTruck> lesFts = apiJson.getListeFTByVille(foodTruckApp,0);
 
-        // Mise à jour de la liste dans l'adapter.
-        listeFTAdapter.setFTs(lesFts,false);
+        // On verifie si le GPS est activé et on met à jour les listes.
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            listeFTAdapter.setFTs(lesFts,false);
+        }else{
+            listeFTAdapter.setFTs(lesFts,true);
+        }
+
+        // Affectation des ft récupérer a la varibale global.
         Constantes.lesFTs = lesFts;
 
         // On arrete le swipeRefresh si il a était lancé sinon on masque le loader du début de lancement de l'applicaiton.
