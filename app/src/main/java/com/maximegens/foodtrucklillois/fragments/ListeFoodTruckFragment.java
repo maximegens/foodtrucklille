@@ -3,12 +3,15 @@ package com.maximegens.foodtrucklillois.fragments;
 import android.Manifest;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -16,12 +19,15 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -49,6 +55,8 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
 
     private LocationManager locationManager;
     private ProgressBar loader;
+    private LinearLayout linearActiveGPS;
+    private Button activateGPS;
     private boolean isAffichageClassique;
     private TextView indicationChargementFT;
     private TextView indicationListeFTVide;
@@ -99,26 +107,21 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         indicationListeFTVide = (TextView) view.findViewById(R.id.indication_liste_ft_vide);
         recyclerViewListeFT = (RecyclerView) view.findViewById(R.id.recycler_view_liste_ft);
         swipeRefreshLayoutListeFT = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayoutListeFT);
+        linearActiveGPS = (LinearLayout) view.findViewById(R.id.linear_gps_desactive);
+        activateGPS = (Button) view.findViewById(R.id.button_activer_gps);
         recyclerViewListeFT.setHasFixedSize(true);
 
         // Creation de l'agencement des Foods Trucks en fonction de l'activation du GPS.
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            isAffichageClassique = false;
-            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutPortrait());
-            } else {
-                recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutLandscape());
-            }
-        } else {
-            isAffichageClassique = true;
-            // Creation de l'agencement des Foods Trucks en fonction de l'orientation ( Portrait : par 2 - Paysage : par 3)
-            int nombreColonne = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? 2 : 3;
-            recyclerViewListeFT.setLayoutManager(new GridLayoutManager(getContext(), nombreColonne));
-        }
+        updateLayoutRecyclerView();
 
         // Ajout des FTs interne dans l'adapters de la liste.
         listeFTAdapter = new ListeFTAdapter(Constantes.lesFTs, getContext(), isAffichageClassique);
         recyclerViewListeFT.setAdapter(listeFTAdapter);
+
+        // Chargement des données des Foods trucks automatiquement (soit Online soit en local).
+        if (Constantes.lesFTs == null || Constantes.lesFTs.isEmpty()) {
+            loadDataFoodTruck(false);
+        }
 
         /**
          * Implementation de la fonction du SwipeRefresh.
@@ -131,10 +134,13 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
             }
         });
 
-        // Chargement des données des Foods trucks automatiquement.
-        if (Constantes.lesFTs == null || Constantes.lesFTs.isEmpty()) {
-            loadDataFoodTruck(false);
-        }
+        // Bouton permettant d'activer le GPS.
+        activateGPS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                turnGPSOn();
+            }
+        });
 
     }
 
@@ -191,6 +197,7 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
 
+        // Traitement de la recherche.
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -205,7 +212,7 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
             }
         });
 
-        // traitement lorsque la recherche est activé.
+        // Traitement lorsque la recherche est activé ou refermé.
         MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
@@ -232,10 +239,9 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
 
         // Creation de l'agencement des Foods Trucks en fonction de l'orientation ( Portrait : par 2 - Paysage : par 3)
         int nombreColonne = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? 2 : 3;
-
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && vide) {
             isAffichageClassique = false;
-            if (nombreColonne == 2) {
+            if (nombreColonne == 2 ) {
                 recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutPortrait());
             } else {
                 recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutLandscape());
@@ -305,6 +311,9 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
             return;
         }
 
+        // Mise à jour de l'affichage.
+        updateLayoutRecyclerView();
+
         //TODO a mettre dans une asyntasck
         // Pour chaque Food Truck on calcul sa distance par rapport à l'utilisateur.
         for (FoodTruck ft : Constantes.lesFTs) {
@@ -342,19 +351,47 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
 
     }
 
+    /**
+     * Mise à jour de l'agencement de la recyclerView en fonction de l'activation du GPS ou non et de l'orientation.
+     */
+    private void updateLayoutRecyclerView() {
+        int nombreColonne = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? 2 : 3;
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            linearActiveGPS.setVisibility(View.GONE);
+            isAffichageClassique = false;
+            if (nombreColonne == 2) {
+                recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutPortrait());
+            } else {
+                recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutLandscape());
+            }
+        } else {
+            linearActiveGPS.setVisibility(View.VISIBLE);
+            isAffichageClassique = true;
+            recyclerViewListeFT.setLayoutManager(new GridLayoutManager(getContext(), nombreColonne));
+        }
+    }
+
+    /**
+     * Active le GPS.
+     */
+    public void turnGPSOn() {
+        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        startActivity(intent);
+    }
+
+
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-
+        if(provider != null){
+            Log.v(provider.intern(),String.valueOf(status));
+        }
     }
 
     @Override
     public void onProviderEnabled(String provider) {
-
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-
     }
-
 }

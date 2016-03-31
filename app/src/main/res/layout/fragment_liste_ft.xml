@@ -43,10 +43,38 @@
                 android:textStyle="italic"
                 android:visibility="gone"/>
 
+            <LinearLayout
+                android:id="@+id/linear_gps_desactive"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gps_desactive"
+                    android:padding="5dp"
+                    android:layout_weight="1"
+                    android:textStyle="italic"/>
+
+                <Button
+                    android:id="@+id/button_activer_gps"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/colorAccent"
+                    android:text="@string/activer_gps"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    style="?android:attr/borderlessButtonStyle"/>
+
+            </LinearLayout>
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view_liste_ft"
-                android:layout_below="@id/linear_plus_proche_ft"
+                android:layout_below="@id/linear_gps_desactive"
                 android:layout_width="match_parent"
+                android:visibility="visible"
                 android:layout_height="match_parent">
 
             </android.support.v7.widget.RecyclerView>
