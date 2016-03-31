@@ -66,7 +66,11 @@ public class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
                     .into(imageView);
         }
 
-        distance.setText(String.valueOf(Utils.metreToKm(ft.getDistanceFromUser()))+ Constantes.KM);
+        if(ft.getDistanceFromUser() == 0 && ft.isOpenNow()){
+            distance.setText(context.getString(R.string.calcul_distance_en_cours));
+        }else{
+            distance.setText(String.valueOf(Utils.metreToKm(ft.getDistanceFromUser()))+ Constantes.KM);
+        }
 
         // Indique si le food truck le plus proche est actuellement ouvert ou fermé.
         if(ft.isOpenNow()){

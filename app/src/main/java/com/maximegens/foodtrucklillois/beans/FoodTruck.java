@@ -382,6 +382,32 @@ public class FoodTruck implements Parcelable{
     }
 
     /**
+     * Methode permettant de savoir si le food truc est ouvert aujoud'hui.
+     */
+    public boolean isOpenToday() {
+
+        PlanningFoodTruck planning = getPlaningToday();
+        String horaireOuverture = null;
+        String horaireFermeture = null;
+
+        if (planning != null) {
+            // On verifie si on se trouve le midi ou le soir afin de récupérer les horaires d"ouverture correspondant.
+            if (planning.getMidi() != null && GestionnaireHoraire.isMidiOrBeforeMidi()) {
+                horaireOuverture = planning.getMidi().getHoraireOuverture();
+                horaireFermeture = planning.getMidi().getHoraireFermeture();
+            } else if (planning.getSoir() != null && GestionnaireHoraire.isSoirOrBeforeSoirButAfterMidi()) {
+                horaireOuverture = planning.getSoir().getHoraireOuverture();
+                horaireFermeture = planning.getSoir().getHoraireFermeture();
+            }
+            // On verifie si le food truck posséde une heure d'ouverture et de fermeture , donc il est ouvert aujoud'hui.
+            return horaireOuverture != null && horaireFermeture != null ? true : false;
+
+        }else{
+            return false;
+        }
+    }
+
+    /**
      * Donne le planing du jour en cours.
      * @return
      */

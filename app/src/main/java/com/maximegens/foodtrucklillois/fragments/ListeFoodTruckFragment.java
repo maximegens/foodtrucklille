@@ -229,11 +229,6 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
     public void onResume() {
         super.onResume();
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        if ( !locationManager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ){
-            Toast.makeText(getContext(), "GPS is disabled!", Toast.LENGTH_LONG).show();
-        }else{
-            Toast.makeText(getContext(), "GPS is enabled!", Toast.LENGTH_LONG).show();
-        }
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             // Demande de permission pour Android 6.0 (API 23).
             if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -266,26 +261,34 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         //TODO a mettre dans une asyntasck
         // Pour chaque Food Truck on calcul sa distance par rapport à l'utilisateur.
         for (FoodTruck ft: Constantes.lesFTs) {
-            Location loc = new Location("");
-            PlanningFoodTruck planning = ft.getPlaningToday();
-            if(planning != null){
-                if(GestionnaireHoraire.isMidiOrBeforeMidi()){
-                    if(planning.getMidi() != null && planning.getMidi().getAdresses() != null && planning.getMidi().getAdresses().get(0) != null
-                            && planning.getMidi().getAdresses().get(0).getLatitude() != null && planning.getMidi().getAdresses().get(0).getLongitude() != null){
-                        loc.setLatitude(Double.parseDouble(planning.getMidi().getAdresses().get(0).getLatitude()));
-                        loc.setLongitude(Double.parseDouble(planning.getMidi().getAdresses().get(0).getLongitude()));
+
+            //On verifie si le food truck est ouvert aujoud'hui.
+            if(ft.isOpenToday()){
+                Location loc = new Location("");
+                PlanningFoodTruck planning = ft.getPlaningToday();
+                if(planning != null){
+                    if(GestionnaireHoraire.isMidiOrBeforeMidi()){
+                        if(planning.getMidi() != null && planning.getMidi().getAdresses() != null && planning.getMidi().getAdresses().get(0) != null
+                                && planning.getMidi().getAdresses().get(0).getLatitude() != null && planning.getMidi().getAdresses().get(0).getLongitude() != null){
+                            loc.setLatitude(Double.parseDouble(planning.getMidi().getAdresses().get(0).getLatitude()));
+                            loc.setLongitude(Double.parseDouble(planning.getMidi().getAdresses().get(0).getLongitude()));
+                        }
+                    }else if(GestionnaireHoraire.isSoirOrBeforeSoirButAfterMidi()){
+                        if(planning.getSoir() != null && planning.getSoir().getAdresses() != null && planning.getSoir().getAdresses().get(0) != null
+                                && planning.getSoir().getAdresses().get(0).getLatitude() != null && planning.getSoir().getAdresses().get(0).getLongitude() != null){
+                            loc.setLatitude(Double.parseDouble(planning.getSoir().getAdresses().get(0).getLatitude()));
+                            loc.setLongitude(Double.parseDouble(planning.getSoir().getAdresses().get(0).getLongitude()));
+                        }
                     }
-                }else if(GestionnaireHoraire.isSoirOrBeforeSoirButAfterMidi()){
-                    if(planning.getSoir() != null && planning.getSoir().getAdresses() != null && planning.getSoir().getAdresses().get(0) != null
-                            && planning.getSoir().getAdresses().get(0).getLatitude() != null && planning.getSoir().getAdresses().get(0).getLongitude() != null){
-                        loc.setLatitude(Double.parseDouble(planning.getSoir().getAdresses().get(0).getLatitude()));
-                        loc.setLongitude(Double.parseDouble(planning.getSoir().getAdresses().get(0).getLongitude()));
-                    }
+                    // On calcul et on ajout la distance depuis l'utilisateur au Food truck.
+                    ft.setDistanceFromUser(location.distanceTo(loc));
                 }
-                // On ajout la distance depuis l'utilisateur au Food truck.
-                ft.setDistanceFromUser(location.distanceTo(loc));
+            }else{
+                ft.setDistanceFromUser(Constantes.FT_FERMER_DISTANCE);
             }
         }
+
+        // On trie la liste des Food trucks par distance.
         Collections.sort(Constantes.lesFTs, new SortByDistanceFT());
         listeFTAdapter.setFTs(Constantes.lesFTs, false);
         listeFTAdapter.notifyDataSetChanged();

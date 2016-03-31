@@ -3,6 +3,7 @@ package com.maximegens.foodtrucklillois.adapters;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -45,7 +46,12 @@ public class ListeFTHolder extends RecyclerView.ViewHolder {
         textViewNom.setText(ft.getNom());
         Resources res = context.getResources();
 
-        distance.setText(String.valueOf(Utils.metreToKm(ft.getDistanceFromUser()))+ Constantes.KM);
+        if(ft.getDistanceFromUser() != 0){
+            distance.setText(String.valueOf(Utils.metreToKm(ft.getDistanceFromUser()))+ Constantes.KM);
+        }else{
+            distance.setTextColor(ContextCompat.getColor(context, R.color.colorFermeture));
+            distance.setText(context.getString(R.string.fermer));
+        }
 
         if(ft.getLogo() != null){
             int resID = res.getIdentifier(ft.getLogo() , "mipmap", context.getPackageName());

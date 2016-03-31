@@ -19,6 +19,15 @@ public class SortByDistanceFT implements Comparator<FoodTruck> {
      */
     public int compare(FoodTruck ft1, FoodTruck ft2) {
 
-        return (ft1.getDistanceFromUser() < ft2.getDistanceFromUser() ? -1 : (ft1.getDistanceFromUser() == ft2.getDistanceFromUser() ? 0 : 1));
+        if(ft1.getDistanceFromUser() < ft2.getDistanceFromUser() && ft1.getDistanceFromUser() != 0  && ft2.getDistanceFromUser() != 0){
+            return -1;
+        }
+        if(ft1.getDistanceFromUser() == ft2.getDistanceFromUser()){
+            return 0;
+        }else{
+            return 1;
+        }
+
+        //return (ft1.getDistanceFromUser() < ft2.getDistanceFromUser() ? -1 : (ft1.getDistanceFromUser() == ft2.getDistanceFromUser() ? 0 : 1));
     }
 }

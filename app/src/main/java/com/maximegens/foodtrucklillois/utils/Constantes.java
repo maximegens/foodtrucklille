@@ -38,6 +38,7 @@ public class Constantes {
     public static String SOIR = "soir";
     public static String FERMER = "Fermé";
     public static String KM = "km";
+    public static float FT_FERMER_DISTANCE = 0;
 
 
 }
