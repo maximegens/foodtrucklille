@@ -190,4 +190,15 @@ public class GestionnaireHoraire {
         }
     }
 
+    /**
+     * Indique si l'heure de la date du jour est avant l'heure de la date passé en paramétre.
+     * @param date la date a verifier.
+     * @return true si l'heure du jour est avant l'heure de la date.
+     */
+    public static boolean isTodayBeforeDate(String date){
+        Calendar calendarDate = createCalendar(date);
+        Calendar today = createCalendarToday();
+        return today.get(Calendar.HOUR_OF_DAY) < calendarDate.get(Calendar.HOUR_OF_DAY);
+    }
+
 }

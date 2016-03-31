@@ -222,9 +222,9 @@ public class DescriptionFoodTruckFragment extends Fragment {
         // Si le Food truck est fermé mais ouvres aujourd'hui.
         }else if(ft.isOpenToday()) {
             ouverture.setTextColor(ContextCompat.getColor(getContext(), R.color.colorFermeture));
-            if (GestionnaireHoraire.isMidiOrBeforeMidi()) {
+            if (GestionnaireHoraire.isMidiOrBeforeMidi() && GestionnaireHoraire.isTodayBeforeDate(planning.getMidi().getHoraireOuverture())) {
                 ouverture.setText(fermer + " : ouverture à " + planning.getMidi().getHeureOuvertureEnString());
-            } else if (GestionnaireHoraire.isSoirOrBeforeSoirButAfterMidi()) {
+            } else if (GestionnaireHoraire.isSoirOrBeforeSoirButAfterMidi() && GestionnaireHoraire.isTodayBeforeDate(planning.getSoir().getHoraireOuverture())) {
                 ouverture.setText(fermer + " : ouverture à " + planning.getSoir().getHeureOuvertureEnString());
             } else {
                 ouverture.setText(fermer);
