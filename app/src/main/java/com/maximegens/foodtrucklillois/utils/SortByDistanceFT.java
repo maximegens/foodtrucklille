@@ -28,6 +28,5 @@ public class SortByDistanceFT implements Comparator<FoodTruck> {
             return 1;
         }
 
-        //return (ft1.getDistanceFromUser() < ft2.getDistanceFromUser() ? -1 : (ft1.getDistanceFromUser() == ft2.getDistanceFromUser() ? 0 : 1));
     }
 }

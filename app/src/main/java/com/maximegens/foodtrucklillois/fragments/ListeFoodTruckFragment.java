@@ -311,9 +311,6 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
             return;
         }
 
-        // Mise à jour de l'affichage.
-        updateLayoutRecyclerView();
-
         //TODO a mettre dans une asyntasck
         // Pour chaque Food Truck on calcul sa distance par rapport à l'utilisateur.
         for (FoodTruck ft : Constantes.lesFTs) {
@@ -348,6 +345,9 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         Collections.sort(Constantes.lesFTs, new SortByDistanceFT());
         listeFTAdapter.setFTs(Constantes.lesFTs, false);
         listeFTAdapter.notifyDataSetChanged();
+
+        // Mise à jour de l'affichage.
+        updateLayoutRecyclerView();
 
     }
 
