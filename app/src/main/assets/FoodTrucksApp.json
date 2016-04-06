@@ -142,18 +142,7 @@
 										}
 									]
 								},
-								"soir":{
-									"horaireOuverture" : null,
-									"horaireFermeture" : null,
-									"adresses":[
-										{
-										"map": null,
-										"latitude" : null,
-										"longitude" : null,
-										"adresse": null
-										}
-									]
-								}
+								"soir": null
 							},
 							{
 							  "nomJour":"mardi",
@@ -170,18 +159,7 @@
 										}
 									]
 								},
-								"soir":{
-									"horaireOuverture" : null,
-									"horaireFermeture" : null,
-									"adresses":[
-										{
-										"map": null,
-										"latitude" : null,
-										"longitude" : null,
-										"adresse": null
-										}
-									]
-								}
+								"soir": null
 							},
 							{
 							  "nomJour":"mercredi",
@@ -198,18 +176,7 @@
 										}
 									]
 								},
-								"soir":{
-									"horaireOuverture" : null,
-									"horaireFermeture" : null,
-									"adresses":[
-										{
-										"map": null,
-										"latitude" : null,
-										"longitude" : null,
-										"adresse": null
-										}
-									]
-								}
+								"soir": null
 							},
 							{
 							  "nomJour":"jeudi",
@@ -226,18 +193,7 @@
 										}
 									]
 								},
-								"soir":{
-									"horaireOuverture" : null,
-									"horaireFermeture" : null,
-									"adresses":[
-										{
-										"map": null,
-										"latitude" : null,
-										"longitude" : null,
-										"adresse": null
-										}
-									]
-								}
+								"soir": null
 							},
 							{
 							  "nomJour":"vendredi",
@@ -254,62 +210,18 @@
 										}
 									]
 								},
-								"soir":{
-									"horaireOuverture" : null,
-									"horaireFermeture" : null,
-									"adresses":[
-										{
-										"map": null,
-										"latitude" : null,
-										"longitude" : null,
-										"adresse": null
-										}
-									]
-								}
+								"soir": null
 							},
 							{
 							  "nomJour":"samedi",
 							  "numJour":6,
-								"midi":{
-									"horaireOuverture" : null,
-									"horaireFermeture" : null,
-									"adresses":[
-										{
-										"map": null,
-										"latitude" : null,
-										"longitude" : null,
-										"adresse": null
-										}
-									]
-								},
-								"soir":{
-									"horaireOuverture" : null,
-									"horaireFermeture" : null,
-									"adresses":[
-										{
-										"map": null,
-										"latitude" : null,
-										"longitude" : null,
-										"adresse": null
-										}
-									]
-								}
+								"midi": null,
+								"soir":null
 							},
 							{
 							  "nomJour":"dimanche",
 							  "numJour":7,
-								"midi":{
-									"horaireOuverture" : null,
-									"horaireFermeture" : null,
-									"adresses":[
-										{
-										"map": null,
-										"latitude" : null,
-										"longitude" : null,
-										"adresse": null
-										}
-									]
-								},
+								"midi":null,
 								"soir":{
 									"horaireOuverture" : "1990-01-01 12:00:00",
 									"horaireFermeture" : "1990-01-01 14:00:00",
@@ -555,18 +467,7 @@
 										}
 									]
 								},
-								"soir":{
-									"horaireOuverture" : null,
-									"horaireFermeture" : null,
-									"adresses":[
-										{
-										"map": null,
-										"latitude" : null,
-										"longitude" : null,
-										"adresse": null
-										}
-									]
-								}
+								"soir":null
 							},
 							{
 							  "nomJour":"mardi",
@@ -583,18 +484,7 @@
 										}
 									]
 								},
-								"soir":{
-									"horaireOuverture" : null,
-									"horaireFermeture" : null,
-									"adresses":[
-										{
-										"map": null,
-										"latitude" : null,
-										"longitude" : null,
-										"adresse": null
-										}
-									]
-								}
+								"soir":null
 							},
 							{
 							  "nomJour":"mercredi",
@@ -611,18 +501,7 @@
 										}
 									]
 								},
-								"soir":{
-									"horaireOuverture" : null,
-									"horaireFermeture" : null,
-									"adresses":[
-										{
-										"map": null,
-										"latitude" : null,
-										"longitude" : null,
-										"adresse": null
-										}
-									]
-								}
+								"soir":null
 							},
 							{
 							  "nomJour":"jeudi",
@@ -639,18 +518,7 @@
 										}
 									]
 								},
-								"soir":{
-									"horaireOuverture" : null,
-									"horaireFermeture" : null,
-									"adresses":[
-										{
-										"map": null,
-										"latitude" : null,
-										"longitude" : null,
-										"adresse": null
-										}
-									]
-								}
+								"soir":null
 							},
 							{
 							  "nomJour":"vendredi",
@@ -667,34 +535,12 @@
 										}
 									]
 								},
-								"soir":{
-									"horaireOuverture" : null,
-									"horaireFermeture" : null,
-									"adresses":[
-										{
-										"map": null,
-										"latitude" : null,
-										"longitude" : null,
-										"adresse": null
-										}
-									]
-								}
+								"soir":null
 							},
 							{
 							  "nomJour":"samedi",
 							  "numJour":6,
-								"midi":{
-									"horaireOuverture" : null,
-									"horaireFermeture" : null,
-									"adresses":[
-										{
-										"map": null,
-										"latitude" : null,
-										"longitude" : null,
-										"adresse": null
-										}
-									]
-								},
+								"midi":null,
 								"soir":{
 									"horaireOuverture" : "1990-01-01 18:00:00",
 									"horaireFermeture" : "1990-01-01 22:00:00",
@@ -711,18 +557,7 @@
 							{
 							  "nomJour":"dimanche",
 							  "numJour":7,
-								"midi":{
-									"horaireOuverture" : null,
-									"horaireFermeture" : null,
-									"adresses":[
-										{
-										"map": null,
-										"latitude" : null,
-										"longitude" : null,
-										"adresse": null
-										}
-									]
-								},
+								"midi":null,
 								"soir":{
 									"horaireOuverture" : "1990-01-01 18:00:00",
 									"horaireFermeture" : "1990-01-01 22:00:00",

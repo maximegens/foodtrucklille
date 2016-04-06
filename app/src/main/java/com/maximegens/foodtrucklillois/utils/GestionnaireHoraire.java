@@ -201,4 +201,5 @@ public class GestionnaireHoraire {
         return today.get(Calendar.HOUR_OF_DAY) < calendarDate.get(Calendar.HOUR_OF_DAY);
     }
 
+
 }

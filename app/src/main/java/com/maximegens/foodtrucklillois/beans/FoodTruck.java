@@ -408,6 +408,38 @@ public class FoodTruck implements Parcelable{
     }
 
     /**
+     * Indique si l'heure passé en paramétre se trouve avant la derniéré heure de fermeture du food truc poour la journée.
+     * @param cal le calendrier de la date a tester.
+     * @return vrai si l'heure se situe avant la fermeture.
+     */
+    public boolean isBeforeLastHoraireFermeture(Calendar cal){
+
+        PlanningFoodTruck planning = getPlaningToday();
+        String horaireFermeture = "";
+        boolean ok = false;
+
+        if (planning != null) {
+            // On récupere de base le derniere horaire, celui du soir
+            if (planning.getSoir() != null) {
+                horaireFermeture = planning.getSoir().getHoraireFermeture();
+            }
+            // sinon on prend celui du midi
+            else if (planning.getMidi() != null) {
+                horaireFermeture = planning.getMidi().getHoraireFermeture();
+            }else{
+                ok =  false;
+            }
+
+            // Si on trouver un horaire alors on verifie si l'heure est avant celui passé en parametre.
+            if(!ok){
+                Calendar calFt = GestionnaireHoraire.createCalendar(horaireFermeture);
+                return calFt.before(cal);
+            }
+        }
+        return ok;
+    }
+
+    /**
      * Donne le planing du jour en cours.
      * @return
      */

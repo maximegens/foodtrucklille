@@ -63,12 +63,17 @@ public class MapFoodTruckFragment extends SupportMapFragment {
                 for(PlanningFoodTruck planning : ft.getPlanning()){
 
                     // Parcours des adresses du food truck pour le midi.
-                    for (AdresseFoodTruck adresse : planning.getMidi().getAdresses()){
+                    if(planning.getMidi() != null){
+                        for (AdresseFoodTruck adresse : planning.getMidi().getAdresses()){
                             ajouteMarker(googleMap, planning, adresse,Constantes.MIDI);
+                        }
                     }
+
                     // Parcours des adresses du food truck pour le soir.
-                    for (AdresseFoodTruck adresse : planning.getSoir().getAdresses()){
+                    if(planning.getSoir() != null){
+                        for (AdresseFoodTruck adresse : planning.getSoir().getAdresses()){
                             ajouteMarker(googleMap, planning, adresse,Constantes.SOIR);
+                        }
                     }
                 }
 
