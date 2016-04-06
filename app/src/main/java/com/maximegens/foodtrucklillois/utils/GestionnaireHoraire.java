@@ -201,5 +201,24 @@ public class GestionnaireHoraire {
         return today.get(Calendar.HOUR_OF_DAY) < calendarDate.get(Calendar.HOUR_OF_DAY);
     }
 
+    /**
+     * Indique si la date 1 est avant la date 2
+     * @param cal1 la date 1
+     * @param cal2 la date 2
+     * @return vrai la date 1 est avant la date 2
+     */
+    public static boolean isBefore(Calendar cal1,Calendar cal2){
+        if(cal1 != null && cal2 != null){
+            if(cal1.get(Calendar.HOUR_OF_DAY) < cal2.get(Calendar.HOUR_OF_DAY)){
+                return true;
+            }else if(cal1.get(Calendar.HOUR_OF_DAY) == cal2.get(Calendar.HOUR_OF_DAY)){
+                return cal1.get(Calendar.MINUTE) < cal2.get(Calendar.MINUTE);
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
 
 }

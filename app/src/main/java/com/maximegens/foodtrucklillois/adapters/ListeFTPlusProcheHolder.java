@@ -21,6 +21,8 @@ import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
 import com.maximegens.foodtrucklillois.utils.Utils;
 import com.squareup.picasso.Picasso;
 
+import java.util.Calendar;
+
 /**
  * Holder pour l'affichage de la liste des Foods Trucks.
  */
@@ -52,6 +54,7 @@ public class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
      * Fonction pour remplir la cellule en fonction d'un FoodTruck.
      */
     public void bind(final FoodTruck ft,int position){
+        Calendar caltoday = GestionnaireHoraire.createCalendarToday();
         textViewNom.setText(ft.getNom());
         Resources res = context.getResources();
 
@@ -76,14 +79,22 @@ public class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
             distance.setText("");
         }
 
+
         // Affichage de l'ouverture du Food Truck.
         if(ft.isOpenNow()){
             ouverture.setText(context.getString(R.string.ouvert));
             ouverture.setTextColor(ContextCompat.getColor(context, R.color.colorOuverture));
         }else{
+            // Affichage du bouton 'go' si le Food Truck est ouvert ou va ouvrir aujoud'hui
+            if(ft.isDateBeforeLastHoraireFermeture(caltoday)){
+                go.setVisibility(View.VISIBLE);
+            }else{
+                go.setVisibility(View.INVISIBLE);
+            }
             ouverture.setText(context.getString(R.string.fermer));
             ouverture.setTextColor(ContextCompat.getColor(context, R.color.colorFermeture));
         }
+
 
         // Clique sur le boutton 'GO' permettant d'afficher l'itinéaire vers le food truck".
         go.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +158,10 @@ public class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
         AlertDialog.Builder builder =
                 new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle);
         builder.setTitle(ft.getNom());
-        builder.setMessage("Attention le Food truck " + ft.getNom() + " est actuellement fermé\n\nSouhaitez vous quand même voir l'itinéraire ?");
+        builder.setMessage("Attention le Food truck " + ft.getNom() + " est actuellement fermé"
+                + "\nIl sera ouvert à "+ ft.getNextOuverture()
+                + "\n\n"
+                + "Souhaitez vous quand même voir l'itinéraire ?");
         builder.setPositiveButton(context.getString(R.string.oui_faim), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

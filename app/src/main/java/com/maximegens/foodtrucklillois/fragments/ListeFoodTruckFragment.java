@@ -9,7 +9,6 @@ import android.content.res.Configuration;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
@@ -43,6 +42,7 @@ import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
 import com.maximegens.foodtrucklillois.utils.GridLayoutManagerFoodTruck;
 import com.maximegens.foodtrucklillois.utils.SortByDistanceFT;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -310,23 +310,26 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
+        Calendar cal = GestionnaireHoraire.createCalendarToday();
+        boolean isMidiOrBeforeMidi = GestionnaireHoraire.isMidiOrBeforeMidi();
+        boolean isSoirOrBeforeSoirButAfterMidi= GestionnaireHoraire.isSoirOrBeforeSoirButAfterMidi();
 
         //TODO a mettre dans une asyntasck
         // Pour chaque Food Truck on calcul sa distance par rapport à l'utilisateur.
         for (FoodTruck ft : Constantes.lesFTs) {
 
             //On verifie si le food truck est ouvert aujoud'hui.
-            if (ft.isOpenToday()) {
+            if (ft.isOpenToday() && ft.isDateBeforeLastHoraireFermeture(cal)) {
                 Location loc = new Location("");
                 PlanningFoodTruck planning = ft.getPlaningToday();
                 if (planning != null) {
-                    if (GestionnaireHoraire.isMidiOrBeforeMidi()) {
+                    if (isMidiOrBeforeMidi) {
                         if (planning.getMidi() != null && planning.getMidi().getAdresses() != null && planning.getMidi().getAdresses().get(0) != null
                                 && planning.getMidi().getAdresses().get(0).getLatitude() != null && planning.getMidi().getAdresses().get(0).getLongitude() != null) {
                             loc.setLatitude(Double.parseDouble(planning.getMidi().getAdresses().get(0).getLatitude()));
                             loc.setLongitude(Double.parseDouble(planning.getMidi().getAdresses().get(0).getLongitude()));
                         }
-                    } else if (GestionnaireHoraire.isSoirOrBeforeSoirButAfterMidi()) {
+                    } else if (isSoirOrBeforeSoirButAfterMidi) {
                         if (planning.getSoir() != null && planning.getSoir().getAdresses() != null && planning.getSoir().getAdresses().get(0) != null
                                 && planning.getSoir().getAdresses().get(0).getLatitude() != null && planning.getSoir().getAdresses().get(0).getLongitude() != null) {
                             loc.setLatitude(Double.parseDouble(planning.getSoir().getAdresses().get(0).getLatitude()));

@@ -2,9 +2,7 @@ package com.maximegens.foodtrucklillois.beans;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.v4.content.ContextCompat;
 
-import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.menu.Menu;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
@@ -412,7 +410,7 @@ public class FoodTruck implements Parcelable{
      * @param cal le calendrier de la date a tester.
      * @return vrai si l'heure se situe avant la fermeture.
      */
-    public boolean isBeforeLastHoraireFermeture(Calendar cal){
+    public boolean isDateBeforeLastHoraireFermeture(Calendar cal){
 
         PlanningFoodTruck planning = getPlaningToday();
         String horaireFermeture = "";
@@ -430,10 +428,10 @@ public class FoodTruck implements Parcelable{
                 ok =  false;
             }
 
-            // Si on trouver un horaire alors on verifie si l'heure est avant celui passé en parametre.
-            if(!ok){
+            // Si on trouve un horaire de fermeture alors on verifie si l'heure est avant celui passé en parametre.
+            if(!horaireFermeture.isEmpty()){
                 Calendar calFt = GestionnaireHoraire.createCalendar(horaireFermeture);
-                return calFt.before(cal);
+                return GestionnaireHoraire.isBefore(cal,calFt);
             }
         }
         return ok;
@@ -455,5 +453,31 @@ public class FoodTruck implements Parcelable{
         }else{
             return null;
         }
+    }
+
+    /**
+     * Donne la prochaine horaire d'ouverture du food truck pour aujourd'hui.
+     * @return l'heure d'ouverture prochaien du Food truck.
+     */
+    public String getNextOuverture(){
+
+        // Creation du calendrier
+        Calendar calendarToday = GestionnaireHoraire.createCalendarToday();
+        String horaireOuverture = "";
+
+        // test de l'ouverture actuelle ou prochaine sur la journee du ft.
+        if(isOpenToday() && isDateBeforeLastHoraireFermeture(calendarToday)){
+            PlanningFoodTruck planning = getPlaningToday();
+
+            if (planning != null) {
+                // On verifie si on se trouve le midi ou le soir afin de récupérer les horaires d"ouverture correspondant.
+                if (planning.getMidi() != null && GestionnaireHoraire.isMidiOrBeforeMidi()) {
+                    horaireOuverture = planning.getMidi().getHeureOuvertureEnString();
+                } else if (planning.getSoir() != null && GestionnaireHoraire.isSoirOrBeforeSoirButAfterMidi()) {
+                    horaireOuverture = planning.getSoir().getHeureOuvertureEnString();
+                }
+            }
+        }
+        return horaireOuverture;
     }
 }
