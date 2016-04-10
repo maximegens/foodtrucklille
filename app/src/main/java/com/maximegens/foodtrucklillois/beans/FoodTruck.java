@@ -385,22 +385,11 @@ public class FoodTruck implements Parcelable{
     public boolean isOpenToday() {
 
         PlanningFoodTruck planning = getPlaningToday();
-        String horaireOuverture = null;
-        String horaireFermeture = null;
 
+        // On verifie si il existe un planning pour le midi ou pour le soir, dans ce cas le FT est ou a bien été ouvert aujourd'hui.
         if (planning != null) {
-            // On verifie si on se trouve le midi ou le soir afin de récupérer les horaires d"ouverture correspondant.
-            if (planning.getMidi() != null && GestionnaireHoraire.isMidiOrBeforeMidi()) {
-                horaireOuverture = planning.getMidi().getHoraireOuverture();
-                horaireFermeture = planning.getMidi().getHoraireFermeture();
-            } else if (planning.getSoir() != null && GestionnaireHoraire.isSoirOrBeforeSoirButAfterMidi()) {
-                horaireOuverture = planning.getSoir().getHoraireOuverture();
-                horaireFermeture = planning.getSoir().getHoraireFermeture();
-            }
-            // On verifie si le food truck posséde une heure d'ouverture et de fermeture , donc il est ouvert aujoud'hui.
-            return horaireOuverture != null && horaireFermeture != null ? true : false;
-
-        }else{
+            return planning.getMidi() != null || planning.getSoir() != null ? true : false;
+        } else {
             return false;
         }
     }
@@ -479,5 +468,25 @@ public class FoodTruck implements Parcelable{
             }
         }
         return horaireOuverture;
+    }
+
+    /**
+     * Indique si il existe une adresse pour le food truck le midi en fonction du planning passé en paramétre.
+     * @param planning le planning demandé.
+     * @return true si le food truck posséde une adresse avec coordonnées GPS pour le midi.
+     */
+    public boolean existPlaningMidiAdresse(PlanningFoodTruck planning){
+        return planning.getMidi() != null && planning.getMidi().getAdresses() != null && planning.getMidi().getAdresses().get(0) != null
+                && planning.getMidi().getAdresses().get(0).getLatitude() != null && planning.getMidi().getAdresses().get(0).getLongitude() != null;
+    }
+
+    /**
+     * Indique si il existe une adresse pour le food truck le soir en fonction du planning passé en paramétre.
+     * @param planning le planning demandé.
+     * @return true si le food truck posséde une adresse avec coordonnées GPS pour le soir.
+     */
+    public boolean existPlaningSoirAdresse(PlanningFoodTruck planning){
+        return planning.getSoir() != null && planning.getSoir().getAdresses() != null && planning.getSoir().getAdresses().get(0) != null
+                && planning.getSoir().getAdresses().get(0).getLatitude() != null && planning.getSoir().getAdresses().get(0).getLongitude() != null;
     }
 }

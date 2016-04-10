@@ -145,7 +145,7 @@ public class GestionnaireHoraire {
     }
 
     /**
-     * Indique si on est avant le soir mais apres le midi
+     * Indique si on est avant le soir mais apres le midi (15h - 23h59)
      * @return un boolean vrai si on est avant le soir mais apres .
      */
     public static boolean isBeforeSoirButAfterMidi(){

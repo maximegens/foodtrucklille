@@ -325,22 +325,30 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
 
                 Location loc = new Location("");
                 PlanningFoodTruck planning = ft.getPlaningToday();
+
                 if (planning != null) {
+                    // On vérifie si on est dans la tanche horaire du midi.
                     if (isMidiOrBeforeMidi) {
-                        if (planning.getMidi() != null && planning.getMidi().getAdresses() != null && planning.getMidi().getAdresses().get(0) != null
-                                && planning.getMidi().getAdresses().get(0).getLatitude() != null && planning.getMidi().getAdresses().get(0).getLongitude() != null) {
+                        if (ft.existPlaningMidiAdresse(planning)) {
                             loc.setLatitude(Double.parseDouble(planning.getMidi().getAdresses().get(0).getLatitude()));
                             loc.setLongitude(Double.parseDouble(planning.getMidi().getAdresses().get(0).getLongitude()));
-                        }
-                    } else if (isSoirOrBeforeSoirButAfterMidi) {
-                        if (planning.getSoir() != null && planning.getSoir().getAdresses() != null && planning.getSoir().getAdresses().get(0) != null
-                                && planning.getSoir().getAdresses().get(0).getLatitude() != null && planning.getSoir().getAdresses().get(0).getLongitude() != null) {
+                        }else if(ft.existPlaningSoirAdresse(planning)) {
+                            // Si il n'y a pas de service le midi on verifie si il existe un service le soir
                             loc.setLatitude(Double.parseDouble(planning.getSoir().getAdresses().get(0).getLatitude()));
                             loc.setLongitude(Double.parseDouble(planning.getSoir().getAdresses().get(0).getLongitude()));
                         }
+                    } else if (isSoirOrBeforeSoirButAfterMidi && ft.existPlaningSoirAdresse(planning)) {
+                    // On vérifie si on est dans la tanche horaire du soir et qu'il existe une adresse avec coordonnées gps pour le soir.
+                            loc.setLatitude(Double.parseDouble(planning.getSoir().getAdresses().get(0).getLatitude()));
+                            loc.setLongitude(Double.parseDouble(planning.getSoir().getAdresses().get(0).getLongitude()));
                     }
+
                     // On calcul et on ajout la distance depuis l'utilisateur au Food truck.
-                    ft.setDistanceFromUser(location.distanceTo(loc));
+                    if(loc.getLongitude() != 0.0 && loc.getLatitude() != 0.0){
+                        ft.setDistanceFromUser(location.distanceTo(loc));
+                    }else{
+                        ft.setDistanceFromUser(Constantes.FT_FERMER_DISTANCE);
+                    }
                 }
             } else {
                 ft.setDistanceFromUser(Constantes.FT_FERMER_DISTANCE);

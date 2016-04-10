@@ -71,7 +71,7 @@ public class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
         }
 
         // Affichage de la distance entre l'utilisateur et le food truck le plsu proche.
-        if(ft.getDistanceFromUser() == Constantes.FT_FERMER_DISTANCE && ft.isOpenToday()){
+        if(ft.getDistanceFromUser() == Constantes.FT_FERMER_DISTANCE && ft.isOpenToday() && ft.isDateBeforeLastHoraireFermeture(GestionnaireHoraire.createCalendarToday())){
             distance.setText(context.getString(R.string.calcul_distance_en_cours));
         }else if (ft.getDistanceFromUser() != Constantes.FT_FERMER_DISTANCE && ft.isOpenToday()){
             distance.setText(String.valueOf(Utils.metreToKm(ft.getDistanceFromUser()))+ Constantes.KM);
