@@ -128,13 +128,8 @@ public class RetreiveJSONListeFT extends AsyncTask<Boolean, Integer, FoodTruckAp
         // Pour l'instant on sélection la ville de Lille à l'index 0.
         List<FoodTruck> lesFts = apiJson.getListeFTByVille(foodTruckApp,0);
 
-        // On verifie si le GPS est activé et on met à jour les listes.
-        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-            listeFTAdapter.setFTs(lesFts,false);
-        }else{
-            listeFTAdapter.setFTs(lesFts,true);
-        }
+        // Mise a jour de la liste avec un affichage classique ( true)
+        listeFTAdapter.setFTs(lesFts,true);
 
         // Affectation des ft récupérer a la varibale global.
         Constantes.lesFTs = lesFts;

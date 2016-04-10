@@ -111,8 +111,10 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         activateGPS = (Button) view.findViewById(R.id.button_activer_gps);
         recyclerViewListeFT.setHasFixedSize(true);
 
-        // Creation de l'agencement des Foods Trucks en fonction de l'activation du GPS.
-        updateLayoutRecyclerView();
+        // Creation de l'agencement classique des food trucks en attendant la détection du food truck le plus proche si le gps est activé.
+        int nombreColonne = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? 2 : 3;
+        isAffichageClassique = true;
+        recyclerViewListeFT.setLayoutManager(new GridLayoutManager(getContext(), nombreColonne));
 
         // Ajout des FTs interne dans l'adapters de la liste.
         listeFTAdapter = new ListeFTAdapter(Constantes.lesFTs, getContext(), isAffichageClassique);
@@ -320,6 +322,7 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
 
             //On verifie si le food truck est ouvert aujoud'hui.
             if (ft.isOpenToday() && ft.isDateBeforeLastHoraireFermeture(cal)) {
+
                 Location loc = new Location("");
                 PlanningFoodTruck planning = ft.getPlaningToday();
                 if (planning != null) {
