@@ -418,7 +418,7 @@ public class FoodTruck implements Parcelable{
             }
 
             // Si on trouve un horaire de fermeture alors on verifie si l'heure est avant celui passé en parametre.
-            if(!horaireFermeture.isEmpty()){
+            if(horaireFermeture != null && !horaireFermeture.isEmpty()){
                 Calendar calFt = GestionnaireHoraire.createCalendar(horaireFermeture);
                 return GestionnaireHoraire.isBefore(cal,calFt);
             }

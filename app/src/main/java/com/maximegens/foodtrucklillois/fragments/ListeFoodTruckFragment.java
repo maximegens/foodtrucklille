@@ -57,7 +57,6 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
     private ProgressBar loader;
     private LinearLayout linearActiveGPS;
     private Button activateGPS;
-    private boolean isAffichageClassique;
     private TextView indicationChargementFT;
     private TextView indicationListeFTVide;
     private ListeFTAdapter listeFTAdapter;
@@ -111,14 +110,19 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         activateGPS = (Button) view.findViewById(R.id.button_activer_gps);
         recyclerViewListeFT.setHasFixedSize(true);
 
-        isAffichageClassique = true;
+        // Affichage du message d'information d'activation du GPS
+        if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            linearActiveGPS.setVisibility(View.GONE);
+        }else{
+            linearActiveGPS.setVisibility(View.VISIBLE);
+        }
 
         // Creation de l'agencement classique des food trucks en attendant la détection du food truck le plus proche si le gps est activé.
         int nombreColonne = getNbColonneForScreen();
         recyclerViewListeFT.setLayoutManager(new GridLayoutManager(getContext(), nombreColonne));
 
         // Ajout des FTs interne dans l'adapters de la liste.
-        listeFTAdapter = new ListeFTAdapter(Constantes.lesFTs, getContext(), isAffichageClassique);
+        listeFTAdapter = new ListeFTAdapter(Constantes.lesFTs, getContext(), true);
         recyclerViewListeFT.setAdapter(listeFTAdapter);
 
         // Chargement des données des Foods trucks automatiquement (soit Online soit en local).
@@ -144,6 +148,7 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
                 turnGPSOn();
             }
         });
+
 
     }
 
@@ -220,13 +225,13 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
-                //removeUpdatesLocation();
+                removeUpdatesLocation();
                 return true;
             }
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
-                //addUpdatesLocation();
+                addUpdatesLocation();
                 return true;
             }
         });
@@ -239,6 +244,7 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
      */
     private void updateRechercheFT(String recherche) {
         boolean vide = recherche.isEmpty();
+        boolean isAffichageClassique;
         final List<FoodTruck> filteredModelList = vide ? Constantes.lesFTs : FoodTruck.filterListeFTs(Constantes.lesFTs, recherche);
 
         // Creation de l'agencement des Foods Trucks en fonction de l'orientation ( Portrait : par 2 - Paysage : par 3)
@@ -256,7 +262,8 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         }
 
         // Mise à jour des FT dans l'adpater.
-        listeFTAdapter.setFTs(filteredModelList, isAffichageClassique);
+        listeFTAdapter.setIsAffichageClassique(isAffichageClassique);
+        listeFTAdapter.setFTs(filteredModelList);
         listeFTAdapter.notifyDataSetChanged();
     }
 
@@ -362,7 +369,8 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
 
         // On trie la liste des Food trucks par distance.
         Collections.sort(Constantes.lesFTs, new SortByDistanceFT());
-        listeFTAdapter.setFTs(Constantes.lesFTs, false);
+        listeFTAdapter.setIsAffichageClassique(false);
+        listeFTAdapter.setFTs(Constantes.lesFTs);
         listeFTAdapter.notifyDataSetChanged();
 
         // Mise à jour de l'affichage.
@@ -376,17 +384,22 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
      */
     private void updateLayoutRecyclerView(boolean tousfermer) {
         int nombreColonne = getNbColonneForScreen();
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && !tousfermer) {
+        boolean gpsActive = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        if (gpsActive && !tousfermer) {
             linearActiveGPS.setVisibility(View.GONE);
-            isAffichageClassique = false;
+            listeFTAdapter.setIsAffichageClassique(false);
             if (nombreColonne == 2) {
                 recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutPortrait());
             } else {
                 recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutLandscape());
             }
         } else {
-            linearActiveGPS.setVisibility(View.VISIBLE);
-            isAffichageClassique = true;
+            if(gpsActive){
+                linearActiveGPS.setVisibility(View.GONE);
+            }else{
+                linearActiveGPS.setVisibility(View.VISIBLE);
+            }
+            listeFTAdapter.setIsAffichageClassique(true);
             recyclerViewListeFT.setLayoutManager(new GridLayoutManager(getContext(), nombreColonne));
         }
     }

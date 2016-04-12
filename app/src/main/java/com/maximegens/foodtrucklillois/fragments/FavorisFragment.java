@@ -78,7 +78,8 @@ public class FavorisFragment extends Fragment {
         }
 
         // Charge les favoris dans l'adapter et demande un affichage classique.
-        listeFTAdapter.setFTs(lesFTFavoris,true);
+        listeFTAdapter.setIsAffichageClassique(true);
+        listeFTAdapter.setFTs(lesFTFavoris);
 
         // Creation de l'agencement des Foods Trucks en fonction de l'orientation ( Portrait : par 2 - Paysage : par 3)
         int nombreColonne = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? 2 : 3;

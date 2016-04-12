@@ -41,6 +41,7 @@ public class ListeFTAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return position;
     }
 
+
     /**
      * Permet de créer les viewHolder et d'indiquer la vue à inflater.
      * @param parent Le parent.
@@ -96,11 +97,17 @@ public class ListeFTAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     /**
      * Modification des foods trucks dans la liste.
      * @param fts les foods trucks.
-     * @param isAffichageClassique Permet d'indiquer si la liste doit etre afficher de maniére classique ou mise en avant.
      */
-    public void setFTs(List<FoodTruck> fts, boolean isAffichageClassique) {
+    public void setFTs(List<FoodTruck> fts) {
         lesFT = new ArrayList<>(fts);
-        this.isAffichageClassique = isAffichageClassique;
         notifyDataSetChanged();
+    }
+
+    public boolean isAffichageClassique() {
+        return isAffichageClassique;
+    }
+
+    public void setIsAffichageClassique(boolean isAffichageClassique) {
+        this.isAffichageClassique = isAffichageClassique;
     }
 }

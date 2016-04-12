@@ -129,7 +129,8 @@ public class RetreiveJSONListeFT extends AsyncTask<Boolean, Integer, FoodTruckAp
         List<FoodTruck> lesFts = apiJson.getListeFTByVille(foodTruckApp,0);
 
         // Mise a jour de la liste avec un affichage classique ( true)
-        listeFTAdapter.setFTs(lesFts,true);
+        listeFTAdapter.setIsAffichageClassique(true);
+        listeFTAdapter.setFTs(lesFts);
 
         // Affectation des ft récupérer a la varibale global.
         Constantes.lesFTs = lesFts;
