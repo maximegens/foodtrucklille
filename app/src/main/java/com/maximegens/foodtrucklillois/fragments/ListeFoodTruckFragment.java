@@ -111,9 +111,10 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         activateGPS = (Button) view.findViewById(R.id.button_activer_gps);
         recyclerViewListeFT.setHasFixedSize(true);
 
-        // Creation de l'agencement classique des food trucks en attendant la détection du food truck le plus proche si le gps est activé.
-        int nombreColonne = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? 2 : 3;
         isAffichageClassique = true;
+
+        // Creation de l'agencement classique des food trucks en attendant la détection du food truck le plus proche si le gps est activé.
+        int nombreColonne = getNbColonneForScreen();
         recyclerViewListeFT.setLayoutManager(new GridLayoutManager(getContext(), nombreColonne));
 
         // Ajout des FTs interne dans l'adapters de la liste.
@@ -145,6 +146,7 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         });
 
     }
+
 
     /**
      * OnResume.
@@ -218,13 +220,13 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
-                removeUpdatesLocation();
+                //removeUpdatesLocation();
                 return true;
             }
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
-                addUpdatesLocation();
+                //addUpdatesLocation();
                 return true;
             }
         });
@@ -240,7 +242,7 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         final List<FoodTruck> filteredModelList = vide ? Constantes.lesFTs : FoodTruck.filterListeFTs(Constantes.lesFTs, recherche);
 
         // Creation de l'agencement des Foods Trucks en fonction de l'orientation ( Portrait : par 2 - Paysage : par 3)
-        int nombreColonne = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? 2 : 3;
+        int nombreColonne = getNbColonneForScreen();
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && vide) {
             isAffichageClassique = false;
             if (nombreColonne == 2 ) {
@@ -322,7 +324,7 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         // Pour chaque Food Truck on calcul sa distance par rapport à l'utilisateur.
         for (FoodTruck ft : Constantes.lesFTs) {
 
-            //On verifie si le food truck est ouvert aujoud'hui.
+            //On verifie si le food truck est ouvert aujoud'hui et qu'on ne se trouve pas aprés la fermeture du ft pour la journée..
             if (ft.isOpenToday() && ft.isDateBeforeLastHoraireFermeture(cal)) {
 
                 Location loc = new Location("");
@@ -364,19 +366,17 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         listeFTAdapter.notifyDataSetChanged();
 
         // Mise à jour de l'affichage.
-        // Si tous les foods truck sont fermer on garde l'affichage classique
-        if(!tousFermer) {
-            updateLayoutRecyclerView();
-        }
+        updateLayoutRecyclerView(tousFermer);
 
     }
 
     /**
      * Mise à jour de l'agencement de la recyclerView en fonction de l'activation du GPS ou non et de l'orientation.
+     * @param tousfermer indique si tous les ft sont fermé pour la journée.
      */
-    private void updateLayoutRecyclerView() {
-        int nombreColonne = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? 2 : 3;
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+    private void updateLayoutRecyclerView(boolean tousfermer) {
+        int nombreColonne = getNbColonneForScreen();
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && !tousfermer) {
             linearActiveGPS.setVisibility(View.GONE);
             isAffichageClassique = false;
             if (nombreColonne == 2) {
@@ -397,6 +397,10 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
     public void turnGPSOn() {
         Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         startActivity(intent);
+    }
+
+    private int getNbColonneForScreen() {
+        return getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? 2 : 3;
     }
 
 

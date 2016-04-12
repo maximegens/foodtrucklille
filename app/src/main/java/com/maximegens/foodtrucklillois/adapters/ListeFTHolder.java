@@ -1,7 +1,6 @@
 package com.maximegens.foodtrucklillois.adapters;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +20,7 @@ import com.squareup.picasso.Picasso;
 public class ListeFTHolder extends RecyclerView.ViewHolder {
 
     private Context context;
-    private TextView textViewNom;
+    private TextView textViewOuverture;
     private ImageView imageView;
     private TextView distance;
 
@@ -33,7 +32,7 @@ public class ListeFTHolder extends RecyclerView.ViewHolder {
     public ListeFTHolder(View itemView, Context context) {
         super(itemView);
         this.context = context;
-        textViewNom = (TextView) itemView.findViewById(R.id.nom_ft_card_view);
+        textViewOuverture = (TextView) itemView.findViewById(R.id.ouverture_ft_card_view);
         imageView = (ImageView) itemView.findViewById(R.id.logo_ft_card_view);
         distance = (TextView) itemView.findViewById(R.id.ft_distance_tv);
 
@@ -43,14 +42,21 @@ public class ListeFTHolder extends RecyclerView.ViewHolder {
      * Fonction pour remplir la cellule en fonction d'un FoodTruck.
      */
     public void bind(FoodTruck ft,int position,boolean rechercheEnCours){
-        textViewNom.setText(ft.getNom());
+
         Resources res = context.getResources();
 
+        //Affichage de l'ouverture
+        if(ft.isOpenNow()){
+            textViewOuverture.setText(context.getString(R.string.ouvert));
+            textViewOuverture.setTextColor(ContextCompat.getColor(context, R.color.colorOuverture));
+        }else{
+            textViewOuverture.setText(context.getString(R.string.fermer));
+            textViewOuverture.setTextColor(ContextCompat.getColor(context, R.color.colorFermeture));
+        }
+
+        // Affichage de la distance si elle existe.
         if(ft.getDistanceFromUser() != Constantes.FT_FERMER_DISTANCE){
             distance.setText(String.valueOf(Utils.metreToKm(ft.getDistanceFromUser()))+ Constantes.KM);
-        }else{
-            distance.setTextColor(ContextCompat.getColor(context, R.color.colorFermeture));
-            distance.setText(context.getString(R.string.fermer));
         }
 
         if(ft.getLogo() != null){
