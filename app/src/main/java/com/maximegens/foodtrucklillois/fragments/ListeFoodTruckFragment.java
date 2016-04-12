@@ -40,7 +40,7 @@ import com.maximegens.foodtrucklillois.network.RetreiveJSONListeFT;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
 import com.maximegens.foodtrucklillois.utils.GridLayoutManagerFoodTruck;
-import com.maximegens.foodtrucklillois.utils.SortByDistanceFT;
+import com.maximegens.foodtrucklillois.utils.SortListeFT;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -122,6 +122,7 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         recyclerViewListeFT.setLayoutManager(new GridLayoutManager(getContext(), nombreColonne));
 
         // Ajout des FTs interne dans l'adapters de la liste.
+        Collections.sort(Constantes.lesFTs, new SortListeFT(false));
         listeFTAdapter = new ListeFTAdapter(Constantes.lesFTs, getContext(), true);
         recyclerViewListeFT.setAdapter(listeFTAdapter);
 
@@ -151,7 +152,6 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
 
 
     }
-
 
     /**
      * OnResume.
@@ -239,84 +239,11 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
     }
 
     /**
-     * Mise à jour de la liste des FoodTrucks pendant la recherche.
-     * @param recherche Le contenu de la recherche.
+     * Méthode appelé à chaque mise à jour de la position du GPS.
+     * @param location La location récupéré par le GPS.
      */
-    private void updateRechercheFT(String recherche) {
-        boolean vide = recherche.isEmpty();
-        boolean isAffichageClassique;
-        final List<FoodTruck> filteredModelList = vide ? Constantes.lesFTs : FoodTruck.filterListeFTs(Constantes.lesFTs, recherche);
-
-        // Creation de l'agencement des Foods Trucks en fonction de l'orientation ( Portrait : par 2 - Paysage : par 3)
-        int nombreColonne = getNbColonneForScreen();
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && vide) {
-            isAffichageClassique = false;
-            if (nombreColonne == 2 ) {
-                recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutPortrait());
-            } else {
-                recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutLandscape());
-            }
-        } else {
-            isAffichageClassique = true;
-            recyclerViewListeFT.setLayoutManager(new GridLayoutManager(getContext(), nombreColonne));
-        }
-
-        // Mise à jour des FT dans l'adpater.
-        listeFTAdapter.setIsAffichageClassique(isAffichageClassique);
-        listeFTAdapter.setFTs(filteredModelList);
-        listeFTAdapter.notifyDataSetChanged();
-    }
-
-    /**
-     * Chargement des données des Food trucks par Internet ou en interne si il n'existe pas de connexion.
-     */
-    private void loadDataFoodTruck(boolean bySwiperefresh) {
-        RetreiveJSONListeFT retreiveJSONListeFT = new RetreiveJSONListeFT(listeFTAdapter, getContext(), bySwiperefresh, indicationListeFTVide, getContext());
-        retreiveJSONListeFT.setProgressBar(loader, indicationChargementFT);
-        retreiveJSONListeFT.setswipeRefresh(swipeRefreshLayoutListeFT);
-        retreiveJSONListeFT.execute(Internet.isNetworkAvailable(getActivity().getApplicationContext()));
-    }
-
-    /**
-     * Rafraichie la liste des Foods trucks.
-     */
-    private void refreshListeFT() {
-        loadDataFoodTruck(true);
-    }
-
-    /**
-     * Supprimes la mise a jour de la postion du GPS.
-     */
-    public void removeUpdatesLocation() {
-        if(locationManager != null){
-            // Demande de permission pour Android 6.0 (API 23).
-            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            locationManager.removeUpdates(this);
-        }
-    }
-
-    /**
-     * Ajoute la mise à jour de la position du GPS.
-     */
-    public void addUpdatesLocation() {
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            // Demande de permission pour Android 6.0 (API 23).
-            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, Constantes.TIME_BETWEEN_UPDATE_GPS, 0, this);
-        }
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, Constantes.TIME_BETWEEN_UPDATE_GPS, 0, this);
-    }
-
-
-
     @Override
     public void onLocationChanged(Location location) {
-
         boolean tousFermer = true;
 
         // Demande de permission pour Android 6.0 (API 23).
@@ -368,14 +295,28 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         }
 
         // On trie la liste des Food trucks par distance.
-        Collections.sort(Constantes.lesFTs, new SortByDistanceFT());
+        Collections.sort(Constantes.lesFTs, new SortListeFT(true));
         listeFTAdapter.setIsAffichageClassique(false);
         listeFTAdapter.setFTs(Constantes.lesFTs);
         listeFTAdapter.notifyDataSetChanged();
 
         // Mise à jour de l'affichage.
         updateLayoutRecyclerView(tousFermer);
+    }
 
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        if(provider != null){
+            Log.v(provider.intern(),String.valueOf(status));
+        }
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
     }
 
     /**
@@ -405,6 +346,60 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
     }
 
     /**
+     * Mise à jour de la liste des FoodTrucks pendant la recherche.
+     * @param recherche Le contenu de la recherche.
+     */
+    private void updateRechercheFT(String recherche) {
+        boolean vide = recherche.isEmpty();
+        boolean isAffichageClassique;
+        final List<FoodTruck> filteredModelList = vide ? Constantes.lesFTs : FoodTruck.filterListeFTs(Constantes.lesFTs, recherche);
+
+        // Creation de l'agencement des Foods Trucks en fonction de l'orientation ( Portrait : par 2 - Paysage : par 3)
+        int nombreColonne = getNbColonneForScreen();
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && vide) {
+            isAffichageClassique = false;
+            if (nombreColonne == 2 ) {
+                recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutPortrait());
+            } else {
+                recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutLandscape());
+            }
+        } else {
+            isAffichageClassique = true;
+            recyclerViewListeFT.setLayoutManager(new GridLayoutManager(getContext(), nombreColonne));
+        }
+
+        // Mise à jour des FT dans l'adpater.
+        listeFTAdapter.setIsAffichageClassique(isAffichageClassique);
+        listeFTAdapter.setFTs(filteredModelList);
+        listeFTAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * Retourne le nombre de colonne pour la recyclerView en fonction de l'orientation du téléphone.
+     * @return
+     */
+    private int getNbColonneForScreen() {
+        return getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? 2 : 3;
+    }
+
+    /**
+     * Chargement des données des Food trucks par Internet ou en interne si il n'existe pas de connexion.
+     */
+    private void loadDataFoodTruck(boolean bySwiperefresh) {
+        RetreiveJSONListeFT retreiveJSONListeFT = new RetreiveJSONListeFT(listeFTAdapter, getContext(), bySwiperefresh, indicationListeFTVide, getContext());
+        retreiveJSONListeFT.setProgressBar(loader, indicationChargementFT);
+        retreiveJSONListeFT.setswipeRefresh(swipeRefreshLayoutListeFT);
+        retreiveJSONListeFT.execute(Internet.isNetworkAvailable(getActivity().getApplicationContext()));
+    }
+
+    /**
+     * Rafraichie la liste des Foods trucks.
+     */
+    private void refreshListeFT() {
+        loadDataFoodTruck(true);
+    }
+
+    /**
      * Active le GPS.
      */
     public void turnGPSOn() {
@@ -412,23 +407,32 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         startActivity(intent);
     }
 
-    private int getNbColonneForScreen() {
-        return getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? 2 : 3;
-    }
-
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-        if(provider != null){
-            Log.v(provider.intern(),String.valueOf(status));
+    /**
+     * Supprimes la mise a jour de la postion du GPS.
+     */
+    public void removeUpdatesLocation() {
+        if(locationManager != null){
+            // Demande de permission pour Android 6.0 (API 23).
+            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            locationManager.removeUpdates(this);
         }
     }
 
-    @Override
-    public void onProviderEnabled(String provider) {
+    /**
+     * Ajoute la mise à jour de la position du GPS.
+     */
+    public void addUpdatesLocation() {
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            // Demande de permission pour Android 6.0 (API 23).
+            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, Constantes.TIME_BETWEEN_UPDATE_GPS, 0, this);
+        }
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, Constantes.TIME_BETWEEN_UPDATE_GPS, 0, this);
     }
 
-    @Override
-    public void onProviderDisabled(String provider) {
-    }
 }
