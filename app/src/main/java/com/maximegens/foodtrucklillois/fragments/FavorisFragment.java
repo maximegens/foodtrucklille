@@ -22,8 +22,10 @@ import com.maximegens.foodtrucklillois.beans.FoodTruckApp;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.maximegens.foodtrucklillois.utils.GestionJsonAPI;
 import com.maximegens.foodtrucklillois.utils.GridLayoutManagerFoodTruck;
+import com.maximegens.foodtrucklillois.utils.SortListeFT;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,6 +78,9 @@ public class FavorisFragment extends Fragment {
                 }
             }
         }
+
+        //Tri des Foods trucks par ouverture et par nom
+        Collections.sort(Constantes.lesFTs, new SortListeFT(false));
 
         // Charge les favoris dans l'adapter et demande un affichage classique.
         listeFTAdapter.setIsAffichageClassique(true);
