@@ -448,7 +448,7 @@ public class FoodTruck implements Parcelable{
      * Donne la prochaine horaire d'ouverture du food truck pour aujourd'hui.
      * @return l'heure d'ouverture prochaien du Food truck.
      */
-    public String getNextOuverture(){
+    public String getNextOuvertureToday(){
 
         // Creation du calendrier
         Calendar calendarToday = GestionnaireHoraire.createCalendarToday();

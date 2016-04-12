@@ -308,6 +308,8 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
     @Override
     public void onLocationChanged(Location location) {
 
+        boolean tousFermer = true;
+
         // Demande de permission pour Android 6.0 (API 23).
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -346,6 +348,7 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
                     // On calcul et on ajout la distance depuis l'utilisateur au Food truck.
                     if(loc.getLongitude() != 0.0 && loc.getLatitude() != 0.0){
                         ft.setDistanceFromUser(location.distanceTo(loc));
+                        tousFermer = false;
                     }else{
                         ft.setDistanceFromUser(Constantes.FT_FERMER_DISTANCE);
                     }
@@ -361,7 +364,10 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         listeFTAdapter.notifyDataSetChanged();
 
         // Mise à jour de l'affichage.
-        updateLayoutRecyclerView();
+        // Si tous les foods truck sont fermer on garde l'affichage classique
+        if(!tousFermer) {
+            updateLayoutRecyclerView();
+        }
 
     }
 

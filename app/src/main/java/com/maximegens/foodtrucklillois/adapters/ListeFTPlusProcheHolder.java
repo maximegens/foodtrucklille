@@ -159,7 +159,7 @@ public class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
                 new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle);
         builder.setTitle(ft.getNom());
         builder.setMessage("Attention le Food truck " + ft.getNom() + " est actuellement fermé"
-                + "\nIl sera ouvert à "+ ft.getNextOuverture()
+                + "\nIl sera ouvert à "+ ft.getNextOuvertureToday()
                 + "\n\n"
                 + "Souhaitez vous quand même voir l'itinéraire ?");
         builder.setPositiveButton(context.getString(R.string.oui_faim), new DialogInterface.OnClickListener() {
