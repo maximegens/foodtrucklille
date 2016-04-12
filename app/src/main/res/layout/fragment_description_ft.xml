@@ -87,6 +87,7 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_label"
                     android:layout_marginBottom="6dp"/>
+
                 <TextView
                     android:id="@+id/value_ouvert"
                     android:layout_width="wrap_content"
@@ -94,7 +95,19 @@
                     android:layout_toRightOf="@id/icon_ouverture"
                     android:layout_below="@id/label_ouverture"
                     android:textSize="@dimen/text_value"
+                    android:padding="5dp"
                     android:text="@string/champ_non_communique"/>
+
+                <Button
+                    android:id="@+id/button_ft_go_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="4dp"
+                    android:textColor="@color/orange"
+                    android:text="@string/go_faim"
+                    android:layout_toRightOf="@id/value_ouvert"
+                    android:layout_weight="1"
+                    style="@style/Widget.AppCompat.Button.Borderless"/>
 
                 <Button
                     android:id="@+id/button_horaire_complet"
