@@ -150,7 +150,6 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
             }
         });
 
-
     }
 
     /**

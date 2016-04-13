@@ -16,10 +16,12 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.maximegens.foodtrucklillois.FoodTruckActivity;
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.beans.PlanningFoodTruck;
+import com.maximegens.foodtrucklillois.utils.AlertDialogFT;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
 
@@ -52,6 +54,7 @@ public class DescriptionFoodTruckFragment extends Fragment {
 
     private Button consulterHoraire;
     private Button voirDescriptionLongue;
+    private Button goFT;
 
     /**
      * Creation du Fragment.
@@ -98,6 +101,7 @@ public class DescriptionFoodTruckFragment extends Fragment {
 
         consulterHoraire = (Button) view.findViewById(R.id.button_horaire_complet);
         voirDescriptionLongue = (Button) view.findViewById(R.id.button_description_longue);
+        goFT = (Button) view.findViewById(R.id.button_ft_go_description);
 
         // Remplissage des différents textView avec les informations contenu dans l'objet FoodTruck.
         if(ft != null){
@@ -196,6 +200,34 @@ public class DescriptionFoodTruckFragment extends Fragment {
                 voirHoraires();
             }
         });
+
+        goFT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goFoodtruckItineraire(getContext());
+            }
+        });
+    }
+
+    /**
+     * Renvoi vers Google Map pour afficher l'itineraire.
+     * @param context
+     */
+    private void goFoodtruckItineraire(Context context) {
+
+        LatLng coordonnee = ft.getLatLon();
+
+        // Verification que les coordonnées sont différent de null.
+        AlertDialogFT alertFT = new AlertDialogFT(context);
+        if (coordonnee != null) {
+            if (ft.isOpenNow()) {
+                alertFT.lanceItineraire(coordonnee);
+            } else {
+                alertFT.affichePopupFoodTruckFermer(ft, coordonnee);
+            }
+        } else {
+            alertFT.affichePopupErreurLocalisation(ft);
+        }
     }
 
     /**
@@ -203,35 +235,22 @@ public class DescriptionFoodTruckFragment extends Fragment {
      */
     private void afficheOuverture() {
 
-        PlanningFoodTruck planning = ft.getPlaningToday();
-        String ouvert = getString(R.string.ouvert);
-        String fermer = getString(R.string.fermer);
-
         // Si le Food truck est actuellement ouvert.
         if(ft.isOpenNow()){
+            goFT.setVisibility(View.VISIBLE);
+            ouverture.setText(getString(R.string.ouvert_jusque) + ft.getOuvertureJusque());
             ouverture.setTextColor(ContextCompat.getColor(getContext(), R.color.colorOuverture));
-            if(planning != null){
-                if(GestionnaireHoraire.isBeforeMidi() || GestionnaireHoraire.isMidi()){
-                    ouverture.setText(ouvert+" jusque "+planning.getMidi().getHeureFermetureEnString());
-                }else if(GestionnaireHoraire.isBeforeSoirButAfterMidi() || GestionnaireHoraire.isSoir()){
-                    ouverture.setText(ouvert+" jusque "+planning.getSoir().getHeureFermetureEnString());
-                }
-            }else{
-                ouverture.setText(ouvert);
-            }
+
         // Si le Food truck est fermé mais ouvres aujourd'hui.
-        }else if(ft.isOpenToday()) {
+        }else if(ft.isDateBeforeLastHoraireFermeture(GestionnaireHoraire.createCalendarToday())) {
+            goFT.setVisibility(View.VISIBLE);
+            ouverture.setText(getString(R.string.fermer_ouverture_a)+ft.getProchaineOuvertureToday());
             ouverture.setTextColor(ContextCompat.getColor(getContext(), R.color.colorFermeture));
-            if (GestionnaireHoraire.isMidiOrBeforeMidi() && planning.getMidi()!= null && GestionnaireHoraire.isTodayBeforeDate(planning.getMidi().getHoraireOuverture())) {
-                ouverture.setText(fermer + " : ouverture à " + planning.getMidi().getHeureOuvertureEnString());
-            } else if (GestionnaireHoraire.isSoirOrBeforeSoirButAfterMidi() && planning.getSoir() != null && GestionnaireHoraire.isTodayBeforeDate(planning.getSoir().getHoraireOuverture())) {
-                ouverture.setText(fermer + " : ouverture à " + planning.getSoir().getHeureOuvertureEnString());
-            } else {
-                ouverture.setText(fermer);
-            }
+
         }else{
+            goFT.setVisibility(View.GONE);
+            ouverture.setText(getString(R.string.fermer_today));
             ouverture.setTextColor(ContextCompat.getColor(getContext(), R.color.colorFermeture));
-            ouverture.setText(fermer+ " aujourd'hui");
         }
     }
 

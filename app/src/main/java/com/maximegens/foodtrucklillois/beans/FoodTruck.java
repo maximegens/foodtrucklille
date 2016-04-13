@@ -3,6 +3,8 @@ package com.maximegens.foodtrucklillois.beans;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.menu.Menu;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
@@ -488,5 +490,67 @@ public class FoodTruck implements Parcelable{
     public boolean existPlaningSoirAdresse(PlanningFoodTruck planning){
         return planning.getSoir() != null && planning.getSoir().getAdresses() != null && planning.getSoir().getAdresses().get(0) != null
                 && planning.getSoir().getAdresses().get(0).getLatitude() != null && planning.getSoir().getAdresses().get(0).getLongitude() != null;
+    }
+
+    /**
+     * Indique jusque quand est ouvert le FT.
+     * @return un string indique jusque qaund el ft est ouvert.
+     */
+    public String getOuvertureJusque() {
+
+        PlanningFoodTruck planning = getPlaningToday();
+        if (isOpenNow() && planning != null) {
+            if (GestionnaireHoraire.isMidiOrBeforeMidi() && planning.getMidi() != null) {
+                return planning.getMidi().getHeureFermetureEnString();
+            } else if (GestionnaireHoraire.isSoirOrBeforeSoirButAfterMidi() && planning.getSoir() != null) {
+                return planning.getSoir().getHeureFermetureEnString();
+            }
+        }
+
+        return "";
+    }
+
+    /**
+     * Indique jusque quand est ouvert le FT.
+     * @return un string indique jusque qaund el ft est ouvert.
+     */
+    public String getProchaineOuvertureToday() {
+
+        PlanningFoodTruck planning = getPlaningToday();
+        if(planning != null){
+            if (GestionnaireHoraire.isMidiOrBeforeMidi() && planning.getMidi()!= null && GestionnaireHoraire.isTodayBeforeDate(planning.getMidi().getHoraireOuverture())) {
+                return planning.getMidi().getHeureOuvertureEnString();
+            } else if (GestionnaireHoraire.isSoirOrBeforeSoirButAfterMidi() && planning.getSoir() != null && GestionnaireHoraire.isTodayBeforeDate(planning.getSoir().getHoraireOuverture())) {
+                return planning.getSoir().getHeureOuvertureEnString();
+            }
+        }
+        return "";
+    }
+
+    /**
+     * Retourne les coordonnées GPS du Food truck pour la journée.
+     * @return
+     */
+    public LatLng getLatLon(){
+
+        String latitude = null;
+        String longitude = null;
+        PlanningFoodTruck planning = getPlaningToday();
+
+        // Recuperation de la latitude et de la longitude.
+        if (GestionnaireHoraire.isMidiOrBeforeMidi()) {
+            //TODO remplacer par l'adresse la plus proche, pour l'instant parmis toutes les adresses ont prends la premiere (.get(0)).
+            if (planning != null && planning.getMidi() != null && planning.getMidi().getAdresses() != null) {
+                latitude = planning.getMidi().getAdresses().get(0).getLatitude();
+                longitude = planning.getMidi().getAdresses().get(0).getLongitude();
+            }
+        }
+        if (GestionnaireHoraire.isSoirOrBeforeSoirButAfterMidi()) {
+            if (planning != null && planning.getSoir() != null && planning.getSoir().getAdresses() != null) {
+                latitude = planning.getSoir().getAdresses().get(0).getLatitude();
+                longitude = planning.getSoir().getAdresses().get(0).getLongitude();
+            }
+        }
+        return latitude != null && longitude != null ? new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude)) : null;
     }
 }
