@@ -6,9 +6,16 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -21,16 +28,23 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.maximegens.foodtrucklillois.FoodTruckActivity;
 import com.maximegens.foodtrucklillois.R;
+import com.maximegens.foodtrucklillois.beans.AdresseFoodTruck;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
+import com.maximegens.foodtrucklillois.beans.PlanningFoodTruck;
 import com.maximegens.foodtrucklillois.network.Internet;
+import com.maximegens.foodtrucklillois.utils.Constantes;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
-public class EmplacementFoodTruckFragment extends Fragment {
+public class EmplacementFoodTruckFragment extends Fragment{
 
     public static String TITLE = "Map";
     private TextView noConnexion;
     private FoodTruck ft = null;
     private SupportMapFragment fragmentMap;
+    private ArrayAdapter<String> adapter;
     private GoogleMap googleMap;
 
     /**
@@ -80,6 +94,5 @@ public class EmplacementFoodTruckFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
-
 
 }

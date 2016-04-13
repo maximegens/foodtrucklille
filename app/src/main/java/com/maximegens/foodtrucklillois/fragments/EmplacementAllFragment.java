@@ -50,7 +50,7 @@ import java.util.Set;
 
 public class EmplacementAllFragment extends Fragment implements OnMapReadyCallback, AdapterView.OnItemSelectedListener {
 
-    private  ArrayAdapter<FoodTruck> adapter;
+    private ArrayAdapter<FoodTruck> adapter;
     private GoogleMap googleMap;
     private SupportMapFragment map;
     private TextView noConnexion;
@@ -246,7 +246,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
         inflater.inflate(R.menu.menu_map_all, menu);
         super.onCreateOptionsMenu(menu, inflater);
 
-        MenuItem item = menu.findItem(R.id.action_spinner_ft);
+        MenuItem item = menu.findItem(R.id.action_spinner_map_fts);
         Spinner spinnerMap = (Spinner) MenuItemCompat.getActionView(item);
         // Creation du Spinner pour afficher la liste de Food Trucks.
         List<FoodTruck> lesFts = new ArrayList<>();
@@ -258,7 +258,5 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
         adapter.setDropDownViewResource(R.layout.layout_drop_list);
         spinnerMap.setAdapter(adapter);
         spinnerMap.setOnItemSelectedListener(this);
-
     }
-
 }

@@ -447,6 +447,25 @@ public class FoodTruck implements Parcelable{
     }
 
     /**
+     * Donne le planing du jour passé en paramétre.
+     * @return Le planning correspondant au jour passé en paramétre.
+     * 1 = Lundi
+     * 2 = Mardi
+     * etc etc
+     */
+    public PlanningFoodTruck getPlaningByJour(int numeroJour){
+
+        // Modification du numéro du jour pour l'adapter au l'arrayList (first item = position 0);
+        int numJourTab = numeroJour - 1;
+
+        if (getPlanning() != null && getPlanning().get(numJourTab) != null){
+            return getPlanning().get(numJourTab);
+        }else{
+            return null;
+        }
+    }
+
+    /**
      * Donne la prochaine horaire d'ouverture du food truck pour aujourd'hui.
      * @return l'heure d'ouverture prochaien du Food truck.
      */
