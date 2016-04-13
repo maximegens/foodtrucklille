@@ -56,9 +56,9 @@ public class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
      * Fonction pour remplir la cellule en fonction d'un FoodTruck.
      */
     public void bind(final FoodTruck ft,int position){
-        Calendar caltoday = GestionnaireHoraire.createCalendarToday();
         textViewNom.setText(ft.getNom());
         Resources res = context.getResources();
+        boolean isBeforeLastOuverture = ft.isDateBeforeLastHoraireFermeture(GestionnaireHoraire.createCalendarToday());
 
         // Affichage du logo.
         if(ft.getLogo() != null){
@@ -73,9 +73,9 @@ public class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
         }
 
         // Affichage de la distance entre l'utilisateur et le food truck le plsu proche.
-        if(ft.getDistanceFromUser() == Constantes.FT_FERMER_DISTANCE && ft.isOpenToday() && ft.isDateBeforeLastHoraireFermeture(GestionnaireHoraire.createCalendarToday())){
+        if(ft.getDistanceFromUser() == Constantes.FT_FERMER_DISTANCE && isBeforeLastOuverture){
             distance.setText(context.getString(R.string.calcul_distance_en_cours));
-        }else if (ft.getDistanceFromUser() != Constantes.FT_FERMER_DISTANCE && ft.isOpenToday()){
+        }else if (ft.getDistanceFromUser() != Constantes.FT_FERMER_DISTANCE && isBeforeLastOuverture){
             distance.setText(String.valueOf(Utils.metreToKm(ft.getDistanceFromUser()))+ Constantes.KM);
         }else{
             distance.setText("");
@@ -87,7 +87,7 @@ public class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
             ouverture.setTextColor(ContextCompat.getColor(context, R.color.colorOuverture));
         }else{
             // Affichage du bouton 'go' si le Food Truck est ouvert ou va ouvrir aujoud'hui
-            if(ft.isDateBeforeLastHoraireFermeture(caltoday)){
+            if(isBeforeLastOuverture){
                 go.setVisibility(View.VISIBLE);
             }else{
                 go.setVisibility(View.INVISIBLE);

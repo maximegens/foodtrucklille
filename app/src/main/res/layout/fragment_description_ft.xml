@@ -41,36 +41,58 @@
                     android:textSize="@dimen/text_label"
                     android:layout_marginBottom="6dp"/>
 
-                <TextView
-                    android:id="@+id/value_ouvert"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/icon_ouverture"
+                <LinearLayout
+                    android:id="@+id/linear_ouverture_distance"
                     android:layout_below="@id/label_ouverture"
-                    android:textSize="@dimen/text_value"
-                    android:padding="5dp"
-                    android:text="@string/champ_non_communique"/>
+                    android:layout_width="match_parent"
+                    android:layout_toRightOf="@id/icon_ouverture"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/value_ouvert"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/text_value"
+                        android:padding="5dp"
+                        android:layout_weight="1"
+                        android:text="@string/champ_non_communique"/>
+
+                    <TextView
+                        android:id="@+id/value_distance"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingRight="5dp"
+                        android:gravity="right"
+                        android:textSize="@dimen/text_value"
+                        android:padding="5dp"
+                        android:layout_weight="3"
+                        android:text="1250 km"/>
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/button_ft_go_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/orange"
+                    android:layout_below="@+id/linear_ouverture_distance"
+                    android:text="@string/go_faim"
+                    android:layout_toRightOf="@id/icon_ouverture"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    />
 
                 <Button
                     android:id="@+id/button_horaire_complet"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/value_ouvert"
+                    android:layout_below="@id/linear_ouverture_distance"
                     android:layout_centerHorizontal="true"
                     android:layout_alignParentRight="true"
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/size_flat_button"
                     android:text="@string/consulter_horaire"/>
-
-                <Button
-                    android:id="@+id/button_ft_go_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/orange"
-                    android:layout_below="@+id/button_horaire_complet"
-                    android:text="@string/go_faim"
-                    style="@style/Widget.AppCompat.Button.Borderless"/>
 
             </RelativeLayout>
 

@@ -15,10 +15,12 @@ import com.maximegens.foodtrucklillois.beans.FoodTruckApp;
 import com.maximegens.foodtrucklillois.beans.Ville;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.maximegens.foodtrucklillois.utils.GestionJsonAPI;
+import com.maximegens.foodtrucklillois.utils.SortListeFT;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit.RestAdapter;
@@ -128,12 +130,13 @@ public class RetreiveJSONListeFT extends AsyncTask<Boolean, Integer, FoodTruckAp
         // Pour l'instant on sélection la ville de Lille à l'index 0.
         List<FoodTruck> lesFts = apiJson.getListeFTByVille(foodTruckApp,0);
 
+        // Affectation et tri des ft récupérés a la varibale global.
+        Constantes.lesFTs = lesFts;
+        Collections.sort(Constantes.lesFTs, new SortListeFT(false));
+
         // Mise a jour de la liste avec un affichage classique ( true)
         listeFTAdapter.setIsAffichageClassique(true);
-        listeFTAdapter.setFTs(lesFts);
-
-        // Affectation des ft récupérer a la varibale global.
-        Constantes.lesFTs = lesFts;
+        listeFTAdapter.setFTs(Constantes.lesFTs);
 
         // On arrete le swipeRefresh si il a était lancé sinon on masque le loader du début de lancement de l'applicaiton.
         if(swipeRefreshActive){

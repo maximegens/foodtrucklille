@@ -553,4 +553,5 @@ public class FoodTruck implements Parcelable{
         }
         return latitude != null && longitude != null ? new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude)) : null;
     }
+
 }

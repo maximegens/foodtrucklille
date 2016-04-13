@@ -122,7 +122,6 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         recyclerViewListeFT.setLayoutManager(new GridLayoutManager(getContext(), nombreColonne));
 
         // Ajout des FTs interne dans l'adapters de la liste.
-        Collections.sort(Constantes.lesFTs, new SortListeFT(false));
         listeFTAdapter = new ListeFTAdapter(Constantes.lesFTs, getContext(), true);
         recyclerViewListeFT.setAdapter(listeFTAdapter);
 

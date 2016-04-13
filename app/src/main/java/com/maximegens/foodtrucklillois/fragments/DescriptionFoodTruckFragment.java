@@ -24,6 +24,7 @@ import com.maximegens.foodtrucklillois.beans.PlanningFoodTruck;
 import com.maximegens.foodtrucklillois.utils.AlertDialogFT;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
+import com.maximegens.foodtrucklillois.utils.Utils;
 
 import java.util.Calendar;
 
@@ -35,6 +36,7 @@ public class DescriptionFoodTruckFragment extends Fragment {
     private FoodTruck ft = null;
     private TextView descriptionBreve;
     private TextView ouverture;
+    private TextView distance;
     private TextView cuisine;
 
     private TextView gammePrix;
@@ -85,6 +87,7 @@ public class DescriptionFoodTruckFragment extends Fragment {
         // Recuperation des informations depuis le xml.
         descriptionBreve = (TextView) view.findViewById(R.id.value_description_breve);
         ouverture = (TextView) view.findViewById(R.id.value_ouvert);
+        distance = (TextView) view.findViewById(R.id.value_distance);
         cuisine = (TextView) view.findViewById(R.id.value_cuisine);
         gammePrix = (TextView) view.findViewById(R.id.value_gamme_prix);
         moyenPaiement = (TextView) view.findViewById(R.id.value_moyen_paiement);
@@ -110,6 +113,8 @@ public class DescriptionFoodTruckFragment extends Fragment {
             }
             // affichage de l'ouverture du food truck
             afficheOuverture();
+
+            afficheDistance();
 
             if(ft.getCuisine() != null){
                 cuisine.setText(ft.getCuisine());
@@ -210,6 +215,17 @@ public class DescriptionFoodTruckFragment extends Fragment {
     }
 
     /**
+     * Affiche la distance vers le Food truck.
+     */
+    private void afficheDistance() {
+        if (ft.getDistanceFromUser() != Constantes.FT_FERMER_DISTANCE && ft.isDateBeforeLastHoraireFermeture(GestionnaireHoraire.createCalendarToday())){
+            distance.setText(String.valueOf(Utils.metreToKm(ft.getDistanceFromUser()))+ Constantes.KM);
+        }else{
+            distance.setText("");
+        }
+    }
+
+    /**
      * Renvoi vers Google Map pour afficher l'itineraire.
      * @param context
      */
@@ -251,6 +267,12 @@ public class DescriptionFoodTruckFragment extends Fragment {
             goFT.setVisibility(View.GONE);
             ouverture.setText(getString(R.string.fermer_today));
             ouverture.setTextColor(ContextCompat.getColor(getContext(), R.color.colorFermeture));
+        }
+
+        if (ft.getDistanceFromUser() != Constantes.FT_FERMER_DISTANCE && ft.isDateBeforeLastHoraireFermeture(GestionnaireHoraire.createCalendarToday())){
+            distance.setText(String.valueOf(Utils.metreToKm(ft.getDistanceFromUser())) + Constantes.KM);
+        }else{
+            distance.setText("");
         }
     }
 
