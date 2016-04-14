@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -48,6 +49,7 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
     private SupportMapFragment fragmentMap;
     private ArrayAdapter<String> adapter;
     private GoogleMap googleMap;
+    private static View view;
 
     /**
      * Creation du Fragment.
@@ -64,7 +66,17 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.fragment_emplacement_ft, container, false);
+        if (view != null) {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (parent != null)
+                parent.removeView(view);
+        }
+        try {
+            view = inflater.inflate(R.layout.fragment_emplacement_ft, container, false);
+        } catch (InflateException e) {
+         /* map is already there, just return view as it is */
+        }
+        return view;
     }
 
     @Override
@@ -81,6 +93,7 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
                 .findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
             googleMap = mapFragment.getMap();
+            googleMap.setMyLocationEnabled(true);
         }else{
             //TODO ajouter un Broadcast Receiver pour detecter l'apparition d'une connexion et afficher la map
             noConnexion = (TextView) view.findViewById(R.id.no_connexion_map);
