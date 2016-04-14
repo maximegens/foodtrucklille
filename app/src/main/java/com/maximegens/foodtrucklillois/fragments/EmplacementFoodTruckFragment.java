@@ -3,6 +3,9 @@ package com.maximegens.foodtrucklillois.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -51,6 +54,7 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
     private ArrayAdapter<String> adapter;
     private GoogleMap googleMap;
     private static View view;
+    private AppBarLayout appBarLayout;
 
     /**
      * Creation du Fragment.
@@ -67,6 +71,7 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.setHasOptionsMenu(true);
+
         if (view != null) {
             ViewGroup parent = (ViewGroup) view.getParent();
             if (parent != null)
@@ -99,6 +104,30 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
             //TODO ajouter un Broadcast Receiver pour detecter l'apparition d'une connexion et afficher la map
             noConnexion = (TextView) view.findViewById(R.id.no_connexion_map);
             noConnexion.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+     * Methode appelé lorsque le fragment est visible par l'utilisateur (et non mise en cache).
+     * @param visible indique si le fragment est visible ou non.
+     */
+    @Override
+    public void setMenuVisibility(final boolean visible) {
+        super.setMenuVisibility(visible);
+        if (!visible) {
+        }else{
+            // On replie l'appBarLayout et on block son dépliage
+            appBarLayout = (AppBarLayout) view.getRootView().findViewById(R.id.app_bar_layout);
+            appBarLayout.setExpanded(false, true);
+
+            CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
+            AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
+            behavior.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
+                @Override
+                public boolean canDrag(@NonNull AppBarLayout appBarLayout) {
+                    return false;
+                }
+            });
         }
     }
 
