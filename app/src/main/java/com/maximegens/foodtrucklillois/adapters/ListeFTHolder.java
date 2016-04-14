@@ -21,6 +21,7 @@ public class ListeFTHolder extends RecyclerView.ViewHolder {
 
     private Context context;
     private TextView textViewOuverture;
+    private TextView textHoraire;
     private ImageView imageView;
     private TextView distance;
 
@@ -33,6 +34,7 @@ public class ListeFTHolder extends RecyclerView.ViewHolder {
         super(itemView);
         this.context = context;
         textViewOuverture = (TextView) itemView.findViewById(R.id.ouverture_ft_card_view);
+        textHoraire = (TextView) itemView.findViewById(R.id.horaireouverture_ft_card_view);
         imageView = (ImageView) itemView.findViewById(R.id.logo_ft_card_view);
         distance = (TextView) itemView.findViewById(R.id.ft_distance_tv);
 
@@ -52,6 +54,12 @@ public class ListeFTHolder extends RecyclerView.ViewHolder {
         }else{
             textViewOuverture.setText(context.getString(R.string.fermer));
             textViewOuverture.setTextColor(ContextCompat.getColor(context, R.color.colorFermeture));
+
+            if(ft.getTrancheHoraire().isEmpty()) {
+                textHoraire.setVisibility(View.GONE);
+            }else{
+                textHoraire.setText(ft.getTrancheHoraire());
+            }
         }
 
         // Affichage de la distance si elle existe.

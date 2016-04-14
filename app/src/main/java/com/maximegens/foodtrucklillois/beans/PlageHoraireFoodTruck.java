@@ -86,7 +86,9 @@ public class PlageHoraireFoodTruck implements Parcelable{
      */
     public String getHeureOuvertureEnString() {
         Calendar calendarOuverture = GestionnaireHoraire.createCalendar(getHoraireOuverture());
-        return calendarOuverture.get(Calendar.HOUR_OF_DAY) + "h"+String.format(Constantes.FORMAT_DECIMAL_MINUTE,calendarOuverture.get(Calendar.MINUTE));
+        String heure = String.valueOf(calendarOuverture.get(Calendar.HOUR_OF_DAY));
+        String minute = String.format(Constantes.FORMAT_DECIMAL_MINUTE,calendarOuverture.get(Calendar.MINUTE));
+        return minute.equals("00") ? heure + "h" : heure + "h"+ minute;
     }
 
     /**
@@ -95,7 +97,9 @@ public class PlageHoraireFoodTruck implements Parcelable{
      */
     public String getHeureFermetureEnString() {
         Calendar calendarFermeture = GestionnaireHoraire.createCalendar(getHoraireFermeture());
-        return calendarFermeture.get(Calendar.HOUR_OF_DAY) + "h"+String.format(Constantes.FORMAT_DECIMAL_MINUTE,calendarFermeture.get(Calendar.MINUTE));
+        String heure = String.valueOf(calendarFermeture.get(Calendar.HOUR_OF_DAY));
+        String minute = String.format(Constantes.FORMAT_DECIMAL_MINUTE, calendarFermeture.get(Calendar.MINUTE));
+        return minute.equals("00") ? heure + "h" : heure + "h"+ minute;
     }
 
 }

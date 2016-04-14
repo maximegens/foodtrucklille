@@ -35,6 +35,7 @@ public class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
     private Button go;
     private TextView ouverture;
     private TextView distance;
+    private TextView horaireOuverture;
     private ImageView imageView;
 
     /**
@@ -49,6 +50,7 @@ public class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
         imageView = (ImageView) itemView.findViewById(R.id.logo_ft_plus_proche_card_view);
         ouverture = (TextView) itemView.findViewById(R.id.ouverture_ft_plus_proche_card_view);
         distance = (TextView) itemView.findViewById(R.id.ft_distance_plus_proche_tv);
+        horaireOuverture = (TextView) itemView.findViewById(R.id.horaireouverture_ft_plus_proche_card_view);
         go = (Button) itemView.findViewById(R.id.button_ft_go);
     }
 
@@ -89,8 +91,11 @@ public class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
             // Affichage du bouton 'go' si le Food Truck est ouvert ou va ouvrir aujoud'hui
             if(isBeforeLastOuverture){
                 go.setVisibility(View.VISIBLE);
+                horaireOuverture.setVisibility(View.VISIBLE);
+                horaireOuverture.setText(ft.getTrancheHoraire());
             }else{
                 go.setVisibility(View.INVISIBLE);
+                horaireOuverture.setVisibility(View.GONE);
             }
             ouverture.setText(context.getString(R.string.fermer));
             ouverture.setTextColor(ContextCompat.getColor(context, R.color.colorFermeture));

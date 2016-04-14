@@ -35,24 +35,44 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/logo_ft_card_view"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="3">
 
-                <TextView
-                    android:id="@+id/ouverture_ft_card_view"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="?android:selectableItemBackground"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="5dp"
-                    android:text="Ouverture"
-                    android:fontFamily="sans-serif"
-                    android:textColor="#333"
-                    android:textSize="14sp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:layout_weight="3"
-                    />
+                    android:orientation="horizontal"
+                    android:layout_weight="2">
+
+                    <TextView
+                        android:id="@+id/ouverture_ft_card_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?android:selectableItemBackground"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingLeft="5dp"
+                        android:text="Ouverture"
+                        android:fontFamily="sans-serif"
+                        android:textColor="#333"
+                        android:textSize="14sp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        />
+
+                    <TextView
+                        android:id="@+id/horaireouverture_ft_card_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?android:selectableItemBackground"
+                        android:visibility="visible"
+                        android:paddingLeft="5dp"
+                        android:fontFamily="sans-serif"
+                        android:textSize="9sp"
+                        />
+
+                </LinearLayout>
+
 
                 <TextView
                     android:id="@+id/ft_distance_tv"
@@ -66,6 +86,7 @@
                     android:gravity="right"
                     android:textStyle="italic"
                     android:singleLine="true"
+                    android:layout_weight="1"
                     android:textSize="12sp" />
 
             </LinearLayout>

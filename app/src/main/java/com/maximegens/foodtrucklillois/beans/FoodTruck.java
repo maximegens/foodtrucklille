@@ -492,6 +492,45 @@ public class FoodTruck implements Parcelable{
     }
 
     /**
+     * Donne la prochaine horaire de fermeture du food truck pour aujourd'hui.
+     * @return l'heure d'ouverture prochaien du Food truck.
+     */
+    public String getNextFermetureToday(){
+
+        // Creation du calendrier
+        Calendar calendarToday = GestionnaireHoraire.createCalendarToday();
+        String horaireFermeture = "";
+
+        // test de la fermeture actuelle ou prochaine sur la journee du ft.
+        if(isOpenToday() && isDateBeforeLastHoraireFermeture(calendarToday)){
+            PlanningFoodTruck planning = getPlaningToday();
+
+            if (planning != null) {
+                // On verifie si on se trouve le midi ou le soir afin de récupérer les horaires d"ouverture correspondant.
+                if (planning.getMidi() != null && GestionnaireHoraire.isMidiOrBeforeMidi()) {
+                    horaireFermeture = planning.getMidi().getHeureFermetureEnString();
+                } else if (planning.getSoir() != null && GestionnaireHoraire.isSoirOrBeforeSoirButAfterMidi()) {
+                    horaireFermeture = planning.getSoir().getHeureFermetureEnString();
+                }
+            }
+        }
+        return horaireFermeture;
+    }
+
+    /**
+     * Retourne la tranche horaire d'ouverture/fermeture du Food truck.
+     * @return
+     */
+    public String getTrancheHoraire(){
+        String horaireOuverture = getNextOuvertureToday();
+        String horaireFermeture = getNextFermetureToday();
+        if(horaireOuverture != null && !horaireOuverture.isEmpty() && horaireFermeture != null && !horaireFermeture.isEmpty())
+            return getNextOuvertureToday()+" - "+getNextFermetureToday();
+        else
+            return "";
+    }
+
+    /**
      * Indique si il existe une adresse pour le food truck le midi en fonction du planning passé en paramétre.
      * @param planning le planning demandé.
      * @return true si le food truck posséde une adresse avec coordonnées GPS pour le midi.
@@ -572,5 +611,6 @@ public class FoodTruck implements Parcelable{
         }
         return latitude != null && longitude != null ? new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude)) : null;
     }
+
 
 }
