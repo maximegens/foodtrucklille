@@ -55,6 +55,7 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
     private GoogleMap googleMap;
     private static View view;
     private AppBarLayout appBarLayout;
+    private boolean isViewShown;
 
     /**
      * Creation du Fragment.
@@ -74,14 +75,16 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
 
         if (view != null) {
             ViewGroup parent = (ViewGroup) view.getParent();
-            if (parent != null)
+            if (parent != null) {
                 parent.removeView(view);
+            }
         }
         try {
             view = inflater.inflate(R.layout.fragment_emplacement_ft, container, false);
         } catch (InflateException e) {
          /* map is already there, just return view as it is */
         }
+
         return view;
     }
 
@@ -91,6 +94,10 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
 
         if(getArguments() != null){
             ft = getArguments().getParcelable(FoodTruckActivity.KEY_FOODTRUCK_SELECTIONNER);
+        }
+
+        if(isViewShown){
+            repliageAppBarLayout();
         }
 
         // On affiche la map si le device posséde une connexion internet.
@@ -114,21 +121,34 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
     @Override
     public void setMenuVisibility(final boolean visible) {
         super.setMenuVisibility(visible);
-        if (!visible) {
+        if (visible) {
+            if(getView() != null) {
+                repliageAppBarLayout();
+            }
+            isViewShown = true;
         }else{
-            // On replie l'appBarLayout et on block son dépliage
-            appBarLayout = (AppBarLayout) view.getRootView().findViewById(R.id.app_bar_layout);
-            appBarLayout.setExpanded(false, true);
-
-            CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
-            AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
-            behavior.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
-                @Override
-                public boolean canDrag(@NonNull AppBarLayout appBarLayout) {
-                    return false;
-                }
-            });
+            isViewShown = false;
         }
+    }
+
+    /**
+     * Methode permettant de replier l'AppBarLayout afin de masquer automatiquement l'image
+     * et d'afficher correctement le menu de selection du jour pour le Food Truck
+     */
+    private void repliageAppBarLayout() {
+
+        // On replie l'appBarLayout et on block son dépliage
+        appBarLayout = (AppBarLayout) getView().getRootView().findViewById(R.id.app_bar_layout);
+        appBarLayout.setExpanded(false, true);
+
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
+        AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
+        behavior.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
+            @Override
+            public boolean canDrag(@NonNull AppBarLayout appBarLayout) {
+                return false;
+            }
+        });
     }
 
     @Override
