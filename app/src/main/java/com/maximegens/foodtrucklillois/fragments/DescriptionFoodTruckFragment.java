@@ -20,13 +20,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.maximegens.foodtrucklillois.FoodTruckActivity;
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
-import com.maximegens.foodtrucklillois.beans.PlanningFoodTruck;
 import com.maximegens.foodtrucklillois.utils.AlertDialogFT;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
 import com.maximegens.foodtrucklillois.utils.Utils;
-
-import java.util.Calendar;
 
 
 public class DescriptionFoodTruckFragment extends Fragment {
@@ -52,8 +49,9 @@ public class DescriptionFoodTruckFragment extends Fragment {
 
     private RelativeLayout zoneTel;
     private RelativeLayout zoneMail;
-    private RelativeLayout zoneSiteWeb;
+    private RelativeLayout zoneDistance;
 
+    private RelativeLayout zoneSiteWeb;
     private Button consulterHoraire;
     private Button voirDescriptionLongue;
     private Button goFT;
@@ -101,10 +99,12 @@ public class DescriptionFoodTruckFragment extends Fragment {
         zoneTel = (RelativeLayout) view.findViewById(R.id.relative_layout_tel);
         zoneMail = (RelativeLayout) view.findViewById(R.id.relative_layout_mail);
         zoneSiteWeb = (RelativeLayout) view.findViewById(R.id.relative_layout_site_web);
+        zoneDistance = (RelativeLayout) view.findViewById(R.id.linear_distance_description);
 
         consulterHoraire = (Button) view.findViewById(R.id.button_horaire_complet);
         voirDescriptionLongue = (Button) view.findViewById(R.id.button_description_longue);
         goFT = (Button) view.findViewById(R.id.button_ft_go_description);
+
 
         // Remplissage des différents textView avec les informations contenu dans l'objet FoodTruck.
         if(ft != null){
@@ -112,9 +112,7 @@ public class DescriptionFoodTruckFragment extends Fragment {
                 descriptionBreve.setText(ft.getDescriptionBreve());
             }
             // affichage de l'ouverture du food truck
-            afficheOuverture();
-
-            afficheDistance();
+            afficheOuvertureDistance();
 
             if(ft.getCuisine() != null){
                 cuisine.setText(ft.getCuisine());
@@ -215,17 +213,6 @@ public class DescriptionFoodTruckFragment extends Fragment {
     }
 
     /**
-     * Affiche la distance vers le Food truck.
-     */
-    private void afficheDistance() {
-        if (ft.getDistanceFromUser() != Constantes.FT_FERMER_DISTANCE && ft.isDateBeforeLastHoraireFermeture(GestionnaireHoraire.createCalendarToday())){
-            distance.setText(String.valueOf(Utils.metreToKm(ft.getDistanceFromUser()))+ Constantes.KM);
-        }else{
-            distance.setText("");
-        }
-    }
-
-    /**
      * Renvoi vers Google Map pour afficher l'itineraire.
      * @param context
      */
@@ -249,31 +236,33 @@ public class DescriptionFoodTruckFragment extends Fragment {
     /**
      * Methode permettant de savoir si le food truc est actuellement ouvert ou fermé.
      */
-    private void afficheOuverture() {
+    private void afficheOuvertureDistance() {
 
         // Si le Food truck est actuellement ouvert.
         if(ft.isOpenNow()){
-            goFT.setVisibility(View.VISIBLE);
+            zoneDistance.setVisibility(View.VISIBLE);
             ouverture.setText(getString(R.string.ouvert_jusque) + ft.getOuvertureJusque());
             ouverture.setTextColor(ContextCompat.getColor(getContext(), R.color.colorOuverture));
 
         // Si le Food truck est fermé mais ouvres aujourd'hui.
         }else if(ft.isDateBeforeLastHoraireFermeture(GestionnaireHoraire.createCalendarToday())) {
-            goFT.setVisibility(View.VISIBLE);
+            zoneDistance.setVisibility(View.VISIBLE);
             ouverture.setText(getString(R.string.fermer_ouverture_a)+ft.getProchaineOuvertureToday());
             ouverture.setTextColor(ContextCompat.getColor(getContext(), R.color.colorFermeture));
 
         }else{
-            goFT.setVisibility(View.GONE);
+            zoneDistance.setVisibility(View.GONE);
             ouverture.setText(getString(R.string.fermer_today));
             ouverture.setTextColor(ContextCompat.getColor(getContext(), R.color.colorFermeture));
         }
 
+        // Affiche la distance.
         if (ft.getDistanceFromUser() != Constantes.FT_FERMER_DISTANCE && ft.isDateBeforeLastHoraireFermeture(GestionnaireHoraire.createCalendarToday())){
-            distance.setText(String.valueOf(Utils.metreToKm(ft.getDistanceFromUser())) + Constantes.KM);
+            distance.setText(String.valueOf(Utils.metreToKm(ft.getDistanceFromUser())) + " " + Constantes.KM);
         }else{
-            distance.setText("");
+            distance.setText(getContext().getString(R.string.distance_indisponible));
         }
+
     }
 
     /**

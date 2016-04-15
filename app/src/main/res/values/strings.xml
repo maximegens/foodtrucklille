@@ -29,6 +29,7 @@
     <string name="description_breve">Description</string>
     <string name="description_longue">Description longue</string>
     <string name="ouverture">Ouverture</string>
+    <string name="distance">Distance</string>
     <string name="cuisine">Cuisine</string>
     <string name="gamme_prix">Gamme de prix</string>
     <string name="moyen_paiement">Moyen de paiement</string>
@@ -42,6 +43,7 @@
     <string name="voir_description_complete">Voir description compléte</string>
     <string name="consulter_horaire">Consulter les horaires</string>
     <string name="champ_non_communique">Non communiqué</string>
+    <string name="distance_indisponible">Distance indisponible</string>
 
     <!-- String Favoris -->
     <string name="title_favoris">Mes Favoris</string>

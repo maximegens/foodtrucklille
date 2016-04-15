@@ -13,7 +13,7 @@ import com.maximegens.foodtrucklillois.R;
 
 public class AProposFragment extends Fragment {
 
-    public static String TITLE = "Emplacement All";
+    public static String TITLE = "APropos";
 
     /**
      * Creation du Fragment.

@@ -13,86 +13,110 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@drawable/separator"
-            android:showDividers="end"
             android:layout_marginTop="20dp"
-            android:orientation="vertical">
+            android:divider="@drawable/separator"
+            android:orientation="vertical"
+            android:showDividers="end">
 
             <!-- Ouverture  -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp">
+
                 <ImageView
                     android:id="@+id/icon_ouverture"
                     android:layout_width="@dimen/icon_description_width"
                     android:layout_height="@dimen/icon_description_height"
-                    android:layout_marginRight="10dp"
+                    android:layout_alignParentLeft="true"
                     android:layout_marginLeft="10dp"
-                    android:src="@drawable/ic_clock_24dp"
-                    android:layout_alignParentLeft="true"/>
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_clock_24dp" />
+
                 <TextView
                     android:id="@+id/label_ouverture"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="6dp"
                     android:layout_toRightOf="@id/icon_ouverture"
                     android:text="@string/ouverture"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_label"
-                    android:layout_marginBottom="6dp"/>
+                    android:textSize="@dimen/text_label" />
 
-                <LinearLayout
-                    android:id="@+id/linear_ouverture_distance"
-                    android:layout_below="@id/label_ouverture"
+
+                <TextView
+                    android:id="@+id/value_ouvert"
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/label_ouverture"
                     android:layout_toRightOf="@id/icon_ouverture"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:text="@string/champ_non_communique"
+                    android:textSize="@dimen/text_value" />
 
-                    <TextView
-                        android:id="@+id/value_ouvert"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textSize="@dimen/text_value"
-                        android:padding="5dp"
-                        android:layout_weight="1"
-                        android:text="@string/champ_non_communique"/>
-
-                    <TextView
-                        android:id="@+id/value_distance"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:paddingRight="5dp"
-                        android:gravity="right"
-                        android:textSize="@dimen/text_value"
-                        android:padding="5dp"
-                        android:layout_weight="3"
-                        android:text="1250 km"/>
-
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/button_ft_go_description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/orange"
-                    android:layout_below="@+id/linear_ouverture_distance"
-                    android:text="@string/go_faim"
-                    android:layout_toRightOf="@id/icon_ouverture"
-                    style="@style/Widget.AppCompat.Button.Borderless"
-                    />
 
                 <Button
                     android:id="@+id/button_horaire_complet"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/linear_ouverture_distance"
-                    android:layout_centerHorizontal="true"
                     android:layout_alignParentRight="true"
+                    android:layout_below="@id/value_ouvert"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/consulter_horaire"
                     android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/size_flat_button"
-                    android:text="@string/consulter_horaire"/>
+                    android:textSize="@dimen/size_flat_button" />
+
+            </RelativeLayout>
+
+            <!-- Distance  -->
+            <RelativeLayout
+                android:id="@+id/linear_distance_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/icon_distance"
+                    android:layout_width="@dimen/icon_description_width"
+                    android:layout_height="@dimen/icon_description_height"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/map_marker" />
+
+                <TextView
+                    android:id="@+id/label_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="6dp"
+                    android:layout_toRightOf="@id/icon_distance"
+                    android:text="@string/distance"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_label" />
+
+                <TextView
+                    android:id="@+id/value_distance"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/label_distance"
+                    android:layout_toRightOf="@id/icon_distance"
+                    android:padding="5dp"
+                    android:paddingRight="5dp"
+                    android:text="1250 km"
+                    android:textSize="@dimen/text_value" />
+
+                <Button
+                    android:id="@+id/button_ft_go_description"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/value_distance"
+                    android:layout_toRightOf="@id/icon_distance"
+                    android:text="@string/go_faim"
+                    android:textColor="@color/orange" />
+
 
             </RelativeLayout>
 
@@ -101,31 +125,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp">
+
                 <ImageView
                     android:id="@+id/icon_description_breve"
                     android:layout_width="@dimen/icon_description_width"
                     android:layout_height="@dimen/icon_description_height"
-                    android:layout_marginRight="10dp"
+                    android:layout_alignParentLeft="true"
                     android:layout_marginLeft="10dp"
-                    android:src="@mipmap/truck"
-                    android:layout_alignParentLeft="true"/>
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/truck" />
+
                 <TextView
                     android:id="@+id/label_description_breve"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="6dp"
                     android:layout_toRightOf="@id/icon_description_breve"
                     android:text="@string/description_breve"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_label"
-                    android:layout_marginBottom="6dp"/>
+                    android:textSize="@dimen/text_label" />
+
                 <TextView
                     android:id="@+id/value_description_breve"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/icon_description_breve"
                     android:layout_below="@id/label_description_breve"
-                    android:textSize="@dimen/text_value"
-                    android:text="@string/champ_non_communique"/>
+                    android:layout_toRightOf="@id/icon_description_breve"
+                    android:text="@string/champ_non_communique"
+                    android:textSize="@dimen/text_value" />
 
                 <!-- Description Longue -->
                 <Button
@@ -133,12 +160,12 @@
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
                     android:layout_below="@id/value_description_breve"
                     android:layout_centerHorizontal="true"
-                    android:layout_alignParentRight="true"
+                    android:text="@string/voir_description_complete"
                     android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/size_flat_button"
-                    android:text="@string/voir_description_complete"/>
+                    android:textSize="@dimen/size_flat_button" />
 
             </RelativeLayout>
 
@@ -148,30 +175,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp">
+
                 <ImageView
                     android:id="@+id/icon_cuisine"
                     android:layout_width="@dimen/icon_description_width"
                     android:layout_height="@dimen/icon_description_height"
-                    android:layout_marginRight="10dp"
+                    android:layout_alignParentLeft="true"
                     android:layout_marginLeft="10dp"
-                    android:layout_alignParentLeft="true"/>
+                    android:layout_marginRight="10dp" />
+
                 <TextView
                     android:id="@+id/label_cuisine"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="6dp"
                     android:layout_toRightOf="@id/icon_cuisine"
                     android:text="@string/cuisine"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_label"
-                    android:layout_marginBottom="6dp"/>
+                    android:textSize="@dimen/text_label" />
+
                 <TextView
                     android:id="@+id/value_cuisine"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/icon_cuisine"
                     android:layout_below="@id/label_cuisine"
-                    android:textSize="@dimen/text_value"
-                    android:text="@string/champ_non_communique"/>
+                    android:layout_toRightOf="@id/icon_cuisine"
+                    android:text="@string/champ_non_communique"
+                    android:textSize="@dimen/text_value" />
             </RelativeLayout>
 
         </LinearLayout>
@@ -181,39 +211,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="@drawable/separator"
-            android:showDividers="end"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:showDividers="end">
 
             <!-- Gamme de prix  -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp">
+
                 <ImageView
                     android:id="@+id/icon_gamme_prix"
                     android:layout_width="@dimen/icon_description_width"
                     android:layout_height="@dimen/icon_description_height"
-                    android:layout_marginRight="10dp"
+                    android:layout_alignParentLeft="true"
                     android:layout_marginLeft="10dp"
-                    android:src="@mipmap/euro"
-                    android:layout_alignParentLeft="true"/>
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/euro" />
+
                 <TextView
                     android:id="@+id/label_gamme_prix"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="6dp"
                     android:layout_toRightOf="@id/icon_gamme_prix"
                     android:text="@string/gamme_prix"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_label"
-                    android:layout_marginBottom="6dp"/>
+                    android:textSize="@dimen/text_label" />
+
                 <TextView
                     android:id="@+id/value_gamme_prix"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/icon_gamme_prix"
                     android:layout_below="@id/label_gamme_prix"
-                    android:textSize="@dimen/text_value"
-                    android:text="@string/champ_non_communique"/>
+                    android:layout_toRightOf="@id/icon_gamme_prix"
+                    android:text="@string/champ_non_communique"
+                    android:textSize="@dimen/text_value" />
             </RelativeLayout>
 
             <!-- moyen de paiement  -->
@@ -221,30 +254,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp">
+
                 <ImageView
                     android:id="@+id/icon_moyen_paiement"
                     android:layout_width="@dimen/icon_description_width"
                     android:layout_height="@dimen/icon_description_height"
-                    android:layout_marginRight="10dp"
+                    android:layout_alignParentLeft="true"
                     android:layout_marginLeft="10dp"
-                    android:layout_alignParentLeft="true"/>
+                    android:layout_marginRight="10dp" />
+
                 <TextView
                     android:id="@+id/label_moyen_paiement"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="6dp"
                     android:layout_toRightOf="@id/icon_moyen_paiement"
                     android:text="@string/moyen_paiement"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_label"
-                    android:layout_marginBottom="6dp"/>
+                    android:textSize="@dimen/text_label" />
+
                 <TextView
                     android:id="@+id/value_moyen_paiement"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/icon_moyen_paiement"
                     android:layout_below="@id/label_moyen_paiement"
-                    android:textSize="@dimen/text_value"
-                    android:text="@string/champ_non_communique"/>
+                    android:layout_toRightOf="@id/icon_moyen_paiement"
+                    android:text="@string/champ_non_communique"
+                    android:textSize="@dimen/text_value" />
             </RelativeLayout>
 
         </LinearLayout>
@@ -254,8 +290,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="@drawable/separator"
-            android:showDividers="end"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:showDividers="end">
 
             <!-- Telephone  -->
             <RelativeLayout
@@ -264,31 +300,34 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/selector_layout"
                 android:padding="5dp">
+
                 <ImageView
                     android:id="@+id/icon_telephone"
                     android:layout_width="@dimen/icon_description_width"
                     android:layout_height="@dimen/icon_description_height"
-                    android:layout_marginRight="10dp"
+                    android:layout_alignParentLeft="true"
                     android:layout_marginLeft="10dp"
-                    android:src="@mipmap/online_support"
-                    android:layout_alignParentLeft="true"/>
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/online_support" />
+
                 <TextView
                     android:id="@+id/label_telephone"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="6dp"
                     android:layout_toRightOf="@id/icon_telephone"
                     android:text="@string/telephone"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_label"
-                    android:layout_marginBottom="6dp"/>
+                    android:textSize="@dimen/text_label" />
+
                 <TextView
                     android:id="@+id/value_telephone"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/icon_telephone"
                     android:layout_below="@id/label_telephone"
-                    android:textSize="@dimen/text_value"
-                    android:text="@string/champ_non_communique"/>
+                    android:layout_toRightOf="@id/icon_telephone"
+                    android:text="@string/champ_non_communique"
+                    android:textSize="@dimen/text_value" />
             </RelativeLayout>
 
             <!-- Email  -->
@@ -298,30 +337,33 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/selector_layout"
                 android:padding="5dp">
+
                 <ImageView
                     android:id="@+id/icon_email"
                     android:layout_width="@dimen/icon_description_width"
                     android:layout_height="@dimen/icon_description_height"
-                    android:layout_marginRight="10dp"
+                    android:layout_alignParentLeft="true"
                     android:layout_marginLeft="10dp"
-                    android:layout_alignParentLeft="true"/>
+                    android:layout_marginRight="10dp" />
+
                 <TextView
                     android:id="@+id/label_email"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="6dp"
                     android:layout_toRightOf="@id/icon_email"
                     android:text="@string/email"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_label"
-                    android:layout_marginBottom="6dp"/>
+                    android:textSize="@dimen/text_label" />
+
                 <TextView
                     android:id="@+id/value_email"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/icon_email"
                     android:layout_below="@id/label_email"
-                    android:textSize="@dimen/text_value"
-                    android:text="@string/champ_non_communique"/>
+                    android:layout_toRightOf="@id/icon_email"
+                    android:text="@string/champ_non_communique"
+                    android:textSize="@dimen/text_value" />
             </RelativeLayout>
 
             <!-- SiteWeb  -->
@@ -331,30 +373,33 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/selector_layout"
                 android:padding="5dp">
+
                 <ImageView
                     android:id="@+id/icon_site_web"
                     android:layout_width="@dimen/icon_description_width"
                     android:layout_height="@dimen/icon_description_height"
-                    android:layout_marginRight="10dp"
+                    android:layout_alignParentLeft="true"
                     android:layout_marginLeft="10dp"
-                    android:layout_alignParentLeft="true"/>
+                    android:layout_marginRight="10dp" />
+
                 <TextView
                     android:id="@+id/label_site_web"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="6dp"
                     android:layout_toRightOf="@id/icon_site_web"
                     android:text="@string/site_web"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_label"
-                    android:layout_marginBottom="6dp"/>
+                    android:textSize="@dimen/text_label" />
+
                 <TextView
                     android:id="@+id/value_site_web"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/icon_site_web"
                     android:layout_below="@id/label_site_web"
-                    android:textSize="@dimen/text_value"
-                    android:text="@string/champ_non_communique"/>
+                    android:layout_toRightOf="@id/icon_site_web"
+                    android:text="@string/champ_non_communique"
+                    android:textSize="@dimen/text_value" />
             </RelativeLayout>
 
         </LinearLayout>
@@ -364,39 +409,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="@drawable/separator"
-            android:showDividers="end"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:showDividers="end">
 
             <!-- Specialite  -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp">
+
                 <ImageView
                     android:id="@+id/icon_specialite"
                     android:layout_width="@dimen/icon_description_width"
                     android:layout_height="@dimen/icon_description_height"
-                    android:layout_marginRight="10dp"
+                    android:layout_alignParentLeft="true"
                     android:layout_marginLeft="10dp"
-                    android:src="@mipmap/info"
-                    android:layout_alignParentLeft="true"/>
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/info" />
+
                 <TextView
                     android:id="@+id/label_specialite"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="6dp"
                     android:layout_toRightOf="@id/icon_specialite"
                     android:text="@string/specialite"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_label"
-                    android:layout_marginBottom="6dp"/>
+                    android:textSize="@dimen/text_label" />
+
                 <TextView
                     android:id="@+id/value_specialite"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/icon_specialite"
                     android:layout_below="@id/label_specialite"
-                    android:textSize="@dimen/text_value"
-                    android:text="@string/champ_non_communique"/>
+                    android:layout_toRightOf="@id/icon_specialite"
+                    android:text="@string/champ_non_communique"
+                    android:textSize="@dimen/text_value" />
             </RelativeLayout>
 
             <!-- Service  -->
@@ -404,30 +452,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp">
+
                 <ImageView
                     android:id="@+id/icon_service"
                     android:layout_width="@dimen/icon_description_width"
                     android:layout_height="@dimen/icon_description_height"
-                    android:layout_marginRight="10dp"
+                    android:layout_alignParentLeft="true"
                     android:layout_marginLeft="10dp"
-                    android:layout_alignParentLeft="true"/>
+                    android:layout_marginRight="10dp" />
+
                 <TextView
                     android:id="@+id/label_service"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="6dp"
                     android:layout_toRightOf="@id/icon_service"
                     android:text="@string/service"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_label"
-                    android:layout_marginBottom="6dp"/>
+                    android:textSize="@dimen/text_label" />
+
                 <TextView
                     android:id="@+id/value_service"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/icon_service"
                     android:layout_below="@id/label_service"
-                    android:textSize="@dimen/text_value"
-                    android:text="@string/champ_non_communique"/>
+                    android:layout_toRightOf="@id/icon_service"
+                    android:text="@string/champ_non_communique"
+                    android:textSize="@dimen/text_value" />
             </RelativeLayout>
 
             <!-- date ouverture  -->
@@ -435,30 +486,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp">
+
                 <ImageView
                     android:id="@+id/icon_date_ouverture"
                     android:layout_width="@dimen/icon_description_width"
                     android:layout_height="@dimen/icon_description_height"
-                    android:layout_marginRight="10dp"
+                    android:layout_alignParentLeft="true"
                     android:layout_marginLeft="10dp"
-                    android:layout_alignParentLeft="true"/>
+                    android:layout_marginRight="10dp" />
+
                 <TextView
                     android:id="@+id/label_date_ouverture"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="6dp"
                     android:layout_toRightOf="@id/icon_date_ouverture"
                     android:text="@string/date_ouverture"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_label"
-                    android:layout_marginBottom="6dp"/>
+                    android:textSize="@dimen/text_label" />
+
                 <TextView
                     android:id="@+id/value_date_ouverture"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_toRightOf="@id/icon_date_ouverture"
                     android:layout_below="@id/label_date_ouverture"
-                    android:textSize="@dimen/text_value"
-                    android:text="@string/champ_non_communique"/>
+                    android:layout_toRightOf="@id/icon_date_ouverture"
+                    android:text="@string/champ_non_communique"
+                    android:textSize="@dimen/text_value" />
             </RelativeLayout>
 
         </LinearLayout>
