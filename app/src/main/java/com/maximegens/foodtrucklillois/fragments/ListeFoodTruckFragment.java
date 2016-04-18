@@ -41,6 +41,7 @@ import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
 import com.maximegens.foodtrucklillois.utils.GridLayoutManagerFoodTruck;
 import com.maximegens.foodtrucklillois.utils.SortListeFT;
+import com.maximegens.foodtrucklillois.utils.Utils;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -59,7 +60,7 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
     private Button activateGPS;
     private TextView indicationChargementFT;
     private TextView indicationListeFTVide;
-    private ListeFTAdapter listeFTAdapter;
+    public  ListeFTAdapter listeFTAdapter;
     private RecyclerView recyclerViewListeFT;
     private GridLayoutManagerFoodTruck layoutManagerFT;
     private SwipeRefreshLayout swipeRefreshLayoutListeFT;
@@ -118,7 +119,7 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         }
 
         // Creation de l'agencement classique des food trucks en attendant la détection du food truck le plus proche si le gps est activé.
-        int nombreColonne = getNbColonneForScreen();
+        int nombreColonne = Utils.getNbColonneForScreen(getContext());
         recyclerViewListeFT.setLayoutManager(new GridLayoutManager(getContext(), nombreColonne));
 
         // Ajout des FTs interne dans l'adapters de la liste.
@@ -294,9 +295,8 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
 
         // On trie la liste des Food trucks par distance.
         Collections.sort(Constantes.lesFTs, new SortListeFT(true));
-        listeFTAdapter.setIsAffichageClassique(false);
-        listeFTAdapter.setFTs(Constantes.lesFTs);
-        listeFTAdapter.notifyDataSetChanged();
+        ListeFTAdapter listeFTAdapter = new ListeFTAdapter(Constantes.lesFTs, getContext(),false);
+        recyclerViewListeFT.setAdapter(listeFTAdapter);
 
         // Mise à jour de l'affichage.
         updateLayoutRecyclerView(tousFermer);
@@ -322,7 +322,7 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
      * @param tousfermer indique si tous les ft sont fermé pour la journée.
      */
     private void updateLayoutRecyclerView(boolean tousfermer) {
-        int nombreColonne = getNbColonneForScreen();
+        int nombreColonne = Utils.getNbColonneForScreen(getContext());
         boolean gpsActive = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         if (gpsActive && !tousfermer) {
             linearActiveGPS.setVisibility(View.GONE);
@@ -341,6 +341,7 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
             listeFTAdapter.setIsAffichageClassique(true);
             recyclerViewListeFT.setLayoutManager(new GridLayoutManager(getContext(), nombreColonne));
         }
+        listeFTAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -353,7 +354,7 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         final List<FoodTruck> filteredModelList = vide ? Constantes.lesFTs : FoodTruck.filterListeFTs(Constantes.lesFTs, recherche);
 
         // Creation de l'agencement des Foods Trucks en fonction de l'orientation ( Portrait : par 2 - Paysage : par 3)
-        int nombreColonne = getNbColonneForScreen();
+        int nombreColonne = Utils.getNbColonneForScreen(getContext());
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && vide) {
             isAffichageClassique = false;
             if (nombreColonne == 2 ) {
@@ -373,18 +374,10 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
     }
 
     /**
-     * Retourne le nombre de colonne pour la recyclerView en fonction de l'orientation du téléphone.
-     * @return
-     */
-    private int getNbColonneForScreen() {
-        return getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? 2 : 3;
-    }
-
-    /**
      * Chargement des données des Food trucks par Internet ou en interne si il n'existe pas de connexion.
      */
     private void loadDataFoodTruck(boolean bySwiperefresh) {
-        RetreiveJSONListeFT retreiveJSONListeFT = new RetreiveJSONListeFT(listeFTAdapter, getContext(), bySwiperefresh, indicationListeFTVide, getContext());
+        RetreiveJSONListeFT retreiveJSONListeFT = new RetreiveJSONListeFT(listeFTAdapter, getActivity(), bySwiperefresh, indicationListeFTVide);
         retreiveJSONListeFT.setProgressBar(loader, indicationChargementFT);
         retreiveJSONListeFT.setswipeRefresh(swipeRefreshLayoutListeFT);
         retreiveJSONListeFT.execute(Internet.isNetworkAvailable(getActivity().getApplicationContext()));

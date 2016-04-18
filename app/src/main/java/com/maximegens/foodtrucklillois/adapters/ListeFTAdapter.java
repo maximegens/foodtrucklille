@@ -109,5 +109,7 @@ public class ListeFTAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public void setIsAffichageClassique(boolean isAffichageClassique) {
         this.isAffichageClassique = isAffichageClassique;
+        notifyDataSetChanged();
     }
+
 }
