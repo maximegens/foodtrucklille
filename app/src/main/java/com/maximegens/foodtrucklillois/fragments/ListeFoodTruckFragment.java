@@ -322,11 +322,12 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
      * @param tousfermer indique si tous les ft sont fermé pour la journée.
      */
     private void updateLayoutRecyclerView(boolean tousfermer) {
+        boolean affiClassique;
         int nombreColonne = Utils.getNbColonneForScreen(getContext());
         boolean gpsActive = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         if (gpsActive && !tousfermer) {
             linearActiveGPS.setVisibility(View.GONE);
-            listeFTAdapter.setIsAffichageClassique(false);
+            affiClassique = false;
             if (nombreColonne == 2) {
                 recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutPortrait());
             } else {
@@ -338,9 +339,11 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
             }else{
                 linearActiveGPS.setVisibility(View.VISIBLE);
             }
-            listeFTAdapter.setIsAffichageClassique(true);
+            affiClassique = true;
             recyclerViewListeFT.setLayoutManager(new GridLayoutManager(getContext(), nombreColonne));
         }
+        ListeFTAdapter listeFTAd = new ListeFTAdapter(Constantes.lesFTs, getContext(),affiClassique);
+        recyclerViewListeFT.setAdapter(listeFTAd);
         listeFTAdapter.notifyDataSetChanged();
     }
 

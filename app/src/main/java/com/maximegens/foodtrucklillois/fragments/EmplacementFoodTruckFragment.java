@@ -90,16 +90,16 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        public void onViewCreated(View view, Bundle savedInstanceState) {
+            super.onViewCreated(view, savedInstanceState);
 
-        if(getArguments() != null){
-            ft = getArguments().getParcelable(FoodTruckActivity.KEY_FOODTRUCK_SELECTIONNER);
-        }
+            if(getArguments() != null){
+                ft = getArguments().getParcelable(FoodTruckActivity.KEY_FOODTRUCK_SELECTIONNER);
+            }
 
-        if(isViewShown){
-            repliageAppBarLayout();
-        }
+            if(isViewShown){
+                repliageAppBarLayout();
+            }
 
 
         // On affiche la map si le device posséde une connexion internet.
