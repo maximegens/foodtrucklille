@@ -368,9 +368,8 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         }
 
         // Mise à jour des FT dans l'adpater.
-        listeFTAdapter.setIsAffichageClassique(isAffichageClassique);
-        listeFTAdapter.setFTs(filteredModelList);
-        listeFTAdapter.notifyDataSetChanged();
+        ListeFTAdapter listeFTAdapter = new ListeFTAdapter(filteredModelList, getContext(),isAffichageClassique);
+        recyclerViewListeFT.setAdapter(listeFTAdapter);
     }
 
     /**
