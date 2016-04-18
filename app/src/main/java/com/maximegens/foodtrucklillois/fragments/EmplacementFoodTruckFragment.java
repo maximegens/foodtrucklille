@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -99,6 +100,7 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
         if(isViewShown){
             repliageAppBarLayout();
         }
+
 
         // On affiche la map si le device posséde une connexion internet.
         if(Internet.isNetworkAvailable(getContext())){

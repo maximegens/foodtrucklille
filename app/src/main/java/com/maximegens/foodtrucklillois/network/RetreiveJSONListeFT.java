@@ -55,12 +55,11 @@ public class RetreiveJSONListeFT extends AsyncTask<Boolean, Integer, FoodTruckAp
      * @param swipeRefreshActive indique si l'utilisateur à lui meme demander le refresh de la liste des FT avec le pull to refresh.
      */
     public RetreiveJSONListeFT(ListeFTAdapter ListeFTAdapter, Activity activity, boolean swipeRefreshActive, TextView indicationListeFTVide){
-        this.ctx = ctx;
         this.listeFTAdapter = ListeFTAdapter;
         this.swipeRefreshActive = swipeRefreshActive;
         this.indicationListeFTVide = indicationListeFTVide;
         this.activity = activity;
-        apiJson = new GestionJsonAPI(this.ctx);
+        apiJson = new GestionJsonAPI(this.activity);
     }
 
     /**

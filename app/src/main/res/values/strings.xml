@@ -20,7 +20,7 @@
     <string name="title_liste_food_truck">Les Food Trucks</string>
     <string name="telechargement_ft_en_cours">Téléchargement des Food Trucks en cours...</string>
     <string name="liste_ft_vide">Il n\'y a pas de Food Trucks</string>
-    <string name="gps_desactive">Activé le GPS pour afficher les Food Trucks les plus proches</string>
+    <string name="gps_desactive">Activer le GPS pour afficher les Food Trucks les plus proches</string>
     <string name="activer_gps">Activer GPS</string>
     <string name="calcul_distance_en_cours">calcul..</string>
     <string name="erreur_localisation_ft">Désolé, impossible de récupérer l\'adresse précise du Food Truck d\'aujoud\'hui pour calculer l\'itinéraire.</string>
