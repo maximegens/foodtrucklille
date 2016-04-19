@@ -40,18 +40,7 @@ public class SortListeFT implements Comparator<FoodTruck> {
         if(ft1.isOpenNow() && ft2.isOpenNow()){
 
             if(gpsActive){
-                // On compare la distance.
-                if (ft1.getDistanceFromUser() == Constantes.FT_FERMER_DISTANCE && ft2.getDistanceFromUser() != Constantes.FT_FERMER_DISTANCE) {
-                    return 1;
-                } else if (ft2.getDistanceFromUser() == Constantes.FT_FERMER_DISTANCE && ft1.getDistanceFromUser() != Constantes.FT_FERMER_DISTANCE) {
-                    return -1;
-                } else if (ft1.getDistanceFromUser() == ft2.getDistanceFromUser()) {
-                    return 0;
-                } else if (ft1.getDistanceFromUser() < ft2.getDistanceFromUser()) {
-                    return -1;
-                } else {
-                    return 1;
-                }
+                    return compareDistance(ft1,ft2);
             }else{
                 // On compare par nom
                 return ft1.getNom().compareToIgnoreCase(ft2.getNom());
@@ -62,7 +51,33 @@ public class SortListeFT implements Comparator<FoodTruck> {
         }else if(!ft1.isOpenNow() && ft2.isOpenNow()){
             return 1;
         }else{
-            return 0; // les deux food truc sont fermé.
+            // les deux food truc sont fermé.
+            boolean ft1OpenToday = ft1.isDateBeforeLastHoraireFermeture(GestionnaireHoraire.createCalendarToday());
+            boolean ft2OpenToday = ft2.isDateBeforeLastHoraireFermeture(GestionnaireHoraire.createCalendarToday());
+            if(ft1OpenToday && ft2OpenToday){
+                return compareDistance(ft1,ft2);
+            }else if(ft1OpenToday && !ft2OpenToday){
+                return -1;
+            }else if(!ft1OpenToday && ft2OpenToday){
+                return 1;
+            }else{
+                return 0;
+            }
+        }
+    }
+
+    public int compareDistance(FoodTruck ft1, FoodTruck ft2){
+        // On compare la distance.
+        if (ft1.getDistanceFromUser() == Constantes.FT_FERMER_DISTANCE && ft2.getDistanceFromUser() != Constantes.FT_FERMER_DISTANCE) {
+            return 1;
+        } else if (ft2.getDistanceFromUser() == Constantes.FT_FERMER_DISTANCE && ft1.getDistanceFromUser() != Constantes.FT_FERMER_DISTANCE) {
+            return -1;
+        } else if (ft1.getDistanceFromUser() == ft2.getDistanceFromUser()) {
+            return 0;
+        } else if (ft1.getDistanceFromUser() < ft2.getDistanceFromUser()) {
+            return -1;
+        } else {
+            return 1;
         }
     }
 }
