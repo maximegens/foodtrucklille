@@ -75,6 +75,7 @@
 
     <!-- Menu -->
     <string name="menu_title_map_fts_spinner">Map des Food Trucks</string>
+    <string name="menu_title_map_fts_spinner_jour">Jour des FT map</string>
     <string name="menu_title_map_ft_spinner">Map du Food Truck</string>
     <string name="action_search">Rechercher un Food Truck</string>
 

@@ -2,16 +2,10 @@ package com.maximegens.foodtrucklillois.fragments;
 
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -50,11 +44,12 @@ import java.util.Set;
 
 public class EmplacementAllFragment extends Fragment implements OnMapReadyCallback, AdapterView.OnItemSelectedListener {
 
-    private ArrayAdapter<FoodTruck> adapter;
-    private GoogleMap googleMap;
+    private ArrayAdapter<FoodTruck> adapterFT;
+    private ArrayAdapter<CharSequence> adapterJour;
     private SupportMapFragment map;
     private TextView noConnexion;
-    private Button plusProche;
+    private int jourSelection = 0;
+    private FoodTruck ftSelection = null;
     public static final Set<Target> protectedFromGarbageCollectorTargets = new HashSet<>();
 
     /**
@@ -80,24 +75,18 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
 
         (getActivity()).setTitle(R.string.title_map_all);
 
-        plusProche = (Button) view.findViewById(R.id.button_map_plus_proche);
-
         FragmentManager fm = getChildFragmentManager();
         map = SupportMapFragment.newInstance();
 
         // On affiche la map si le device posséde une connexion internet.
         if(Internet.isNetworkAvailable(getContext()) && map != null){
             fm.beginTransaction().replace(R.id.framelayout_map_all, map).commit();
-            googleMap = map.getMap();
             map.getMapAsync(this);
-
         }else{
             //TODO ajouter un Broadcast Receiver pour detecter l'apparition d'une connexion et afficher la map
             noConnexion = (TextView) view.findViewById(R.id.no_connexion_map_all);
             noConnexion.setVisibility(View.VISIBLE);
-            plusProche.setVisibility(View.GONE);
         }
-
     }
 
     @Override
@@ -110,7 +99,6 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
         super.onDetach();
     }
 
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         centreMap(googleMap);
@@ -118,71 +106,151 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        FoodTruck ft = adapter.getItem(position);
-        GoogleMap gMapItem = null;
 
         // Récuperation de la googleMap
+        GoogleMap gMapItem = null;
         if(map != null){
             gMapItem = map.getMap();
         }
+        // Suppresion des précédents markers.
+        gMapItem.clear();
 
-        // Traitement du premier item " Voir tous"
-        if(position == 0 && gMapItem != null) {
+        // Récupération du spinner.
+        Spinner spinner = (Spinner) parent;
 
-            // Suppresion des précédents markers.
-            gMapItem.clear();
+        // Spinner gérant les jours.
+        if(spinner.getId() == R.id.action_spinner_map_fts_jour) {
+            gestionSpinnerJour(position, gMapItem);
+        }
+        // Spinner gérant les FTs.
+        else if(spinner.getId() == R.id.action_spinner_map_fts) {
+            gestionSpinnerFoodTruck(position, gMapItem);
+        }
+        // Centre la google Map.
+        centreMap(gMapItem);
+    }
 
-            for (FoodTruck left : Constantes.lesFTs) {
-
-                for(PlanningFoodTruck planning : left.getPlanning()){
-
-                    if(planning != null){
-                        // Parcours des adresses du food truck pour le midi.
-                        if(planning.getMidi() != null){
-                            for (AdresseFoodTruck adresse : planning.getMidi().getAdresses()){
-                                ajouteMarker(gMapItem, left, planning, adresse,Constantes.MIDI);
-                            }
-                        }
-                        // Parcours des adresses du food truck pour le soir.
-                        if(planning.getSoir() != null){
-                            for (AdresseFoodTruck adresse : planning.getSoir().getAdresses()){
-                                ajouteMarker(gMapItem, left , planning, adresse,Constantes.SOIR);
-                            }
-                        }
+    /**
+     * Gestion de l'affichage de la map en fonction du jour sélectionné.
+     * @param position la position du jour sélectionné dans le spinner.
+     * @param gMapItem la Google Map.
+     */
+    private void gestionSpinnerJour(int position, GoogleMap gMapItem) {
+        jourSelection = position;
+        // Tous les ft
+        if(ftSelection != null && ftSelection.getNom().equals(Constantes.TOUS) && gMapItem != null){
+            // Tous les jours
+            if(jourSelection == 0){
+                for (FoodTruck ft : Constantes.lesFTs) {
+                    for (PlanningFoodTruck planning : ft.getPlanning()) {
+                        traitementByPlanning(planning, gMapItem, ft);
                     }
-
                 }
-                // Centre la google Map.
-                centreMap(gMapItem);
+            }else{ // Un jour de selectionné
+                for (FoodTruck ft : Constantes.lesFTs){
+                    PlanningFoodTruck planning = ft.getPlaningByJour(jourSelection);
+                    traitementByPlanning(planning, gMapItem, ft);
+                }
+            }
+
+        }else if(ftSelection != null && !ftSelection.getNom().equals(Constantes.TOUS) && gMapItem != null){ // Un ft de selectionné
+            // Tous les jours
+            if(jourSelection == 0){
+                for (PlanningFoodTruck planning : ftSelection.getPlanning()) {
+                    traitementByPlanning(planning, gMapItem, ftSelection);
+                }
+            }else{ // Un jour de selectionné
+                PlanningFoodTruck planning = ftSelection.getPlaningByJour(jourSelection);
+                traitementByPlanning(planning, gMapItem, ftSelection);
             }
         }
-        else if(ft != null && gMapItem != null){
+    }
 
-            // Suppresion des précédents markers.
-            gMapItem.clear();
+    /**
+     * Gestion de l'affichage de la map en fonction du Food Truck sélectionné.
+     * @param position la position du Food truck sélectionné dans le spinner.
+     * @param gMapItem la Google Map.
+     */
+    private void gestionSpinnerFoodTruck(int position, GoogleMap gMapItem) {
+        ftSelection = adapterFT.getItem(position);
 
-            for(PlanningFoodTruck planning : ft.getPlanning()){
-
-                // Parcours des adresses du food truck pour le midi.
-                if(planning.getMidi() != null) {
-                    for (AdresseFoodTruck adresse : planning.getMidi().getAdresses()) {
-                        ajouteMarker(gMapItem, ft, planning, adresse, Constantes.MIDI);
+        // Tous les jours
+        if(jourSelection == 0 && gMapItem != null){
+            // Tous les ft
+            if(ftSelection != null && ftSelection.getNom().equals(Constantes.TOUS)){
+                for (FoodTruck left : Constantes.lesFTs) {
+                    for (PlanningFoodTruck planning : left.getPlanning()) {
+                        parcoursAdresses(left, gMapItem, planning);
                     }
                 }
-                // Parcours des adresses du food truck pour le soir.
-                if(planning.getSoir() != null) {
-                    for (AdresseFoodTruck adresse : planning.getSoir().getAdresses()) {
-                        ajouteMarker(gMapItem, ft, planning, adresse, Constantes.SOIR);
-                    }
+            }else{ // Un ft de selectionné
+                for (PlanningFoodTruck planning : ftSelection.getPlanning()) {
+                    parcoursAdresses(ftSelection, gMapItem, planning);
                 }
             }
-            // Centre la google Map.
-            centreMap(gMapItem);
+
+         // Un jour de selectionné
+        }else if(jourSelection != 0 && gMapItem != null){
+            // Tous les ft
+            if(ftSelection != null && ftSelection.getNom().equals(Constantes.TOUS)){
+                for(FoodTruck ft : Constantes.lesFTs) {
+                    PlanningFoodTruck planning = ft.getPlaningByJour(jourSelection);
+                    parcoursAdresses(ft, gMapItem, planning);
+                }
+            }else{ // Un ft de selectionné
+                PlanningFoodTruck planning = ftSelection.getPlaningByJour(jourSelection);
+                parcoursAdresses(ftSelection, gMapItem, planning);
+            }
         }
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {}
+
+
+    /**
+     * Parcours les adresses du food truck pour ajouter un marker sur la map permettant de visualiser l'emplacement du FT.
+     * @param ft le food truck.
+     * @param gMapItem La googleMap.
+     * @param planning Le planning du FT.
+     */
+    private void parcoursAdresses(FoodTruck ft, GoogleMap gMapItem, PlanningFoodTruck planning) {
+        if(planning != null){
+            // Parcours des adresses du food truck pour le midi.
+            if(planning.getMidi() != null) {
+                for (AdresseFoodTruck adresse : planning.getMidi().getAdresses()) {
+                    ajouteMarker(gMapItem, ft, planning, adresse, Constantes.MIDI);
+                }
+            }
+            // Parcours des adresses du food truck pour le soir.
+            if(planning.getSoir() != null) {
+                for (AdresseFoodTruck adresse : planning.getSoir().getAdresses()) {
+                    ajouteMarker(gMapItem, ft, planning, adresse, Constantes.SOIR);
+                }
+            }
+        }
+    }
+
+    /**
+     * Traitement des emplacements en fonction du planning passé en paramétre.
+     * @param planning le planning a traiter.
+     */
+    private void traitementByPlanning(PlanningFoodTruck planning, GoogleMap gMapItem, FoodTruck ft) {
+        if(planning != null){
+            // Parcours des adresses du food truck pour le midi.
+            if (planning.getMidi() != null) {
+                for (AdresseFoodTruck adresse : planning.getMidi().getAdresses()) {
+                    ajouteMarker(gMapItem, ft, planning, adresse, Constantes.MIDI);
+                }
+            }
+            // Parcours des adresses du food truck pour le soir.
+            if (planning.getSoir() != null) {
+                for (AdresseFoodTruck adresse : planning.getSoir().getAdresses()) {
+                    ajouteMarker(gMapItem, ft, planning, adresse, Constantes.SOIR);
+                }
+            }
+        }
+    }
 
     /**
      * Ajout d'un marker sur la google map pour repérer l'emplacement du Food Truck.
@@ -246,17 +314,26 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
         inflater.inflate(R.menu.menu_map_all, menu);
         super.onCreateOptionsMenu(menu, inflater);
 
-        MenuItem item = menu.findItem(R.id.action_spinner_map_fts);
-        Spinner spinnerMap = (Spinner) MenuItemCompat.getActionView(item);
+        MenuItem itemFT = menu.findItem(R.id.action_spinner_map_fts);
+        Spinner spinnerMap = (Spinner) MenuItemCompat.getActionView(itemFT);
+
         // Creation du Spinner pour afficher la liste de Food Trucks.
         List<FoodTruck> lesFts = new ArrayList<>();
-        lesFts.add(new FoodTruck("Tous"));
+        lesFts.add(new FoodTruck(Constantes.TOUS));
         for (FoodTruck ft : Constantes.lesFTs){
             lesFts.add(ft);
         }
-        adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,lesFts);
-        adapter.setDropDownViewResource(R.layout.layout_drop_list);
-        spinnerMap.setAdapter(adapter);
+        adapterFT = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,lesFts);
+        adapterFT.setDropDownViewResource(R.layout.layout_drop_list);
+        spinnerMap.setAdapter(adapterFT);
         spinnerMap.setOnItemSelectedListener(this);
+
+        // Creation du spinner pour la liste des jours.
+        MenuItem itemJour = menu.findItem(R.id.action_spinner_map_fts_jour);
+        Spinner spinnerMapJour = (Spinner) MenuItemCompat.getActionView(itemJour);
+        adapterJour = ArrayAdapter.createFromResource(getContext(), R.array.semaine_array, android.R.layout.simple_spinner_item);
+        adapterJour.setDropDownViewResource(R.layout.layout_drop_list);
+        spinnerMapJour.setAdapter(adapterJour);
+        spinnerMapJour.setOnItemSelectedListener(this);
     }
 }
