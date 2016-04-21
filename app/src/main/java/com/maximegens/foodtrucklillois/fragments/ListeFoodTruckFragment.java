@@ -295,8 +295,9 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
 
         // On trie la liste des Food trucks par distance.
         Collections.sort(Constantes.lesFTs, new SortListeFT(true));
-        ListeFTAdapter listeFTAdapter = new ListeFTAdapter(Constantes.lesFTs, getContext(),false);
-        recyclerViewListeFT.setAdapter(listeFTAdapter);
+
+        // Mise à jour de l'adapter.
+        updateAdpaterFT(false,Constantes.lesFTs);
 
         // Mise à jour de l'affichage.
         updateLayoutRecyclerView(tousFermer);
@@ -342,9 +343,9 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
             affiClassique = true;
             recyclerViewListeFT.setLayoutManager(new GridLayoutManager(getContext(), nombreColonne));
         }
-        ListeFTAdapter listeFTAd = new ListeFTAdapter(Constantes.lesFTs, getContext(),affiClassique);
-        recyclerViewListeFT.setAdapter(listeFTAd);
-        listeFTAdapter.notifyDataSetChanged();
+
+        // Mise à jour des FT dans l'adpater.
+        updateAdpaterFT(affiClassique, Constantes.lesFTs);
     }
 
     /**
@@ -352,13 +353,24 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
      * @param recherche Le contenu de la recherche.
      */
     private void updateRechercheFT(String recherche) {
-        boolean vide = recherche.isEmpty();
+
+        boolean tousFermer = true;
         boolean isAffichageClassique;
+        boolean vide = recherche.isEmpty();
+        Calendar today =GestionnaireHoraire.createCalendarToday();
+        int nombreColonne = Utils.getNbColonneForScreen(getContext());
+        boolean activeGPS = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         final List<FoodTruck> filteredModelList = vide ? Constantes.lesFTs : FoodTruck.filterListeFTs(Constantes.lesFTs, recherche);
 
-        // Creation de l'agencement des Foods Trucks en fonction de l'orientation ( Portrait : par 2 - Paysage : par 3)
-        int nombreColonne = Utils.getNbColonneForScreen(getContext());
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) && vide) {
+        // Verification si tous les ft sont fermé
+        for (FoodTruck ft : Constantes.lesFTs) {
+            if(ft.isOpenToday() && ft.isDateBeforeLastHoraireFermeture(today)){
+                tousFermer = false;
+            }
+        }
+
+        // condition : gps activé, le chamsp de recherche est vide et au moins un ft n'est pas encore fermé aujoud'hui.
+        if (activeGPS && vide && !tousFermer) {
             isAffichageClassique = false;
             if (nombreColonne == 2 ) {
                 recyclerViewListeFT.setLayoutManager(layoutManagerFT.buildGridLayoutPortrait());
@@ -371,8 +383,18 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         }
 
         // Mise à jour des FT dans l'adpater.
-        ListeFTAdapter listeFTAdapter = new ListeFTAdapter(filteredModelList, getContext(),isAffichageClassique);
+        updateAdpaterFT(isAffichageClassique, filteredModelList);
+    }
+
+    /**
+     * Mise à jour des Ft dans l'adapter.
+     * @param isAffichageClassique si il s'agit d'un affichage classique.
+     * @param listeFT la liste des fts.
+     */
+    private void updateAdpaterFT(boolean isAffichageClassique, List<FoodTruck> listeFT) {
+        ListeFTAdapter listeFTAdapter = new ListeFTAdapter(listeFT, getContext(),isAffichageClassique);
         recyclerViewListeFT.setAdapter(listeFTAdapter);
+        listeFTAdapter.notifyDataSetChanged();
     }
 
     /**
