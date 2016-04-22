@@ -447,7 +447,9 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
             }
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, Constantes.TIME_BETWEEN_UPDATE_GPS, 0, this);
         }
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, Constantes.TIME_BETWEEN_UPDATE_GPS, 0, this);
+        if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, Constantes.TIME_BETWEEN_UPDATE_GPS, 0, this);
+        }
     }
 
 }
