@@ -72,7 +72,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        (getActivity()).setTitle(R.string.title_map_all);
+        (getActivity()).setTitle("");
 
         FragmentManager fm = getChildFragmentManager();
         map = SupportMapFragment.newInstance();
@@ -137,7 +137,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
     private void gestionSpinnerJour(int position, GoogleMap gMapItem) {
         jourSelection = position;
         // Tous les ft
-        if(ftSelection != null && ftSelection.getNom().equals(Constantes.TOUS) && gMapItem != null){
+        if(ftSelection != null && ftSelection.getNom().equals(Constantes.TOUS_FT) && gMapItem != null){
             // Tous les jours
             if(jourSelection == 0){
                 for (FoodTruck ft : Constantes.lesFTs) {
@@ -152,7 +152,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
                 }
             }
 
-        }else if(ftSelection != null && !ftSelection.getNom().equals(Constantes.TOUS) && gMapItem != null){ // Un ft de selectionné
+        }else if(ftSelection != null && !ftSelection.getNom().equals(Constantes.TOUS_FT) && gMapItem != null){ // Un ft de selectionné
             // Tous les jours
             if(jourSelection == 0){
                 for (PlanningFoodTruck planning : ftSelection.getPlanning()) {
@@ -176,7 +176,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
         // Tous les jours
         if(jourSelection == 0 && gMapItem != null){
             // Tous les ft
-            if(ftSelection != null && ftSelection.getNom().equals(Constantes.TOUS)){
+            if(ftSelection != null && ftSelection.getNom().equals(Constantes.TOUS_FT)){
                 for (FoodTruck left : Constantes.lesFTs) {
                     for (PlanningFoodTruck planning : left.getPlanning()) {
                         parcoursAdresses(left, gMapItem, planning);
@@ -191,7 +191,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
          // Un jour de selectionné
         }else if(jourSelection != 0 && gMapItem != null){
             // Tous les ft
-            if(ftSelection != null && ftSelection.getNom().equals(Constantes.TOUS)){
+            if(ftSelection != null && ftSelection.getNom().equals(Constantes.TOUS_FT)){
                 for(FoodTruck ft : Constantes.lesFTs) {
                     PlanningFoodTruck planning = ft.getPlanningByJour(jourSelection);
                     parcoursAdresses(ft, gMapItem, planning);
@@ -318,7 +318,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
 
         // Creation du Spinner pour afficher la liste de Food Trucks.
         List<FoodTruck> lesFts = new ArrayList<>();
-        lesFts.add(new FoodTruck(Constantes.TOUS));
+        lesFts.add(new FoodTruck(Constantes.TOUS_FT));
         for (FoodTruck ft : Constantes.lesFTs){
             lesFts.add(ft);
         }
