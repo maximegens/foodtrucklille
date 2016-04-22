@@ -18,8 +18,10 @@ import com.maximegens.foodtrucklillois.adapters.PlanningAdapter;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.beans.PlanningFoodTruck;
 import com.maximegens.foodtrucklillois.utils.Constantes;
+import com.maximegens.foodtrucklillois.utils.SortFtByNom;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -57,6 +59,9 @@ public class PlanningFragment extends Fragment implements AdapterView.OnItemSele
 
         adapterJourPlanning = ArrayAdapter.createFromResource(getContext(), R.array.semaine_array_jour_today, R.layout.spinner_item_planning);
         adapterJourPlanning.setDropDownViewResource(R.layout.layout_drop_list);
+
+        // tri par ordre alphabétique.
+        Collections.sort(Constantes.lesFTs, new SortFtByNom());
 
         adapterPlanning = new PlanningAdapter(Constantes.lesFTs, getContext(), 0);
         recyclerViewPlanning.setAdapter(adapterPlanning);
