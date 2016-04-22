@@ -39,6 +39,7 @@ public class Constantes {
     public static String FERMER = "Fermé";
     public static String KM = "km";
     public static String TOUS = "Tous";
+    public static String ET = " et ";
     public static float FT_FERMER_DISTANCE = 0;
 
 

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cad_view_adresse_item"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    >
+
+    <TextView
+        android:id="@+id/adresse_planning_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textStyle="italic"
+        android:textSize="11sp"
+        android:paddingLeft="3dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"/>
+
+</android.support.v7.widget.CardView>

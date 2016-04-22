@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -148,7 +147,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
                 }
             }else{ // Un jour de selectionné
                 for (FoodTruck ft : Constantes.lesFTs){
-                    PlanningFoodTruck planning = ft.getPlaningByJour(jourSelection);
+                    PlanningFoodTruck planning = ft.getPlanningByJour(jourSelection);
                     traitementByPlanning(planning, gMapItem, ft);
                 }
             }
@@ -160,7 +159,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
                     traitementByPlanning(planning, gMapItem, ftSelection);
                 }
             }else{ // Un jour de selectionné
-                PlanningFoodTruck planning = ftSelection.getPlaningByJour(jourSelection);
+                PlanningFoodTruck planning = ftSelection.getPlanningByJour(jourSelection);
                 traitementByPlanning(planning, gMapItem, ftSelection);
             }
         }
@@ -194,11 +193,11 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
             // Tous les ft
             if(ftSelection != null && ftSelection.getNom().equals(Constantes.TOUS)){
                 for(FoodTruck ft : Constantes.lesFTs) {
-                    PlanningFoodTruck planning = ft.getPlaningByJour(jourSelection);
+                    PlanningFoodTruck planning = ft.getPlanningByJour(jourSelection);
                     parcoursAdresses(ft, gMapItem, planning);
                 }
             }else{ // Un ft de selectionné
-                PlanningFoodTruck planning = ftSelection.getPlaningByJour(jourSelection);
+                PlanningFoodTruck planning = ftSelection.getPlanningByJour(jourSelection);
                 parcoursAdresses(ftSelection, gMapItem, planning);
             }
         }
@@ -331,7 +330,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
         // Creation du spinner pour la liste des jours.
         MenuItem itemJour = menu.findItem(R.id.action_spinner_map_fts_jour);
         Spinner spinnerMapJour = (Spinner) MenuItemCompat.getActionView(itemJour);
-        adapterJour = ArrayAdapter.createFromResource(getContext(), R.array.semaine_array, android.R.layout.simple_spinner_item);
+        adapterJour = ArrayAdapter.createFromResource(getContext(), R.array.semaine_array_jour, android.R.layout.simple_spinner_item);
         adapterJour.setDropDownViewResource(R.layout.layout_drop_list);
         spinnerMapJour.setAdapter(adapterJour);
         spinnerMapJour.setOnItemSelectedListener(this);

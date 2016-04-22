@@ -506,18 +506,7 @@
 			{
 			  "nomJour":"jeudi",
 			  "numJour":4,
-			  "midi":{
-				"horaireOuverture" : null,
-				"horaireFermeture" : null,
-				"adresses":[
-				  {
-					"map": null,
-					"latitude" : null,
-					"longitude" : null,
-					"adresse": null
-				  }
-				]
-			  },
+			  "midi":null,
 			  "soir":null
 			},
 			{

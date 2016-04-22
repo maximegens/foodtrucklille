@@ -7,13 +7,17 @@
                     android:checked="false"
                     android:title="@string/drawer_liste_ft" />
                 <item
-                    android:id="@+id/navigation_item_favori"
+                    android:id="@+id/navigation_item_planning"
                     android:checked="false"
-                    android:title="@string/drawer_favoris" />
+                    android:title="@string/drawer_planning" />
                 <item
                     android:id="@+id/navigation_item_emplacement"
                     android:checked="false"
                     android:title="@string/drawer_emplacement" />
+                <item
+                    android:id="@+id/navigation_item_favori"
+                    android:checked="false"
+                    android:title="@string/drawer_favoris" />
         </group>
 
     <group

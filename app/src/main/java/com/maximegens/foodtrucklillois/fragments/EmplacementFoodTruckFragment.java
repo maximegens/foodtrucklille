@@ -6,10 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.view.InflateException;
 import android.view.LayoutInflater;
@@ -20,14 +17,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -41,9 +35,6 @@ import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.beans.PlanningFoodTruck;
 import com.maximegens.foodtrucklillois.network.Internet;
 import com.maximegens.foodtrucklillois.utils.Constantes;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class EmplacementFoodTruckFragment extends Fragment implements OnMapReadyCallback, AdapterView.OnItemSelectedListener{
@@ -237,7 +228,7 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
         MenuItem item = menu.findItem(R.id.action_spinner_map_ft);
         Spinner spinnerMap = (Spinner) MenuItemCompat.getActionView(item);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.semaine_array, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.semaine_array_jour, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(R.layout.layout_drop_list);
         spinnerMap.setAdapter(adapter);
         spinnerMap.setOnItemSelectedListener(this);
@@ -256,7 +247,7 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
                     traitementByPlanning(planning);
                 }
             }else{
-                PlanningFoodTruck planning = ft.getPlaningByJour(position);
+                PlanningFoodTruck planning = ft.getPlanningByJour(position);
                 traitementByPlanning(planning);
             }
         }

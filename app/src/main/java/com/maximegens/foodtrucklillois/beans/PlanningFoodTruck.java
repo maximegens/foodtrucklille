@@ -116,4 +116,28 @@ public class PlanningFoodTruck implements Parcelable{
     public boolean isOpenSoir(){
         return getSoir() != null && getSoir().getHoraireOuverture() != null && getSoir().getHoraireFermeture() != null;
     }
+
+    /**
+     * Retourne la tranche horaire d'ouverture/fermeture du Food truck.
+     * @return
+     */
+    public String getTrancheHorairePlanning(){
+        StringBuilder trancheHoraire = new StringBuilder();
+        String horaireOuvertureMidi = null;
+        String horaireFermetureSoir = null;
+
+        if (getMidi() != null) {
+            horaireOuvertureMidi = getMidi().getHeureOuvertureEnString() + " - " + getMidi().getHeureFermetureEnString();
+            trancheHoraire.append(horaireOuvertureMidi);
+        }
+        if (getSoir() != null) {
+            horaireFermetureSoir = getSoir().getHeureOuvertureEnString() + " - " + getSoir().getHeureFermetureEnString();
+            if(getMidi() != null){
+                trancheHoraire.append(Constantes.ET);
+            }
+            trancheHoraire.append(horaireFermetureSoir);
+        }
+
+        return trancheHoraire.toString();
+    }
 }

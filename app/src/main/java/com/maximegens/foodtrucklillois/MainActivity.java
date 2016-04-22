@@ -26,14 +26,16 @@ import com.maximegens.foodtrucklillois.fragments.AProposFragment;
 import com.maximegens.foodtrucklillois.fragments.EmplacementAllFragment;
 import com.maximegens.foodtrucklillois.fragments.FavorisFragment;
 import com.maximegens.foodtrucklillois.fragments.ListeFoodTruckFragment;
+import com.maximegens.foodtrucklillois.fragments.PlanningFragment;
 import com.maximegens.foodtrucklillois.interfaces.ListeFoodTruckFragmentCallback;
 import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListeFTListener;
+import com.maximegens.foodtrucklillois.interfaces.RecyclerViewPlanningListener;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 
 /**
  * Class MainAcitivity.
  */
-public class MainActivity extends AppCompatActivity implements RecyclerViewListeFTListener, ListeFoodTruckFragmentCallback {
+public class MainActivity extends AppCompatActivity implements RecyclerViewListeFTListener, ListeFoodTruckFragmentCallback, RecyclerViewPlanningListener {
 
     private NavigationView nav;
     private DrawerLayout drawerLayout;
@@ -104,16 +106,22 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
                                 .replace(R.id.fragmentLayout, ListeFoodTruckFragment.newInstance())
                                 .commit();
                         return true;
-                    case R.id.navigation_item_favori:
+                    case R.id.navigation_item_planning:
                         // Commit du Fragment des listes des FT
                         getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragmentLayout, FavorisFragment.newInstance())
+                                .replace(R.id.fragmentLayout, PlanningFragment.newInstance())
                                 .commit();
                         return true;
                     case R.id.navigation_item_emplacement:
                         // Commit du Fragment des listes des FT
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.fragmentLayout, EmplacementAllFragment.newInstance())
+                                .commit();
+                        return true;
+                    case R.id.navigation_item_favori:
+                        // Commit du Fragment des listes des FT
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragmentLayout, FavorisFragment.newInstance())
                                 .commit();
                         return true;
                     case R.id.navigation_item_a_propos:
@@ -156,4 +164,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
 
     }
 
+    /**
+     * CallBack du clique sur un foodtruck depuis la page du planning.
+     * @param  foodtruck le food truck sélectionne.
+     */
+    @Override
+    public void onClickFtPlanning(FoodTruck foodtruck) {
+        Intent intent = new Intent(MainActivity.this, FoodTruckActivity.class);
+        intent.putExtra(FoodTruck.KEY_FOOD_TRUCK, foodtruck);
+        startActivity(intent);
+    }
 }

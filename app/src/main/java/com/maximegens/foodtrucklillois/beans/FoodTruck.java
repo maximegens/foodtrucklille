@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.menu.Menu;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
@@ -453,7 +452,7 @@ public class FoodTruck implements Parcelable{
      * 2 = Mardi
      * etc etc
      */
-    public PlanningFoodTruck getPlaningByJour(int numeroJour){
+    public PlanningFoodTruck getPlanningByJour(int numeroJour){
 
         // Modification du numéro du jour pour l'adapter au l'arrayList (first item = position 0);
         int numJourTab = numeroJour - 1;
@@ -528,6 +527,15 @@ public class FoodTruck implements Parcelable{
             return getNextOuvertureToday()+" - "+getNextFermetureToday();
         else
             return "";
+    }
+
+    /**
+     * Retourne la tranche horaire d'ouverture/fermeture du Food truck selon le jour.
+     * @return
+     */
+    public String getTrancheHoraireByDay(int numJour){
+        PlanningFoodTruck planning = getPlanningByJour(numJour);
+        return planning != null ? planning.getTrancheHorairePlanning() : null;
     }
 
     /**

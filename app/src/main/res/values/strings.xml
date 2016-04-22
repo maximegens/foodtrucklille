@@ -45,13 +45,17 @@
     <string name="champ_non_communique">Non communiqué</string>
     <string name="distance_indisponible">Distance indisponible</string>
 
-    <!-- String Favoris -->
-    <string name="title_favoris">Mes Favoris</string>
-    <string name="aucun_favori">il n\'y a aucun favoris</string>
+    <!-- String Planning -->
+    <string name="title_planning">Planning</string>
+    <string name="horaires_planning">Horaires</string>
 
     <!-- String Emplacement des food trucks. -->
     <string name="title_map_all">Map</string>
     <string name="no_connexion">Vous ne pouvez pas afficher la carte Google Map sans connexion Internet</string>
+
+    <!-- String Favoris -->
+    <string name="title_favoris">Mes Favoris</string>
+    <string name="aucun_favori">il n\'y a aucun favoris</string>
 
     <!-- String A Propos -->
     <string name="title_a_propos">A propos</string>
@@ -61,13 +65,15 @@
     <string name="ok">OK</string>
     <string name="oui_faim">Oui j\'ai faim</string>
     <string name="go_faim">GO j\'ai faim !</string>
+    <string name="planning_direction">Voir l\'itinéaire</string>
     <string name="oui">Oui</string>
     <string name="non">Non</string>
 
     <!-- Strings du drawer -->
     <string name="drawer_liste_ft">Voir les Food Trucks</string>
-    <string name="drawer_favoris">Mes Favoris</string>
+    <string name="drawer_planning">Planning de la semaine</string>
     <string name="drawer_emplacement">Emplacement des Food Trucks</string>
+    <string name="drawer_favoris">Mes Favoris</string>
     <string name="drawer_a_propos">A propos</string>
     <string name="drawer_faire_don">Faire un don</string>
     <string name="openDrawer">Ouverture du menu</string>
