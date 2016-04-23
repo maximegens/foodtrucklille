@@ -1,6 +1,7 @@
 package com.maximegens.foodtrucklillois.fragments;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -37,6 +38,7 @@ import com.maximegens.foodtrucklillois.beans.PlanningFoodTruck;
 import com.maximegens.foodtrucklillois.interfaces.ListeFoodTruckFragmentCallback;
 import com.maximegens.foodtrucklillois.network.Internet;
 import com.maximegens.foodtrucklillois.network.RetreiveJSONListeFT;
+import com.maximegens.foodtrucklillois.network.RetreiveJSONListeFTSplash;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
 import com.maximegens.foodtrucklillois.utils.GridLayoutManagerFoodTruck;
@@ -55,16 +57,12 @@ import java.util.List;
 public class ListeFoodTruckFragment extends Fragment implements LocationListener {
 
     private LocationManager locationManager;
-    private ProgressBar loader;
     private LinearLayout linearActiveGPS;
     private Button activateGPS;
-    private TextView indicationChargementFT;
-    private TextView indicationListeFTVide;
     public  ListeFTAdapter listeFTAdapter;
     private RecyclerView recyclerViewListeFT;
     private GridLayoutManagerFoodTruck layoutManagerFT;
-    private SwipeRefreshLayout swipeRefreshLayoutListeFT;
-    private ListeFoodTruckFragmentCallback listeFoodTruckFragmentCallback;
+    private Activity activity;
 
     /**
      * Creation du Fragment.
@@ -99,14 +97,12 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        getActivity().setTitle(getString(R.string.title_liste_food_truck));
+        activity = getActivity();
+
+        activity.setTitle(getString(R.string.title_liste_food_truck));
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         layoutManagerFT = new GridLayoutManagerFoodTruck(getContext());
-        loader = (ProgressBar) view.findViewById(R.id.loader_download_ft);
-        indicationChargementFT = (TextView) view.findViewById(R.id.indication_chargement_ft);
-        indicationListeFTVide = (TextView) view.findViewById(R.id.indication_liste_ft_vide);
         recyclerViewListeFT = (RecyclerView) view.findViewById(R.id.recycler_view_liste_ft);
-        swipeRefreshLayoutListeFT = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayoutListeFT);
         linearActiveGPS = (LinearLayout) view.findViewById(R.id.linear_gps_desactive);
         activateGPS = (Button) view.findViewById(R.id.button_activer_gps);
         recyclerViewListeFT.setHasFixedSize(true);
@@ -126,21 +122,10 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         listeFTAdapter = new ListeFTAdapter(Constantes.lesFTs, getContext(), true);
         recyclerViewListeFT.setAdapter(listeFTAdapter);
 
-        // Chargement des données des Foods trucks automatiquement (soit Online soit en local).
-        if (Constantes.lesFTs == null || Constantes.lesFTs.isEmpty()) {
-            loadDataFoodTruck(false);
-        }
-
-        /**
-         * Implementation de la fonction du SwipeRefresh.
-         */
-        swipeRefreshLayoutListeFT.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // Refresh la liste des foods trucks
-                refreshListeFT();
-            }
-        });
+        // Mise a jour de la liste avec un affichage classique (true)
+        ListeFTAdapter listeFTAdapter = new ListeFTAdapter(Constantes.lesFTs, activity,true);
+        recyclerViewListeFT.setLayoutManager(new GridLayoutManager(activity, Utils.getNbColonneForScreen(activity)));
+        recyclerViewListeFT.setAdapter(listeFTAdapter);
 
         // Bouton permettant d'activer le GPS.
         activateGPS.setOnClickListener(new View.OnClickListener() {
@@ -177,8 +162,6 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof ListeFoodTruckFragmentCallback)
-            listeFoodTruckFragmentCallback = (ListeFoodTruckFragmentCallback) context;
     }
 
     /**
@@ -187,7 +170,6 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
     @Override
     public void onDetach() {
         super.onDetach();
-        listeFoodTruckFragmentCallback = null;
     }
 
     /**
@@ -395,23 +377,6 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         ListeFTAdapter listeFTAdapter = new ListeFTAdapter(listeFT, getContext(),isAffichageClassique);
         recyclerViewListeFT.setAdapter(listeFTAdapter);
         listeFTAdapter.notifyDataSetChanged();
-    }
-
-    /**
-     * Chargement des données des Food trucks par Internet ou en interne si il n'existe pas de connexion.
-     */
-    private void loadDataFoodTruck(boolean bySwiperefresh) {
-        RetreiveJSONListeFT retreiveJSONListeFT = new RetreiveJSONListeFT(listeFTAdapter, getActivity(), bySwiperefresh, indicationListeFTVide);
-        retreiveJSONListeFT.setProgressBar(loader, indicationChargementFT);
-        retreiveJSONListeFT.setswipeRefresh(swipeRefreshLayoutListeFT);
-        retreiveJSONListeFT.execute(Internet.isNetworkAvailable(getActivity().getApplicationContext()));
-    }
-
-    /**
-     * Rafraichie la liste des Foods trucks.
-     */
-    private void refreshListeFT() {
-        loadDataFoodTruck(true);
     }
 
     /**
