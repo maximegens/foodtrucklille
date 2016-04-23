@@ -3,6 +3,7 @@ package com.maximegens.foodtrucklillois;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -15,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -40,11 +42,15 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
     private NavigationView nav;
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Récupération du context
+        context = getApplicationContext();
 
         // Recuperation de la toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar_list_ft);
@@ -173,5 +179,21 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
         Intent intent = new Intent(MainActivity.this, FoodTruckActivity.class);
         intent.putExtra(FoodTruck.KEY_FOOD_TRUCK, foodtruck);
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed(){
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(MainActivity.this, R.style.AppCompatAlertDialogStyle);
+        builder.setTitle(context.getString(R.string.exit_app));
+        builder.setMessage(context.getString(R.string.msg_exit));
+        builder.setPositiveButton(context.getString(R.string.oui), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                MainActivity.this.finish();
+            }
+        });
+        builder.setNegativeButton(context.getString(R.string.non), null);
+        builder.show();
     }
 }

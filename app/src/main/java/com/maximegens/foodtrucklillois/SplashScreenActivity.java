@@ -1,6 +1,7 @@
 package com.maximegens.foodtrucklillois;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +11,6 @@ import android.widget.TextView;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.interfaces.AsyncResponseSplashScreen;
 import com.maximegens.foodtrucklillois.network.Internet;
-import com.maximegens.foodtrucklillois.network.RetreiveJSONListeFT;
 import com.maximegens.foodtrucklillois.network.RetreiveJSONListeFTSplash;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.maximegens.foodtrucklillois.utils.SortListeFT;
@@ -27,6 +27,7 @@ public class SplashScreenActivity extends AppCompatActivity implements AsyncResp
 
     private ProgressBar loader;
     private TextView indicationLoarder;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +37,11 @@ public class SplashScreenActivity extends AppCompatActivity implements AsyncResp
         loader = (ProgressBar) findViewById(R.id.loader_splash_screen);
         indicationLoarder = (TextView) findViewById(R.id.text_view_chargement_splashscreen);
 
+        context = getApplicationContext();
+
         // Lancement d'une asynstack pour récupérer les Foods trucks.
         RetreiveJSONListeFTSplash retreiveJSONListeFTSplash = new RetreiveJSONListeFTSplash(this, loader, indicationLoarder);
-        retreiveJSONListeFTSplash.execute(Internet.isNetworkAvailable(this.getApplicationContext()));
+        retreiveJSONListeFTSplash.execute(Internet.isNetworkAvailable(context));
 
     }
 
@@ -54,5 +57,6 @@ public class SplashScreenActivity extends AppCompatActivity implements AsyncResp
         // On lance le main activity
         Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 }

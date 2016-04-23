@@ -16,6 +16,8 @@
     <string name="ouvert_a">Ouvert à\u0020</string>
     <string name="prix">Prix</string>
     <string name="prix_en_menu">Prix en menu</string>
+    <string name="exit_app">Quitter l\'application</string>
+    <string name="msg_exit">Voulez-vous quitter l\'application ?</string>
 
     <!-- String liste des food trucks-->
     <string name="title_liste_food_truck">Les Food Trucks</string>
