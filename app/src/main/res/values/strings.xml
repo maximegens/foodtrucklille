@@ -19,6 +19,13 @@
     <string name="exit_app">Quitter l\'application</string>
     <string name="msg_exit">Voulez-vous quitter l\'application ?</string>
 
+    <!-- String SplashScreen-->
+    <string name="splash_allumage_ft">Allumage du moteur du Foods Trucks</string>
+    <string name="splash_recup_ft">Récupération de la liste des Foods Truck en cours.</string>
+    <string name="splash_ouverture_ft">Ouverture du Food Truck</string>
+    <string name="splash_four_ft">Pré-chauffage des fours.</string>
+    <string name="splash_lancement_ft">Téléchargement temriné, ouverture de l\'application en cours.</string>
+
     <!-- String liste des food trucks-->
     <string name="title_liste_food_truck">Les Food Trucks</string>
     <string name="telechargement_ft_en_cours">Téléchargement des Food Trucks en cours...</string>

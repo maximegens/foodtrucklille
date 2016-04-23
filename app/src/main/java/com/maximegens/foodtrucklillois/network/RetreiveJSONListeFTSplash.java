@@ -33,12 +33,13 @@ import retrofit.RetrofitError;
  * AsyncTask permettant de recuperer le JSON et de le convertir.
  * Utilisation de la librairie RetroFit.
  */
-public class RetreiveJSONListeFTSplash extends AsyncTask<Boolean, Integer, FoodTruckApp>{
+public class RetreiveJSONListeFTSplash extends AsyncTask<Boolean, String, FoodTruckApp>{
 
     private ProgressBar loader;
     private TextView indicationLoader;
     private GestionJsonAPI apiJson;
     private Activity activity;
+    private Context context;
     private AsyncResponseSplashScreen responseAsynctask = null;
 
     Context ctx;
@@ -49,7 +50,8 @@ public class RetreiveJSONListeFTSplash extends AsyncTask<Boolean, Integer, FoodT
      */
     public RetreiveJSONListeFTSplash(Activity activity, ProgressBar loader, TextView indicationLoader){
         this.activity = activity;
-        apiJson = new GestionJsonAPI(this.activity);
+        this.context = activity.getApplicationContext();
+        this.apiJson = new GestionJsonAPI(this.activity);
         this.loader = loader;
         this.indicationLoader = indicationLoader;
         this.responseAsynctask = (AsyncResponseSplashScreen) this.activity;
@@ -62,9 +64,16 @@ public class RetreiveJSONListeFTSplash extends AsyncTask<Boolean, Integer, FoodT
     }
 
     @Override
+    protected void onProgressUpdate(String... progress) {
+        indicationLoader.setText(progress[0]);
+    }
+
+    @Override
     protected FoodTruckApp doInBackground(Boolean... param) {
 
         boolean online = param[0];
+
+        publishProgress(context.getString(R.string.splash_recup_ft));
 
         if(online){
             // Recuperation des données en ligne.
@@ -107,7 +116,7 @@ public class RetreiveJSONListeFTSplash extends AsyncTask<Boolean, Integer, FoodT
 
         // On masque le loader.
         loader.setVisibility(View.INVISIBLE);
-        indicationLoader.setText("Téléchargement terminé, lancement en cours.");
+        indicationLoader.setText(context.getString(R.string.splash_lancement_ft));
 
         // Callback vers l'activity pour lui indiquer que le traitement est fini
         if(responseAsynctask != null){
