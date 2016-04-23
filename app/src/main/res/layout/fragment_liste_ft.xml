@@ -1,85 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/coordinator_liste_ft"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="@dimen/activity_vertical_margin"
     android:layout_marginBottom="@dimen/activity_vertical_margin"
     android:layout_marginLeft="@dimen/activity_horizontal_margin"
-    android:layout_marginRight="@dimen/activity_horizontal_margin">
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
+    android:layout_marginTop="@dimen/activity_vertical_margin">
 
     <RelativeLayout
-            android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/linear_recherche_ft"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <ProgressBar
-                android:id="@+id/loader_download_ft"
+                android:id="@+id/loader_recherche_ft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:visibility="gone"
-                />
-            <TextView
-                android:id="@+id/indication_chargement_ft"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/telechargement_ft_en_cours"
-                android:layout_below="@id/loader_download_ft"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:textStyle="italic"
-                android:visibility="gone"/>
+                android:visibility="visible" />
 
             <TextView
-                android:id="@+id/indication_liste_ft_vide"
+                android:id="@+id/indication_recherche_ft"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/liste_ft_vide"
-                android:layout_margin="10dp"
-                android:gravity="center"
+                android:layout_height="match_parent"
+                android:padding="5dp"
+                android:text="@string/recherche_plus_proche_en_cours"
                 android:textStyle="italic"
-                android:visibility="gone"/>
+                android:visibility="visible" />
+        </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/linear_gps_desactive"
+        <TextView
+            android:id="@+id/indication_liste_ft_vide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:text="@string/liste_ft_vide"
+            android:textStyle="italic"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/linear_gps_desactive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linear_recherche_ft"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:orientation="horizontal">
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:text="@string/gps_desactive"
+                android:textStyle="italic" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/gps_desactive"
-                    android:padding="5dp"
-                    android:layout_weight="1"
-                    android:textStyle="italic"/>
-
-                <Button
-                    android:id="@+id/button_activer_gps"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textColor="@color/colorAccent"
-                    android:text="@string/activer_gps"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    style="?android:attr/borderlessButtonStyle"/>
-
-            </LinearLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view_liste_ft"
-                android:layout_below="@id/linear_gps_desactive"
+            <Button
+                android:id="@+id/button_activer_gps"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="match_parent"
-                android:visibility="visible"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="@string/activer_gps"
+                android:textColor="@color/colorAccent" />
 
-            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_liste_ft"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/linear_gps_desactive"
+            android:visibility="visible">
+
+        </android.support.v7.widget.RecyclerView>
 
 
-        </RelativeLayout>
+    </RelativeLayout>
 
-    </android.support.design.widget.CoordinatorLayout>
+</android.support.design.widget.CoordinatorLayout>

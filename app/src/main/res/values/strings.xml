@@ -28,7 +28,7 @@
 
     <!-- String liste des food trucks-->
     <string name="title_liste_food_truck">Les Food Trucks</string>
-    <string name="telechargement_ft_en_cours">Téléchargement des Food Trucks en cours...</string>
+    <string name="recherche_plus_proche_en_cours">Recherche des Food Trucks les plus proche en cours...</string>
     <string name="liste_ft_vide">Il n\'y a pas de Food Trucks</string>
     <string name="gps_desactive">Activer le GPS pour afficher les Food Trucks les plus proches</string>
     <string name="activer_gps">Activer GPS</string>

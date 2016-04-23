@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.adapters.ListeFTAdapter;
@@ -50,6 +51,7 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
 
     private LocationManager locationManager;
     private LinearLayout linearActiveGPS;
+    private LinearLayout linearPlusProcheEnCours;
     private Button activateGPS;
     public  ListeFTAdapter listeFTAdapter;
     private RecyclerView recyclerViewListeFT;
@@ -97,11 +99,13 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         recyclerViewListeFT = (RecyclerView) view.findViewById(R.id.recycler_view_liste_ft);
         linearActiveGPS = (LinearLayout) view.findViewById(R.id.linear_gps_desactive);
         activateGPS = (Button) view.findViewById(R.id.button_activer_gps);
+        linearPlusProcheEnCours = (LinearLayout) view.findViewById(R.id.linear_recherche_ft);
         recyclerViewListeFT.setHasFixedSize(true);
 
         // Affichage du message d'information d'activation du GPS
         if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
             linearActiveGPS.setVisibility(View.GONE);
+            linearPlusProcheEnCours.setVisibility(View.VISIBLE);
         }else{
             linearActiveGPS.setVisibility(View.VISIBLE);
         }
@@ -269,6 +273,9 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
 
         // On trie la liste des Food trucks par distance.
         Collections.sort(Constantes.lesFTs, new SortListeFT(true));
+
+        // On masque le message de recherche du ft le plus proche en cours.
+        linearPlusProcheEnCours.setVisibility(View.GONE);
 
         // Mise à jour de l'adapter.
         updateAdpaterFT(false,Constantes.lesFTs);
