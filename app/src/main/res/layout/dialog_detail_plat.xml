@@ -1,41 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-        <ProgressBar
-            android:id="@+id/loader_plat_detail"
-            style="?android:attr/progressBarStyleSmall"
-            android:layout_width="@dimen/icon_plat_liste_width"
-            android:layout_height="@dimen/icon_plat_liste_height"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:padding="10dp"
-            />
+            <ProgressBar
+                android:id="@+id/loader_plat_detail"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="@dimen/icon_plat_liste_width"
+                android:layout_height="@dimen/icon_plat_liste_height"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:visibility="gone" />
 
-        <ImageView
-            android:id="@+id/image_plat_dialog"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:scaleType="centerCrop"
-            android:layout_marginTop="10dp"
-            android:padding="10dp"
-            android:src="@mipmap/photonotavailable"
-            />
+            <ImageView
+                android:id="@+id/image_plat_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/photonotavailable" />
 
         </RelativeLayout>
 
@@ -45,66 +42,77 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:padding="5dp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_margin="5dp"
-            android:paddingRight="5dp"
-            android:paddingLeft="5dp"
-            android:orientation="horizontal">
+            android:weightSum="2">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/prix"
-                android:textSize="@dimen/text_label"
+                android:orientation="vertical"
+                android:paddingLeft="5dp"
                 android:layout_weight="1"
-                android:textColor="@color/black"/>
+                android:paddingRight="5dp">
 
-            <TextView
-                android:id="@+id/prix_en_menu_label"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/prix_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/prix"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_label" />
+
+                <TextView
+                    android:id="@+id/prix_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="2dp"
+                    android:text="@string/prix"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_value" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/prix_en_menu"
-                android:textSize="@dimen/text_label"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:orientation="vertical"
                 android:layout_weight="1"
-                android:visibility="gone"
-                android:textColor="@color/black"/>
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp">
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/prix_en_menu_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/prix_en_menu"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_label"
+                    android:visibility="gone" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:paddingRight="5dp"
-            android:paddingLeft="5dp"
-            android:paddingBottom="5dp"
-            android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/prix_en_menu_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="2dp"
+                    android:text="@string/prix_en_menu"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_value"
+                    android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/prix_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/prix"
-                android:layout_weight="1"
-                android:textSize="@dimen/text_value"
-                android:gravity="left"
-                android:textColor="@color/black"/>
-
-            <TextView
-                android:id="@+id/prix_en_menu_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/prix_en_menu"
-                android:gravity="left"
-                android:textSize="@dimen/text_value"
-                android:layout_weight="1"
-                android:visibility="gone"
-                android:textColor="@color/black"/>
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -122,7 +122,8 @@ public class MenuFoodTruckFragment extends Fragment implements RecyclerViewListe
 
             ImageView imagePlatDialog = (ImageView) dialogView.findViewById(R.id.image_plat_dialog);
             TextView description = (TextView) dialogView.findViewById(R.id.description_plat);
-            TextView prix = (TextView) dialogView.findViewById(R.id.prix_value);
+            TextView prixLabel = (TextView) dialogView.findViewById(R.id.prix_label);
+            TextView prixValue = (TextView) dialogView.findViewById(R.id.prix_value);
             TextView prixEnMenuLabel = (TextView) dialogView.findViewById(R.id.prix_en_menu_label);
             TextView prixEnMenuValue = (TextView) dialogView.findViewById(R.id.prix_en_menu_value);
             final ProgressBar loader = (ProgressBar) dialogView.findViewById(R.id.loader_plat_detail);
@@ -151,9 +152,16 @@ public class MenuFoodTruckFragment extends Fragment implements RecyclerViewListe
                 imagePlatDialog.setVisibility(View.GONE);
             }
 
-            // Ajout de la description et du prix
+            // Ajout de la description
             description.setText(plat.getDescriptionPlat());
-            prix.setText(String.valueOf(plat.getPrix()));
+
+            // AJout du prix
+            if(plat.getPrix() != 0){
+                prixValue.setText(String.valueOf(plat.getPrix()));
+            }else{
+                prixLabel.setVisibility(View.GONE);
+                prixValue.setVisibility(View.GONE);
+            }
 
             // Ajout du prix en menu si il existe
             Float prixMenu = new Float(plat.getPrixEnMenu());
@@ -161,7 +169,6 @@ public class MenuFoodTruckFragment extends Fragment implements RecyclerViewListe
                 prixEnMenuLabel.setVisibility(View.VISIBLE);
                 prixEnMenuValue.setVisibility(View.VISIBLE);
                 prixEnMenuValue.setText(String.valueOf(prixMenu));
-
             }
 
             builder.setTitle(plat.getNomPlat());
