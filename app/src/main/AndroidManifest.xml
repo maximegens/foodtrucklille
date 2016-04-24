@@ -24,7 +24,6 @@
 
         <activity
             android:name=".SplashScreenActivity"
-            android:label="@string/title_splashscreen_activity"
             android:theme="@style/MyMaterialTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

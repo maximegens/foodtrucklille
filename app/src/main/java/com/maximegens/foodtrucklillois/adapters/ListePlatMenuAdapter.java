@@ -7,11 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.menu.Plat;
 import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListePlatListener;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -51,12 +53,17 @@ public class ListePlatMenuAdapter extends RecyclerView.Adapter<ListePlatMenuAdap
      * @param holder Le holder.
      * @param position La position de l'item.
      */
-    public void onBindViewHolder(ViewHolder  holder, final int position) {
+    public void onBindViewHolder(final ViewHolder  holder, final int position) {
         final Plat plat = lesPlats.get(position);
+        final ProgressBar loaderPlat = holder.loader;
+        final ImageView imagePlat = holder.imagePlat;
 
         if(plat != null){
             String url = plat.getUrlPhoto();
             holder.titlePlat.setText(plat.getNomPlat());
+
+            imagePlat.setVisibility(View.GONE);
+            loaderPlat.setVisibility(View.VISIBLE);
 
             if(url != null && fragment != null){
                 Picasso.with(fragment.getContext())
@@ -64,7 +71,18 @@ public class ListePlatMenuAdapter extends RecyclerView.Adapter<ListePlatMenuAdap
                         .placeholder(R.drawable.progress_animation_loader)
                         .error(R.mipmap.photonotavailable)
                         .fit().centerInside()
-                        .into(holder.imagePlat);
+                        .into(holder.imagePlat, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                loaderPlat.setVisibility(View.GONE);
+                                imagePlat.setVisibility(View.VISIBLE);
+                            }
+                            @Override
+                            public void onError() {
+                                loaderPlat.setVisibility(View.GONE);
+                                imagePlat.setVisibility(View.VISIBLE);
+                            }
+                        });
             }
 
             holder.cardViewPlat.setOnClickListener(new View.OnClickListener() {
@@ -92,11 +110,13 @@ public class ListePlatMenuAdapter extends RecyclerView.Adapter<ListePlatMenuAdap
         public TextView titlePlat;
         public CardView cardViewPlat;
         public ImageView imagePlat;
+        public ProgressBar loader;
         public ViewHolder(View v) {
             super(v);
             titlePlat = (TextView) v.findViewById(R.id.title_plat_card_view);
             cardViewPlat = (CardView) v.findViewById(R.id.card_view_liste_plat);
             imagePlat = (ImageView) v.findViewById(R.id.image_plat);
+            loader = (ProgressBar) v.findViewById(R.id.loader_plat);
         }
     }
 }
