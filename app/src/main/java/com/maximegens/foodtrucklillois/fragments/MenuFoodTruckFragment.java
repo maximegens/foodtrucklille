@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.maximegens.foodtrucklillois.FoodTruckActivity;
@@ -19,6 +20,7 @@ import com.maximegens.foodtrucklillois.beans.menu.CategoriePlat;
 import com.maximegens.foodtrucklillois.beans.menu.Plat;
 import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListeCatePlatListener;
 import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListePlatListener;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -123,17 +125,29 @@ public class MenuFoodTruckFragment extends Fragment implements RecyclerViewListe
             TextView prix = (TextView) dialogView.findViewById(R.id.prix_value);
             TextView prixEnMenuLabel = (TextView) dialogView.findViewById(R.id.prix_en_menu_label);
             TextView prixEnMenuValue = (TextView) dialogView.findViewById(R.id.prix_en_menu_value);
+            final ProgressBar loader = (ProgressBar) dialogView.findViewById(R.id.loader_plat_detail);
 
             // Recuperation de la photo
             String url = plat.getUrlPhoto();
             if(url != null ){
+                loader.setVisibility(View.VISIBLE);
                 Picasso.with(getActivity())
                         .load(url)
-                        .placeholder(R.drawable.progress_animation_loader)
                         .error(R.mipmap.photonotavailable)
                         .fit().centerInside()
-                        .into(imagePlatDialog);
+                        .into(imagePlatDialog, new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                loader.setVisibility(View.GONE);
+                            }
+
+                            @Override
+                            public void onError() {
+                                loader.setVisibility(View.GONE);
+                            }
+                        });
             }else{
+                loader.setVisibility(View.GONE);
                 imagePlatDialog.setVisibility(View.GONE);
             }
 

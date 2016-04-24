@@ -3,6 +3,7 @@ package com.maximegens.foodtrucklillois.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,32 +56,25 @@ public class ListePlatMenuAdapter extends RecyclerView.Adapter<ListePlatMenuAdap
      */
     public void onBindViewHolder(final ViewHolder  holder, final int position) {
         final Plat plat = lesPlats.get(position);
-        final ProgressBar loaderPlat = holder.loader;
-        final ImageView imagePlat = holder.imagePlat;
 
         if(plat != null){
             String url = plat.getUrlPhoto();
             holder.titlePlat.setText(plat.getNomPlat());
-
-            imagePlat.setVisibility(View.GONE);
-            loaderPlat.setVisibility(View.VISIBLE);
+            holder.loader.setVisibility(View.VISIBLE);
 
             if(url != null && fragment != null){
                 Picasso.with(fragment.getContext())
                         .load(url)
-                        .placeholder(R.drawable.progress_animation_loader)
                         .error(R.mipmap.photonotavailable)
                         .fit().centerInside()
                         .into(holder.imagePlat, new Callback() {
                             @Override
                             public void onSuccess() {
-                                loaderPlat.setVisibility(View.GONE);
-                                imagePlat.setVisibility(View.VISIBLE);
+                                holder.loader.setVisibility(View.GONE);
                             }
                             @Override
                             public void onError() {
-                                loaderPlat.setVisibility(View.GONE);
-                                imagePlat.setVisibility(View.VISIBLE);
+                                holder.loader.setVisibility(View.GONE);
                             }
                         });
             }
