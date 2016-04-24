@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.view.InflateException;
@@ -47,7 +48,6 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
     private GoogleMap googleMap;
     private static View view;
     private AppBarLayout appBarLayout;
-    private boolean isViewShown;
 
     /**
      * Creation du Fragment.
@@ -88,11 +88,6 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
                 ft = getArguments().getParcelable(FoodTruckActivity.KEY_FOODTRUCK_SELECTIONNER);
             }
 
-            if(isViewShown){
-                repliageAppBarLayout();
-            }
-
-
         // On affiche la map si le device posséde une connexion internet.
         if(Internet.isNetworkAvailable(getContext())){
             SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
@@ -104,23 +99,6 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
             //TODO ajouter un Broadcast Receiver pour detecter l'apparition d'une connexion et afficher la map
             noConnexion = (TextView) view.findViewById(R.id.no_connexion_map);
             noConnexion.setVisibility(View.VISIBLE);
-        }
-    }
-
-    /**
-     * Methode appelé lorsque le fragment est visible par l'utilisateur (et non mise en cache).
-     * @param visible indique si le fragment est visible ou non.
-     */
-    @Override
-    public void setMenuVisibility(final boolean visible) {
-        super.setMenuVisibility(visible);
-        if (visible) {
-            if(getView() != null) {
-                repliageAppBarLayout();
-            }
-            isViewShown = true;
-        }else{
-            isViewShown = false;
         }
     }
 

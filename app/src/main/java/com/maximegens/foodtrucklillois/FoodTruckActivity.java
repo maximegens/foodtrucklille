@@ -5,7 +5,10 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -32,6 +35,7 @@ public class FoodTruckActivity extends AppCompatActivity{
     private TabLayout tabLayout;
     private FloatingActionButton fabFavorite;
     private CollapsingToolbarLayout collapsingToolbarLayout;
+    private AppBarLayout appBarLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,9 @@ public class FoodTruckActivity extends AppCompatActivity{
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_food_truck);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
 
         // Recuperation du FoodTruck sélectionné.
         ft = getIntent().getExtras().getParcelable(FoodTruck.KEY_FOOD_TRUCK);
@@ -82,6 +89,36 @@ public class FoodTruckActivity extends AppCompatActivity{
         viewPager = (ViewPager) findViewById(R.id.viewpager_food_truck);
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
+
+        viewPager.addOnPageChangeListener (new ViewPager.OnPageChangeListener () {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+            @Override
+            public void onPageSelected(int position) {
+                if(position == 2){
+                    fabFavorite.setVisibility(View.GONE);
+
+                    // On replie l'appBarLayout et on block son dépliage
+                    if(appBarLayout != null){
+                        appBarLayout.setExpanded(false, true);
+                        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
+                        AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
+                        behavior.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
+                            @Override
+                            public boolean canDrag(@NonNull AppBarLayout appBarLayout) {
+                                return false;
+                            }
+                        });
+                    }
+                }else{
+                    fabFavorite.setVisibility(View.VISIBLE);
+                }
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
 
     }
 
