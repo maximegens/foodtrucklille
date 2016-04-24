@@ -13,6 +13,7 @@
     <dimen name="fab_top">16dp</dimen>
     <dimen name="fab_left">16dp</dimen>
 
+    <dimen name="spinner_height">48dp</dimen>
 
     <dimen name="icon_description_width">28dp</dimen>
     <dimen name="icon_description_height">28dp</dimen>
