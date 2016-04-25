@@ -472,21 +472,24 @@ public class FoodTruck implements Parcelable{
 
         // Creation du calendrier
         Calendar calendarToday = GestionnaireHoraire.createCalendarToday();
+        boolean isMidiOrBeforeMidi = GestionnaireHoraire.isMidiOrBeforeMidi();
+        boolean isSoirOrBeforeSoirButAfterMidi= GestionnaireHoraire.isSoirOrBeforeSoirButAfterMidi();
         String horaireOuverture = "";
 
         // test de l'ouverture actuelle ou prochaine sur la journee du ft.
         if(isOpenToday() && isDateBeforeLastHoraireFermeture(calendarToday)){
             PlanningFoodTruck planning = getPlaningToday();
-
-            if (planning != null) {
-                // On verifie si on se trouve le midi ou le soir afin de récupérer les horaires d"ouverture correspondant.
-                if (planning.getMidi() != null && GestionnaireHoraire.isMidiOrBeforeMidi()) {
+            if (isMidiOrBeforeMidi) {
+                if (existPlaningMidiAdresse(planning)) {
                     horaireOuverture = planning.getMidi().getHeureOuvertureEnString();
-                } else if (planning.getSoir() != null && GestionnaireHoraire.isSoirOrBeforeSoirButAfterMidi()) {
+                }else if(existPlaningSoirAdresse(planning)) {
                     horaireOuverture = planning.getSoir().getHeureOuvertureEnString();
                 }
+            } else if (isSoirOrBeforeSoirButAfterMidi && existPlaningSoirAdresse(planning)) {
+                horaireOuverture = planning.getSoir().getHeureFermetureEnString();
             }
         }
+
         return horaireOuverture;
     }
 
@@ -498,19 +501,21 @@ public class FoodTruck implements Parcelable{
 
         // Creation du calendrier
         Calendar calendarToday = GestionnaireHoraire.createCalendarToday();
+        boolean isMidiOrBeforeMidi = GestionnaireHoraire.isMidiOrBeforeMidi();
+        boolean isSoirOrBeforeSoirButAfterMidi= GestionnaireHoraire.isSoirOrBeforeSoirButAfterMidi();
         String horaireFermeture = "";
 
         // test de la fermeture actuelle ou prochaine sur la journee du ft.
         if(isOpenToday() && isDateBeforeLastHoraireFermeture(calendarToday)){
             PlanningFoodTruck planning = getPlaningToday();
-
-            if (planning != null) {
-                // On verifie si on se trouve le midi ou le soir afin de récupérer les horaires d"ouverture correspondant.
-                if (planning.getMidi() != null && GestionnaireHoraire.isMidiOrBeforeMidi()) {
+            if (isMidiOrBeforeMidi) {
+                if (existPlaningMidiAdresse(planning)) {
                     horaireFermeture = planning.getMidi().getHeureFermetureEnString();
-                } else if (planning.getSoir() != null && GestionnaireHoraire.isSoirOrBeforeSoirButAfterMidi()) {
+                }else if(existPlaningSoirAdresse(planning)) {
                     horaireFermeture = planning.getSoir().getHeureFermetureEnString();
                 }
+            } else if (isSoirOrBeforeSoirButAfterMidi && existPlaningSoirAdresse(planning)) {
+                horaireFermeture = planning.getSoir().getHeureFermetureEnString();
             }
         }
         return horaireFermeture;
@@ -603,23 +608,24 @@ public class FoodTruck implements Parcelable{
         String latitude = null;
         String longitude = null;
         PlanningFoodTruck planning = getPlaningToday();
+        boolean isMidiOrBeforeMidi = GestionnaireHoraire.isMidiOrBeforeMidi();
+        boolean isSoirOrBeforeSoirButAfterMidi= GestionnaireHoraire.isSoirOrBeforeSoirButAfterMidi();
 
-        // Recuperation de la latitude et de la longitude.
-        if (GestionnaireHoraire.isMidiOrBeforeMidi()) {
-            //TODO remplacer par l'adresse la plus proche, pour l'instant parmis toutes les adresses ont prends la premiere (.get(0)).
-            if (planning != null && planning.getMidi() != null && planning.getMidi().getAdresses() != null) {
+        //TODO remplacer par l'adresse la plus proche, pour l'instant parmis toutes les adresses ont prends la premiere (.get(0)).
+        if (isMidiOrBeforeMidi) {
+            if (existPlaningMidiAdresse(planning)) {
                 latitude = planning.getMidi().getAdresses().get(0).getLatitude();
                 longitude = planning.getMidi().getAdresses().get(0).getLongitude();
-            }
-        }
-        if (GestionnaireHoraire.isSoirOrBeforeSoirButAfterMidi()) {
-            if (planning != null && planning.getSoir() != null && planning.getSoir().getAdresses() != null) {
+            }else if(existPlaningSoirAdresse(planning)) {
                 latitude = planning.getSoir().getAdresses().get(0).getLatitude();
                 longitude = planning.getSoir().getAdresses().get(0).getLongitude();
             }
+        } else if (isSoirOrBeforeSoirButAfterMidi && existPlaningSoirAdresse(planning)) {
+            latitude = planning.getSoir().getAdresses().get(0).getLatitude();
+            longitude = planning.getSoir().getAdresses().get(0).getLongitude();
         }
+
         return latitude != null && longitude != null ? new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude)) : null;
     }
-
 
 }

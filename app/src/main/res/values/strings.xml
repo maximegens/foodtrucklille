@@ -3,6 +3,7 @@
     <!-- String technique de l'application -->
     <string name="app_name">Food Truck Lillois</string>
     <string name="title_main_activity">MainActivity</string>
+    <string name="title_splashscreen_activity">SplashScreen</string>
     <string name="title_activity_food_truck">FoodTruckActivity</string>
     <string name="key_api_google_map">AIzaSyDASrlPPti8U3qoqoj8V0O3VVZ-cBCYwkc</string>
 
@@ -15,10 +16,19 @@
     <string name="ouvert_a">Ouvert à\u0020</string>
     <string name="prix">Prix</string>
     <string name="prix_en_menu">Prix en menu</string>
+    <string name="exit_app">Quitter l\'application</string>
+    <string name="msg_exit">Voulez-vous quitter l\'application ?</string>
+
+    <!-- String SplashScreen-->
+    <string name="splash_allumage_ft">Allumage du moteur du Foods Trucks</string>
+    <string name="splash_recup_ft">Récupération de la liste des Foods Truck en cours.</string>
+    <string name="splash_ouverture_ft">Ouverture du Food Truck</string>
+    <string name="splash_four_ft">Pré-chauffage des fours.</string>
+    <string name="splash_lancement_ft">Téléchargement temriné, ouverture de l\'application en cours.</string>
 
     <!-- String liste des food trucks-->
     <string name="title_liste_food_truck">Les Food Trucks</string>
-    <string name="telechargement_ft_en_cours">Téléchargement des Food Trucks en cours...</string>
+    <string name="recherche_plus_proche_en_cours">Recherche des Food Trucks les plus proche en cours...</string>
     <string name="liste_ft_vide">Il n\'y a pas de Food Trucks</string>
     <string name="gps_desactive">Activer le GPS pour afficher les Food Trucks les plus proches</string>
     <string name="activer_gps">Activer GPS</string>

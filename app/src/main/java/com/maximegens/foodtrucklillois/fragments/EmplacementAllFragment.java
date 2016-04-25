@@ -23,6 +23,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.adapters.InfoWindowMarkerMapAdapter;
@@ -50,6 +51,8 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
     private int jourSelection = 0;
     private FoodTruck ftSelection = null;
     public static final Set<Target> protectedFromGarbageCollectorTargets = new HashSet<>();
+    private Spinner spinnerMap;
+    private Spinner spinnerMapJour;
 
     /**
      * Creation du Fragment.
@@ -64,7 +67,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        this.setHasOptionsMenu(true);
+        //this.setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_emplacement_all, container, false);
     }
 
@@ -72,10 +75,27 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        (getActivity()).setTitle("");
+        (getActivity()).setTitle(getContext().getString(R.string.title_map_all));
 
         FragmentManager fm = getChildFragmentManager();
         map = SupportMapFragment.newInstance();
+
+        // Creation du Spinner pour afficher la liste de Food Trucks.
+        spinnerMap = (Spinner) view.findViewById(R.id.spinner_map_fts);
+        List<FoodTruck> lesFts = new ArrayList<>();
+        lesFts.add(new FoodTruck(Constantes.TOUS_FT));
+        for (FoodTruck ft : Constantes.lesFTs){
+            lesFts.add(ft);
+        }
+        adapterFT = new ArrayAdapter<>(getContext(), R.layout.layout_drop_title_black,lesFts);
+        adapterFT.setDropDownViewResource(R.layout.layout_drop_list);
+        spinnerMap.setAdapter(adapterFT);
+
+        // Creation du spinner pour la liste des jours.
+        spinnerMapJour = (Spinner) view.findViewById(R.id.spinner_map_fts_jour);
+        adapterJour = ArrayAdapter.createFromResource(getContext(), R.array.semaine_array_jour, R.layout.layout_drop_title_black);
+        adapterJour.setDropDownViewResource(R.layout.layout_drop_list);
+        spinnerMapJour.setAdapter(adapterJour);
 
         // On affiche la map si le device posséde une connexion internet.
         if(Internet.isNetworkAvailable(getContext()) && map != null){
@@ -87,6 +107,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
             noConnexion.setVisibility(View.VISIBLE);
         }
     }
+
 
     @Override
     public void onAttach(Context context) {
@@ -101,6 +122,10 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
     @Override
     public void onMapReady(GoogleMap googleMap) {
         centreMap(googleMap);
+        gestionSpinnerFoodTruck(0, googleMap);
+        gestionSpinnerJour(0, googleMap);
+        spinnerMapJour.setOnItemSelectedListener(this);
+        spinnerMap.setOnItemSelectedListener(this);
     }
 
     @Override
@@ -120,12 +145,12 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
         Spinner spinner = (Spinner) parent;
 
         // Spinner gérant les jours.
-        if(spinner.getId() == R.id.action_spinner_map_fts_jour) {
-            gestionSpinnerJour(position, gMapItem);
+        if(spinner.getId() == R.id.spinner_map_fts) {
+            gestionSpinnerFoodTruck(position, gMapItem);
         }
         // Spinner gérant les FTs.
-        else if(spinner.getId() == R.id.action_spinner_map_fts) {
-            gestionSpinnerFoodTruck(position, gMapItem);
+        else if(spinner.getId() == R.id.spinner_map_fts_jour) {
+            gestionSpinnerJour(position, gMapItem);
         }
         // Centre la google Map.
         centreMap(gMapItem);
@@ -276,10 +301,14 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
 
             // Creation de l'icone.
             if(ft.getLogo() != null){
+
                 int resID = getResources().getIdentifier(ft.getLogo(), "mipmap", getContext().getPackageName());
-                PicassoMarker picassoMarker  = new PicassoMarker(googleMap.addMarker(markerOptions),planning,adresse,periode);
-                protectedFromGarbageCollectorTargets.add(picassoMarker);
-                Picasso.with(getActivity()).load(resID).resize(100,100).into(picassoMarker);
+                Marker marker = googleMap.addMarker(markerOptions);
+                if(marker != null){
+                    PicassoMarker picassoMarker  = new PicassoMarker(marker,planning,adresse,periode);
+                    protectedFromGarbageCollectorTargets.add(picassoMarker);
+                    Picasso.with(getActivity()).load(resID).resize(100,100).into(picassoMarker);
+                }
             }else{
                 markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_truck));
             }
@@ -303,38 +332,5 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
 
         // Centre la google map avec animation de zoom.
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CENTRE, 11));
-    }
-
-    /**
-     * Gestion du menu.
-     * @param menu Le menu.
-     * @param inflater L'objet pour inflater.
-     */
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_map_all, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-
-        MenuItem itemFT = menu.findItem(R.id.action_spinner_map_fts);
-        Spinner spinnerMap = (Spinner) MenuItemCompat.getActionView(itemFT);
-
-        // Creation du Spinner pour afficher la liste de Food Trucks.
-        List<FoodTruck> lesFts = new ArrayList<>();
-        lesFts.add(new FoodTruck(Constantes.TOUS_FT));
-        for (FoodTruck ft : Constantes.lesFTs){
-            lesFts.add(ft);
-        }
-        adapterFT = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,lesFts);
-        adapterFT.setDropDownViewResource(R.layout.layout_drop_list);
-        spinnerMap.setAdapter(adapterFT);
-        spinnerMap.setOnItemSelectedListener(this);
-
-        // Creation du spinner pour la liste des jours.
-        MenuItem itemJour = menu.findItem(R.id.action_spinner_map_fts_jour);
-        Spinner spinnerMapJour = (Spinner) MenuItemCompat.getActionView(itemJour);
-        adapterJour = ArrayAdapter.createFromResource(getContext(), R.array.semaine_array_jour, android.R.layout.simple_spinner_item);
-        adapterJour.setDropDownViewResource(R.layout.layout_drop_list);
-        spinnerMapJour.setAdapter(adapterJour);
-        spinnerMapJour.setOnItemSelectedListener(this);
     }
 }

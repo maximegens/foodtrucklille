@@ -18,6 +18,7 @@ import com.maximegens.foodtrucklillois.adapters.PlanningAdapter;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.beans.PlanningFoodTruck;
 import com.maximegens.foodtrucklillois.utils.Constantes;
+import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
 import com.maximegens.foodtrucklillois.utils.SortFtByNom;
 
 import java.util.ArrayList;
@@ -60,10 +61,7 @@ public class PlanningFragment extends Fragment implements AdapterView.OnItemSele
         adapterJourPlanning = ArrayAdapter.createFromResource(getContext(), R.array.semaine_array_jour_today, R.layout.spinner_item_planning);
         adapterJourPlanning.setDropDownViewResource(R.layout.layout_drop_list);
 
-        // tri par ordre alphabétique.
-        Collections.sort(Constantes.lesFTs, new SortFtByNom());
-
-        adapterPlanning = new PlanningAdapter(Constantes.lesFTs, getContext(), 0);
+        adapterPlanning = new PlanningAdapter(new ArrayList<FoodTruck>(), getContext(), 0);
         recyclerViewPlanning.setAdapter(adapterPlanning);
         recyclerViewPlanning.setLayoutManager(new GridLayoutManager(getContext(), 1));
 
@@ -86,16 +84,19 @@ public class PlanningFragment extends Fragment implements AdapterView.OnItemSele
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
         List<FoodTruck> listeByJour = new ArrayList<>();
-        if(position == 0){
-            listeByJour = Constantes.lesFTs;
-        }else{
-            for (FoodTruck ft : Constantes.lesFTs) {
-                PlanningFoodTruck planning = ft.getPlanningByJour(position);
-                if(planning != null && (planning.getMidi() != null || planning.getSoir() != null)){
-                    listeByJour.add(ft);
-                }
+        int numJour = (position == 0 ? GestionnaireHoraire.getNumeroJourDansLaSemaine() : position);
+
+        // Récupération des Foods Trucks correspondant au jour sélectionné.
+        for (FoodTruck ft : Constantes.lesFTs) {
+            PlanningFoodTruck planning = ft.getPlanningByJour(numJour);
+            if(planning != null && (planning.getMidi() != null || planning.getSoir() != null)){
+                listeByJour.add(ft);
             }
         }
+
+        // tri par ordre alphabétique.
+        Collections.sort(listeByJour, new SortFtByNom());
+
         adapterPlanning = new PlanningAdapter(listeByJour, getContext(), position);
         recyclerViewPlanning.setAdapter(adapterPlanning);
     }

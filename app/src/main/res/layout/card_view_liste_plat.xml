@@ -22,15 +22,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/image_plat"
-                android:layout_width="@dimen/icon_plat_liste_width"
-                android:layout_height="@dimen/icon_plat_liste_height"
-                android:scaleType="centerCrop"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="4dp"
-                android:src="@mipmap/photonotavailable"
-                />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ProgressBar
+                    android:id="@+id/loader_plat"
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="@dimen/icon_plat_liste_width"
+                    android:layout_height="@dimen/icon_plat_liste_height"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    />
+
+                <ImageView
+                    android:id="@+id/image_plat"
+                    android:layout_width="@dimen/icon_plat_liste_width"
+                    android:layout_height="@dimen/icon_plat_liste_height"
+                    android:scaleType="centerCrop"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="4dp"
+                    android:visibility="visible"
+                    android:src="@mipmap/photonotavailable"
+                    />
+
+            </RelativeLayout>
+
 
             <TextView
                 android:id="@+id/title_plat_card_view"
