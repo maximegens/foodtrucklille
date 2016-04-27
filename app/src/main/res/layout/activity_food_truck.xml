@@ -63,7 +63,7 @@
         android:layout_marginRight="@dimen/fab_right"
         android:layout_marginBottom="@dimen/fab_bottom"
         android:src="@drawable/ic_favorite_24dp"
-        app:backgroundTint="@color/colorAccent"
+        app:backgroundTint="@color/blue"
         android:layout_gravity="bottom|right"
         app:elevation="6dp"
         app:fabSize="normal"
