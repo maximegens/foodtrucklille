@@ -27,8 +27,6 @@ public class Constantes {
     public static String LOG_PARSE_DATE = "ERREUR PARSING DATE";
     public static String ERROR_NETWORK = "Erreur Internet";
 
-    public static String GPS_LILLE_LATITUDE = "50.62925";
-    public static String GPS_LILLE_LONGITUDE = "3.057256000000052";
     public static long TIME_BETWEEN_UPDATE_GPS = 5000;
 
     public static String GPS_CENTRE_CARTE_MARC_BAROEUL_LATITUDE = "50.659660";
