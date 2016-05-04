@@ -6,6 +6,7 @@
     <string name="title_splashscreen_activity">SplashScreen</string>
     <string name="title_activity_food_truck">FoodTruckActivity</string>
     <string name="key_api_google_map">AIzaSyDASrlPPti8U3qoqoj8V0O3VVZ-cBCYwkc</string>
+    <string name="id_interstitiel">ca-app-pub-3668885861238587/2245159357</string>
 
     <!-- String globaux-->
     <string name="fermer">Fermé</string>
