@@ -19,6 +19,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.maximegens.foodtrucklillois.adapters.ViewPagerAdapter;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.fragments.DescriptionFoodTruckFragment;
@@ -37,10 +41,27 @@ public class FoodTruckActivity extends AppCompatActivity{
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private AppBarLayout appBarLayout;
 
+    private AdView mAdView;
+    private InterstitialAd mInterstitialAd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_truck);
+
+        //loadInterstitialAd();
+        mAdView = (AdView) findViewById(R.id.adView);
+        mAdView.loadAd(new AdRequest.Builder().build());
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getString(R.string.id_interstitiel));
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                mInterstitialAd.show();
+            }
+        });
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mInterstitialAd.loadAd(adRequest);
 
         // Creation de la toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_food_truck);
@@ -120,6 +141,22 @@ public class FoodTruckActivity extends AppCompatActivity{
             }
         });
 
+        if (mInterstitialAd != null && mInterstitialAd.isLoaded()){
+            mInterstitialAd.show();
+        }
+
+    }
+
+    /**
+     *  Pour charger notre interstitial, mais on ne l'affiche pas
+     */
+    private void loadInterstitialAd() {
+
+        mInterstitialAd = new InterstitialAd(this);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        // On récupère depuis le ressource l'id de l'interstitiel
+        mInterstitialAd.setAdUnitId(getString(R.string.id_interstitiel));
+        mInterstitialAd.loadAd(adRequest);
     }
 
     /**
@@ -168,7 +205,33 @@ public class FoodTruckActivity extends AppCompatActivity{
                 editor.putString(KEY_ID, KEY_ID).apply();
             }
         }
+    }
 
+    // Quand on quitte notre activity
+    @Override
+    public void onPause() {
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        super.onPause();
+    }
+
+    // Quand on retourne sur notre activity
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+    }
+
+    // Avant que notre activity ne soit détruite
+    @Override
+    public void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
     }
 
 }

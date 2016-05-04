@@ -137,7 +137,9 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
             gMapItem = map.getMap();
         }
         // Suppresion des précédents markers.
-        gMapItem.clear();
+        if(gMapItem != null){
+            gMapItem.clear();
+        }
 
         // Récupération du spinner.
         Spinner spinner = (Spinner) parent;

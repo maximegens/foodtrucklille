@@ -4,6 +4,7 @@ package com.maximegens.foodtrucklillois;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -34,10 +35,15 @@ public class SplashScreenActivity extends AppCompatActivity implements AsyncResp
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+        context = getApplicationContext();
+
         loader = (ProgressBar) findViewById(R.id.loader_splash_screen);
         indicationLoarder = (TextView) findViewById(R.id.text_view_chargement_splashscreen);
 
-        context = getApplicationContext();
+        // Changement de la couleur du loader
+        loader.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context,R.color.white), android.graphics.PorterDuff.Mode.SRC_IN);
+
+
 
         // Lancement d'une asynstack pour récupérer les Foods trucks.
         RetreiveJSONListeFTSplash retreiveJSONListeFTSplash = new RetreiveJSONListeFTSplash(this, loader, indicationLoarder);
