@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.maximegens.foodtrucklillois.App;
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.adapters.ListeFTAdapter;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
@@ -56,6 +57,8 @@ public class FavorisFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        App.tracker.setScreenName(getString(R.string.ga_title_favori));
 
         getActivity().setTitle(getString(R.string.title_favoris));
 

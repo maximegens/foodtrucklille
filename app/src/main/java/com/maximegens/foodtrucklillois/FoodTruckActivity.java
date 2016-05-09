@@ -23,6 +23,7 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.analytics.HitBuilders;
 import com.maximegens.foodtrucklillois.adapters.ViewPagerAdapter;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.fragments.DescriptionFoodTruckFragment;
@@ -47,6 +48,11 @@ public class FoodTruckActivity extends AppCompatActivity{
         setContentView(R.layout.activity_food_truck);
 
         App.tracker.setScreenName(getString(R.string.ga_title_food_truck));
+//        App.tracker.send(new HitBuilders.EventBuilder()
+//                .setCategory(getString(R.string.ga_cat_foodtruck))
+//                .setAction(getString(R.string.ga_action_clique))
+//                .setLabel(ft.getNom())
+//                .build());
 
         // Creation de la toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_food_truck);

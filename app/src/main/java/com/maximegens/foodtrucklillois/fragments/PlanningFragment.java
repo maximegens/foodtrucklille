@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.maximegens.foodtrucklillois.App;
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.adapters.PlanningAdapter;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
@@ -52,6 +53,8 @@ public class PlanningFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        App.tracker.setScreenName(getString(R.string.ga_title_planning));
 
         getActivity().setTitle(getString(R.string.title_planning));
 

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.maximegens.foodtrucklillois.App;
 import com.maximegens.foodtrucklillois.R;
 
 
@@ -34,6 +35,8 @@ public class AProposFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        App.tracker.setScreenName(getString(R.string.ga_title_a_propos));
 
         getActivity().setTitle(getString(R.string.title_a_propos));
 

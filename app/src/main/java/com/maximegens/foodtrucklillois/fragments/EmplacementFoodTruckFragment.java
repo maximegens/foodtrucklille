@@ -32,6 +32,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.maximegens.foodtrucklillois.App;
 import com.maximegens.foodtrucklillois.FoodTruckActivity;
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.adapters.InfoWindowMarkerMapAdapter;
@@ -88,6 +89,8 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        App.tracker.setScreenName(getString(R.string.ga_title_map_food_truck));
 
         if (getArguments() != null) {
             ft = getArguments().getParcelable(FoodTruckActivity.KEY_FOODTRUCK_SELECTIONNER);

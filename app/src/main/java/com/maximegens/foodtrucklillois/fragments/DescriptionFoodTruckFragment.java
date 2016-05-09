@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.maximegens.foodtrucklillois.App;
 import com.maximegens.foodtrucklillois.FoodTruckActivity;
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
@@ -78,6 +79,8 @@ public class DescriptionFoodTruckFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        App.tracker.setScreenName(getString(R.string.ga_title_description_food_truck));
 
         if(getArguments() != null){
             ft = getArguments().getParcelable(FoodTruckActivity.KEY_FOODTRUCK_SELECTIONNER);

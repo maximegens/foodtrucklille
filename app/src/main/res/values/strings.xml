@@ -102,5 +102,15 @@
     <string name="ga_title_splashscreen">SplashScreen</string>
     <string name="ga_title_main_activity">MainActivity</string>
     <string name="ga_title_food_truck">FoodTruck</string>
+    <string name="ga_title_favori">Favori</string>
+    <string name="ga_title_a_propos">A Propos</string>
+    <string name="ga_title_planning">Planning des Food Trucks</string>
+    <string name="ga_title_description_food_truck">Description du FoodTruck</string>
+    <string name="ga_title_menu_food_truck">Menu du FoodTruck</string>
+    <string name="ga_title_map_food_truck">Emplacement du FoodTruck</string>
+
+    <string name="ga_cat_foodtruck">FoodTruck</string>
+    <string name="ga_action_clique">Clique</string>
+
 
 </resources>
