@@ -67,7 +67,6 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //this.setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_emplacement_all, container, false);
     }
 
@@ -105,6 +104,8 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
             //TODO ajouter un Broadcast Receiver pour detecter l'apparition d'une connexion et afficher la map
             noConnexion = (TextView) view.findViewById(R.id.no_connexion_map_all);
             noConnexion.setVisibility(View.VISIBLE);
+            spinnerMap.setVisibility(View.GONE);
+            spinnerMapJour.setVisibility(View.GONE);
         }
     }
 
