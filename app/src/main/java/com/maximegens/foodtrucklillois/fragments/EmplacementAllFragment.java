@@ -1,7 +1,10 @@
 package com.maximegens.foodtrucklillois.fragments;
 
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -30,6 +33,7 @@ import com.maximegens.foodtrucklillois.adapters.InfoWindowMarkerMapAdapter;
 import com.maximegens.foodtrucklillois.beans.AdresseFoodTruck;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.beans.PlanningFoodTruck;
+import com.maximegens.foodtrucklillois.broadcastReceiver.NetworkBroadcast;
 import com.maximegens.foodtrucklillois.network.Internet;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.maximegens.foodtrucklillois.utils.PicassoMarker;
@@ -53,6 +57,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
     public static final Set<Target> protectedFromGarbageCollectorTargets = new HashSet<>();
     private Spinner spinnerMap;
     private Spinner spinnerMapJour;
+    private BroadcastReceiver broadcastReceiverInternet;
 
     /**
      * Creation du Fragment.
@@ -71,12 +76,11 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         (getActivity()).setTitle(getContext().getString(R.string.title_map_all));
 
-        FragmentManager fm = getChildFragmentManager();
         map = SupportMapFragment.newInstance();
 
         // Creation du Spinner pour afficher la liste de Food Trucks.
@@ -88,6 +92,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
         }
         adapterFT = new ArrayAdapter<>(getContext(), R.layout.layout_drop_title_black,lesFts);
         adapterFT.setDropDownViewResource(R.layout.layout_drop_list);
+        noConnexion = (TextView) view.findViewById(R.id.no_connexion_map_all);
         spinnerMap.setAdapter(adapterFT);
 
         // Creation du spinner pour la liste des jours.
@@ -98,17 +103,54 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
 
         // On affiche la map si le device posséde une connexion internet.
         if(Internet.isNetworkAvailable(getContext()) && map != null){
-            fm.beginTransaction().replace(R.id.framelayout_map_all, map).commit();
-            map.getMapAsync(this);
+            afficheMap();
         }else{
-            //TODO ajouter un Broadcast Receiver pour detecter l'apparition d'une connexion et afficher la map
-            noConnexion = (TextView) view.findViewById(R.id.no_connexion_map_all);
-            noConnexion.setVisibility(View.VISIBLE);
-            spinnerMap.setVisibility(View.GONE);
-            spinnerMapJour.setVisibility(View.GONE);
+            masqueMap();
         }
+
+        // Creation du BroadcastReceiver pour vérifier la connexion internet.
+        broadcastReceiverInternet = new NetworkBroadcast();
+        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if(Internet.isNetworkAvailable(context)){
+                    afficheMap();
+                }else{
+                    masqueMap();
+                }
+            }
+        };
+        getActivity().registerReceiver(broadcastReceiver, new IntentFilter(NetworkBroadcast.INTERNET_DETECTED));
+
     }
 
+    /**
+     * Masque la map dans le fragment.
+     */
+    private void masqueMap() {
+        if(map != null && map.getView() != null){
+            map.getView().setVisibility(View.GONE);
+        }
+        noConnexion.setVisibility(View.VISIBLE);
+        spinnerMap.setVisibility(View.GONE);
+        spinnerMapJour.setVisibility(View.GONE);
+    }
+
+    /**
+     * Affichage la map dans le fragment.
+     */
+    private void afficheMap() {
+        if(map != null && map.getView() != null){
+            map.getView().setVisibility(View.VISIBLE);
+        }else{
+            final FragmentManager fm = getChildFragmentManager();
+            fm.beginTransaction().replace(R.id.framelayout_map_all, map).commit();
+        }
+        noConnexion.setVisibility(View.GONE);
+        spinnerMap.setVisibility(View.VISIBLE);
+        spinnerMapJour.setVisibility(View.VISIBLE);
+        map.getMapAsync(this);
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -118,6 +160,17 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
     @Override
     public void onDetach() {
         super.onDetach();
+        if(broadcastReceiverInternet != null){
+            getActivity().unregisterReceiver(broadcastReceiverInternet);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(broadcastReceiverInternet != null){
+            getActivity().unregisterReceiver(broadcastReceiverInternet);
+        }
     }
 
     @Override
