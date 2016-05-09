@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.maximegens.foodtrucklillois.R;
@@ -16,6 +17,7 @@ import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.beans.PlanningFoodTruck;
 import com.maximegens.foodtrucklillois.interfaces.RecyclerViewPlanningListener;
 import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -58,7 +60,7 @@ public class PlanningAdapter extends RecyclerView.Adapter<PlanningAdapter.ViewHo
      * @param holder Le holder.
      * @param position La position de l'item.
      */
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         if(lesFts != null){
 
             final FoodTruck ft = lesFts.get(position);
@@ -91,14 +93,23 @@ public class PlanningAdapter extends RecyclerView.Adapter<PlanningAdapter.ViewHo
 
             // Récupération du logo.
             if(ft.getLogo() != null){
+                holder.loader.setVisibility(View.VISIBLE);
                 int resID = context.getResources().getIdentifier(ft.getLogo() , "mipmap", context.getPackageName());
                 Picasso.with(context)
                         .load(resID)
-                        .placeholder(R.drawable.progress_animation_loader)
                         .error(R.mipmap.photonotavailable)
                         .fit()
                         .centerInside()
-                        .into(holder.logoFt);
+                        .into(holder.logoFt,new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        holder.loader.setVisibility(View.GONE);
+                    }
+                    @Override
+                    public void onError() {
+                        holder.loader.setVisibility(View.GONE);
+                    }
+                });
             }
 
             holder.cardViewPlanning.setOnClickListener(new View.OnClickListener() {
@@ -130,6 +141,7 @@ public class PlanningAdapter extends RecyclerView.Adapter<PlanningAdapter.ViewHo
         public TextView adresse;
         public ImageView logoFt;
         public RecyclerView listeAdressePlanning;
+        public ProgressBar loader;
         public ViewHolder(View v) {
             super(v);
             titleFT = (TextView) v.findViewById(R.id.nom_ft_planning_card_view);
@@ -139,6 +151,7 @@ public class PlanningAdapter extends RecyclerView.Adapter<PlanningAdapter.ViewHo
             listeAdressePlanning = (RecyclerView) v.findViewById(R.id.liste_adresse_planning);
             listeAdressePlanning.setLayoutManager(new LinearLayoutManager(context));
             cardViewPlanning = (CardView) v.findViewById(R.id.card_view_planning_ft);
+            loader = (ProgressBar) v.findViewById(R.id.loader_ft_planning);
         }
     }
 
