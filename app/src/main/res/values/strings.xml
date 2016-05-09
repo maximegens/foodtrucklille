@@ -6,6 +6,7 @@
     <string name="title_splashscreen_activity">SplashScreen</string>
     <string name="title_activity_food_truck">FoodTruckActivity</string>
     <string name="key_api_google_map">AIzaSyDASrlPPti8U3qoqoj8V0O3VVZ-cBCYwkc</string>
+    <string name="id_google_analytics">UA-77292854-1</string>
     <string name="id_interstitiel">ca-app-pub-3668885861238587/2245159357</string>
 
     <!-- String globaux-->
@@ -96,5 +97,10 @@
     <string name="menu_title_map_fts_spinner_jour">Jour des FT map</string>
     <string name="menu_title_map_ft_spinner">Map du Food Truck</string>
     <string name="action_search">Rechercher un Food Truck</string>
+
+    <!-- Nom pour Google Analytics -->
+    <string name="ga_title_splashscreen">SplashScreen</string>
+    <string name="ga_title_main_activity">MainActivity</string>
+    <string name="ga_title_food_truck">FoodTruck</string>
 
 </resources>

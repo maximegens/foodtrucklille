@@ -43,6 +43,8 @@ public class SplashScreenActivity extends AppCompatActivity implements AsyncResp
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+        App.tracker.setScreenName(getString(R.string.ga_title_splashscreen));
+
         context = getApplicationContext();
 
         // Téléchargement et affichage de la publicité

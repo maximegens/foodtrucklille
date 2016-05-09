@@ -46,6 +46,8 @@ public class FoodTruckActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_truck);
 
+        App.tracker.setScreenName(getString(R.string.ga_title_food_truck));
+
         // Creation de la toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_food_truck);
         setSupportActionBar(toolbar);

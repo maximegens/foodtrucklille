@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        App.tracker.setScreenName(getString(R.string.ga_title_main_activity));
+
         // Récupération du context
         context = getApplicationContext();
 
@@ -86,7 +88,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
-
 
         // Définition du ActionBarDrawerToggle.
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer) {
