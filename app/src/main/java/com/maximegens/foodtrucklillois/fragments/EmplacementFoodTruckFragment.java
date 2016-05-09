@@ -1,13 +1,17 @@
 package com.maximegens.foodtrucklillois.fragments;
 
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.view.InflateException;
 import android.view.LayoutInflater;
@@ -34,29 +38,32 @@ import com.maximegens.foodtrucklillois.adapters.InfoWindowMarkerMapAdapter;
 import com.maximegens.foodtrucklillois.beans.AdresseFoodTruck;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.beans.PlanningFoodTruck;
+import com.maximegens.foodtrucklillois.broadcastReceiver.NetworkBroadcast;
 import com.maximegens.foodtrucklillois.network.Internet;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 
 
-public class EmplacementFoodTruckFragment extends Fragment implements OnMapReadyCallback, AdapterView.OnItemSelectedListener{
+public class EmplacementFoodTruckFragment extends Fragment implements OnMapReadyCallback, AdapterView.OnItemSelectedListener {
 
     public static String TITLE = "Map";
     private TextView noConnexion;
     private FoodTruck ft = null;
-    private SupportMapFragment fragmentMap;
+    private SupportMapFragment mapFragment;
     private ArrayAdapter<String> adapter;
     private GoogleMap googleMap;
     private static View view;
     private AppBarLayout appBarLayout;
+    private BroadcastReceiver broadcastReceiverInternet;
 
     /**
      * Creation du Fragment.
+     *
      * @return Une instance de EmplacementFoodTruckFragment.
      */
     public static EmplacementFoodTruckFragment newInstance(FoodTruck ft) {
         EmplacementFoodTruckFragment fragment = new EmplacementFoodTruckFragment();
         Bundle args = new Bundle();
-        args.putParcelable(FoodTruckActivity.KEY_FOODTRUCK_SELECTIONNER,ft);
+        args.putParcelable(FoodTruckActivity.KEY_FOODTRUCK_SELECTIONNER, ft);
         fragment.setArguments(args);
         return fragment;
     }
@@ -81,45 +88,63 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
     }
 
     @Override
-        public void onViewCreated(View view, Bundle savedInstanceState) {
-            super.onViewCreated(view, savedInstanceState);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-            if(getArguments() != null){
-                ft = getArguments().getParcelable(FoodTruckActivity.KEY_FOODTRUCK_SELECTIONNER);
-            }
+        if (getArguments() != null) {
+            ft = getArguments().getParcelable(FoodTruckActivity.KEY_FOODTRUCK_SELECTIONNER);
+        }
+
+        noConnexion = (TextView) view.findViewById(R.id.no_connexion_map);
+        mapFragment = SupportMapFragment.newInstance();
 
         // On affiche la map si le device posséde une connexion internet.
-        if(Internet.isNetworkAvailable(getContext())){
-            SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager()
-                .findFragmentById(R.id.map);
-            mapFragment.getMapAsync(this);
-            googleMap = mapFragment.getMap();
-            googleMap.setMyLocationEnabled(true);
-        }else{
-            //TODO ajouter un Broadcast Receiver pour detecter l'apparition d'une connexion et afficher la map
-            noConnexion = (TextView) view.findViewById(R.id.no_connexion_map);
-            noConnexion.setVisibility(View.VISIBLE);
+        if (Internet.isNetworkAvailable(getContext())) {
+            afficheMap();
+        } else {
+            masqueMap();
         }
+
+        // Creation du BroadcastReceiver pour vérifier la connexion internet.
+        broadcastReceiverInternet = new NetworkBroadcast();
+        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (Internet.isNetworkAvailable(context)) {
+                    afficheMap();
+                } else {
+                    masqueMap();
+                }
+            }
+        };
+        getActivity().registerReceiver(broadcastReceiver, new IntentFilter(NetworkBroadcast.INTERNET_DETECTED));
     }
 
     /**
-     * Methode permettant de replier l'AppBarLayout afin de masquer automatiquement l'image
-     * et d'afficher correctement le menu de selection du jour pour le Food Truck
+     * Masque la map dans le fragment.
      */
-    private void repliageAppBarLayout() {
+    private void masqueMap() {
+        if (mapFragment != null && mapFragment.getView() != null) {
+            mapFragment.getView().setVisibility(View.GONE);
+        }
+        noConnexion.setVisibility(View.VISIBLE);
+    }
 
-        // On replie l'appBarLayout et on block son dépliage
-        appBarLayout = (AppBarLayout) getView().getRootView().findViewById(R.id.app_bar_layout);
-        appBarLayout.setExpanded(false, true);
-
-        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
-        AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
-        behavior.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
-            @Override
-            public boolean canDrag(@NonNull AppBarLayout appBarLayout) {
-                return false;
-            }
-        });
+    /**
+     * Affichage la map dans le fragment.
+     */
+    private void afficheMap() {
+        if (mapFragment != null && mapFragment.getView() != null) {
+            mapFragment.getView().setVisibility(View.VISIBLE);
+        } else {
+            mapFragment = (SupportMapFragment) this.getChildFragmentManager()
+                    .findFragmentById(R.id.map);
+            mapFragment.getMapAsync(this);
+            googleMap = mapFragment.getMap();
+            googleMap.setMyLocationEnabled(true);
+        }
+        noConnexion.setVisibility(View.GONE);
+        mapFragment.getMapAsync(this);
     }
 
     @Override
@@ -130,28 +155,43 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
     @Override
     public void onDetach() {
         super.onDetach();
+        if(broadcastReceiverInternet != null){
+            getActivity().unregisterReceiver(broadcastReceiverInternet);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(broadcastReceiverInternet != null){
+            getActivity().unregisterReceiver(broadcastReceiverInternet);
+        }
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         //Ajoute un marker sur Marcq En Baroeul, permet de centrer la vue sur l'agglomeration Lilloise.
-        LatLng CENTRE = new LatLng(Double.parseDouble(Constantes.GPS_CENTRE_CARTE_MARC_BAROEUL_LATITUDE), Double.parseDouble(Constantes.GPS_CENTRE_CARTE_MARC_BAROEUL_LONGITUDE));
+        LatLng CENTRE = new LatLng(Double.parseDouble(Constantes.GPS_CENTRE_CARTE_MARC_BAROEUL_LATITUDE),Double.parseDouble(Constantes.GPS_CENTRE_CARTE_MARC_BAROEUL_LONGITUDE));
+
+        // Affiche le bouton permettant de localiser l'utilisateur.
+        googleMap.setMyLocationEnabled(true);
+
         // Centre la google map avec animation de zoom.
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CENTRE, 8));
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(11), 2000, null);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CENTRE, 11));
     }
 
     /**
      * Ajout d'un marker sur la google map pour repérer l'emplacement du Food Truck.
+     *
      * @param googleMap LA google map.
-     * @param planning Le planning.
-     * @param adresse L'objet contenant l'adresse du Food Truck.
-     * @param periode La periode en cours : midi ou soir.
+     * @param planning  Le planning.
+     * @param adresse   L'objet contenant l'adresse du Food Truck.
+     * @param periode   La periode en cours : midi ou soir.
      */
     private void ajouteMarker(GoogleMap googleMap, PlanningFoodTruck planning, AdresseFoodTruck adresse, String periode) {
 
         // Verification qu'il existe une latitude et une longitude de renseigné pour pouvoir l'afficher.
-        if(adresse.getLatitude() != null && adresse.getLongitude() != null) {
+        if (adresse.getLatitude() != null && adresse.getLongitude() != null) {
 
             MarkerOptions markerOptions = new MarkerOptions();
             markerOptions.title(ft.getNom());
@@ -164,9 +204,9 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
             markerOptions.position(new LatLng(latitude, longitude));
 
             StringBuilder snippet = new StringBuilder();
-            snippet.append("Ouvert uniquement le "+planning.getNomJour() + " "+periode);
-            if(adresse.getAdresse() != null){
-                snippet.append(Constantes.RETOUR_CHARIOT+Constantes.RETOUR_CHARIOT+adresse.getAdresse());
+            snippet.append("Ouvert uniquement le " + planning.getNomJour() + " " + periode);
+            if (adresse.getAdresse() != null) {
+                snippet.append(Constantes.RETOUR_CHARIOT + Constantes.RETOUR_CHARIOT + adresse.getAdresse());
             }
             markerOptions.snippet(snippet.toString());
             googleMap.setInfoWindowAdapter(new InfoWindowMarkerMapAdapter(getContext()));
@@ -176,6 +216,7 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
 
     /**
      * Traitement des emplacements en fonction du planning passé en paramétre.
+     *
      * @param planning le planning a traiter.
      */
     private void traitementByPlanning(PlanningFoodTruck planning) {
@@ -195,7 +236,8 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
 
     /**
      * Gestion du menu.
-     * @param menu Le menu.
+     *
+     * @param menu     Le menu.
      * @param inflater L'objet pour inflater.
      */
     @Override
@@ -215,16 +257,16 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-        if(googleMap != null){
+        if (googleMap != null) {
 
             // Suppresion des précédents markers.
             googleMap.clear();
 
-            if(position == 0){
+            if (position == 0) {
                 for (PlanningFoodTruck planning : ft.getPlanning()) {
                     traitementByPlanning(planning);
                 }
-            }else{
+            } else {
                 PlanningFoodTruck planning = ft.getPlanningByJour(position);
                 traitementByPlanning(planning);
             }
