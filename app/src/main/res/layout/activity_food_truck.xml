@@ -45,6 +45,7 @@
             android:id="@+id/tabs_food_truck"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:tabIndicatorColor="@android:color/white"
             app:tabGravity="fill" />
 
     </android.support.design.widget.AppBarLayout>
