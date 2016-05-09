@@ -12,6 +12,7 @@ import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
@@ -56,6 +57,15 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
         // Récupération du context
         context = getApplicationContext();
 
+        // Récupération des données de l'intent.
+        if(getIntent() != null){
+            Bundle bundle = getIntent().getExtras();
+            if(!bundle.getBoolean(SplashScreenActivity.DATA_A_JOUR)){
+                View parentLayout = findViewById(R.id.relative_layout_main_activity);
+                Snackbar.make(parentLayout,getString(R.string.msg_data_no_update),Snackbar.LENGTH_LONG).show();
+            }
+        }
+
         // Recuperation de la toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar_list_ft);
 
@@ -99,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
 
-                //C On passe l'item cliqué en mode checked, sinon on le retire.
+                // On passe l'item cliqué en mode checked, sinon on le retire.
                 if (menuItem.isChecked()) {
                     menuItem.setChecked(false);
                 } else {

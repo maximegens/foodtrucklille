@@ -31,6 +31,7 @@ import java.util.List;
  */
 public class SplashScreenActivity extends AppCompatActivity implements AsyncResponseSplashScreen{
 
+    public static final String DATA_A_JOUR = "dataAjour";
     private ProgressBar loader;
     private TextView indicationLoarder;
     private Context context;
@@ -79,7 +80,7 @@ public class SplashScreenActivity extends AppCompatActivity implements AsyncResp
     }
 
     @Override
-    public void processFinish(List<FoodTruck> listeFt) {
+    public void processFinish(List<FoodTruck> listeFt, boolean isAJour) {
         if(listeFt != null){
             Constantes.lesFTs = listeFt;
             Collections.sort(Constantes.lesFTs, new SortListeFT(false));
@@ -89,6 +90,7 @@ public class SplashScreenActivity extends AppCompatActivity implements AsyncResp
 
         // On lance le main activity
         Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
+        intent.putExtra(SplashScreenActivity.DATA_A_JOUR, isAJour);
         startActivity(intent);
         finish();
     }

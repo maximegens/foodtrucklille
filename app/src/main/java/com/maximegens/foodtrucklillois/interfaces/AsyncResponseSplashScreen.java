@@ -9,6 +9,6 @@ import java.util.List;
  */
 public interface AsyncResponseSplashScreen {
 
-    void processFinish(List<FoodTruck> listeFt);
+    void processFinish(List<FoodTruck> listeFt, boolean isAJour);
 
 }

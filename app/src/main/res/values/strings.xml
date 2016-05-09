@@ -28,6 +28,7 @@
     <string name="splash_lancement_ft">Téléchargement temriné, ouverture de l\'application en cours.</string>
 
     <!-- String liste des food trucks-->
+    <string name="msg_data_no_update">Attention la liste n\'a pas été mise à jour.</string>
     <string name="title_liste_food_truck">Les Food Trucks</string>
     <string name="recherche_plus_proche_en_cours">Recherche des Food Trucks les plus proche en cours...</string>
     <string name="liste_ft_vide">Il n\'y a pas de Food Trucks</string>

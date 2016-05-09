@@ -41,8 +41,8 @@ public class RetreiveJSONListeFTSplash extends AsyncTask<Boolean, String, FoodTr
     private Activity activity;
     private Context context;
     private AsyncResponseSplashScreen responseAsynctask = null;
+    private boolean isAJour;
 
-    Context ctx;
 
     /**
      * Constructeur de l'asynstack.
@@ -84,8 +84,11 @@ public class RetreiveJSONListeFTSplash extends AsyncTask<Boolean, String, FoodTr
                         .build()
                         .create(RetreiveListeFTService.class);
 
+                isAJour = true;
+
                 // Recuperation et conversion du JSON.
                 return retreiveListeFTService.getListFT();
+
             }catch (RetrofitError cause){
                 //TODO gestion des erreurs à améliorer - trop sommaire pour l'instant.
                 // Gestion des erreurs
@@ -98,14 +101,19 @@ public class RetreiveJSONListeFTSplash extends AsyncTask<Boolean, String, FoodTr
                     Log.v(Constantes.ERROR_NETWORK,"-- Probléme non référencé  --");
                     cause.getMessage();
                 }
-                return null;
+                return getFoodTruckInterne();
             }
         }else{
-            // Recuperation des données en interne.
-            String json = apiJson.loadJSONFromAsset();
-            return apiJson.parseJsonToFTApp(json);
+            return getFoodTruckInterne();
         }
 
+    }
+
+    FoodTruckApp getFoodTruckInterne() {
+        // Recuperation des données en interne.
+        isAJour = false;
+        String json = apiJson.loadJSONFromAsset();
+        return apiJson.parseJsonToFTApp(json);
     }
 
     @Override
@@ -120,8 +128,7 @@ public class RetreiveJSONListeFTSplash extends AsyncTask<Boolean, String, FoodTr
 
         // Callback vers l'activity pour lui indiquer que le traitement est fini
         if(responseAsynctask != null){
-            responseAsynctask.processFinish(lesFts);
+            responseAsynctask.processFinish(lesFts, isAJour);
         }
-
     }
 }
