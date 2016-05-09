@@ -57,7 +57,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
     public static final Set<Target> protectedFromGarbageCollectorTargets = new HashSet<>();
     private Spinner spinnerMap;
     private Spinner spinnerMapJour;
-    private BroadcastReceiver broadcastReceiverInternet;
+    private BroadcastReceiver broadcastReceiver;
 
     /**
      * Creation du Fragment.
@@ -109,8 +109,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
         }
 
         // Creation du BroadcastReceiver pour vérifier la connexion internet.
-        broadcastReceiverInternet = new NetworkBroadcast();
-        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if(Internet.isNetworkAvailable(context)){
@@ -160,16 +159,14 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
     @Override
     public void onDetach() {
         super.onDetach();
-        if(broadcastReceiverInternet != null){
-            getActivity().unregisterReceiver(broadcastReceiverInternet);
-        }
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if(broadcastReceiverInternet != null){
-            getActivity().unregisterReceiver(broadcastReceiverInternet);
+    public void onPause(){
+        super.onPause();
+        if(broadcastReceiver != null){
+            getActivity().unregisterReceiver(broadcastReceiver);
+            broadcastReceiver= null;
         }
     }
 

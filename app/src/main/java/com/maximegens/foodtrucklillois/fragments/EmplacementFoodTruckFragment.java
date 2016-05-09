@@ -49,11 +49,9 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
     private TextView noConnexion;
     private FoodTruck ft = null;
     private SupportMapFragment mapFragment;
-    private ArrayAdapter<String> adapter;
     private GoogleMap googleMap;
     private static View view;
-    private AppBarLayout appBarLayout;
-    private BroadcastReceiver broadcastReceiverInternet;
+    private BroadcastReceiver broadcastReceiverInt;
 
     /**
      * Creation du Fragment.
@@ -106,8 +104,7 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
         }
 
         // Creation du BroadcastReceiver pour vérifier la connexion internet.
-        broadcastReceiverInternet = new NetworkBroadcast();
-        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        broadcastReceiverInt = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (Internet.isNetworkAvailable(context)) {
@@ -117,7 +114,7 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
                 }
             }
         };
-        getActivity().registerReceiver(broadcastReceiver, new IntentFilter(NetworkBroadcast.INTERNET_DETECTED));
+        getActivity().registerReceiver(broadcastReceiverInt, new IntentFilter(NetworkBroadcast.INTERNET_DETECTED));
     }
 
     /**
@@ -155,16 +152,14 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
     @Override
     public void onDetach() {
         super.onDetach();
-        if(broadcastReceiverInternet != null){
-            getActivity().unregisterReceiver(broadcastReceiverInternet);
-        }
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if(broadcastReceiverInternet != null){
-            getActivity().unregisterReceiver(broadcastReceiverInternet);
+    public void onPause(){
+        super.onPause();
+        if(broadcastReceiverInt != null){
+            getActivity().unregisterReceiver(broadcastReceiverInt);
+            broadcastReceiverInt= null;
         }
     }
 

@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
         // Récupération des données de l'intent.
         if(getIntent() != null){
             Bundle bundle = getIntent().getExtras();
-            if(!bundle.getBoolean(SplashScreenActivity.DATA_A_JOUR)){
+            if(bundle != null && !bundle.getBoolean(SplashScreenActivity.DATA_A_JOUR)){
                 View parentLayout = findViewById(R.id.relative_layout_main_activity);
                 Snackbar.make(parentLayout,getString(R.string.msg_data_no_update),Snackbar.LENGTH_LONG).show();
             }
