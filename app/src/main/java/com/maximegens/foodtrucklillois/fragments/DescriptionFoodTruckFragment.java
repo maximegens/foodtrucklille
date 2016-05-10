@@ -48,6 +48,7 @@ public class DescriptionFoodTruckFragment extends Fragment {
     private TextView specialite;
     private TextView service;
     private TextView dateOuverture;
+    private TextView servicePrive;
 
     private RelativeLayout zoneTel;
     private RelativeLayout zoneMail;
@@ -99,6 +100,7 @@ public class DescriptionFoodTruckFragment extends Fragment {
         dateOuverture = (TextView) view.findViewById(R.id.value_date_ouverture);
         specialite = (TextView) view.findViewById(R.id.value_specialite);
         service = (TextView) view.findViewById(R.id.value_service);
+        servicePrive = (TextView) view.findViewById(R.id.value_service_prive);
 
         zoneTel = (RelativeLayout) view.findViewById(R.id.relative_layout_tel);
         zoneMail = (RelativeLayout) view.findViewById(R.id.relative_layout_mail);
@@ -108,7 +110,6 @@ public class DescriptionFoodTruckFragment extends Fragment {
         consulterHoraire = (Button) view.findViewById(R.id.button_horaire_complet);
         voirDescriptionLongue = (Button) view.findViewById(R.id.button_description_longue);
         goFT = (Button) view.findViewById(R.id.button_ft_go_description);
-
 
         // Remplissage des différents textView avec les informations contenu dans l'objet FoodTruck.
         if(ft != null){
@@ -144,6 +145,9 @@ public class DescriptionFoodTruckFragment extends Fragment {
             }
             if(ft.getServices() != null){
                 service.setText(ft.getServices());
+            }
+            if(ft.getServicePrive() != null){
+                servicePrive.setText(ft.getServicePrive());
             }
         }
 

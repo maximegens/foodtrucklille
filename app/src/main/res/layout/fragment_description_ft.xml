@@ -481,6 +481,40 @@
                     android:textSize="@dimen/text_value" />
             </RelativeLayout>
 
+            <!-- Service Privée -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/icon_service_prive"
+                    android:layout_width="@dimen/icon_description_width"
+                    android:layout_height="@dimen/icon_description_height"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp" />
+
+                <TextView
+                    android:id="@+id/label_service_prive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="6dp"
+                    android:layout_toRightOf="@id/icon_service_prive"
+                    android:text="@string/service_prive"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_label" />
+
+                <TextView
+                    android:id="@+id/value_service_prive"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/label_service_prive"
+                    android:layout_toRightOf="@id/icon_service_prive"
+                    android:text="@string/champ_non_communique"
+                    android:textSize="@dimen/text_value" />
+            </RelativeLayout>
+
             <!-- date ouverture  -->
             <RelativeLayout
                 android:layout_width="match_parent"

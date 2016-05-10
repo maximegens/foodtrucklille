@@ -33,6 +33,7 @@ public class FoodTruck implements Parcelable{
     private String telephone;
     private String email;
     private String dateOuverture;
+    private String servicePrive;
     private String logo;
     private String urlLogo;
     private Menu menu;
@@ -178,6 +179,14 @@ public class FoodTruck implements Parcelable{
         this.dateOuverture = dateOuverture;
     }
 
+    public String getServicePrive() {
+        return servicePrive;
+    }
+
+    public void setServicePrive(String servicePrive) {
+        this.servicePrive = servicePrive;
+    }
+
     public String getLogo() {
         return logo;
     }
@@ -264,6 +273,7 @@ public class FoodTruck implements Parcelable{
         dest.writeString(telephone);
         dest.writeString(email);
         dest.writeString(dateOuverture);
+        dest.writeString(servicePrive);
         dest.writeString(logo);
         dest.writeString(urlLogo);
         dest.writeParcelable(menu, flags);
@@ -304,6 +314,7 @@ public class FoodTruck implements Parcelable{
         this.telephone = in.readString();
         this.email = in.readString();
         this.dateOuverture = in.readString();
+        this.servicePrive = in.readString();
         this.logo = in.readString();
         this.urlLogo = in.readString();
         this.menu = (Menu)in.readParcelable(Menu.class.getClassLoader());

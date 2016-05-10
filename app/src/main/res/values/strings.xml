@@ -53,6 +53,7 @@
     <string name="date_ouverture">Date d\'ouverture</string>
     <string name="specialite">Spécialité</string>
     <string name="service">Service</string>
+    <string name="service_prive">Service privé</string>
     <string name="voir_description_complete">Voir description compléte</string>
     <string name="consulter_horaire">Consulter les horaires</string>
     <string name="champ_non_communique">Non communiqué</string>
