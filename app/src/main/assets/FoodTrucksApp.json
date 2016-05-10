@@ -1166,13 +1166,13 @@
           "menu": {
             "lesCategorieDePlat" : [
               {
-                "nomCategoriePlat" : "Viande de bœuf",
+                "nomCategoriePlat" : "Viande de boeuf",
                 "informations" : null,
                 "listePlats" : [
                   {
                     "nomPlat" : "LE VIRGIN VERSION FALL/WINTER",
                     "urlPhoto" : null,
-                    "descriptionPlat" : "Bœuf haché, Mimolette fondue, bacon grillé, fondue d'oignons, tranchettes d'avocat bien mûrs, sauce maison, jeunes pousses",
+                    "descriptionPlat" : "Boeuf haché, Mimolette fondue, bacon grillé, fondue d'oignons, tranchettes d'avocat bien mûrs, sauce maison, jeunes pousses",
                     "prix" : 9,
                     "prixEnMenu" : 10,
                     "disponible" : "true"
