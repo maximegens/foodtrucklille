@@ -36,6 +36,7 @@ import com.maximegens.foodtrucklillois.beans.PlanningFoodTruck;
 import com.maximegens.foodtrucklillois.broadcastReceiver.NetworkBroadcast;
 import com.maximegens.foodtrucklillois.network.Internet;
 import com.maximegens.foodtrucklillois.utils.Constantes;
+import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
 import com.maximegens.foodtrucklillois.utils.PicassoMarker;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
@@ -52,7 +53,8 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
     private ArrayAdapter<CharSequence> adapterJour;
     private SupportMapFragment map;
     private TextView noConnexion;
-    private int jourSelection = 0;
+    private int jourSelection;
+    private int jourActuel;
     private FoodTruck ftSelection = null;
     public static final Set<Target> protectedFromGarbageCollectorTargets = new HashSet<>();
     private Spinner spinnerMap;
@@ -100,6 +102,8 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
         adapterJour = ArrayAdapter.createFromResource(getContext(), R.array.semaine_array_jour, R.layout.layout_drop_title_black);
         adapterJour.setDropDownViewResource(R.layout.layout_drop_list);
         spinnerMapJour.setAdapter(adapterJour);
+        //jourActuel = GestionnaireHoraire.getNumeroJourDansLaSemaine();
+        //spinnerMapJour.setSelection(jourActuel);
 
         // On affiche la map si le device posséde une connexion internet.
         if(Internet.isNetworkAvailable(getContext()) && map != null){
