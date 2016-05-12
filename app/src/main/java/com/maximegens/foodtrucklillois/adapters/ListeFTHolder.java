@@ -6,12 +6,14 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.maximegens.foodtrucklillois.utils.Utils;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -24,6 +26,7 @@ public class ListeFTHolder extends RecyclerView.ViewHolder {
     private TextView textHoraire;
     private ImageView imageView;
     private TextView distance;
+    private ProgressBar loader;
 
     /**
      * Le constructeur.
@@ -37,6 +40,7 @@ public class ListeFTHolder extends RecyclerView.ViewHolder {
         textHoraire = (TextView) itemView.findViewById(R.id.horaireouverture_ft_card_view);
         imageView = (ImageView) itemView.findViewById(R.id.logo_ft_card_view);
         distance = (TextView) itemView.findViewById(R.id.ft_distance_tv);
+        loader = (ProgressBar) itemView.findViewById(R.id.loader_ft);
 
     }
 
@@ -46,6 +50,8 @@ public class ListeFTHolder extends RecyclerView.ViewHolder {
     public void bind(FoodTruck ft,int position,boolean rechercheEnCours){
 
         Resources res = context.getResources();
+
+        loader.setVisibility(View.VISIBLE);
 
         //Affichage de l'ouverture
         if(ft.isOpenNow()){
@@ -71,11 +77,19 @@ public class ListeFTHolder extends RecyclerView.ViewHolder {
             int resID = res.getIdentifier(ft.getLogo() , "mipmap", context.getPackageName());
             Picasso.with(context)
                     .load(resID)
-                    .placeholder(R.drawable.progress_animation_loader)
                     .error(R.mipmap.photonotavailable)
                     .fit()
                     .centerInside()
-                    .into(imageView);
+                    .into(imageView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            loader.setVisibility(View.GONE);
+                        }
+                        @Override
+                        public void onError() {
+                            loader.setVisibility(View.GONE);
+                        }
+                    });
         }
 
     }
