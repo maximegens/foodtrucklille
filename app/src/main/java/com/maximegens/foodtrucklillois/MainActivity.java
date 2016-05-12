@@ -49,6 +49,19 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
     private Toolbar toolbar;
     private Context context;
 
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        // Si la liste dés food trucs a été perdue, on relance le splashscreen pour re télécharger les données.
+        if(Constantes.lesFTs == null || Constantes.lesFTs.isEmpty()){
+            Intent intent = new Intent(MainActivity.this, SplashScreenActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

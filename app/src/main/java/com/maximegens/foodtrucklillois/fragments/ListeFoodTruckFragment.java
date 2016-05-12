@@ -104,6 +104,12 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         linearPlusProcheEnCours = (LinearLayout) view.findViewById(R.id.linear_recherche_ft);
         recyclerViewListeFT.setHasFixedSize(true);
 
+        // Abonnement aux receiver du GPS.
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+
         // Affichage du message d'information d'activation du GPS et de la recherche la plus proche
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             linearActiveGPS.setVisibility(View.GONE);
@@ -113,11 +119,6 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
             linearPlusProcheEnCours.setVisibility(View.GONE);
         }
 
-        // Abonnement aux receiver du GPS.
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
         // Creation de l'agencement classique des food trucks en attendant la détection du food truck le plus proche si le gps est activé.
         int nombreColonne = Utils.getNbColonneForScreen(getContext());
@@ -409,8 +410,6 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
                 return;
             }
             locationManager.removeUpdates(this);
-            linearPlusProcheEnCours.setVisibility(View.GONE);
-            linearActiveGPS.setVisibility(View.VISIBLE);
         }
     }
 
@@ -418,6 +417,7 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
      * Ajoute la mise à jour de la position du GPS.
      */
     public void addUpdatesLocation() {
+        boolean gps = false;
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             // Demande de permission pour Android 6.0 (API 23).
@@ -427,11 +427,18 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
             linearPlusProcheEnCours.setVisibility(View.VISIBLE);
             linearActiveGPS.setVisibility(View.GONE);
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, Constantes.TIME_BETWEEN_UPDATE_GPS, 0, this);
+            gps = true;
         }
         if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
             linearPlusProcheEnCours.setVisibility(View.VISIBLE);
             linearActiveGPS.setVisibility(View.GONE);
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, Constantes.TIME_BETWEEN_UPDATE_GPS, 0, this);
+            gps = true;
+        }
+
+        if(!gps){
+            linearPlusProcheEnCours.setVisibility(View.GONE);
+            linearActiveGPS.setVisibility(View.VISIBLE);
         }
     }
 
