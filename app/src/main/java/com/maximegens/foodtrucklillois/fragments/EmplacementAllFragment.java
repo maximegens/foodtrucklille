@@ -102,8 +102,8 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
         adapterJour = ArrayAdapter.createFromResource(getContext(), R.array.semaine_array_jour, R.layout.layout_drop_title_black);
         adapterJour.setDropDownViewResource(R.layout.layout_drop_list);
         spinnerMapJour.setAdapter(adapterJour);
-        //jourActuel = GestionnaireHoraire.getNumeroJourDansLaSemaine();
-        //spinnerMapJour.setSelection(jourActuel);
+        jourActuel = GestionnaireHoraire.getNumeroJourDansLaSemaine();
+
 
         // On affiche la map si le device posséde une connexion internet.
         if(Internet.isNetworkAvailable(getContext()) && map != null){
@@ -177,6 +177,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
     @Override
     public void onMapReady(GoogleMap googleMap) {
         centreMap(googleMap);
+        //spinnerMapJour.setSelection(jourActuel);
         gestionSpinnerFoodTruck(0, googleMap);
         gestionSpinnerJour(0, googleMap);
         spinnerMapJour.setOnItemSelectedListener(this);
