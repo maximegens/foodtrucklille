@@ -15,8 +15,8 @@ public class Plat implements Parcelable {
     private String nomPlat;
     private String urlPhoto;
     private String descriptionPlat;
-    private float prix;
-    private float prixEnMenu;
+    private String prix;
+    private String prixEnMenu;
     private boolean disponible;
 
     public String getNomPlat() {
@@ -43,19 +43,19 @@ public class Plat implements Parcelable {
         this.descriptionPlat = descriptionPlat;
     }
 
-    public float getPrix() {
+    public String getPrix() {
         return prix;
     }
 
-    public void setPrix(float prix) {
+    public void setPrix(String prix) {
         this.prix = prix;
     }
 
-    public float getPrixEnMenu() {
+    public String getPrixEnMenu() {
         return prixEnMenu;
     }
 
-    public void setPrixEnMenu(float prixEnMenu) {
+    public void setPrixEnMenu(String prixEnMenu) {
         this.prixEnMenu = prixEnMenu;
     }
 
@@ -77,8 +77,8 @@ public class Plat implements Parcelable {
         dest.writeString(nomPlat);
         dest.writeString(urlPhoto);
         dest.writeString(descriptionPlat);
-        dest.writeFloat(prix);
-        dest.writeFloat(prixEnMenu);
+        dest.writeString(prix);
+        dest.writeString(prixEnMenu);
         dest.writeByte((byte) (disponible ? 1 : 0));
     }
 
@@ -101,8 +101,8 @@ public class Plat implements Parcelable {
         this.nomPlat = in.readString();
         this.urlPhoto = in.readString();
         this.descriptionPlat = in.readString();
-        this.prix = in.readFloat();
-        this.prixEnMenu = in.readFloat();
+        this.prix = in.readString();
+        this.prixEnMenu = in.readString();
         disponible = in.readByte() != 0;
     }
 }

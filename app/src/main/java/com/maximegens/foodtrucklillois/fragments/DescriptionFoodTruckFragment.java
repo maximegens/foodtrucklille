@@ -44,6 +44,7 @@ public class DescriptionFoodTruckFragment extends Fragment {
     private TextView telephone;
     private TextView email;
     private TextView siteWeb;
+    private TextView pageFacebook;
 
     private TextView specialite;
     private TextView service;
@@ -53,6 +54,7 @@ public class DescriptionFoodTruckFragment extends Fragment {
     private RelativeLayout zoneTel;
     private RelativeLayout zoneMail;
     private RelativeLayout zoneDistance;
+    private RelativeLayout zonePageFacebook;
 
     private RelativeLayout zoneSiteWeb;
     private Button consulterHoraire;
@@ -97,6 +99,7 @@ public class DescriptionFoodTruckFragment extends Fragment {
         telephone = (TextView) view.findViewById(R.id.value_telephone);
         email = (TextView) view.findViewById(R.id.value_email);
         siteWeb = (TextView) view.findViewById(R.id.value_site_web);
+        pageFacebook = (TextView) view.findViewById(R.id.value_page_facebook);
         dateOuverture = (TextView) view.findViewById(R.id.value_date_ouverture);
         specialite = (TextView) view.findViewById(R.id.value_specialite);
         service = (TextView) view.findViewById(R.id.value_service);
@@ -105,6 +108,7 @@ public class DescriptionFoodTruckFragment extends Fragment {
         zoneTel = (RelativeLayout) view.findViewById(R.id.relative_layout_tel);
         zoneMail = (RelativeLayout) view.findViewById(R.id.relative_layout_mail);
         zoneSiteWeb = (RelativeLayout) view.findViewById(R.id.relative_layout_site_web);
+        zonePageFacebook = (RelativeLayout) view.findViewById(R.id.relative_layout_page_facebook);
         zoneDistance = (RelativeLayout) view.findViewById(R.id.linear_distance_description);
 
         consulterHoraire = (Button) view.findViewById(R.id.button_horaire_complet);
@@ -136,6 +140,9 @@ public class DescriptionFoodTruckFragment extends Fragment {
             }
             if(ft.getSiteWeb() != null){
                 siteWeb.setText(ft.getSiteWeb());
+            }
+            if(ft.getUrlPageFacebook() != null){
+                pageFacebook.setText(ft.getUrlPageFacebook());
             }
             if(ft.getDateOuverture() != null){
                 dateOuverture.setText(ft.getDateOuverture());
@@ -184,6 +191,19 @@ public class DescriptionFoodTruckFragment extends Fragment {
             public void onClick(View v) {
                 if(ft.getSiteWeb() != null){
                     String url = ft.getSiteWeb();
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    intent.putExtra(Browser.EXTRA_APPLICATION_ID, getActivity().getApplicationContext().getPackageName());
+                    startActivity(intent);
+                }
+            }
+        });
+
+        /** Ouverture de la page Facebook du Food Truck **/
+        zonePageFacebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ft.getUrlPageFacebook() != null){
+                    String url = ft.getUrlPageFacebook();
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                     intent.putExtra(Browser.EXTRA_APPLICATION_ID, getActivity().getApplicationContext().getPackageName());
                     startActivity(intent);

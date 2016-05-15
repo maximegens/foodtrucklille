@@ -26,7 +26,7 @@
     <string name="splash_recup_ft">Récupération de la liste des Foods Truck en cours.</string>
     <string name="splash_ouverture_ft">Ouverture du Food Truck</string>
     <string name="splash_four_ft">Pré-chauffage des fours.</string>
-    <string name="splash_lancement_ft">Téléchargement temriné, ouverture de l\'application en cours.</string>
+    <string name="splash_lancement_ft">Téléchargement terminé, ouverture de l\'application en cours.</string>
 
     <!-- String liste des food trucks-->
     <string name="msg_data_no_update">Attention la liste n\'a pas été mise à jour.</string>
@@ -49,6 +49,7 @@
     <string name="telephone">Téléphone</string>
     <string name="email">Email</string>
     <string name="site_web">Site Web</string>
+    <string name="page_facebook">Page Facebook</string>
     <string name="tenue_vestimentaire">Tenue vestimentaire</string>
     <string name="date_ouverture">Date d\'ouverture</string>
     <string name="specialite">Spécialité</string>
@@ -56,6 +57,7 @@
     <string name="service_prive">Service privé</string>
     <string name="voir_description_complete">Voir description compléte</string>
     <string name="consulter_horaire">Consulter les horaires</string>
+    <string name="consulter_facebook">Consulter la page Facebook</string>
     <string name="champ_non_communique">Non communiqué</string>
     <string name="distance_indisponible">Distance indisponible</string>
 
@@ -66,6 +68,7 @@
     <!-- String Emplacement des food trucks. -->
     <string name="title_map_all">Map</string>
     <string name="no_connexion">Vous ne pouvez pas afficher la carte Google Map sans connexion Internet</string>
+    <string name="no_adresses_ft">Aucunes adresses pour le Food Truck, veuillez consulter la page facebook pour connaitre l\'adresse du jour.</string>
 
     <!-- String Favoris -->
     <string name="title_favoris">Mes Favoris</string>

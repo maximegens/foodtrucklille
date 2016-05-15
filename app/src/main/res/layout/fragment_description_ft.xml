@@ -400,6 +400,46 @@
                     android:layout_toRightOf="@id/icon_site_web"
                     android:text="@string/champ_non_communique"
                     android:textSize="@dimen/text_value" />
+
+
+            </RelativeLayout>
+
+            <!-- Page Facebook  -->
+            <RelativeLayout
+                android:id="@+id/relative_layout_page_facebook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_layout"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/icon_site_page_facebook"
+                    android:layout_width="@dimen/icon_description_width"
+                    android:layout_height="@dimen/icon_description_height"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp" />
+
+                <TextView
+                    android:id="@+id/label_page_facebook"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="6dp"
+                    android:layout_toRightOf="@id/icon_site_page_facebook"
+                    android:text="@string/page_facebook"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_label" />
+
+                <TextView
+                    android:id="@+id/value_page_facebook"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/label_page_facebook"
+                    android:layout_toRightOf="@id/icon_site_page_facebook"
+                    android:text="@string/champ_non_communique"
+                    android:textSize="@dimen/text_value" />
+
+
             </RelativeLayout>
 
         </LinearLayout>

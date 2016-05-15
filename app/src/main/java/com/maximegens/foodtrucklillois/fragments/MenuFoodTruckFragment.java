@@ -159,19 +159,19 @@ public class MenuFoodTruckFragment extends Fragment implements RecyclerViewListe
             description.setText(plat.getDescriptionPlat());
 
             // AJout du prix
-            if(plat.getPrix() != 0){
-                prixValue.setText(String.valueOf(plat.getPrix()));
+            if(!plat.getPrix().equals(0)){
+                prixValue.setText(plat.getPrix());
             }else{
                 prixLabel.setVisibility(View.GONE);
                 prixValue.setVisibility(View.GONE);
             }
 
             // Ajout du prix en menu si il existe
-            Float prixMenu = new Float(plat.getPrixEnMenu());
-            if(prixMenu != null && prixMenu != 0){
+            String prixMenu = plat.getPrixEnMenu();
+            if(prixMenu != null && !prixMenu.equals(0)){
                 prixEnMenuLabel.setVisibility(View.VISIBLE);
                 prixEnMenuValue.setVisibility(View.VISIBLE);
-                prixEnMenuValue.setText(String.valueOf(prixMenu));
+                prixEnMenuValue.setText(prixMenu);
             }
 
             builder.setTitle(plat.getNomPlat());

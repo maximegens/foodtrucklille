@@ -491,9 +491,9 @@ public class FoodTruck implements Parcelable{
         if(isOpenToday() && isDateBeforeLastHoraireFermeture(calendarToday)){
             PlanningFoodTruck planning = getPlaningToday();
             if (isMidiOrBeforeMidi) {
-                if (existPlaningMidiAdresse(planning)) {
+                if (planning.getMidi() != null && planning.getMidi().getHeureOuvertureEnString() != null) {
                     horaireOuverture = planning.getMidi().getHeureOuvertureEnString();
-                }else if(existPlaningSoirAdresse(planning)) {
+                }else if(planning.getSoir() != null && planning.getSoir().getHeureOuvertureEnString() != null) {
                     horaireOuverture = planning.getSoir().getHeureOuvertureEnString();
                 }
             } else if (isSoirOrBeforeSoirButAfterMidi && existPlaningSoirAdresse(planning)) {
@@ -520,9 +520,9 @@ public class FoodTruck implements Parcelable{
         if(isOpenToday() && isDateBeforeLastHoraireFermeture(calendarToday)){
             PlanningFoodTruck planning = getPlaningToday();
             if (isMidiOrBeforeMidi) {
-                if (existPlaningMidiAdresse(planning)) {
+                if (planning.getMidi() != null && planning.getMidi().getHeureFermetureEnString() != null) {
                     horaireFermeture = planning.getMidi().getHeureFermetureEnString();
-                }else if(existPlaningSoirAdresse(planning)) {
+                }else if(planning.getSoir() != null && planning.getSoir().getHeureFermetureEnString() != null) {
                     horaireFermeture = planning.getSoir().getHeureFermetureEnString();
                 }
             } else if (isSoirOrBeforeSoirButAfterMidi && existPlaningSoirAdresse(planning)) {
@@ -639,4 +639,21 @@ public class FoodTruck implements Parcelable{
         return latitude != null && longitude != null ? new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude)) : null;
     }
 
+    /**
+     * Indique si le food truck ne posséde aucune adresse/emplacement de renseigné dans tous le planning
+     * @return vrai si il n'existe pas d'adresse.
+     */
+    public boolean isAucuneAdresse(){
+        if(getPlanning() != null){
+            for (PlanningFoodTruck planning : getPlanning()) {
+                if(planning.getMidi() != null && planning.getMidi().getAdresses() != null && !planning.getMidi().getAdresses().isEmpty()){
+                    return false;
+                }
+                if(planning.getSoir() != null && planning.getSoir().getAdresses() != null && !planning.getSoir().getAdresses().isEmpty()){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

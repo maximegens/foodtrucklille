@@ -48,6 +48,7 @@ public class SplashScreenActivity extends AppCompatActivity implements AsyncResp
         context = getApplicationContext();
 
         // Téléchargement et affichage de la publicité
+        //TODO reactiver pub
         //loadPub(context);
 
         loader = (ProgressBar) findViewById(R.id.loader_splash_screen);

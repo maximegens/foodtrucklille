@@ -5,7 +5,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Browser;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -22,6 +24,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -48,9 +52,10 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
 
     public static String TITLE = "Map";
     private TextView noConnexion;
+    private RelativeLayout lienPageFacebook;
+    private Button buttonPageFacebook;
     private FoodTruck ft = null;
     private SupportMapFragment mapFragment;
-    private GoogleMap googleMap;
     private static View view;
     private BroadcastReceiver broadcastReceiverInt;
 
@@ -97,11 +102,17 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
         }
 
         noConnexion = (TextView) view.findViewById(R.id.no_connexion_map);
+        lienPageFacebook = (RelativeLayout) view.findViewById(R.id.lien_page_facebook);
+        buttonPageFacebook = (Button) view.findViewById(R.id.button_page_facebook);
         mapFragment = SupportMapFragment.newInstance();
 
         // On affiche la map si le device posséde une connexion internet.
         if (Internet.isNetworkAvailable(getContext())) {
-            afficheMap();
+            if(ft.isAucuneAdresse()){
+                affichePageFacebook();
+            }else{
+                afficheMap();
+            }
         } else {
             masqueMap();
         }
@@ -111,13 +122,30 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (Internet.isNetworkAvailable(context)) {
-                    afficheMap();
+                    if(ft.isAucuneAdresse()){
+                        affichePageFacebook();
+                    }else{
+                        afficheMap();
+                    }
                 } else {
                     masqueMap();
                 }
             }
         };
         getActivity().registerReceiver(broadcastReceiverInt, new IntentFilter(NetworkBroadcast.INTERNET_DETECTED));
+
+        /** Ouverture de la page Facebook du Food Truck **/
+        buttonPageFacebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ft.getUrlPageFacebook() != null){
+                    String url = ft.getUrlPageFacebook();
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    intent.putExtra(Browser.EXTRA_APPLICATION_ID, getActivity().getApplicationContext().getPackageName());
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     /**
@@ -128,6 +156,18 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
             mapFragment.getView().setVisibility(View.GONE);
         }
         noConnexion.setVisibility(View.VISIBLE);
+        lienPageFacebook.setVisibility(View.GONE);
+    }
+
+    /**
+     * Affiche une information comme quoi le food truck ne posséde pas d'adresse précise et qu'il faut consulter la page facebook
+     */
+    private void affichePageFacebook() {
+        if (mapFragment != null && mapFragment.getView() != null) {
+            mapFragment.getView().setVisibility(View.GONE);
+        }
+        noConnexion.setVisibility(View.GONE);
+        lienPageFacebook.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -137,13 +177,13 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
         if (mapFragment != null && mapFragment.getView() != null) {
             mapFragment.getView().setVisibility(View.VISIBLE);
         } else {
-            mapFragment = (SupportMapFragment) this.getChildFragmentManager()
-                    .findFragmentById(R.id.map);
-            mapFragment.getMapAsync(this);
-            googleMap = mapFragment.getMap();
-            googleMap.setMyLocationEnabled(true);
+
+            final FragmentManager fm = getChildFragmentManager();
+            fm.beginTransaction().replace(R.id.framelayout_map_ft, mapFragment).commit();
+
         }
         noConnexion.setVisibility(View.GONE);
+        lienPageFacebook.setVisibility(View.GONE);
         mapFragment.getMapAsync(this);
     }
 
@@ -217,17 +257,17 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
      *
      * @param planning le planning a traiter.
      */
-    private void traitementByPlanning(PlanningFoodTruck planning) {
+    private void traitementByPlanning(PlanningFoodTruck planning, GoogleMap gMapItem) {
         // Parcours des adresses du food truck pour le midi.
         if (planning.getMidi() != null) {
             for (AdresseFoodTruck adresse : planning.getMidi().getAdresses()) {
-                ajouteMarker(googleMap, planning, adresse, Constantes.MIDI);
+                ajouteMarker(gMapItem, planning, adresse, Constantes.MIDI);
             }
         }
         // Parcours des adresses du food truck pour le soir.
         if (planning.getSoir() != null) {
             for (AdresseFoodTruck adresse : planning.getSoir().getAdresses()) {
-                ajouteMarker(googleMap, planning, adresse, Constantes.SOIR);
+                ajouteMarker(gMapItem, planning, adresse, Constantes.SOIR);
             }
         }
     }
@@ -255,6 +295,12 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+        GoogleMap googleMap = null;
+
+        if(mapFragment != null){
+            googleMap = mapFragment.getMap();
+        }
+
         if (googleMap != null) {
 
             // Suppresion des précédents markers.
@@ -262,11 +308,11 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
 
             if (position == 0) {
                 for (PlanningFoodTruck planning : ft.getPlanning()) {
-                    traitementByPlanning(planning);
+                    traitementByPlanning(planning, googleMap);
                 }
             } else {
                 PlanningFoodTruck planning = ft.getPlanningByJour(position);
-                traitementByPlanning(planning);
+                traitementByPlanning(planning, googleMap);
             }
         }
 
