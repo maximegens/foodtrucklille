@@ -223,14 +223,18 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
             // Tous les jours
             if(jourSelection == 0){
                 for (FoodTruck ft : Constantes.lesFTs) {
-                    for (PlanningFoodTruck planning : ft.getPlanning()) {
-                        traitementByPlanning(planning, gMapItem, ft);
+                    if(!ft.isAucuneAdresse()){
+                        for (PlanningFoodTruck planning : ft.getPlanning()) {
+                            traitementByPlanning(planning, gMapItem, ft);
+                        }
                     }
                 }
             }else{ // Un jour de selectionné
                 for (FoodTruck ft : Constantes.lesFTs){
-                    PlanningFoodTruck planning = ft.getPlanningByJour(jourSelection);
-                    traitementByPlanning(planning, gMapItem, ft);
+                    if(!ft.isAucuneAdresse()) {
+                        PlanningFoodTruck planning = ft.getPlanningByJour(jourSelection);
+                        traitementByPlanning(planning, gMapItem, ft);
+                    }
                 }
             }
 
@@ -260,8 +264,10 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
             // Tous les ft
             if(ftSelection != null && ftSelection.getNom().equals(Constantes.TOUS_FT)){
                 for (FoodTruck left : Constantes.lesFTs) {
-                    for (PlanningFoodTruck planning : left.getPlanning()) {
-                        parcoursAdresses(left, gMapItem, planning);
+                    if(!left.isAucuneAdresse()){
+                        for (PlanningFoodTruck planning : left.getPlanning()) {
+                            parcoursAdresses(left, gMapItem, planning);
+                        }
                     }
                 }
             }else{ // Un ft de selectionné
@@ -275,8 +281,10 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
             // Tous les ft
             if(ftSelection != null && ftSelection.getNom().equals(Constantes.TOUS_FT)){
                 for(FoodTruck ft : Constantes.lesFTs) {
-                    PlanningFoodTruck planning = ft.getPlanningByJour(jourSelection);
-                    parcoursAdresses(ft, gMapItem, planning);
+                    if(!ft.isAucuneAdresse()) {
+                        PlanningFoodTruck planning = ft.getPlanningByJour(jourSelection);
+                        parcoursAdresses(ft, gMapItem, planning);
+                    }
                 }
             }else{ // Un ft de selectionné
                 PlanningFoodTruck planning = ftSelection.getPlanningByJour(jourSelection);
