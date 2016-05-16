@@ -30,6 +30,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.fragments.AProposFragment;
+import com.maximegens.foodtrucklillois.fragments.ContactFragment;
 import com.maximegens.foodtrucklillois.fragments.EmplacementAllFragment;
 import com.maximegens.foodtrucklillois.fragments.FavorisFragment;
 import com.maximegens.foodtrucklillois.fragments.ListeFoodTruckFragment;
@@ -135,31 +136,31 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
                 // A appel le bon fragment en fonction de l'item cliqué.
                 switch (menuItem.getItemId()) {
                     case R.id.navigation_item_liste_ft:
-                        // Commit du Fragment des listes des FT
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.fragmentLayout, ListeFoodTruckFragment.newInstance())
                                 .commit();
                         return true;
                     case R.id.navigation_item_planning:
-                        // Commit du Fragment des listes des FT
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.fragmentLayout, PlanningFragment.newInstance())
                                 .commit();
                         return true;
                     case R.id.navigation_item_emplacement:
-                        // Commit du Fragment des listes des FT
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.fragmentLayout, EmplacementAllFragment.newInstance())
                                 .commit();
                         return true;
                     case R.id.navigation_item_favori:
-                        // Commit du Fragment des listes des FT
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.fragmentLayout, FavorisFragment.newInstance())
                                 .commit();
                         return true;
+                    case R.id.navigation_item_contact:
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragmentLayout, ContactFragment.newInstance())
+                                .commit();
+                        return true;
                     case R.id.navigation_item_a_propos:
-                        // Commit du Fragment des listes des FT
                         getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.fragmentLayout, AProposFragment.newInstance())
                                 .commit();
