@@ -1844,6 +1844,182 @@
               }
             }
           ]
+        },
+        {
+          "id": 108,
+          "nom": "Chez Fab",
+          "siteWeb": null,
+          "urlPageFacebook": "https://www.facebook.com/ChezFABfoodtruck/",
+          "descriptionBreve" : "Chez F*A*B //\nFabrique à Burger est un restaurant mobile qui propose des Burgers gourmets dans la métropole lilloise.",
+          "descriptionLongue": "Chez FAB La Fabrique à Burger, spécialiste de burgers gourmets,\nvous propose une carte composée exclusivement de produits frais.\n\nChaque jour, Alex et Fabienne confectionnent des burgers de qualité à base de produits frais.\n\nVenez ravir vos papilles en dégustant un délicieux burger !",
+          "gammeDePrixprix" : "€",
+          "tenueVestimentaire" : "Déconcracté",
+          "moyensDePaiement" : "Visa, Mastercard et Espèces",
+          "services" : null,
+          "specialites":"Burgers Gourmets fait maison et en utilisant des produits locaux. Et des desserts fait maison",
+          "cuisine":"Hamburgers et Français",
+          "equipe_culinaire" : null,
+          "telephone":"06 51 42 85 13",
+          "email":"chez-fab@hotmail.com",
+          "dateOuverture": null,
+          "servicePrive" : "Possible, nous contacter",
+          "logo": "logo_chez_fab",
+          "urlLogo" : "https://scontent-cdg2-1.xx.fbcdn.net/t31.0-8/12694871_952564818159866_491816630135024995_o.png",
+          "menu": {
+            "lesCategorieDePlat" : [
+              {
+                "nomCategoriePlat" : "Burgers",
+                "informations" : null,
+                "listePlats" : [
+                  {
+                    "nomPlat" : "L’original",
+                    "urlPhoto" : null,
+                    "descriptionPlat" : "Buns, Boeuf Haché, Tomme de Savoie, Sauce Cocktail Maison, Oignons Rouges, Salades.",
+                    "prix" : "7.5",
+                    "prixEnMenu" : "8.50 / 10.50",
+                    "disponible" : "true"
+                  },
+                  {
+                    "nomPlat" : "Classic Cheddar",
+                    "urlPhoto" : null,
+                    "descriptionPlat" : "Buns, Boeuf Haché, Cheddar, Sauce BBQ, Lard Grillé, Oignons Rouges, Salades.",
+                    "prix" : "7.5",
+                    "prixEnMenu" : "8.50 / 10.50",
+                    "disponible" : "true"
+                  },
+                  {
+                    "nomPlat" : "Le Végèt",
+                    "urlPhoto" : null,
+                    "descriptionPlat" : "Buns, Poêlé de Champignon de Paname, Tomme de Savoie, Sauce Cocktail Maison, Confit d’oignons,  Oignons Rouges, Salades",
+                    "prix" : "7.5",
+                    "prixEnMenu" : "8.50 / 10.50",
+                    "disponible" : "true"
+                  },
+                  {
+                    "nomPlat" : "El Pancho",
+                    "urlPhoto" : null,
+                    "descriptionPlat" : "Boeuf Haché, Gouda, Avocat, Oignons Rouges, Salades, Sauce Chipotle Maison (légèrement fumé et épicé).",
+                    "prix" : "7.5",
+                    "prixEnMenu" : "8.50 / 10.50",
+                    "disponible" : "true"
+                  }
+                ]
+              }
+            ],
+            "idFoodTruck" : null,
+            "information" : null,
+            "descriptionMenu" : "Burger + Frites ou Boisson : 8.50€\nBurger + Frites + Boisson : 10.50€"
+          },
+          "planning":[
+            {
+              "nomJour":"lundi",
+              "numJour":1,
+              "midi":null,
+              "soir":null
+            },
+            {
+              "nomJour":"mardi",
+              "numJour":2,
+              "midi":{
+                "horaireOuverture" : "1990-01-01 11:30:00",
+                "horaireFermeture" : "1990-01-01 14:15:00",
+                "adresses":[
+                  {
+                    "map": null,
+                    "latitude" : "50.692018",
+                    "longitude" : "3.089970",
+                    "adresse": "422 Avenue du Général de Gaulle, 59910 Bondues, France"
+                  }
+                ]
+              },
+              "soir":null
+            },
+            {
+              "nomJour":"mercredi",
+              "numJour":3,
+              "midi":{
+                "horaireOuverture" : "1990-01-01 12:00:00",
+                "horaireFermeture" : "1990-01-01 14:00:00",
+                "adresses":[
+                  {
+                    "map": null,
+                    "latitude" : "50.650861",
+                    "longitude" : "3.200293",
+                    "adresse": "3 Avenue Antoine Pinay 59510 Hem"
+                  }
+                ]
+              },
+              "soir":null
+            },
+            {
+              "nomJour":"jeudi",
+              "numJour":4,
+              "midi":{
+                "horaireOuverture" : "1990-01-01 12:00:00",
+                "horaireFermeture" : "1990-01-01 14:00:00",
+                "adresses":[
+                  {
+                    "map": null,
+                    "latitude" : "50.680481",
+                    "longitude" : "3.111151",
+                    "adresse": "159 Avenue de la Marne, 59700 Marcq-en-Barœul, France"
+                  }
+                ]
+              },
+              "soir":null
+            },
+            {
+              "nomJour":"vendredi",
+              "numJour":5,
+              "midi":{
+                "horaireOuverture" : "1990-01-01 12:00:00",
+                "horaireFermeture" : "1990-01-01 14:00:00",
+                "adresses":[
+                  {
+                    "map": null,
+                    "latitude" : "50.707004",
+                    "longitude" : "3.164600",
+                    "adresse": "41 Rue des Métissages, 59200 Tourcoing, France"
+                  }
+                ]
+              },
+              "soir":{
+                "horaireOuverture" : "1990-01-01 19:00:00",
+                "horaireFermeture" : "1990-01-01 21:00:00",
+                "adresses":[
+                  {
+                    "map": null,
+                    "latitude" : "50.670558",
+                    "longitude" : "2.989527",
+                    "adresse": "Rue de l'Église, 59840 Lompret, France"
+                  }
+                ]
+              }
+            },
+            {
+              "nomJour":"samedi",
+              "numJour":6,
+              "midi":null,
+              "soir":null
+            },
+            {
+              "nomJour":"dimanche",
+              "numJour":7,
+              "midi":null,
+              "soir":{
+                "horaireOuverture" : "1990-01-01 19:00:00",
+                "horaireFermeture" : "1990-01-01 21:00:00",
+                "adresses":[
+                  {
+                    "map": null,
+                    "latitude" : "50.668963",
+                    "longitude" : "2.976430",
+                    "adresse": "3 Place Roger Dutriez, Pérenchies 59840"
+                  }
+                ]
+              }
+            }
+          ]
         }
       ]
     }
