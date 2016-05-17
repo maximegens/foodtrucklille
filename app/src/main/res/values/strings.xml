@@ -2,6 +2,9 @@
 
     <!-- String technique de l'application -->
     <string name="app_name">Food Truck Lillois</string>
+    <string name="app_version">0.5</string>
+    <string name="app_name_developper">Maxime Gens</string>
+    <string name="app_date_publication">1 juin 2016</string>
     <string name="title_main_activity">MainActivity</string>
     <string name="title_splashscreen_activity">SplashScreen</string>
     <string name="title_activity_food_truck">FoodTruckActivity</string>
@@ -79,7 +82,11 @@
 
     <!-- String A Propos -->
     <string name="title_a_propos">A propos</string>
+    <string name="a_propos_developpeur">Développeur : </string>
+    <string name="a_propos_version">Version : </string>
+    <string name="a_propos_date_publication">Date de publication : </string>
     <string name="a_propos_de_app">L\'application \"Food Truck Lillois\"</string>
+    <string name="copyright">© Copyright - Tous droits réservés.</string>
     <string name="a_propos_du_developpeur">A propos du développeur</string>
     <string name="a_propos_des_aides">Personnes ayant collaboré</string>
     <string name="contenu_a_propos_de_app">L\’application Food Truck Lillois est une application permettant de lister et de consulter tous les Food Trucks existant sur la région Lillois.

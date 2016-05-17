@@ -30,10 +30,88 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="@color/black" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/text_view_developpeur_a_propos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:gravity="left"
+                    android:text="@string/a_propos_developpeur"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/text_view_developpeur_a_propos"
+                    android:gravity="left"
+                    android:text="@string/app_name_developper"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/text_view_version_a_propos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="left"
+                    android:text="@string/a_propos_version"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/text_view_version_a_propos"
+                    android:gravity="left"
+                    android:text="@string/app_version"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/text_view_date_publication_a_propos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="left"
+                    android:text="@string/a_propos_date_publication"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/text_view_date_publication_a_propos"
+                    android:gravity="left"
+                    android:text="@string/app_date_publication"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+            </RelativeLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="38dp"
+                android:layout_marginTop="28dp"
                 android:gravity="left"
                 android:text="@string/a_propos_de_app"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -128,6 +206,16 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:gravity="left"
+                android:text="@string/copyright"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/black"/>
 
         </LinearLayout>
 
