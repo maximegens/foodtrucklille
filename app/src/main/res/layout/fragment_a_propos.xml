@@ -144,6 +144,15 @@
                 android:text="@string/contenu_a_propos_du_developpeur"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
+            <TextView
+                android:id="@+id/lien_e_service"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:gravity="left"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
             <!-- Personne ayant collaboré -->
             <LinearLayout
                 android:layout_width="match_parent"
