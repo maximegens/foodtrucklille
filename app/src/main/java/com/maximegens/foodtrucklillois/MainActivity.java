@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private Context context;
+    private int referenceFragment;
 
 
     @Override
@@ -61,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
             finish();
         }
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +120,19 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
+        if (savedInstanceState != null) {
+            // Restore last state for checked position.
+            referenceFragment = savedInstanceState.getInt(Constantes.RESTORE_FRAGMENT, R.id.navigation_item_liste_ft);
+            openFragment(referenceFragment);
+        }else{
+            // Chargement de base de la liste des Food Trucks.
+            // Commit du Fragment des listes des FT
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragmentLayout, ListeFoodTruckFragment.newInstance())
+                    .commit();
+        }
+
+        // Déclaration des clics sur le drawer
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -133,49 +146,64 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
                 // Fermeture du drawer aprés le clique.
                 drawerLayout.closeDrawers();
 
+                // Récupére la référence à l'item du menu sélectionné.
+                referenceFragment = menuItem.getItemId();
+
                 // A appel le bon fragment en fonction de l'item cliqué.
-                switch (menuItem.getItemId()) {
-                    case R.id.navigation_item_liste_ft:
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragmentLayout, ListeFoodTruckFragment.newInstance())
-                                .commit();
-                        return true;
-                    case R.id.navigation_item_planning:
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragmentLayout, PlanningFragment.newInstance())
-                                .commit();
-                        return true;
-                    case R.id.navigation_item_emplacement:
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragmentLayout, EmplacementAllFragment.newInstance())
-                                .commit();
-                        return true;
-                    case R.id.navigation_item_favori:
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragmentLayout, FavorisFragment.newInstance())
-                                .commit();
-                        return true;
-                    case R.id.navigation_item_contact:
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragmentLayout, ContactFragment.newInstance())
-                                .commit();
-                        return true;
-                    case R.id.navigation_item_a_propos:
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.fragmentLayout, AProposFragment.newInstance())
-                                .commit();
-                        return true;
-                    default:
-                        return true;
-                }
+                return openFragment(referenceFragment);
+
             }
         });
 
-        // Chargement de base de la liste des Food Trucks.
-        // Commit du Fragment des listes des FT
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentLayout, ListeFoodTruckFragment.newInstance())
-                .commit();
+
+    }
+
+    /**
+     * Appel le bon fragment en fonction du choix de l'utilisateur depuis le menu
+     * @param ref le menu sélectionné.
+     * @return le bon fragment.
+     */
+    private boolean openFragment(int ref) {
+        switch (ref) {
+            case R.id.navigation_item_liste_ft:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentLayout, ListeFoodTruckFragment.newInstance())
+                        .commit();
+                return true;
+            case R.id.navigation_item_planning:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentLayout, PlanningFragment.newInstance())
+                        .commit();
+                return true;
+            case R.id.navigation_item_emplacement:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentLayout, EmplacementAllFragment.newInstance())
+                        .commit();
+                return true;
+            case R.id.navigation_item_favori:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentLayout, FavorisFragment.newInstance())
+                        .commit();
+                return true;
+            case R.id.navigation_item_contact:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentLayout, ContactFragment.newInstance())
+                        .commit();
+                return true;
+            case R.id.navigation_item_a_propos:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentLayout, AProposFragment.newInstance())
+                        .commit();
+                return true;
+            default:
+                return true;
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(Constantes.RESTORE_FRAGMENT, referenceFragment);
     }
 
 
