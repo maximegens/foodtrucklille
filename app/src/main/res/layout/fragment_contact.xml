@@ -38,7 +38,7 @@
                 android:layout_marginTop="10dp"
                 android:gravity="left"
                 android:text="@string/objet_contact"
-                android:padding="5dp"
+                android:paddingLeft="5dp"
                 />
 
             <android.support.v7.widget.AppCompatSpinner
