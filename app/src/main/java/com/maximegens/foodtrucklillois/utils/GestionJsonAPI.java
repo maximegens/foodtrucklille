@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class GestionJsonAPI {
 
-    Context ctx;
+    private final Context ctx;
 
     public GestionJsonAPI(Context ctx){
         this.ctx = ctx;
@@ -28,12 +28,11 @@ public class GestionJsonAPI {
      * @return un string contenant le fichier json.
      */
     public String loadJSONFromAsset() {
-        String json = null;
+        String json;
         try {
             InputStream is = ctx.getAssets().open(Constantes.FICHIER_JSON_ASSET);
             int size = is.available();
             byte[] buffer = new byte[size];
-            is.read(buffer);
             is.close();
             json = new String(buffer, "UTF-8");
         } catch (IOException ex) {
@@ -79,25 +78,5 @@ public class GestionJsonAPI {
             }
         }
         return lesFoodTrucks;
-    }
-
-    /**
-     * Donne le food truck correspond à l'id.
-     * @param app L'objet FoodTruckApp contenant la liste des villes et de leur food trucks.
-     * @param id l'id du food trucks à récupérer..
-     * @return Le food Trucks.
-     */
-    public FoodTruck getFoodTruck(FoodTruckApp app, int id){
-
-        if(app != null && app.getVilles() != null){
-            // On parcours la liste des villes.
-            for (Ville ville : app.getVilles()) {
-                // On parcours la liste des food trucks de la ville.
-                for (FoodTruck ft : ville.getLesFoodTrucks()){
-                    if(ft.getId() == id){return ft;}
-                }
-            }
-        }
-        return null;
     }
 }

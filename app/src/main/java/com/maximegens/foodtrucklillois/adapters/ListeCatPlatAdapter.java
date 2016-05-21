@@ -19,9 +19,9 @@ import java.util.List;
  */
 public class ListeCatPlatAdapter extends RecyclerView.Adapter<ListeCatPlatAdapter.ViewHolder> {
 
-    private RecyclerViewListeCatePlatListener callback;
-    private List<CategoriePlat> lesCategories;
-    private Fragment context;
+    private final RecyclerViewListeCatePlatListener callback;
+    private final List<CategoriePlat> lesCategories;
+    private final Fragment context;
 
     /**
      * Constructeur prenant en entrée une liste.
@@ -40,8 +40,7 @@ public class ListeCatPlatAdapter extends RecyclerView.Adapter<ListeCatPlatAdapte
      */
     public ListeCatPlatAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_liste_categorie_plat, parent, false);
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+        return new ViewHolder(v);
     }
 
     /**
@@ -49,13 +48,13 @@ public class ListeCatPlatAdapter extends RecyclerView.Adapter<ListeCatPlatAdapte
      * @param holder Le holder.
      * @param position La position de l'item.
      */
-    public void onBindViewHolder(ViewHolder  holder, final int position) {
+    public void onBindViewHolder(final ViewHolder  holder, int position) {
         if(lesCategories != null){
             holder.titleCat.setText(lesCategories.get(position).getNomCategoriePlat());
             holder.cardViewCatPlat.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    callback.onClickCatPlat(lesCategories.get(position));
+                    callback.onClickCatPlat(lesCategories.get(holder.getAdapterPosition()));
                 }
             });
         }
@@ -75,8 +74,8 @@ public class ListeCatPlatAdapter extends RecyclerView.Adapter<ListeCatPlatAdapte
      * Class view Holder
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView titleCat;
-        public CardView cardViewCatPlat;
+        public final TextView titleCat;
+        public final CardView cardViewCatPlat;
         public ViewHolder(View v) {
             super(v);
             titleCat = (TextView) v.findViewById(R.id.title_cat_card_view);

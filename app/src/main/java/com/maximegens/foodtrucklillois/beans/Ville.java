@@ -1,6 +1,5 @@
 package com.maximegens.foodtrucklillois.beans;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,15 +14,8 @@ public class Ville {
         return nom;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
     public List<FoodTruck> getLesFoodTrucks() {
         return lesFoodTrucks;
     }
 
-    public void setLesEnseignesFoodTrucks(List<FoodTruck> lesFoodTrucks) {
-        this.lesFoodTrucks = lesFoodTrucks;
-    }
 }

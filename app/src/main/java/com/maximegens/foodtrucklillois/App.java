@@ -10,7 +10,7 @@ import com.google.android.gms.analytics.Tracker;
  */
 public class App extends Application {
 
-    public static GoogleAnalytics analytics;
+    private static GoogleAnalytics analytics;
     public static Tracker tracker;
 
     @Override

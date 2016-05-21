@@ -29,7 +29,7 @@ public class MenuDetailFragment extends Fragment {
     private ListePlatMenuAdapter adapterPlatMenu;
     private RecyclerViewListePlatListener callback;
     private List<Plat> lesPlats = new ArrayList<>();
-    public static String TAG_MENU_DETAIL_FRAGMENT = "MenuDetailFragment";
+    public static final String TAG_MENU_DETAIL_FRAGMENT = "MenuDetailFragment";
 
     /**
      * Creation du Fragment.

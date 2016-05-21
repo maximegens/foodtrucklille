@@ -31,10 +31,6 @@
             android:id="@+id/navigation_item_a_propos"
             android:checked="false"
             android:title="@string/drawer_a_propos" />
-        <item
-            android:id="@+id/navigation_item_faire_don"
-            android:checked="false"
-            android:title="@string/drawer_faire_don" />
 
     </group>
 </menu>

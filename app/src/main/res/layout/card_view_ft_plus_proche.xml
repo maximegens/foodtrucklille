@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="Food Truck le plus proche"
+        android:text="@string/ft_plus_proche"
         android:fontFamily="sans-serif"
         android:textColor="#333"
         android:textStyle="bold|italic"
@@ -34,10 +34,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
-            <!-- Les CardView agissent comme des FrameLayout,
-             pour avoir une organisation verticale nous devons
-             donc rajouter un LinearLayout -->
 
             <ImageView
                 android:id="@+id/logo_ft_plus_proche_card_view"
@@ -63,7 +59,6 @@
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:paddingLeft="5dp"
-                    android:text="Le Food truck fictif"
                     android:fontFamily="sans-serif"
                     android:textColor="#333"
                     android:textSize="14sp"
@@ -84,7 +79,6 @@
                         android:background="?android:selectableItemBackground"
                         android:paddingLeft="5dp"
                         android:layout_weight="1"
-                        android:text="Ouvert"
                         android:fontFamily="sans-serif"
                         android:textColor="@color/green"
                         android:textSize="14sp"
@@ -95,7 +89,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center|right"
-                        android:text="104m"
                         android:fontFamily="sans-serif"
                         android:textColor="#2E7D32"
                         android:layout_weight="1"
@@ -121,7 +114,7 @@
                 <Button
                     android:id="@+id/button_ft_go"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_gravity="right"
                     android:elevation="4dp"
                     android:textColor="@color/orange"

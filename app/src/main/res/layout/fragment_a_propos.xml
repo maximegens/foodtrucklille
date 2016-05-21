@@ -120,7 +120,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:gravity="left"
                 android:text="@string/contenu_a_propos_de_app"
@@ -138,7 +137,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:gravity="left"
                 android:text="@string/contenu_a_propos_du_developpeur"
@@ -148,7 +146,6 @@
                 android:id="@+id/lien_e_service"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:gravity="left"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -188,7 +185,6 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
                         android:layout_marginTop="5dp"
                         android:gravity="left"
                         android:text="@string/personne_aides_saisies_1"
@@ -206,7 +202,6 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
                         android:layout_marginTop="5dp"
                         android:gravity="left"
                         android:text="@string/personne_realisation_logo"
@@ -219,7 +214,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:gravity="left"
                 android:text="@string/copyright"

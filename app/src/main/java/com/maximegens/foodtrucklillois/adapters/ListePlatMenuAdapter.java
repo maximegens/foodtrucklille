@@ -3,7 +3,6 @@ package com.maximegens.foodtrucklillois.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,9 +23,9 @@ import java.util.List;
  */
 public class ListePlatMenuAdapter extends RecyclerView.Adapter<ListePlatMenuAdapter.ViewHolder> {
 
-    private Fragment fragment;
-    private List<Plat> lesPlats;
-    private RecyclerViewListePlatListener callback;
+    private final Fragment fragment;
+    private final List<Plat> lesPlats;
+    private final RecyclerViewListePlatListener callback;
 
     /**
      * Constructeur prenant en entrée une liste.
@@ -45,8 +44,7 @@ public class ListePlatMenuAdapter extends RecyclerView.Adapter<ListePlatMenuAdap
      */
     public ListePlatMenuAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_liste_plat, parent, false);
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+        return new ViewHolder(v);
     }
 
     /**
@@ -101,10 +99,10 @@ public class ListePlatMenuAdapter extends RecyclerView.Adapter<ListePlatMenuAdap
      * Class view Holder
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView titlePlat;
-        public CardView cardViewPlat;
-        public ImageView imagePlat;
-        public ProgressBar loader;
+        public final TextView titlePlat;
+        public final CardView cardViewPlat;
+        public final ImageView imagePlat;
+        public final ProgressBar loader;
         public ViewHolder(View v) {
             super(v);
             titlePlat = (TextView) v.findViewById(R.id.title_plat_card_view);

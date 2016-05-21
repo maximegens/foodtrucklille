@@ -25,13 +25,13 @@ import java.util.List;
  */
 public class MenuCategorieFragment extends Fragment {
 
-    public static String KEY_CAT_PLAT = "CategoriePlat";
+    public static final String KEY_CAT_PLAT = "CategoriePlat";
     private TextView informationMenu;
     private TextView descriptionMenu;
     private RecyclerView recyclerViewMenu;
     private ListeCatPlatAdapter adapterListeCat;
     private FoodTruck ft = null;
-    public static String TAG_MENU_DETAIL_FRAGMENT = "MenuCategorieFragment";
+    public static final String TAG_MENU_DETAIL_FRAGMENT = "MenuCategorieFragment";
 
     /**
      * Creation du Fragment.

@@ -9,7 +9,7 @@ import java.util.Comparator;
  */
 public class SortListeFT implements Comparator<FoodTruck> {
 
-    boolean gpsActive;
+    private final boolean gpsActive;
 
     /**
      * Constructeur
@@ -56,9 +56,9 @@ public class SortListeFT implements Comparator<FoodTruck> {
             boolean ft2OpenToday = ft2.isDateBeforeLastHoraireFermeture(GestionnaireHoraire.createCalendarToday());
             if(ft1OpenToday && ft2OpenToday){
                 return compareDistance(ft1,ft2);
-            }else if(ft1OpenToday && !ft2OpenToday){
+            }else if(ft1OpenToday){
                 return -1;
-            }else if(!ft1OpenToday && ft2OpenToday){
+            }else if(ft2OpenToday){
                 return 1;
             }else{
                 return 0;
@@ -66,7 +66,7 @@ public class SortListeFT implements Comparator<FoodTruck> {
         }
     }
 
-    public int compareDistance(FoodTruck ft1, FoodTruck ft2){
+    private int compareDistance(FoodTruck ft1, FoodTruck ft2){
         // On compare la distance.
         if (ft1.getDistanceFromUser() == Constantes.FT_FERMER_DISTANCE && ft2.getDistanceFromUser() != Constantes.FT_FERMER_DISTANCE) {
             return 1;

@@ -28,9 +28,9 @@ import java.util.List;
  */
 public class PlanningAdapter extends RecyclerView.Adapter<PlanningAdapter.ViewHolder> {
 
-    private RecyclerViewPlanningListener callback;
+    private final RecyclerViewPlanningListener callback;
     private List<FoodTruck> lesFts;
-    private Context context;
+    private final Context context;
     private int numJour;
 
     /**
@@ -51,8 +51,7 @@ public class PlanningAdapter extends RecyclerView.Adapter<PlanningAdapter.ViewHo
      */
     public PlanningAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_planning, parent, false);
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+        return new ViewHolder(v);
     }
 
     /**
@@ -135,13 +134,13 @@ public class PlanningAdapter extends RecyclerView.Adapter<PlanningAdapter.ViewHo
      * Class view Holder
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView titleFT;
-        public CardView cardViewPlanning;
-        public TextView ouverture1;
-        public TextView adresse;
-        public ImageView logoFt;
-        public RecyclerView listeAdressePlanning;
-        public ProgressBar loader;
+        public final TextView titleFT;
+        public final CardView cardViewPlanning;
+        public final TextView ouverture1;
+        public final TextView adresse;
+        public final ImageView logoFt;
+        public final RecyclerView listeAdressePlanning;
+        public final ProgressBar loader;
         public ViewHolder(View v) {
             super(v);
             titleFT = (TextView) v.findViewById(R.id.nom_ft_planning_card_view);

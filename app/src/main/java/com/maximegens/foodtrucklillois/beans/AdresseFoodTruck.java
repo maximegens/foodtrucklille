@@ -73,7 +73,7 @@ public class AdresseFoodTruck implements Parcelable{
         }
     };
 
-    public AdresseFoodTruck(Parcel in) {
+    private AdresseFoodTruck(Parcel in) {
         this.adresse = in.readString();
         this.latitude = in.readString();
         this.longitude = in.readString();

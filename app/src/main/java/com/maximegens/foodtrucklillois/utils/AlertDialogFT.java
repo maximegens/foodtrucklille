@@ -15,7 +15,7 @@ import com.maximegens.foodtrucklillois.beans.FoodTruck;
  */
 public class AlertDialogFT {
 
-    private Context context;
+    private final Context context;
 
     public AlertDialogFT(Context context){
         this.context = context;

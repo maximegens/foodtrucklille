@@ -8,23 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.AdresseFoodTruck;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
-import com.maximegens.foodtrucklillois.beans.PlageHoraireFoodTruck;
-import com.maximegens.foodtrucklillois.beans.PlanningFoodTruck;
-import com.maximegens.foodtrucklillois.interfaces.RecyclerViewPlanningListener;
-import com.maximegens.foodtrucklillois.utils.Constantes;
-import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
-import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,9 +21,9 @@ import java.util.List;
  */
 public class PlanningAdresseAdapter extends RecyclerView.Adapter<PlanningAdresseAdapter.ViewHolder> {
 
-    private List<AdresseFoodTruck> lesAdresses;
-    private Context context;
-    private FoodTruck ft;
+    private final List<AdresseFoodTruck> lesAdresses;
+    private final Context context;
+    private final FoodTruck ft;
 
     /**
      * Constructeur prenant en entrée une liste.
@@ -53,8 +42,7 @@ public class PlanningAdresseAdapter extends RecyclerView.Adapter<PlanningAdresse
      */
     public PlanningAdresseAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_adresses_planning, parent, false);
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+        return new ViewHolder(v);
     }
 
     /**
@@ -94,8 +82,8 @@ public class PlanningAdresseAdapter extends RecyclerView.Adapter<PlanningAdresse
      * Class view Holder
      */
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView adresse;
-        public CardView cardViewAdresse;
+        public final TextView adresse;
+        public final CardView cardViewAdresse;
 
         public ViewHolder(View v) {
             super(v);

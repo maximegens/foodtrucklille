@@ -3,27 +3,20 @@ package com.maximegens.foodtrucklillois.network;
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.maximegens.foodtrucklillois.R;
-import com.maximegens.foodtrucklillois.adapters.ListeFTAdapter;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.beans.FoodTruckApp;
 import com.maximegens.foodtrucklillois.interfaces.AsyncResponseSplashScreen;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.maximegens.foodtrucklillois.utils.GestionJsonAPI;
-import com.maximegens.foodtrucklillois.utils.SortListeFT;
-import com.maximegens.foodtrucklillois.utils.Utils;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
-import java.util.Collections;
 import java.util.List;
 
 import retrofit.RestAdapter;
@@ -35,11 +28,11 @@ import retrofit.RetrofitError;
  */
 public class RetreiveJSONListeFTSplash extends AsyncTask<Boolean, String, FoodTruckApp>{
 
-    private ProgressBar loader;
-    private TextView indicationLoader;
-    private GestionJsonAPI apiJson;
-    private Activity activity;
-    private Context context;
+    private final ProgressBar loader;
+    private final TextView indicationLoader;
+    private final GestionJsonAPI apiJson;
+    private final Activity activity;
+    private final Context context;
     private AsyncResponseSplashScreen responseAsynctask = null;
     private boolean isAJour;
 
@@ -109,7 +102,7 @@ public class RetreiveJSONListeFTSplash extends AsyncTask<Boolean, String, FoodTr
 
     }
 
-    FoodTruckApp getFoodTruckInterne() {
+    private FoodTruckApp getFoodTruckInterne() {
         // Recuperation des données en interne.
         isAJour = false;
         String json = apiJson.loadJSONFromAsset();

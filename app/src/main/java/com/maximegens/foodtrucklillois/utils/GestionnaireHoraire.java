@@ -106,7 +106,7 @@ public class GestionnaireHoraire {
      * Indique si on est actuellement le midi
      * @return un boolean vrai si on est le midi.
      */
-    public static boolean isMidi(){
+    private static boolean isMidi(){
         Calendar calendarToday = createCalendarToday();
         if(calendarToday != null && createCalendar(MIDI_DEBUT) != null && createCalendar(MIDI_FIN) != null){
             return calendarToday.get(Calendar.HOUR_OF_DAY) >= createCalendar(MIDI_DEBUT).get(Calendar.HOUR_OF_DAY)
@@ -120,7 +120,7 @@ public class GestionnaireHoraire {
      * Indique si on est avant le midi
      * @return un boolean vrai si on est avant le midi.
      */
-    public static boolean isBeforeMidi(){
+    private static boolean isBeforeMidi(){
         Calendar calendarToday = createCalendarToday();
         if(calendarToday != null && createCalendar(MINUIT) != null && createCalendar(MIDI_DEBUT) != null){
             return calendarToday.get(Calendar.HOUR_OF_DAY) >= createCalendar(MINUIT).get(Calendar.HOUR_OF_DAY)
@@ -134,7 +134,7 @@ public class GestionnaireHoraire {
      * Indique si on est actuellement le soir
      * @return un boolean vrai si on est le soir.
      */
-    public static boolean isSoir(){
+    private static boolean isSoir(){
         Calendar calendarToday = createCalendarToday();
         if(calendarToday != null && createCalendar(SOIR_DEBUT) != null && createCalendar(SOIR_FIN) != null){
             return calendarToday.get(Calendar.HOUR_OF_DAY) >= createCalendar(SOIR_DEBUT).get(Calendar.HOUR_OF_DAY)
@@ -148,7 +148,7 @@ public class GestionnaireHoraire {
      * Indique si on est avant le soir mais apres le midi (15h - 23h59)
      * @return un boolean vrai si on est avant le soir mais apres .
      */
-    public static boolean isBeforeSoirButAfterMidi(){
+    private static boolean isBeforeSoirButAfterMidi(){
         Calendar calendarToday = createCalendarToday();
         if(calendarToday != null && createCalendar(MIDI_FIN) != null && createCalendar(SOIR_FIN) != null){
             return calendarToday.get(Calendar.HOUR_OF_DAY) >= createCalendar(MIDI_FIN).get(Calendar.HOUR_OF_DAY)
@@ -226,7 +226,7 @@ public class GestionnaireHoraire {
      * @param cal2 la date 2
      * @return vrai la date 1 est avant la date 2
      */
-    public static boolean isAfter(Calendar cal1,Calendar cal2){
+    private static boolean isAfter(Calendar cal1, Calendar cal2){
         if(cal1 != null && cal2 != null){
             if(cal1.get(Calendar.HOUR_OF_DAY) > cal2.get(Calendar.HOUR_OF_DAY)){
                 return true;

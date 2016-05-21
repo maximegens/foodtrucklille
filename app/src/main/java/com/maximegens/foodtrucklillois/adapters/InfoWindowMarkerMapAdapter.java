@@ -14,7 +14,7 @@ import com.maximegens.foodtrucklillois.R;
  */
 public class InfoWindowMarkerMapAdapter implements GoogleMap.InfoWindowAdapter {
 
-    private Context ctx;
+    private final Context ctx;
 
     public InfoWindowMarkerMapAdapter(Context ctx){
         this.ctx = ctx;

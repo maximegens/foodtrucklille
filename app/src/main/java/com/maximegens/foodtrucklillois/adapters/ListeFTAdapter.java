@@ -1,8 +1,6 @@
 package com.maximegens.foodtrucklillois.adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +18,9 @@ import java.util.List;
  */
 public class ListeFTAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private RecyclerViewListeFTListener callback;
+    private final RecyclerViewListeFTListener callback;
     private List<FoodTruck> lesFT;
-    private Context context;
+    private final Context context;
     private boolean isAffichageClassique;
 
     /**

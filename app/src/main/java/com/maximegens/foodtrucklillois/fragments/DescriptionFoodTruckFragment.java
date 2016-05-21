@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Browser;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -30,7 +29,7 @@ import com.maximegens.foodtrucklillois.utils.Utils;
 
 public class DescriptionFoodTruckFragment extends Fragment {
 
-    public static String TITLE = "Informations";
+    public static final String TITLE = "Informations";
 
     private FoodTruck ft = null;
     private TextView descriptionBreve;
@@ -242,7 +241,7 @@ public class DescriptionFoodTruckFragment extends Fragment {
 
     /**
      * Renvoi vers Google Map pour afficher l'itineraire.
-     * @param context
+     * @param context le context
      */
     private void goFoodtruckItineraire(Context context) {
 

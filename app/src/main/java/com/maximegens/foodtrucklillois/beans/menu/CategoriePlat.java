@@ -3,8 +3,6 @@ package com.maximegens.foodtrucklillois.beans.menu;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.maximegens.foodtrucklillois.beans.AdresseFoodTruck;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,32 +10,16 @@ import java.util.List;
  * Created by a627520 on 04/03/2016.
  */
 public class CategoriePlat implements Parcelable{
-    private String nomCategoriePlat;
-    private String informations;
-    private List<Plat> listePlats;
+    private final String nomCategoriePlat;
+    private final String informations;
+    private final List<Plat> listePlats;
 
     public String getNomCategoriePlat() {
         return nomCategoriePlat;
     }
 
-    public void setNomCategoriePlat(String nomCategoriePlat) {
-        this.nomCategoriePlat = nomCategoriePlat;
-    }
-
     public List<Plat> getListePlats() {
         return listePlats;
-    }
-
-    public void setListePlats(List<Plat> listePlats) {
-        this.listePlats = listePlats;
-    }
-
-    public String getInformations() {
-        return informations;
-    }
-
-    public void setInformations(String informations) {
-        this.informations = informations;
     }
 
 
@@ -68,10 +50,10 @@ public class CategoriePlat implements Parcelable{
         }
     };
 
-    public CategoriePlat(Parcel in) {
+    private CategoriePlat(Parcel in) {
         this.nomCategoriePlat = in.readString();
         this.informations = in.readString();
-        this.listePlats = new ArrayList<Plat>();
+        this.listePlats = new ArrayList<>();
         in.readTypedList(listePlats, Plat.CREATOR);
 
     }

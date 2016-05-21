@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,8 +26,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.adapters.ListeFTAdapter;
@@ -55,7 +52,7 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
     private LinearLayout linearActiveGPS;
     private LinearLayout linearPlusProcheEnCours;
     private Button activateGPS;
-    public ListeFTAdapter listeFTAdapter;
+    private ListeFTAdapter listeFTAdapter;
     private RecyclerView recyclerViewListeFT;
     private GridLayoutManagerFoodTruck layoutManagerFT;
     private Activity activity;
@@ -163,7 +160,7 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
 
     /**
      * OnAttach.
-     * @param context
+     * @param context le context.
      */
     @Override
     public void onAttach(Context context) {
@@ -395,7 +392,7 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
     /**
      * Active le GPS.
      */
-    public void turnGPSOn() {
+    private void turnGPSOn() {
         Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         startActivity(intent);
     }
@@ -403,7 +400,7 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
     /**
      * Supprimes la mise a jour de la postion du GPS.
      */
-    public void removeUpdatesLocation() {
+    private void removeUpdatesLocation() {
         if(locationManager != null){
             // Demande de permission pour Android 6.0 (API 23).
             if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -416,7 +413,7 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
     /**
      * Ajoute la mise à jour de la position du GPS.
      */
-    public void addUpdatesLocation() {
+    private void addUpdatesLocation() {
         boolean gps = false;
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {

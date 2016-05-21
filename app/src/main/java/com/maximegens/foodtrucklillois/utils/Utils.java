@@ -24,7 +24,7 @@ public class Utils {
 
     /**
      * Retourne le nombre de colonne pour la recyclerView en fonction de l'orientation du téléphone.
-     * @return
+     * @return le nombre de colonnes.
      */
     public static int getNbColonneForScreen(Context ctx) {
         return ctx.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? 2 : 3;

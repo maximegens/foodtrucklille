@@ -6,9 +6,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,15 +17,11 @@ import com.maximegens.foodtrucklillois.App;
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.adapters.ListeFTAdapter;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
-import com.maximegens.foodtrucklillois.beans.FoodTruckApp;
 import com.maximegens.foodtrucklillois.utils.Constantes;
-import com.maximegens.foodtrucklillois.utils.GestionJsonAPI;
-import com.maximegens.foodtrucklillois.utils.GridLayoutManagerFoodTruck;
 import com.maximegens.foodtrucklillois.utils.SortListeFT;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

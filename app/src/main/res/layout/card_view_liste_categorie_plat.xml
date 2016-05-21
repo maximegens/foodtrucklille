@@ -24,7 +24,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="?android:selectableItemBackground"
-            android:text="Item"
             android:fontFamily="sans-serif"
             android:textColor="@color/black"
             android:gravity="center"

@@ -50,7 +50,6 @@
                     android:layout_height="match_parent"
                     android:layout_below="@id/label_ouverture"
                     android:layout_toRightOf="@id/icon_ouverture"
-                    android:layout_weight="1"
                     android:padding="5dp"
                     android:text="@string/champ_non_communique"
                     android:textSize="@dimen/text_value" />
@@ -104,7 +103,6 @@
                     android:layout_toRightOf="@id/icon_distance"
                     android:padding="5dp"
                     android:paddingRight="5dp"
-                    android:text="1250 km"
                     android:textSize="@dimen/text_value" />
 
                 <Button

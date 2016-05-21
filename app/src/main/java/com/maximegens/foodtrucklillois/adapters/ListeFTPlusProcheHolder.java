@@ -1,12 +1,8 @@
 package com.maximegens.foodtrucklillois.adapters;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -16,27 +12,24 @@ import android.widget.TextView;
 import com.google.android.gms.maps.model.LatLng;
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
-import com.maximegens.foodtrucklillois.beans.PlanningFoodTruck;
 import com.maximegens.foodtrucklillois.utils.AlertDialogFT;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
 import com.maximegens.foodtrucklillois.utils.Utils;
 import com.squareup.picasso.Picasso;
 
-import java.util.Calendar;
-
 /**
  * Holder pour l'affichage de la liste des Foods Trucks.
  */
-public class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
+class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
 
-    private Context context;
-    private TextView textViewNom;
-    private Button go;
-    private TextView ouverture;
-    private TextView distance;
-    private TextView horaireOuverture;
-    private ImageView imageView;
+    private final Context context;
+    private final TextView textViewNom;
+    private final Button go;
+    private final TextView ouverture;
+    private final TextView distance;
+    private final TextView horaireOuverture;
+    private final ImageView imageView;
 
     /**
      * Le constructeur.

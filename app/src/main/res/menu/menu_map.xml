@@ -4,7 +4,6 @@
         android:id="@+id/action_spinner_map_ft"
         android:title="@string/menu_title_map_ft_spinner"
         app:actionViewClass="android.support.v7.widget.AppCompatSpinner"
-        style="@style/Widget.MyApp.HeaderBar.Spinner"
         app:showAsAction="ifRoom" />
 
 </menu>

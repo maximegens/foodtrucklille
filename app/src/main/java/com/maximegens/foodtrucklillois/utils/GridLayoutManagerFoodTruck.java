@@ -1,8 +1,6 @@
 package com.maximegens.foodtrucklillois.utils;
 
 import android.content.Context;
-import android.content.res.Configuration;
-import android.location.LocationManager;
 import android.support.v7.widget.GridLayoutManager;
 
 /**
@@ -10,7 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
  */
 public class GridLayoutManagerFoodTruck {
 
-    Context ctx;
+    private final Context ctx;
 
     /**
      * Constructeur.
@@ -37,15 +35,6 @@ public class GridLayoutManagerFoodTruck {
     }
 
     /**
-     * Creation d'un gridLayoutManager pour le mode Portrait.
-     * @return un gridLayoutManager pour le mode Portrait.
-     */
-    public GridLayoutManager buildGridLayoutPortraitAfterRecherche() {
-        // Definit l'agencement pour l'affichage en mode portrait
-        return new GridLayoutManager(ctx, 2, GridLayoutManager.VERTICAL, false);
-    }
-
-    /**
      * Creation d'un gridLayoutManager pour le mode paysage.
      * @return un gridLayoutManager pour le mode paysage.
      */
@@ -59,15 +48,6 @@ public class GridLayoutManagerFoodTruck {
             }
         });
         return gridLayoutManagerLandscape;
-    }
-
-    /**
-     * Creation d'un gridLayoutManager pour le mode paysage.
-     * @return un gridLayoutManager pour le mode paysage.
-     */
-    public GridLayoutManager buildGridLayoutLandscapeAfterRecherche(){
-        return new GridLayoutManager(ctx,3,GridLayoutManager.VERTICAL,false);
-
     }
 
     /**
@@ -87,5 +67,4 @@ public class GridLayoutManagerFoodTruck {
         return new GridLayoutManager(ctx,3,GridLayoutManager.VERTICAL,false);
 
     }
-
 }

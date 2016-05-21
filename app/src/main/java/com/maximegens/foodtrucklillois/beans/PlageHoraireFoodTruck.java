@@ -59,7 +59,7 @@ public class PlageHoraireFoodTruck implements Parcelable{
     public PlageHoraireFoodTruck(Parcel in) {
         this.horaireOuverture = in.readString();
         this.horaireFermeture = in.readString();
-        this.adresses = new ArrayList<AdresseFoodTruck>();
+        this.adresses = new ArrayList<>();
         in.readTypedList(adresses,AdresseFoodTruck.CREATOR);
 
     }

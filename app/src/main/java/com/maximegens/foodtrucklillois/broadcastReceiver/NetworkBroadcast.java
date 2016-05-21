@@ -4,8 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.maximegens.foodtrucklillois.network.Internet;
-
 /**
  * Broadcast Receiver détectant l'activation ou la désactivation d'une connexion internet.
  */

@@ -1,17 +1,16 @@
 package com.maximegens.foodtrucklillois.fragments;
 
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Browser;
-import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
@@ -50,7 +49,7 @@ import com.maximegens.foodtrucklillois.utils.Constantes;
 
 public class EmplacementFoodTruckFragment extends Fragment implements OnMapReadyCallback, AdapterView.OnItemSelectedListener {
 
-    public static String TITLE = "Map";
+    public static final String TITLE = "Map";
     private TextView noConnexion;
     private RelativeLayout lienPageFacebook;
     private Button buttonPageFacebook;
@@ -108,9 +107,9 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
 
         // On affiche la map si le device posséde une connexion internet.
         if (Internet.isNetworkAvailable(getContext())) {
-            if(ft.isAucuneAdresse()){
+            if (ft.isAucuneAdresse()) {
                 affichePageFacebook();
-            }else{
+            } else {
                 afficheMap();
             }
         } else {
@@ -122,9 +121,9 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (Internet.isNetworkAvailable(context)) {
-                    if(ft.isAucuneAdresse()){
+                    if (ft.isAucuneAdresse()) {
                         affichePageFacebook();
-                    }else{
+                    } else {
                         afficheMap();
                     }
                 } else {
@@ -138,7 +137,7 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
         buttonPageFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ft.getUrlPageFacebook() != null){
+                if (ft.getUrlPageFacebook() != null) {
                     String url = ft.getUrlPageFacebook();
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                     intent.putExtra(Browser.EXTRA_APPLICATION_ID, getActivity().getApplicationContext().getPackageName());
@@ -198,20 +197,23 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
-        if(broadcastReceiverInt != null){
+        if (broadcastReceiverInt != null) {
             getActivity().unregisterReceiver(broadcastReceiverInt);
-            broadcastReceiverInt= null;
+            broadcastReceiverInt = null;
         }
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         //Ajoute un marker sur Marcq En Baroeul, permet de centrer la vue sur l'agglomeration Lilloise.
-        LatLng CENTRE = new LatLng(Double.parseDouble(Constantes.GPS_CENTRE_CARTE_MARC_BAROEUL_LATITUDE),Double.parseDouble(Constantes.GPS_CENTRE_CARTE_MARC_BAROEUL_LONGITUDE));
+        LatLng CENTRE = new LatLng(Double.parseDouble(Constantes.GPS_CENTRE_CARTE_MARC_BAROEUL_LATITUDE), Double.parseDouble(Constantes.GPS_CENTRE_CARTE_MARC_BAROEUL_LONGITUDE));
 
         // Affiche le bouton permettant de localiser l'utilisateur.
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
         googleMap.setMyLocationEnabled(true);
 
         // Centre la google map avec animation de zoom.
@@ -234,17 +236,17 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
             MarkerOptions markerOptions = new MarkerOptions();
             markerOptions.title(ft.getNom());
 
-            Double latitude = new Double(adresse.getLatitude());
-            Double longitude = new Double(adresse.getLongitude());
+            Double latitude = Double.valueOf(adresse.getLatitude());
+            Double longitude = Double.valueOf(adresse.getLongitude());
 
             markerOptions.title(ft.getNom());
             markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_truck));
             markerOptions.position(new LatLng(latitude, longitude));
 
             StringBuilder snippet = new StringBuilder();
-            snippet.append("Ouvert uniquement le " + planning.getNomJour() + " " + periode);
+            snippet.append("Ouvert uniquement le ").append(planning.getNomJour()).append(" ").append(periode);
             if (adresse.getAdresse() != null) {
-                snippet.append(Constantes.RETOUR_CHARIOT + Constantes.RETOUR_CHARIOT + adresse.getAdresse());
+                snippet.append(Constantes.RETOUR_CHARIOT).append(Constantes.RETOUR_CHARIOT).append(adresse.getAdresse());
             }
             markerOptions.snippet(snippet.toString());
             googleMap.setInfoWindowAdapter(new InfoWindowMarkerMapAdapter(getContext()));

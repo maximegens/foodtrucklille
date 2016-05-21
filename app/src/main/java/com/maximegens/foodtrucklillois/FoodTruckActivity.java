@@ -19,11 +19,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.analytics.HitBuilders;
 import com.maximegens.foodtrucklillois.adapters.ViewPagerAdapter;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.fragments.DescriptionFoodTruckFragment;
@@ -34,7 +29,7 @@ import com.squareup.picasso.Picasso;
 
 public class FoodTruckActivity extends AppCompatActivity{
 
-    public static String KEY_FOODTRUCK_SELECTIONNER = "FoodTruckSelectionner";
+    public static final String KEY_FOODTRUCK_SELECTIONNER = "FoodTruckSelectionner";
     private FoodTruck ft;
     private ViewPager viewPager;
     private TabLayout tabLayout;
@@ -57,7 +52,9 @@ public class FoodTruckActivity extends AppCompatActivity{
         // Creation de la toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_food_truck);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
 
         appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
@@ -83,17 +80,17 @@ public class FoodTruckActivity extends AppCompatActivity{
         // Ajout de l'image de fond represantant le FoodTruck.
         ImageView fond = (ImageView)findViewById(R.id.backgroundImageView_food_truck);
 
-        // Application du filtre rouge pour le fond.
-        fond.setColorFilter(Color.RED, PorterDuff.Mode.LIGHTEN);
-
         Resources res = getResources();
-        int resID;
+        int resID = 0;
         if(ft.getLogo() != null && res != null) {
             resID = res.getIdentifier(ft.getLogo(), "mipmap", getPackageName());
-        }else{
+        }else if(res != null){
             resID = res.getIdentifier(Constantes.PHOTO_NOT_AVAILABLE, "mipmap", getPackageName());
         }
-        fond.setImageDrawable(ContextCompat.getDrawable(this, resID));
+        if(fond != null){
+            fond.setColorFilter(Color.RED, PorterDuff.Mode.LIGHTEN);
+            fond.setImageDrawable(ContextCompat.getDrawable(this, resID));
+        }
         Picasso.with(getBaseContext()).load(resID).fit().centerInside().into(fond);
 
         // Creation du ViewPager

@@ -3,20 +3,15 @@ package com.maximegens.foodtrucklillois.beans;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.utils.Constantes;
-import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
-
-import java.util.ArrayList;
-import java.util.Calendar;
 
 /**
  * Created by Maxime on 25/02/2016.
  */
 public class PlanningFoodTruck implements Parcelable{
 
-    public static int FLAGS_MIDI = 1;
-    public static int FLAGS_SOIR = 2;
+    private static final int FLAGS_MIDI = 1;
+    private static final int FLAGS_SOIR = 2;
 
     private String nomJour;
     private int numJour;
@@ -85,7 +80,7 @@ public class PlanningFoodTruck implements Parcelable{
         }
     };
 
-    public PlanningFoodTruck(Parcel in) {
+    private PlanningFoodTruck(Parcel in) {
         this.nomJour = in.readString();
         this.numJour = in.readInt();
         this.midi = in.readParcelable(PlageHoraireFoodTruck.class.getClassLoader());
@@ -98,7 +93,7 @@ public class PlanningFoodTruck implements Parcelable{
      * @return true si le food truck est fermé.
      */
     public boolean isFermerToday(){
-        return getMidi() == null && getSoir() == null ? true : (isOpenMidi() == false && isOpenSoir() == false);
+        return getMidi() == null && getSoir() == null || (!isOpenMidi() && !isOpenSoir());
     }
 
     /**
@@ -119,12 +114,12 @@ public class PlanningFoodTruck implements Parcelable{
 
     /**
      * Retourne la tranche horaire d'ouverture/fermeture du Food truck.
-     * @return
+     * @return la tranche horaire.
      */
     public String getTrancheHorairePlanning(){
         StringBuilder trancheHoraire = new StringBuilder();
-        String horaireOuvertureMidi = null;
-        String horaireFermetureSoir = null;
+        String horaireOuvertureMidi;
+        String horaireFermetureSoir;
 
         if (getMidi() != null) {
             horaireOuvertureMidi = getMidi().getHeureOuvertureEnString() + " - " + getMidi().getHeureFermetureEnString();

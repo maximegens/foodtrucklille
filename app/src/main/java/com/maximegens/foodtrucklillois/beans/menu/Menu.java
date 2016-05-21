@@ -11,42 +11,23 @@ import java.util.List;
  */
 public class Menu implements Parcelable{
 
-    private List<CategoriePlat> lesCategorieDePlat;
-    private int idFoodTruck;
-    private String information;
-    private String descriptionMenu;
+    private final List<CategoriePlat> lesCategorieDePlat;
+    private final int idFoodTruck;
+    private final String information;
+    private final String descriptionMenu;
 
     public List<CategoriePlat> getLesCategorieDePlat() {
         return lesCategorieDePlat;
-    }
-
-    public void setLesCategorieDePlat(List<CategoriePlat> lesCategorieDePlat) {
-        this.lesCategorieDePlat = lesCategorieDePlat;
-    }
-
-    public int getIdFoodTruck() {
-        return idFoodTruck;
-    }
-
-    public void setIdFoodTruck(int idFoodTruck) {
-        this.idFoodTruck = idFoodTruck;
     }
 
     public String getInformation() {
         return information;
     }
 
-    public void setInformation(String information) {
-        this.information = information;
-    }
-
     public String getDescriptionMenu() {
         return descriptionMenu;
     }
 
-    public void setDescriptionMenu(String description_menu) {
-        this.descriptionMenu = description_menu;
-    }
 
     @Override
     public int describeContents() {
@@ -77,7 +58,7 @@ public class Menu implements Parcelable{
     };
 
     public Menu(Parcel in) {
-        this.lesCategorieDePlat = new ArrayList<CategoriePlat>();
+        this.lesCategorieDePlat = new ArrayList<>();
         in.readTypedList(lesCategorieDePlat, CategoriePlat.CREATOR);
         this.idFoodTruck = in.readInt();
         this.information = in.readString();

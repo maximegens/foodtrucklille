@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class FoodTruck implements Parcelable{
 
-    public static String KEY_FOOD_TRUCK = "foodtruck";
+    public static final String KEY_FOOD_TRUCK = "foodtruck";
     private int id;
     private String nom;
     private String siteWeb;
@@ -43,7 +43,7 @@ public class FoodTruck implements Parcelable{
 
     /**
      * Constructeur.
-     * @param nom
+     * @param nom le nom du ft.
      */
     public FoodTruck(String nom) {
         this.nom = nom;
@@ -297,7 +297,7 @@ public class FoodTruck implements Parcelable{
         }
     };
 
-    public FoodTruck(Parcel in) {
+    private FoodTruck(Parcel in) {
 
         this.id = in.readInt();
         this.nom = in.readString();
@@ -317,8 +317,8 @@ public class FoodTruck implements Parcelable{
         this.servicePrive = in.readString();
         this.logo = in.readString();
         this.urlLogo = in.readString();
-        this.menu = (Menu)in.readParcelable(Menu.class.getClassLoader());
-        this.planning = new ArrayList<PlanningFoodTruck>();
+        this.menu = in.readParcelable(Menu.class.getClassLoader());
+        this.planning = new ArrayList<>();
         in.readTypedList(planning,PlanningFoodTruck.CREATOR);
         this.distanceFromUser = in.readFloat();
     }
@@ -337,19 +337,19 @@ public class FoodTruck implements Parcelable{
             for(PlanningFoodTruck planning : getPlanning()){
                 // Mise en majuscule de la premier lettre.
                 String jour = planning.getNomJour().substring(0, 1).toUpperCase() + planning.getNomJour().substring(1);
-                horaires.append(jour+" : "+ Constantes.RETOUR_CHARIOT);
+                horaires.append(jour).append(" : ").append(Constantes.RETOUR_CHARIOT);
                 if(planning.isFermerToday()){
-                    horaires.append(Constantes.TABULATION_DOUBLE+ fermer +Constantes.RETOUR_CHARIOT);
+                    horaires.append(Constantes.TABULATION_DOUBLE).append(fermer).append(Constantes.RETOUR_CHARIOT);
                 }else{
                     if(planning.isOpenMidi()) {
-                        horaires.append(Constantes.TABULATION_DOUBLE+"Midi : "+planning.getMidi().getHeureOuvertureEnString()+" - "+planning.getMidi().getHeureFermetureEnString()+Constantes.RETOUR_CHARIOT);
+                        horaires.append(Constantes.TABULATION_DOUBLE).append("Midi : ").append(planning.getMidi().getHeureOuvertureEnString()).append(" - ").append(planning.getMidi().getHeureFermetureEnString()).append(Constantes.RETOUR_CHARIOT);
                     }else {
-                        horaires.append(Constantes.TABULATION_DOUBLE+"Midi : "+ fermer+ Constantes.RETOUR_CHARIOT);
+                        horaires.append(Constantes.TABULATION_DOUBLE).append("Midi : ").append(fermer).append(Constantes.RETOUR_CHARIOT);
                     }
                     if(planning.isOpenSoir()) {
-                        horaires.append(Constantes.TABULATION_DOUBLE+"Soir : "+planning.getSoir().getHeureOuvertureEnString()+" - "+planning.getSoir().getHeureFermetureEnString()+Constantes.RETOUR_CHARIOT);
+                        horaires.append(Constantes.TABULATION_DOUBLE).append("Soir : ").append(planning.getSoir().getHeureOuvertureEnString()).append(" - ").append(planning.getSoir().getHeureFermetureEnString()).append(Constantes.RETOUR_CHARIOT);
                     }else {
-                        horaires.append(Constantes.TABULATION_DOUBLE+"Soir : "+fermer+Constantes.RETOUR_CHARIOT);
+                        horaires.append(Constantes.TABULATION_DOUBLE).append("Soir : ").append(fermer).append(Constantes.RETOUR_CHARIOT);
                     }
                 }
                 horaires.append(Constantes.RETOUR_CHARIOT);
@@ -399,11 +399,7 @@ public class FoodTruck implements Parcelable{
         PlanningFoodTruck planning = getPlaningToday();
 
         // On verifie si il existe un planning pour le midi ou pour le soir, dans ce cas le FT est ou a bien été ouvert aujourd'hui.
-        if (planning != null) {
-            return planning.getMidi() != null || planning.getSoir() != null ? true : false;
-        } else {
-            return false;
-        }
+        return planning != null && (planning.getMidi() != null || planning.getSoir() != null);
     }
 
     /**
@@ -415,7 +411,6 @@ public class FoodTruck implements Parcelable{
 
         PlanningFoodTruck planning = getPlaningToday();
         String horaireFermeture = "";
-        boolean ok = false;
 
         if (planning != null) {
             // On récupere de base le derniere horaire, celui du soir
@@ -425,8 +420,6 @@ public class FoodTruck implements Parcelable{
             // sinon on prend celui du midi
             else if (planning.getMidi() != null) {
                 horaireFermeture = planning.getMidi().getHoraireFermeture();
-            }else{
-                ok =  false;
             }
 
             // Si on trouve un horaire de fermeture alors on verifie si l'heure est avant celui passé en parametre.
@@ -435,12 +428,12 @@ public class FoodTruck implements Parcelable{
                 return GestionnaireHoraire.isBefore(cal,calFt);
             }
         }
-        return ok;
+        return false;
     }
 
     /**
      * Donne le planing du jour en cours.
-     * @return
+     * @return le plannign du jour.
      */
     public PlanningFoodTruck getPlaningToday(){
 
@@ -508,7 +501,7 @@ public class FoodTruck implements Parcelable{
      * Donne la prochaine horaire de fermeture du food truck pour aujourd'hui.
      * @return l'heure d'ouverture prochaien du Food truck.
      */
-    public String getNextFermetureToday(){
+    private String getNextFermetureToday(){
 
         // Creation du calendrier
         Calendar calendarToday = GestionnaireHoraire.createCalendarToday();
@@ -534,7 +527,7 @@ public class FoodTruck implements Parcelable{
 
     /**
      * Retourne la tranche horaire d'ouverture/fermeture du Food truck.
-     * @return
+     * @return la tranche horaire.
      */
     public String getTrancheHoraire(){
         String horaireOuverture = getNextOuvertureToday();
@@ -547,7 +540,7 @@ public class FoodTruck implements Parcelable{
 
     /**
      * Retourne la tranche horaire d'ouverture/fermeture du Food truck selon le jour.
-     * @return
+     * @return la tranche horaire.
      */
     public String getTrancheHoraireByDay(int numJour){
         PlanningFoodTruck planning = getPlanningByJour(numJour);
@@ -612,7 +605,7 @@ public class FoodTruck implements Parcelable{
 
     /**
      * Retourne les coordonnées GPS du Food truck pour la journée.
-     * @return
+     * @return les coordonnées gps.
      */
     public LatLng getLatLon(){
 

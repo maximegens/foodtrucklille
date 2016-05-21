@@ -19,14 +19,14 @@ import com.squareup.picasso.Picasso;
 /**
  * Holder pour l'affichage de la liste des Foods Trucks.
  */
-public class ListeFTHolder extends RecyclerView.ViewHolder {
+class ListeFTHolder extends RecyclerView.ViewHolder {
 
-    private Context context;
-    private TextView textViewOuverture;
-    private TextView textHoraire;
-    private ImageView imageView;
-    private TextView distance;
-    private ProgressBar loader;
+    private final Context context;
+    private final TextView textViewOuverture;
+    private final TextView textHoraire;
+    private final ImageView imageView;
+    private final TextView distance;
+    private final ProgressBar loader;
 
     /**
      * Le constructeur.

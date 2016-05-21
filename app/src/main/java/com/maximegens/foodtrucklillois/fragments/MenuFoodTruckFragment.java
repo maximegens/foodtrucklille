@@ -2,7 +2,6 @@ package com.maximegens.foodtrucklillois.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -29,7 +28,7 @@ import com.squareup.picasso.Picasso;
  */
 public class MenuFoodTruckFragment extends Fragment implements RecyclerViewListeCatePlatListener,RecyclerViewListePlatListener{
 
-    public static String TITLE = "Menu";
+    public static final String TITLE = "Menu";
     private FoodTruck ft = null;
 
     /**
@@ -79,7 +78,7 @@ public class MenuFoodTruckFragment extends Fragment implements RecyclerViewListe
      * Chargement du fragment affichant les categories.
      * @param ft Le ft sélectionnée.
      */
-    public void loadMenuCategorieFragment(FoodTruck ft){
+    private void loadMenuCategorieFragment(FoodTruck ft){
         MenuCategorieFragment menuCat = MenuCategorieFragment.newInstance(ft);
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.addToBackStack(null);
@@ -90,7 +89,7 @@ public class MenuFoodTruckFragment extends Fragment implements RecyclerViewListe
      * Chargement du fragment affichant les differents plats de la categorie..
      * @param catPlat La categorie sélectionnée.
      */
-    public void loadMenuDetailFragment(CategoriePlat catPlat){
+    private void loadMenuDetailFragment(CategoriePlat catPlat){
         MenuDetailFragment menuDetail = MenuDetailFragment.newInstance(catPlat);
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.addToBackStack(null);

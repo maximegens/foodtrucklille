@@ -6,7 +6,6 @@
     <string name="app_name_developper">Maxime Gens</string>
     <string name="app_date_publication">1 juin 2016</string>
     <string name="title_main_activity">MainActivity</string>
-    <string name="title_splashscreen_activity">SplashScreen</string>
     <string name="title_activity_food_truck">FoodTruckActivity</string>
     <string name="key_api_google_map">AIzaSyDASrlPPti8U3qoqoj8V0O3VVZ-cBCYwkc</string>
     <string name="id_google_analytics">UA-77292854-1</string>
@@ -18,23 +17,21 @@
     <string name="fermer_ouverture_a">Fermé : ouverture à\u0020</string>
     <string name="ouvert">Ouvert</string>
     <string name="ouvert_jusque">Ouvert jusqu\'à\u0020</string>
-    <string name="ouvert_a">Ouvert à\u0020</string>
     <string name="prix">Prix</string>
     <string name="prix_en_menu">Prix en menu</string>
     <string name="exit_app">Quitter l\'application</string>
     <string name="msg_exit">Voulez-vous quitter l\'application ?</string>
 
     <!-- String SplashScreen-->
-    <string name="splash_allumage_ft">Allumage du moteur du Foods Trucks</string>
     <string name="splash_recup_ft">Récupération de la liste des Foods Truck en cours.</string>
-    <string name="splash_ouverture_ft">Ouverture du Food Truck</string>
-    <string name="splash_four_ft">Pré-chauffage des fours.</string>
     <string name="splash_lancement_ft">Téléchargement terminé, ouverture de l\'application en cours.</string>
+    <string name="chargement">Chargement</string>
 
     <!-- String liste des food trucks-->
     <string name="msg_data_no_update">Attention la liste n\'a pas été mise à jour.</string>
     <string name="title_liste_food_truck">Les Food Trucks</string>
-    <string name="recherche_plus_proche_en_cours">Recherche des Food Trucks les plus proche en cours...</string>
+    <string name="ft_plus_proche">Food Truck le plus proche</string>
+    <string name="recherche_plus_proche_en_cours">Recherche des Food Trucks les plus proche en cours…</string>
     <string name="liste_ft_vide">Il n\'y a pas de Food Trucks</string>
     <string name="gps_desactive">Activer le GPS pour afficher les Food Trucks les plus proches</string>
     <string name="activer_gps">Activer GPS</string>
@@ -43,7 +40,6 @@
 
     <!-- Description du Foodtruck -->
     <string name="description_breve">Description</string>
-    <string name="description_longue">Description longue</string>
     <string name="ouverture">Ouverture</string>
     <string name="distance">Distance</string>
     <string name="cuisine">Cuisine</string>
@@ -53,7 +49,6 @@
     <string name="email">Email</string>
     <string name="site_web">Site Web</string>
     <string name="page_facebook">Page Facebook</string>
-    <string name="tenue_vestimentaire">Tenue vestimentaire</string>
     <string name="date_ouverture">Date d\'ouverture</string>
     <string name="specialite">Spécialité</string>
     <string name="service">Service</string>
@@ -116,7 +111,6 @@
     <string name="ok">OK</string>
     <string name="oui_faim">Oui j\'ai faim</string>
     <string name="go_faim">GO j\'ai faim !</string>
-    <string name="planning_direction">Voir l\'itinéaire</string>
     <string name="oui">Oui</string>
     <string name="non">Non</string>
 
@@ -132,8 +126,6 @@
     <string name="closeDrawer">Fermeture du menu</string>
 
     <!-- Menu -->
-    <string name="menu_title_map_fts_spinner">Map des Food Trucks</string>
-    <string name="menu_title_map_fts_spinner_jour">Jour des FT map</string>
     <string name="menu_title_map_ft_spinner">Map du Food Truck</string>
     <string name="action_search">Rechercher un Food Truck</string>
 
@@ -148,9 +140,5 @@
     <string name="ga_title_description_food_truck">Description du FoodTruck</string>
     <string name="ga_title_menu_food_truck">Menu du FoodTruck</string>
     <string name="ga_title_map_food_truck">Emplacement du FoodTruck</string>
-
-    <string name="ga_cat_foodtruck">FoodTruck</string>
-    <string name="ga_action_clique">Clique</string>
-
 
 </resources>

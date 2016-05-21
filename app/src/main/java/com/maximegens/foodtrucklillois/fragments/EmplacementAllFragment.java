@@ -1,18 +1,17 @@
 package com.maximegens.foodtrucklillois.fragments;
 
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.MenuItemCompat;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -89,10 +88,10 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
         spinnerMap = (Spinner) view.findViewById(R.id.spinner_map_fts);
         List<FoodTruck> lesFts = new ArrayList<>();
         lesFts.add(new FoodTruck(Constantes.TOUS_FT));
-        for (FoodTruck ft : Constantes.lesFTs){
+        for (FoodTruck ft : Constantes.lesFTs) {
             lesFts.add(ft);
         }
-        adapterFT = new ArrayAdapter<>(getContext(), R.layout.layout_drop_title_black,lesFts);
+        adapterFT = new ArrayAdapter<>(getContext(), R.layout.layout_drop_title_black, lesFts);
         adapterFT.setDropDownViewResource(R.layout.layout_drop_list);
         noConnexion = (TextView) view.findViewById(R.id.no_connexion_map_all);
         spinnerMap.setAdapter(adapterFT);
@@ -106,9 +105,9 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
 
 
         // On affiche la map si le device posséde une connexion internet.
-        if(Internet.isNetworkAvailable(getContext()) && map != null){
+        if (Internet.isNetworkAvailable(getContext()) && map != null) {
             afficheMap();
-        }else{
+        } else {
             masqueMap();
         }
 
@@ -116,9 +115,9 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if(Internet.isNetworkAvailable(context)){
+                if (Internet.isNetworkAvailable(context)) {
                     afficheMap();
-                }else{
+                } else {
                     masqueMap();
                 }
             }
@@ -131,7 +130,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
      * Masque la map dans le fragment.
      */
     private void masqueMap() {
-        if(map != null && map.getView() != null){
+        if (map != null && map.getView() != null) {
             map.getView().setVisibility(View.GONE);
         }
         noConnexion.setVisibility(View.VISIBLE);
@@ -143,9 +142,9 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
      * Affichage la map dans le fragment.
      */
     private void afficheMap() {
-        if(map != null && map.getView() != null){
+        if (map != null && map.getView() != null) {
             map.getView().setVisibility(View.VISIBLE);
-        }else{
+        } else {
             final FragmentManager fm = getChildFragmentManager();
             fm.beginTransaction().replace(R.id.framelayout_map_all, map).commit();
         }
@@ -166,11 +165,11 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
-        if(broadcastReceiver != null){
+        if (broadcastReceiver != null) {
             getActivity().unregisterReceiver(broadcastReceiver);
-            broadcastReceiver= null;
+            broadcastReceiver = null;
         }
     }
 
@@ -189,11 +188,11 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
 
         // Récuperation de la googleMap
         GoogleMap gMapItem = null;
-        if(map != null){
+        if (map != null) {
             gMapItem = map.getMap();
         }
         // Suppresion des précédents markers.
-        if(gMapItem != null){
+        if (gMapItem != null) {
             gMapItem.clear();
         }
 
@@ -201,11 +200,11 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
         Spinner spinner = (Spinner) parent;
 
         // Spinner gérant les jours.
-        if(spinner.getId() == R.id.spinner_map_fts) {
+        if (spinner.getId() == R.id.spinner_map_fts) {
             gestionSpinnerFoodTruck(position, gMapItem);
         }
         // Spinner gérant les FTs.
-        else if(spinner.getId() == R.id.spinner_map_fts_jour) {
+        else if (spinner.getId() == R.id.spinner_map_fts_jour) {
             gestionSpinnerJour(position, gMapItem);
         }
         // Centre la google Map.
@@ -220,32 +219,32 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
     private void gestionSpinnerJour(int position, GoogleMap gMapItem) {
         jourSelection = position;
         // Tous les ft
-        if(ftSelection != null && ftSelection.getNom().equals(Constantes.TOUS_FT) && gMapItem != null){
+        if (ftSelection != null && ftSelection.getNom().equals(Constantes.TOUS_FT) && gMapItem != null) {
             // Tous les jours
-            if(jourSelection == 0){
+            if (jourSelection == 0) {
                 for (FoodTruck ft : Constantes.lesFTs) {
-                    if(!ft.isAucuneAdresse()){
+                    if (!ft.isAucuneAdresse()) {
                         for (PlanningFoodTruck planning : ft.getPlanning()) {
                             traitementByPlanning(planning, gMapItem, ft);
                         }
                     }
                 }
-            }else{ // Un jour de selectionné
-                for (FoodTruck ft : Constantes.lesFTs){
-                    if(!ft.isAucuneAdresse()) {
+            } else { // Un jour de selectionné
+                for (FoodTruck ft : Constantes.lesFTs) {
+                    if (!ft.isAucuneAdresse()) {
                         PlanningFoodTruck planning = ft.getPlanningByJour(jourSelection);
                         traitementByPlanning(planning, gMapItem, ft);
                     }
                 }
             }
 
-        }else if(ftSelection != null && !ftSelection.getNom().equals(Constantes.TOUS_FT) && gMapItem != null){ // Un ft de selectionné
+        } else if (ftSelection != null && !ftSelection.getNom().equals(Constantes.TOUS_FT) && gMapItem != null) { // Un ft de selectionné
             // Tous les jours
-            if(jourSelection == 0){
+            if (jourSelection == 0) {
                 for (PlanningFoodTruck planning : ftSelection.getPlanning()) {
                     traitementByPlanning(planning, gMapItem, ftSelection);
                 }
-            }else{ // Un jour de selectionné
+            } else { // Un jour de selectionné
                 PlanningFoodTruck planning = ftSelection.getPlanningByJour(jourSelection);
                 traitementByPlanning(planning, gMapItem, ftSelection);
             }
@@ -261,33 +260,33 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
         ftSelection = adapterFT.getItem(position);
 
         // Tous les jours
-        if(jourSelection == 0 && gMapItem != null){
+        if (jourSelection == 0 && gMapItem != null) {
             // Tous les ft
-            if(ftSelection != null && ftSelection.getNom().equals(Constantes.TOUS_FT)){
+            if (ftSelection != null && ftSelection.getNom().equals(Constantes.TOUS_FT)) {
                 for (FoodTruck left : Constantes.lesFTs) {
-                    if(!left.isAucuneAdresse()){
+                    if (!left.isAucuneAdresse()) {
                         for (PlanningFoodTruck planning : left.getPlanning()) {
                             parcoursAdresses(left, gMapItem, planning);
                         }
                     }
                 }
-            }else{ // Un ft de selectionné
+            } else if(ftSelection != null) { // Un ft de selectionné
                 for (PlanningFoodTruck planning : ftSelection.getPlanning()) {
                     parcoursAdresses(ftSelection, gMapItem, planning);
                 }
             }
 
-         // Un jour de selectionné
-        }else if(jourSelection != 0 && gMapItem != null){
+            // Un jour de selectionné
+        } else if (jourSelection != 0 && gMapItem != null) {
             // Tous les ft
-            if(ftSelection != null && ftSelection.getNom().equals(Constantes.TOUS_FT)){
-                for(FoodTruck ft : Constantes.lesFTs) {
-                    if(!ft.isAucuneAdresse()) {
+            if (ftSelection != null && ftSelection.getNom().equals(Constantes.TOUS_FT)) {
+                for (FoodTruck ft : Constantes.lesFTs) {
+                    if (!ft.isAucuneAdresse()) {
                         PlanningFoodTruck planning = ft.getPlanningByJour(jourSelection);
                         parcoursAdresses(ft, gMapItem, planning);
                     }
                 }
-            }else{ // Un ft de selectionné
+            } else if(ftSelection != null){ // Un ft de selectionné
                 PlanningFoodTruck planning = ftSelection.getPlanningByJour(jourSelection);
                 parcoursAdresses(ftSelection, gMapItem, planning);
             }
@@ -295,7 +294,8 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {}
+    public void onNothingSelected(AdapterView<?> parent) {
+    }
 
 
     /**
@@ -305,15 +305,15 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
      * @param planning Le planning du FT.
      */
     private void parcoursAdresses(FoodTruck ft, GoogleMap gMapItem, PlanningFoodTruck planning) {
-        if(planning != null){
+        if (planning != null) {
             // Parcours des adresses du food truck pour le midi.
-            if(planning.getMidi() != null) {
+            if (planning.getMidi() != null) {
                 for (AdresseFoodTruck adresse : planning.getMidi().getAdresses()) {
                     ajouteMarker(gMapItem, ft, planning, adresse, Constantes.MIDI);
                 }
             }
             // Parcours des adresses du food truck pour le soir.
-            if(planning.getSoir() != null) {
+            if (planning.getSoir() != null) {
                 for (AdresseFoodTruck adresse : planning.getSoir().getAdresses()) {
                     ajouteMarker(gMapItem, ft, planning, adresse, Constantes.SOIR);
                 }
@@ -326,7 +326,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
      * @param planning le planning a traiter.
      */
     private void traitementByPlanning(PlanningFoodTruck planning, GoogleMap gMapItem, FoodTruck ft) {
-        if(planning != null){
+        if (planning != null) {
             // Parcours des adresses du food truck pour le midi.
             if (planning.getMidi() != null) {
                 for (AdresseFoodTruck adresse : planning.getMidi().getAdresses()) {
@@ -349,31 +349,31 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
      * @param adresse L'objet contenant l'adresse du Food Truck.
      * @param periode La periode en cours : midi ou soir.
      */
-    private void ajouteMarker(GoogleMap googleMap,FoodTruck ft, PlanningFoodTruck planning, AdresseFoodTruck adresse, String periode) {
+    private void ajouteMarker(GoogleMap googleMap, FoodTruck ft, PlanningFoodTruck planning, AdresseFoodTruck adresse, String periode) {
 
         // Verification qu'il existe une latitude et une longitude de renseigné pour pouvoir l'afficher.
-        if(adresse.getLatitude() != null && adresse.getLongitude() != null) {
+        if (adresse.getLatitude() != null && adresse.getLongitude() != null) {
 
             final MarkerOptions markerOptions = new MarkerOptions();
 
-            Double latitude = new Double(adresse.getLatitude());
-            Double longitude = new Double(adresse.getLongitude());
+            Double latitude = Double.valueOf(adresse.getLatitude());
+            Double longitude = Double.valueOf(adresse.getLongitude());
 
             // Ajout du nom et de la position du Food Truck.
             markerOptions.title(ft.getNom());
             markerOptions.position(new LatLng(latitude, longitude));
 
             // Creation de l'icone.
-            if(ft.getLogo() != null){
+            if (ft.getLogo() != null) {
 
                 int resID = getResources().getIdentifier(ft.getLogo(), "mipmap", getContext().getPackageName());
                 Marker marker = googleMap.addMarker(markerOptions);
-                if(marker != null){
-                    PicassoMarker picassoMarker  = new PicassoMarker(marker,planning,adresse,periode);
+                if (marker != null) {
+                    PicassoMarker picassoMarker = new PicassoMarker(marker, planning, adresse, periode);
                     protectedFromGarbageCollectorTargets.add(picassoMarker);
-                    Picasso.with(getActivity()).load(resID).resize(100,100).into(picassoMarker);
+                    Picasso.with(getActivity()).load(resID).resize(100, 100).into(picassoMarker);
                 }
-            }else{
+            } else {
                 markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_truck));
             }
 
@@ -385,14 +385,16 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
 
     /**
      * Centre la Google Map sur Marcq en Baroeul.
-     * @param googleMap
+     * @param googleMap la google map
      */
     private void centreMap(GoogleMap googleMap) {
         //Ajoute un marker sur Marcq En Baroeul, permet de centrer la vue sur l'agglomeration Lilloise.
-        LatLng CENTRE = new LatLng(Double.parseDouble(Constantes.GPS_CENTRE_CARTE_MARC_BAROEUL_LATITUDE),Double.parseDouble(Constantes.GPS_CENTRE_CARTE_MARC_BAROEUL_LONGITUDE));
+        LatLng CENTRE = new LatLng(Double.parseDouble(Constantes.GPS_CENTRE_CARTE_MARC_BAROEUL_LATITUDE), Double.parseDouble(Constantes.GPS_CENTRE_CARTE_MARC_BAROEUL_LONGITUDE));
 
         // Affiche le bouton permettant de localiser l'utilisateur.
-        googleMap.setMyLocationEnabled(true);
+        if (!(ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+            googleMap.setMyLocationEnabled(true);
+        }
 
         // Centre la google map avec animation de zoom.
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CENTRE, 11));

@@ -12,19 +12,16 @@ import com.maximegens.foodtrucklillois.fragments.EmplacementAllFragment;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * Implement de Target pour les Googles Map.
  * Permet de récuperer une image via Picasso et de l'afficher en tant d'icon sans perdre la référence au Marker a cause du garbage collector.
  */
 public class PicassoMarker implements Target {
 
-    Marker mMarker;
-    PlanningFoodTruck planning;
-    AdresseFoodTruck adresse;
-    String periode;
+    private final Marker mMarker;
+    private final PlanningFoodTruck planning;
+    private final AdresseFoodTruck adresse;
+    private final String periode;
 
     public PicassoMarker(Marker marker,PlanningFoodTruck planning, AdresseFoodTruck adresse, String periode) {
         mMarker = marker;
@@ -66,12 +63,12 @@ public class PicassoMarker implements Target {
 
     }
 
-    public String creationInfoBulle() {
+    private String creationInfoBulle() {
         // Creation du snippet affichant l'adresse et l'ouverture.
         StringBuilder snippet = new StringBuilder();
-        snippet.append("Ouvert uniquement le " + planning.getNomJour() + " " + periode);
+        snippet.append("Ouvert uniquement le ").append(planning.getNomJour()).append(" ").append(periode);
         if (adresse.getAdresse() != null) {
-            snippet.append(Constantes.RETOUR_CHARIOT + Constantes.RETOUR_CHARIOT + adresse.getAdresse());
+            snippet.append(Constantes.RETOUR_CHARIOT).append(Constantes.RETOUR_CHARIOT).append(adresse.getAdresse());
         }
         return snippet.toString();
     }

@@ -1,19 +1,12 @@
 package com.maximegens.foodtrucklillois;
 
 
-import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -22,12 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.fragments.AProposFragment;
 import com.maximegens.foodtrucklillois.fragments.ContactFragment;
@@ -35,7 +23,6 @@ import com.maximegens.foodtrucklillois.fragments.EmplacementAllFragment;
 import com.maximegens.foodtrucklillois.fragments.FavorisFragment;
 import com.maximegens.foodtrucklillois.fragments.ListeFoodTruckFragment;
 import com.maximegens.foodtrucklillois.fragments.PlanningFragment;
-import com.maximegens.foodtrucklillois.interfaces.ListeFoodTruckFragmentCallback;
 import com.maximegens.foodtrucklillois.interfaces.RecyclerViewListeFTListener;
 import com.maximegens.foodtrucklillois.interfaces.RecyclerViewPlanningListener;
 import com.maximegens.foodtrucklillois.utils.Constantes;
@@ -43,7 +30,7 @@ import com.maximegens.foodtrucklillois.utils.Constantes;
 /**
  * Class MainAcitivity.
  */
-public class MainActivity extends AppCompatActivity implements RecyclerViewListeFTListener, ListeFoodTruckFragmentCallback, RecyclerViewPlanningListener {
+public class MainActivity extends AppCompatActivity implements RecyclerViewListeFTListener, RecyclerViewPlanningListener {
 
     private NavigationView nav;
     private DrawerLayout drawerLayout;
@@ -76,8 +63,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
         // Récupération des données de l'intent.
         if(getIntent() != null){
             Bundle bundle = getIntent().getExtras();
-            if(bundle != null && !bundle.getBoolean(SplashScreenActivity.DATA_A_JOUR)){
-                View parentLayout = findViewById(R.id.relative_layout_main_activity);
+            View parentLayout = findViewById(R.id.relative_layout_main_activity);
+            if(bundle != null && !bundle.getBoolean(SplashScreenActivity.DATA_A_JOUR) && parentLayout != null){
                 Snackbar.make(parentLayout,getString(R.string.msg_data_no_update),Snackbar.LENGTH_LONG).show();
             }
         }
@@ -93,8 +80,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
 
         // Definition de la toolbar en tant qu'actionBar
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,14 +206,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
         Intent intent = new Intent(MainActivity.this, FoodTruckActivity.class);
         intent.putExtra(FoodTruck.KEY_FOOD_TRUCK, ft);
         startActivity(intent);
-    }
-
-    /**
-     * Methode appeler depuis le fragment ListFoodTruckFragment pour notifier l'acitivité.
-     */
-    @Override
-    public void notifyActivity() {
-
     }
 
     /**

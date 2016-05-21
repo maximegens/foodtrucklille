@@ -33,7 +33,7 @@
         android:gravity="center"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="Chargement"
+        android:text="@string/chargement"
         />
 
 </RelativeLayout>

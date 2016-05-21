@@ -7,7 +7,7 @@ import retrofit.http.GET;
 /**
  * Interface Service pour la recuperation de données via RetroFit.
  */
-public interface RetreiveListeFTService {
+interface RetreiveListeFTService {
 
     /**
      * Recuperation de la liste des FoodTrucks.
