@@ -4,5 +4,5 @@
     android:singleLine="true"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:textColor="@color/black"
+    android:textColor="@color/grey_500"
     android:ellipsize="marquee"/>

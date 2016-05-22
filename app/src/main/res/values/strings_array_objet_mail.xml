@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="objet_mail_array">
+        <item>Selectionnez un objet...</item>
         <item>Demande de renseignements</item>
         <item>Propriétaire d\'un Food Truck</item>
         <item>Informations erronées dans un Food Truck</item>
-        <item>Autres demandes</item>
+        <item>Autres</item>
     </string-array>
 </resources>
