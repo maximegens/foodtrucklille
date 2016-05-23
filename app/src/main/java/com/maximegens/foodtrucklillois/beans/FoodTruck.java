@@ -490,7 +490,7 @@ public class FoodTruck implements Parcelable{
                     horaireOuverture = planning.getSoir().getHeureOuvertureEnString();
                 }
             } else if (isSoirOrBeforeSoirButAfterMidi && existPlaningSoirAdresse(planning)) {
-                horaireOuverture = planning.getSoir().getHeureFermetureEnString();
+                horaireOuverture = planning.getSoir().getHeureOuvertureEnString();
             }
         }
 
