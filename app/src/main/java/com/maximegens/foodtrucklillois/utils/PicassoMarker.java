@@ -48,8 +48,12 @@ public class PicassoMarker implements Target {
 
     @Override
     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-        mMarker.setIcon(BitmapDescriptorFactory.fromBitmap(bitmap));
-        EmplacementAllFragment.protectedFromGarbageCollectorTargets.remove(this);
+        try {
+            mMarker.setIcon(BitmapDescriptorFactory.fromBitmap(bitmap));
+            EmplacementAllFragment.protectedFromGarbageCollectorTargets.remove(this);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Override

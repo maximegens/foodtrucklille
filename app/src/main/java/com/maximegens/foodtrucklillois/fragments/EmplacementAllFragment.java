@@ -176,9 +176,9 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
     @Override
     public void onMapReady(GoogleMap googleMap) {
         centreMap(googleMap);
-        //spinnerMapJour.setSelection(jourActuel);
+        spinnerMapJour.setSelection(jourActuel);
         gestionSpinnerFoodTruck(0, googleMap);
-        gestionSpinnerJour(0, googleMap);
+        gestionSpinnerJour(jourActuel, googleMap);
         spinnerMapJour.setOnItemSelectedListener(this);
         spinnerMap.setOnItemSelectedListener(this);
     }
@@ -307,13 +307,13 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
     private void parcoursAdresses(FoodTruck ft, GoogleMap gMapItem, PlanningFoodTruck planning) {
         if (planning != null) {
             // Parcours des adresses du food truck pour le midi.
-            if (planning.getMidi() != null) {
+            if (planning.getMidi() != null && planning.getMidi().getAdresses() != null) {
                 for (AdresseFoodTruck adresse : planning.getMidi().getAdresses()) {
                     ajouteMarker(gMapItem, ft, planning, adresse, Constantes.MIDI);
                 }
             }
             // Parcours des adresses du food truck pour le soir.
-            if (planning.getSoir() != null) {
+            if (planning.getSoir() != null && planning.getSoir().getAdresses() != null) {
                 for (AdresseFoodTruck adresse : planning.getSoir().getAdresses()) {
                     ajouteMarker(gMapItem, ft, planning, adresse, Constantes.SOIR);
                 }
@@ -328,13 +328,13 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
     private void traitementByPlanning(PlanningFoodTruck planning, GoogleMap gMapItem, FoodTruck ft) {
         if (planning != null) {
             // Parcours des adresses du food truck pour le midi.
-            if (planning.getMidi() != null) {
+            if (planning.getMidi() != null && planning.getMidi().getAdresses() != null) {
                 for (AdresseFoodTruck adresse : planning.getMidi().getAdresses()) {
                     ajouteMarker(gMapItem, ft, planning, adresse, Constantes.MIDI);
                 }
             }
             // Parcours des adresses du food truck pour le soir.
-            if (planning.getSoir() != null) {
+            if (planning.getSoir() != null && planning.getSoir().getAdresses() != null) {
                 for (AdresseFoodTruck adresse : planning.getSoir().getAdresses()) {
                     ajouteMarker(gMapItem, ft, planning, adresse, Constantes.SOIR);
                 }
