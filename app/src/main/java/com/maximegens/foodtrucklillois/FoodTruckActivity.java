@@ -91,7 +91,7 @@ public class FoodTruckActivity extends AppCompatActivity{
             fond.setColorFilter(Color.RED, PorterDuff.Mode.LIGHTEN);
             fond.setImageDrawable(ContextCompat.getDrawable(this, resID));
         }
-        Picasso.with(getBaseContext()).load(resID).fit().centerInside().into(fond);
+        Picasso.with(getBaseContext()).load(resID).fit().centerCrop().into(fond);
 
         // Creation du ViewPager
         tabLayout = (TabLayout) findViewById(R.id.tabs_food_truck);

@@ -79,7 +79,7 @@ class ListeFTHolder extends RecyclerView.ViewHolder {
                     .load(resID)
                     .error(R.mipmap.photonotavailable)
                     .fit()
-                    .centerInside()
+                    .centerCrop()
                     .into(imageView, new Callback() {
                         @Override
                         public void onSuccess() {

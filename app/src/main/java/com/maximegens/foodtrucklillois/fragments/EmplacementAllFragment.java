@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -371,7 +372,17 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
                 if (marker != null) {
                     PicassoMarker picassoMarker = new PicassoMarker(marker, planning, adresse, periode);
                     protectedFromGarbageCollectorTargets.add(picassoMarker);
-                    Picasso.with(getActivity()).load(resID).resize(100, 100).into(picassoMarker);
+
+                    ImageView image = new ImageView(getActivity());
+                    int res = getResources().getIdentifier(ft.getLogo(),"mipmap", getContext().getPackageName());
+                    image.setImageResource(res);
+                    int newHeight = getActivity().getWindowManager().getDefaultDisplay().getHeight() / 20;
+                    int orgWidth = image.getDrawable().getIntrinsicWidth();
+                    int orgHeight = image.getDrawable().getIntrinsicHeight();
+                    Double taille = Math.floor((orgWidth * newHeight) / orgHeight);
+                    int newWidth = taille.intValue();
+
+                    Picasso.with(getActivity()).load(resID).resize(newWidth, newHeight).centerCrop().into(picassoMarker);
                 }
             } else {
                 markerOptions.icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_truck));
