@@ -73,7 +73,7 @@ public class ContactFragment extends Fragment {
         tabChoix = getResources().getStringArray(R.array.objet_mail_array);
         adresseMailDeveloppeur.setText(Html.fromHtml(getString(R.string.adresse_mail_developpeur)));
 
-        adapterObjet = ArrayAdapter.createFromResource(getContext(), R.array.objet_mail_array, R.layout.layout_drop_title_black);
+        adapterObjet = ArrayAdapter.createFromResource(getContext(), R.array.objet_mail_array, R.layout.layout_drop_title_grey);
         adapterObjet.setDropDownViewResource(R.layout.layout_drop_list);
         spinnerObjetMail.setAdapter(adapterObjet);
 
