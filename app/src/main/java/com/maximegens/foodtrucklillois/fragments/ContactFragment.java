@@ -2,6 +2,7 @@ package com.maximegens.foodtrucklillois.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 
 import com.maximegens.foodtrucklillois.App;
 import com.maximegens.foodtrucklillois.R;
+import com.maximegens.foodtrucklillois.utils.Constantes;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,11 +33,9 @@ public class ContactFragment extends Fragment {
     public static String TITLE = "Contact";
     private Spinner spinnerObjetMail;
     private ArrayAdapter<CharSequence> adapterObjet;
-    private TextView adresseMail;
     private TextView adresseMailDeveloppeur;
     private EditText contenuMail;
     private Button buttonEnvoyer;
-    private TextInputLayout adresseMailTextInput;
     private TextInputLayout contenuTextInput;
     private String[] tabChoix;
 
@@ -64,10 +64,8 @@ public class ContactFragment extends Fragment {
 
         spinnerObjetMail = (Spinner) view.findViewById(R.id.spinner_contact_objet);
         buttonEnvoyer = (Button) view.findViewById(R.id.button_envoyer);
-        adresseMail = (TextView) view.findViewById(R.id.adresse_mail_contact);
         adresseMailDeveloppeur = (TextView) view.findViewById(R.id.adresse_mail_dev);
         contenuMail = (EditText) view.findViewById(R.id.contenu_msg_contact);
-        adresseMailTextInput = (TextInputLayout) view.findViewById(R.id.textInputLayout_mail_adresse);
         contenuTextInput = (TextInputLayout) view.findViewById(R.id.textInputLayout_mail_contenu);
 
         tabChoix = getResources().getStringArray(R.array.objet_mail_array);
@@ -104,10 +102,11 @@ public class ContactFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(isErrorInFormulaire()){
-                    Intent email = new Intent(android.content.Intent.ACTION_SEND);
+                    Intent email = new Intent(Intent.ACTION_SENDTO);
                     email.setType("message/rfc822");
-                    email.putExtra(Intent.EXTRA_EMAIL, adresseMail.getText().toString());
-                    email.putExtra(Intent.EXTRA_SUBJECT, spinnerObjetMail.getSelectedItem().toString());
+                    Uri uri = Uri.parse("mailto:"+adresseMailDeveloppeur.getText().toString());
+                    email.setData(uri);
+                    email.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name)+" - "+spinnerObjetMail.getSelectedItem().toString());
                     email.putExtra(Intent.EXTRA_TEXT, contenuMail.getText());
                     startActivity(Intent.createChooser(email,"Envoyer par : "));
                 }
@@ -140,13 +139,6 @@ public class ContactFragment extends Fragment {
         }else{
             ((TextView) spinnerObjetMail.getChildAt(0)).setTextColor(ContextCompat.getColor(getContext(), R.color.black));
         }
-        if(adresseMail.getText() == null || !isEmailValid(adresseMail.getText().toString())){
-            adresseMailTextInput.setErrorEnabled(true);
-            adresseMailTextInput.setError(getString(R.string.error_adresse_mail));
-            ok = false;
-        }else{
-            adresseMailTextInput.setError(null);
-        }
         if(contenuMail.getText() == null || contenuMail.getText().toString().equals("")){
             contenuTextInput.setErrorEnabled(true);
             contenuTextInput.setError(getString(R.string.error_contenu_mail));
@@ -158,25 +150,6 @@ public class ContactFragment extends Fragment {
         return ok;
     }
 
-    /**
-     * Verifie si il s'agit d'une adresse e-mail valide.
-     *
-     * @param email l'email a verifier
-     * @return boolean vrai si il s'agit d'un mail valide.
-     */
-    public static boolean isEmailValid(String email) {
-        boolean isValid = false;
-
-        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-        CharSequence inputStr = email;
-
-        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(inputStr);
-        if (matcher.matches()) {
-            isValid = true;
-        }
-        return isValid;
-    }
 
     @Override
     public void onAttach(Context context) {
