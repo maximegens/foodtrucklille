@@ -87,11 +87,11 @@ public class FoodTruckActivity extends AppCompatActivity{
         }else if(res != null){
             resID = res.getIdentifier(Constantes.PHOTO_NOT_AVAILABLE, "mipmap", getPackageName());
         }
-        if(fond != null){
+        if(fond != null && resID != 0){
             fond.setColorFilter(Color.RED, PorterDuff.Mode.LIGHTEN);
             fond.setImageDrawable(ContextCompat.getDrawable(this, resID));
+            Picasso.with(getBaseContext()).load(resID).fit().centerCrop().into(fond);
         }
-        Picasso.with(getBaseContext()).load(resID).fit().centerCrop().into(fond);
 
         // Creation du ViewPager
         tabLayout = (TabLayout) findViewById(R.id.tabs_food_truck);

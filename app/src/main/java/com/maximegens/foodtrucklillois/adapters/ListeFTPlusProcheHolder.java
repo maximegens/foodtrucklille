@@ -12,10 +12,12 @@ import android.widget.TextView;
 import com.google.android.gms.maps.model.LatLng;
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
+import com.maximegens.foodtrucklillois.network.Internet;
 import com.maximegens.foodtrucklillois.utils.AlertDialogFT;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
 import com.maximegens.foodtrucklillois.utils.Utils;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -58,14 +60,29 @@ class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
         // Affichage du logo.
         if(ft.getLogo() != null){
             int resID = res.getIdentifier(ft.getLogo() , "mipmap", context.getPackageName());
-            Picasso.with(context)
-                    .load(resID)
-                    .placeholder(R.drawable.progress_animation_loader)
-                    .error(R.mipmap.photonotavailable)
-                    .fit()
-                    .centerInside()
-                    .into(imageView);
+            if(resID != 0){
+                Picasso.with(context)
+                        .load(resID)
+                        .placeholder(R.drawable.progress_animation_loader)
+                        .error(R.mipmap.photonotavailable)
+                        .fit()
+                        .centerCrop()
+                        .into(imageView);
+            }else if(ft.getUrlLogo() != null && !ft.getUrlLogo().isEmpty() && Internet.isNetworkAvailable(context)){
+                // Récupératation en ligne
+                Picasso.with(context)
+                        .load(ft.getUrlLogo())
+                        .placeholder(R.drawable.progress_animation_loader)
+                        .error(R.mipmap.photonotavailable)
+                        .fit()
+                        .centerCrop()
+                        .into(imageView);
+            }else{
+                int photoNonAvailable = res.getIdentifier("photonotavailable" , "mipmap", context.getPackageName());
+                imageView.setImageResource(photoNonAvailable);
+            }
         }
+
 
         // Affichage de la distance entre l'utilisateur et le food truck le plsu proche.
         if(ft.getDistanceFromUser() == Constantes.FT_FERMER_DISTANCE && isBeforeLastOuverture){

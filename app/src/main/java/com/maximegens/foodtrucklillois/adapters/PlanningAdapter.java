@@ -16,6 +16,7 @@ import com.maximegens.foodtrucklillois.beans.AdresseFoodTruck;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.beans.PlanningFoodTruck;
 import com.maximegens.foodtrucklillois.interfaces.RecyclerViewPlanningListener;
+import com.maximegens.foodtrucklillois.network.Internet;
 import com.maximegens.foodtrucklillois.utils.GestionnaireHoraire;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -92,23 +93,28 @@ public class PlanningAdapter extends RecyclerView.Adapter<PlanningAdapter.ViewHo
 
             // Récupération du logo.
             if(ft.getLogo() != null){
-                holder.loader.setVisibility(View.VISIBLE);
                 int resID = context.getResources().getIdentifier(ft.getLogo() , "mipmap", context.getPackageName());
-                Picasso.with(context)
-                        .load(resID)
-                        .error(R.mipmap.photonotavailable)
-                        .fit()
-                        .centerInside()
-                        .into(holder.logoFt,new Callback() {
-                    @Override
-                    public void onSuccess() {
-                        holder.loader.setVisibility(View.GONE);
-                    }
-                    @Override
-                    public void onError() {
-                        holder.loader.setVisibility(View.GONE);
-                    }
-                });
+                if(resID != 0){
+                    Picasso.with(context)
+                            .load(resID)
+                            .placeholder(R.drawable.progress_animation_loader)
+                            .error(R.mipmap.photonotavailable)
+                            .fit()
+                            .centerCrop()
+                            .into(holder.logoFt);
+                }else if(ft.getUrlLogo() != null && !ft.getUrlLogo().isEmpty() && Internet.isNetworkAvailable(context)){
+                    // Récupératation en ligne
+                    Picasso.with(context)
+                            .load(ft.getUrlLogo())
+                            .placeholder(R.drawable.progress_animation_loader)
+                            .error(R.mipmap.photonotavailable)
+                            .fit()
+                            .centerCrop()
+                            .into(holder.logoFt);
+                }else{
+                    int photoNonAvailable = context.getResources().getIdentifier("photonotavailable" , "mipmap", context.getPackageName());
+                    holder.logoFt.setImageResource(photoNonAvailable);
+                }
             }
 
             holder.cardViewPlanning.setOnClickListener(new View.OnClickListener() {

@@ -57,6 +57,21 @@
                     android:layout_weight="2">
 
                     <TextView
+                        android:id="@+id/nom_ft_card_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?android:selectableItemBackground"
+                        android:paddingTop="3dp"
+                        android:paddingBottom="1dp"
+                        android:paddingLeft="5dp"
+                        android:fontFamily="sans-serif"
+                        android:textColor="#333"
+                        android:textSize="16sp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        />
+
+                    <TextView
                         android:id="@+id/ouverture_ft_card_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
