@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -30,6 +31,7 @@ class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
     private final Button go;
     private final TextView ouverture;
     private final TextView distance;
+    private ProgressBar loader;
     private final TextView horaireOuverture;
     private final ImageView imageView;
 
@@ -45,6 +47,7 @@ class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
         imageView = (ImageView) itemView.findViewById(R.id.logo_ft_plus_proche_card_view);
         ouverture = (TextView) itemView.findViewById(R.id.ouverture_ft_plus_proche_card_view);
         distance = (TextView) itemView.findViewById(R.id.ft_distance_plus_proche_tv);
+        loader = (ProgressBar) itemView.findViewById(R.id.loader_ft_plus_proche);
         horaireOuverture = (TextView) itemView.findViewById(R.id.horaireouverture_ft_plus_proche_card_view);
         go = (Button) itemView.findViewById(R.id.button_ft_go);
     }
@@ -55,6 +58,7 @@ class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
     public void bind(final FoodTruck ft,int position){
         textViewNom.setText(ft.getNom());
         Resources res = context.getResources();
+        loader.setVisibility(View.VISIBLE);
         boolean isBeforeLastOuverture = ft.isDateBeforeLastHoraireFermeture(GestionnaireHoraire.createCalendarToday());
 
         // Affichage du logo.
@@ -63,20 +67,36 @@ class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
             if(resID != 0){
                 Picasso.with(context)
                         .load(resID)
-                        .placeholder(R.drawable.progress_animation_loader)
                         .error(R.mipmap.photonotavailable)
                         .fit()
                         .centerCrop()
-                        .into(imageView);
+                        .into(imageView,new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                loader.setVisibility(View.GONE);
+                            }
+                            @Override
+                            public void onError() {
+                                loader.setVisibility(View.GONE);
+                            }
+                        });
             }else if(ft.getUrlLogo() != null && !ft.getUrlLogo().isEmpty() && Internet.isNetworkAvailable(context)){
                 // Récupératation en ligne
                 Picasso.with(context)
                         .load(ft.getUrlLogo())
-                        .placeholder(R.drawable.progress_animation_loader)
                         .error(R.mipmap.photonotavailable)
                         .fit()
                         .centerCrop()
-                        .into(imageView);
+                        .into(imageView,new Callback() {
+                            @Override
+                            public void onSuccess() {
+                                loader.setVisibility(View.GONE);
+                            }
+                            @Override
+                            public void onError() {
+                                loader.setVisibility(View.GONE);
+                            }
+                        });
             }else{
                 int photoNonAvailable = res.getIdentifier("photonotavailable" , "mipmap", context.getPackageName());
                 imageView.setImageResource(photoNonAvailable);

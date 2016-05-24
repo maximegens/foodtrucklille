@@ -66,6 +66,8 @@ public class PlanningAdapter extends RecyclerView.Adapter<PlanningAdapter.ViewHo
             final FoodTruck ft = lesFts.get(position);
             List<AdresseFoodTruck> listeAdresses = new ArrayList<>();
 
+            holder.loader.setVisibility(View.VISIBLE);
+
             // Selection du bon numéro du jour si il l'utilisateur a choisi "aujourd'hui"
             if(numJour == 0){
                 numJour = GestionnaireHoraire.getNumeroJourDansLaSemaine();
@@ -97,20 +99,36 @@ public class PlanningAdapter extends RecyclerView.Adapter<PlanningAdapter.ViewHo
                 if(resID != 0){
                     Picasso.with(context)
                             .load(resID)
-                            .placeholder(R.drawable.progress_animation_loader)
                             .error(R.mipmap.photonotavailable)
                             .fit()
                             .centerCrop()
-                            .into(holder.logoFt);
+                            .into(holder.logoFt,new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    holder.loader.setVisibility(View.GONE);
+                                }
+                                @Override
+                                public void onError() {
+                                    holder.loader.setVisibility(View.GONE);
+                                }
+                            });
                 }else if(ft.getUrlLogo() != null && !ft.getUrlLogo().isEmpty() && Internet.isNetworkAvailable(context)){
                     // Récupératation en ligne
                     Picasso.with(context)
                             .load(ft.getUrlLogo())
-                            .placeholder(R.drawable.progress_animation_loader)
                             .error(R.mipmap.photonotavailable)
                             .fit()
                             .centerCrop()
-                            .into(holder.logoFt);
+                            .into(holder.logoFt,new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    holder.loader.setVisibility(View.GONE);
+                                }
+                                @Override
+                                public void onError() {
+                                    holder.loader.setVisibility(View.GONE);
+                                }
+                            });
                 }else{
                     int photoNonAvailable = context.getResources().getIdentifier("photonotavailable" , "mipmap", context.getPackageName());
                     holder.logoFt.setImageResource(photoNonAvailable);
