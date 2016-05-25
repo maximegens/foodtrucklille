@@ -1,6 +1,8 @@
 package com.maximegens.foodtrucklillois.utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
@@ -17,9 +19,9 @@ import java.util.List;
  */
 public class GestionJsonAPI {
 
-    private final Context ctx;
+    private final Activity ctx;
 
-    public GestionJsonAPI(Context ctx){
+    public GestionJsonAPI(Activity ctx){
         this.ctx = ctx;
     }
 
@@ -33,6 +35,7 @@ public class GestionJsonAPI {
             InputStream is = ctx.getAssets().open(Constantes.FICHIER_JSON_ASSET);
             int size = is.available();
             byte[] buffer = new byte[size];
+            is.read(buffer);
             is.close();
             json = new String(buffer, "UTF-8");
         } catch (IOException ex) {
@@ -49,7 +52,12 @@ public class GestionJsonAPI {
      */
     public FoodTruckApp parseJsonToFTApp(String json){
         if(json != null){
-            return new Gson().fromJson(json, FoodTruckApp.class);
+            try {
+                return new Gson().fromJson(json, FoodTruckApp.class);
+            }catch (Exception e){
+                Log.e("GSON Format","Le fichier JSON est incorrecte");
+                return null;
+            }
         }else{
             return null;
         }

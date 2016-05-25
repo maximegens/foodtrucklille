@@ -22,7 +22,6 @@ import com.maximegens.foodtrucklillois.R;
 public class AProposFragment extends Fragment {
 
     public static String TITLE = "APropos";
-    private AdView mAdView;
 
     /**
      * Creation du Fragment.
@@ -45,9 +44,6 @@ public class AProposFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         App.tracker.setScreenName(getString(R.string.ga_title_a_propos));
-        mAdView = (AdView) view.findViewById(R.id.adView_banner_apropos);
-
-        loadBanner();
 
         TextView lienEServices = (TextView) view.findViewById(R.id.lien_e_service);
         final String url = "http://portail.fil.univ-lille1.fr/portail/index.php?dipl=MInfo&sem=ESERVICE&ue=ACCUEIL&label=Pr%C3%A9sentation";
@@ -66,15 +62,6 @@ public class AProposFragment extends Fragment {
 
     }
 
-    /**
-     * Pour charger la petite bannière
-     */
-    private void loadBanner() {
-        AdRequest adRequest = new AdRequest.Builder().build();
-        // Ici on commence à afficher notre publicité
-        mAdView.loadAd(adRequest);
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -88,9 +75,6 @@ public class AProposFragment extends Fragment {
     // Quand on quitte notre activity
     @Override
     public void onPause() {
-        if (mAdView != null) {
-            mAdView.pause();
-        }
         super.onPause();
     }
 
@@ -98,17 +82,11 @@ public class AProposFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (mAdView != null) {
-            mAdView.resume();
-        }
     }
 
     // Avant que notre activity ne soit détruite
     @Override
     public void onDestroy() {
-        if (mAdView != null) {
-            mAdView.destroy();
-        }
         super.onDestroy();
     }
 
