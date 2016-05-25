@@ -11,7 +11,7 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
- * Created by Maxime on 25/02/2016.
+ *  Bean représentant la plage d'horaires du Food Truck.
  */
 public class PlageHoraireFoodTruck implements Parcelable{
 
@@ -22,10 +22,6 @@ public class PlageHoraireFoodTruck implements Parcelable{
 
     public List<AdresseFoodTruck> getAdresses() {
         return adresses;
-    }
-
-    public void setAdresses(List<AdresseFoodTruck> adresses) {
-        this.adresses = adresses;
     }
 
     @Override
@@ -68,17 +64,10 @@ public class PlageHoraireFoodTruck implements Parcelable{
         return horaireOuverture;
     }
 
-    public void setHoraireOuverture(String horaireOuverture) {
-        this.horaireOuverture = horaireOuverture;
-    }
-
     public String getHoraireFermeture() {
         return horaireFermeture;
     }
 
-    public void setHoraireFermeture(String horaireFermeture) {
-        this.horaireFermeture = horaireFermeture;
-    }
 
     /**
      * Donne l'heure d'ouverture en string formatté.

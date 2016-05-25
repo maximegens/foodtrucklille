@@ -51,11 +51,8 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
     private LocationManager locationManager;
     private LinearLayout linearActiveGPS;
     private LinearLayout linearPlusProcheEnCours;
-    private Button activateGPS;
-    private ListeFTAdapter listeFTAdapter;
     private RecyclerView recyclerViewListeFT;
     private GridLayoutManagerFoodTruck layoutManagerFT;
-    private Activity activity;
 
     /**
      * Creation du Fragment.
@@ -90,14 +87,14 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        activity = getActivity();
+        Activity activity = getActivity();
 
         activity.setTitle(getString(R.string.title_liste_food_truck));
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         layoutManagerFT = new GridLayoutManagerFoodTruck(getContext());
         recyclerViewListeFT = (RecyclerView) view.findViewById(R.id.recycler_view_liste_ft);
         linearActiveGPS = (LinearLayout) view.findViewById(R.id.linear_gps_desactive);
-        activateGPS = (Button) view.findViewById(R.id.button_activer_gps);
+        Button activateGPS = (Button) view.findViewById(R.id.button_activer_gps);
         linearPlusProcheEnCours = (LinearLayout) view.findViewById(R.id.linear_recherche_ft);
         recyclerViewListeFT.setHasFixedSize(true);
 
@@ -122,8 +119,8 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         recyclerViewListeFT.setLayoutManager(new GridLayoutManager(getContext(), nombreColonne));
 
         // Ajout des FTs interne dans l'adapters de la liste.
-        listeFTAdapter = new ListeFTAdapter(Constantes.lesFTs, getContext(), true);
-        recyclerViewListeFT.setAdapter(listeFTAdapter);
+        ListeFTAdapter listeFTAdapter1 = new ListeFTAdapter(Constantes.lesFTs, getContext(), true);
+        recyclerViewListeFT.setAdapter(listeFTAdapter1);
 
         // Mise a jour de la liste avec un affichage classique (true)
         ListeFTAdapter listeFTAdapter = new ListeFTAdapter(Constantes.lesFTs, activity,true);
@@ -156,23 +153,6 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
     public void onPause() {
         super.onPause();
         removeUpdatesLocation();
-    }
-
-    /**
-     * OnAttach.
-     * @param context le context.
-     */
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    /**
-     * OnDetach.
-     */
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     /**

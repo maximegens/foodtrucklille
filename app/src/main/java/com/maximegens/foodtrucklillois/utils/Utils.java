@@ -6,7 +6,7 @@ import android.content.res.Configuration;
 import java.text.DecimalFormat;
 
 /**
- * Created by Maxime on 30/03/2016.
+ * Classe utilitaires.
  */
 public class Utils {
 

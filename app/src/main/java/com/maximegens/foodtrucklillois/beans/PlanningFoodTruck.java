@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 
 /**
- * Created by Maxime on 25/02/2016.
+ * Bean représentant le planning du Food Truck.
  */
 public class PlanningFoodTruck implements Parcelable{
 
@@ -22,32 +22,12 @@ public class PlanningFoodTruck implements Parcelable{
         return nomJour;
     }
 
-    public void setNomJour(String nomJour) {
-        this.nomJour = nomJour;
-    }
-
-    public int getNumJour() {
-        return numJour;
-    }
-
-    public void setNumJour(int numJour) {
-        this.numJour = numJour;
-    }
-
     public PlageHoraireFoodTruck getMidi() {
         return midi;
     }
 
-    public void setMidi(PlageHoraireFoodTruck midi) {
-        this.midi = midi;
-    }
-
     public PlageHoraireFoodTruck getSoir() {
         return soir;
-    }
-
-    public void setSoir(PlageHoraireFoodTruck soir) {
-        this.soir = soir;
     }
 
 

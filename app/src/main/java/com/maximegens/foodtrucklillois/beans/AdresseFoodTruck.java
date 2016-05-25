@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by Maxime on 25/02/2016.
+ * Bean représentant les adresses du food truck.
  */
 public class AdresseFoodTruck implements Parcelable{
 
@@ -25,25 +25,10 @@ public class AdresseFoodTruck implements Parcelable{
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    public String getMap() {
-        return map;
-    }
-
-    public void setMap(String map) {
-        this.map = map;
-    }
-
     public String getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
 
     @Override
     public int describeContents() {

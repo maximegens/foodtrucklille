@@ -69,11 +69,11 @@ public class ListeFTAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         if(holder.getItemViewType() == 0 && !isAffichageClassique){
             ListeFTPlusProcheHolder holderFirst = (ListeFTPlusProcheHolder) holder;
-            holderFirst.bind(ft,position);
+            holderFirst.bind(ft);
 
         }else{
             ListeFTHolder holderFT = (ListeFTHolder) holder;
-            holderFT.bind(ft,position,isAffichageClassique);
+            holderFT.bind(ft);
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,10 +99,6 @@ public class ListeFTAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void setFTs(List<FoodTruck> fts) {
         lesFT = new ArrayList<>(fts);
         notifyDataSetChanged();
-    }
-
-    public boolean isAffichageClassique() {
-        return isAffichageClassique;
     }
 
     public void setIsAffichageClassique(boolean isAffichageClassique) {

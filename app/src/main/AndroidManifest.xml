@@ -42,6 +42,16 @@
             android:name=".MainActivity"
             android:label="@string/title_main_activity"
             android:theme="@style/MyMaterialTheme">
+
+            <intent-filter android:label="@string/filter_title_food_truck">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="http"
+                    android:host="recipe-app.com"
+                    android:pathPrefix="/recipes" />
+            </intent-filter>
+
         </activity>
 
         <activity
@@ -57,10 +67,6 @@
         <!-- Les Broadcast Receiver -->
         <receiver
             android:name="com.maximegens.foodtrucklillois.broadcastReceiver.NetworkBroadcast">
-            <intent-filter android:priority="100">
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
-            </intent-filter>
         </receiver>
 
 

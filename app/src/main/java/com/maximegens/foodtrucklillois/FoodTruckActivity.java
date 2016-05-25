@@ -31,8 +31,6 @@ public class FoodTruckActivity extends AppCompatActivity{
 
     public static final String KEY_FOODTRUCK_SELECTIONNER = "FoodTruckSelectionner";
     private FoodTruck ft;
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
     private FloatingActionButton fabFavorite;
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private AppBarLayout appBarLayout;
@@ -94,40 +92,43 @@ public class FoodTruckActivity extends AppCompatActivity{
         }
 
         // Creation du ViewPager
-        tabLayout = (TabLayout) findViewById(R.id.tabs_food_truck);
-        viewPager = (ViewPager) findViewById(R.id.viewpager_food_truck);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs_food_truck);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager_food_truck);
         setupViewPager(viewPager);
-        tabLayout.setupWithViewPager(viewPager);
-
-        viewPager.addOnPageChangeListener (new ViewPager.OnPageChangeListener () {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-            @Override
-            public void onPageSelected(int position) {
-                if(position == 2){
-                    fabFavorite.setVisibility(View.GONE);
-
-                    // On replie l'appBarLayout et on block son dépliage
-                    if(appBarLayout != null){
-                        appBarLayout.setExpanded(false, true);
-                        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
-                        AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
-                        behavior.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
-                            @Override
-                            public boolean canDrag(@NonNull AppBarLayout appBarLayout) {
-                                return false;
-                            }
-                        });
-                    }
-                }else{
-                    fabFavorite.setVisibility(View.VISIBLE);
+        if(tabLayout != null){
+            tabLayout.setupWithViewPager(viewPager);
+        }
+        if(viewPager != null){
+            viewPager.addOnPageChangeListener (new ViewPager.OnPageChangeListener () {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 }
-            }
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
+                @Override
+                public void onPageSelected(int position) {
+                    if(position == 2){
+                        fabFavorite.setVisibility(View.GONE);
+
+                        // On replie l'appBarLayout et on block son dépliage
+                        if(appBarLayout != null){
+                            appBarLayout.setExpanded(false, true);
+                            CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
+                            AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
+                            behavior.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
+                                @Override
+                                public boolean canDrag(@NonNull AppBarLayout appBarLayout) {
+                                    return false;
+                                }
+                            });
+                        }
+                    }else{
+                        fabFavorite.setVisibility(View.VISIBLE);
+                    }
+                }
+                @Override
+                public void onPageScrollStateChanged(int state) {
+                }
+            });
+        }
 
     }
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Maxime on 25/02/2016.
+ * Bean principale contenant l'ensemble des beans.
  */
 public class FoodTruckApp {
 
@@ -14,7 +14,4 @@ public class FoodTruckApp {
         return villes;
     }
 
-    public void setVilles(List<Ville> villes) {
-        this.villes = villes;
-    }
 }

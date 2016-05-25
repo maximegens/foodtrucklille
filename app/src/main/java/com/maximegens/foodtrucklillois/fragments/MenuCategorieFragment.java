@@ -1,7 +1,6 @@
 package com.maximegens.foodtrucklillois.fragments;
 
 
-import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,10 +25,6 @@ import java.util.List;
 public class MenuCategorieFragment extends Fragment {
 
     public static final String KEY_CAT_PLAT = "CategoriePlat";
-    private TextView informationMenu;
-    private TextView descriptionMenu;
-    private RecyclerView recyclerViewMenu;
-    private ListeCatPlatAdapter adapterListeCat;
     private FoodTruck ft = null;
     public static final String TAG_MENU_DETAIL_FRAGMENT = "MenuCategorieFragment";
 
@@ -56,9 +51,9 @@ public class MenuCategorieFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        recyclerViewMenu = (RecyclerView) view.findViewById(R.id.recyclerView_menu);
-        informationMenu = (TextView) view.findViewById(R.id.information_menu);
-        descriptionMenu = (TextView) view.findViewById(R.id.description_menu);
+        RecyclerView recyclerViewMenu = (RecyclerView) view.findViewById(R.id.recyclerView_menu);
+        TextView informationMenu = (TextView) view.findViewById(R.id.information_menu);
+        TextView descriptionMenu = (TextView) view.findViewById(R.id.description_menu);
         recyclerViewMenu.setHasFixedSize(true);
 
         if(getArguments() != null){
@@ -91,7 +86,7 @@ public class MenuCategorieFragment extends Fragment {
         }
 
         // Ajout des categories à la liste.
-        adapterListeCat = new ListeCatPlatAdapter(listCatPlat,getParentFragment());
+        ListeCatPlatAdapter adapterListeCat = new ListeCatPlatAdapter(listCatPlat, getParentFragment());
         recyclerViewMenu.setAdapter(adapterListeCat);
 
     }
@@ -110,16 +105,6 @@ public class MenuCategorieFragment extends Fragment {
      */
     private boolean existInformationMenu() {
         return ft.getMenu() != null && ft.getMenu().getInformation() != null && !ft.getMenu().getInformation().isEmpty();
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
 

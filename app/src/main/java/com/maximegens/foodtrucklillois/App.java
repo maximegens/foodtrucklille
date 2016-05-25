@@ -10,14 +10,13 @@ import com.google.android.gms.analytics.Tracker;
  */
 public class App extends Application {
 
-    private static GoogleAnalytics analytics;
     public static Tracker tracker;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        analytics = GoogleAnalytics.getInstance(this);
+        GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
 
         tracker = analytics.newTracker(getString(R.string.id_google_analytics));
 

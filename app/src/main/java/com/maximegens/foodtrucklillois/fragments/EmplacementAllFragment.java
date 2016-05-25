@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +51,6 @@ import java.util.Set;
 public class EmplacementAllFragment extends Fragment implements OnMapReadyCallback, AdapterView.OnItemSelectedListener {
 
     private ArrayAdapter<FoodTruck> adapterFT;
-    private ArrayAdapter<CharSequence> adapterJour;
     private SupportMapFragment map;
     private TextView noConnexion;
     private int jourSelection;
@@ -99,7 +99,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
 
         // Creation du spinner pour la liste des jours.
         spinnerMapJour = (Spinner) view.findViewById(R.id.spinner_map_fts_jour);
-        adapterJour = ArrayAdapter.createFromResource(getContext(), R.array.semaine_array_jour, R.layout.layout_drop_title_black);
+        ArrayAdapter<CharSequence> adapterJour = ArrayAdapter.createFromResource(getContext(), R.array.semaine_array_jour, R.layout.layout_drop_title_black);
         adapterJour.setDropDownViewResource(R.layout.layout_drop_list);
         spinnerMapJour.setAdapter(adapterJour);
         jourActuel = GestionnaireHoraire.getNumeroJourDansLaSemaine();
@@ -153,16 +153,6 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
         spinnerMap.setVisibility(View.VISIBLE);
         spinnerMapJour.setVisibility(View.VISIBLE);
         map.getMapAsync(this);
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     @Override
@@ -376,7 +366,10 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
                     ImageView image = new ImageView(getActivity());
                     int res = getResources().getIdentifier(ft.getLogo(),"mipmap", getContext().getPackageName());
                     image.setImageResource(res);
-                    int newHeight = getActivity().getWindowManager().getDefaultDisplay().getHeight() / 20;
+
+                    DisplayMetrics displaymetrics = new DisplayMetrics();
+                    getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+                    int newHeight = displaymetrics.heightPixels /20;
                     int orgWidth = image.getDrawable().getIntrinsicWidth();
                     int orgHeight = image.getDrawable().getIntrinsicHeight();
                     Double taille = Math.floor((orgWidth * newHeight) / orgHeight);

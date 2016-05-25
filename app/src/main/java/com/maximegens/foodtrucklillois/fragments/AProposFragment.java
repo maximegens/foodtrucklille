@@ -1,7 +1,6 @@
 package com.maximegens.foodtrucklillois.fragments;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,16 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
 import com.maximegens.foodtrucklillois.App;
 import com.maximegens.foodtrucklillois.R;
 
 
 public class AProposFragment extends Fragment {
-
-    public static String TITLE = "APropos";
 
     /**
      * Creation du Fragment.
@@ -59,35 +53,7 @@ public class AProposFragment extends Fragment {
         });
 
         getActivity().setTitle(getString(R.string.title_a_propos));
-
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
-    // Quand on quitte notre activity
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    // Quand on retourne sur notre activity
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    // Avant que notre activity ne soit détruite
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
 
 }

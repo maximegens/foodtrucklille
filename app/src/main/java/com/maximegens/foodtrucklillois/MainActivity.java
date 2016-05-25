@@ -33,9 +33,7 @@ import com.maximegens.foodtrucklillois.utils.Constantes;
  */
 public class MainActivity extends AppCompatActivity implements RecyclerViewListeFTListener, RecyclerViewPlanningListener {
 
-    private NavigationView nav;
     private DrawerLayout drawerLayout;
-    private Toolbar toolbar;
     private Context context;
     private int referenceFragment;
 
@@ -71,16 +69,18 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
         }
 
         // Recuperation de la toolbar
-        toolbar = (Toolbar) findViewById(R.id.toolbar_list_ft);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_list_ft);
 
         // Récuperation du NavigationView
-        nav = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView nav = (NavigationView) findViewById(R.id.nav_view);
 
         // Récuperation du DrawerLayout
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        View hView =  nav.getHeaderView(0);
-        TextView headerSubTitle = (TextView) hView.findViewById(R.id.header_sub_title);
-        headerSubTitle.setText("Version " + getString(R.string.app_version));
+        if(nav != null){
+            View hView =  nav.getHeaderView(0);
+            TextView headerSubTitle = (TextView) hView.findViewById(R.id.header_sub_title);
+            headerSubTitle.setText(getString(R.string.version_display) + getString(R.string.app_version));
+        }
 
         // Definition de la toolbar en tant qu'actionBar
         setSupportActionBar(toolbar);
@@ -89,24 +89,18 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
             getSupportActionBar().setHomeButtonEnabled(true);
         }
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
+        if(toolbar != null){
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    drawerLayout.openDrawer(GravityCompat.START);
+                }
+            });
+        }
 
         // Définition du ActionBarDrawerToggle.
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer) {
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-            }
 
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-            }
         };
 
         //Setting the actionbarToggle to drawer layout
@@ -126,27 +120,29 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
         }
 
         // Déclaration des clics sur le drawer
-        nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
+        if(nav != null){
+            nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(MenuItem menuItem) {
 
-                // On passe l'item cliqué en mode checked, sinon on le retire.
-                if (menuItem.isChecked()) {
-                    menuItem.setChecked(false);
-                } else {
-                    menuItem.setChecked(true);
+                    // On passe l'item cliqué en mode checked, sinon on le retire.
+                    if (menuItem.isChecked()) {
+                        menuItem.setChecked(false);
+                    } else {
+                        menuItem.setChecked(true);
+                    }
+                    // Fermeture du drawer aprés le clique.
+                    drawerLayout.closeDrawers();
+
+                    // Récupére la référence à l'item du menu sélectionné.
+                    referenceFragment = menuItem.getItemId();
+
+                    // A appel le bon fragment en fonction de l'item cliqué.
+                    return openFragment(referenceFragment);
+
                 }
-                // Fermeture du drawer aprés le clique.
-                drawerLayout.closeDrawers();
-
-                // Récupére la référence à l'item du menu sélectionné.
-                referenceFragment = menuItem.getItemId();
-
-                // A appel le bon fragment en fonction de l'item cliqué.
-                return openFragment(referenceFragment);
-
-            }
-        });
+            });
+        }
 
 
     }
@@ -227,7 +223,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
     public void onBackPressed(){
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
+        if (drawer != null && drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             AlertDialog.Builder builder =

@@ -14,6 +14,7 @@
     <string name="adresse_mail_developpeur"><u>maximegens.developpement@gmail.com</u></string>
 
     <!-- String globaux-->
+    <string name="filter_title_food_truck">Food Truck</string>
     <string name="fermer">Fermé</string>
     <string name="fermer_today">Fermé aujourd\'hui</string>
     <string name="fermer_ouverture_a">Fermé : ouverture à\u0020</string>
@@ -23,6 +24,7 @@
     <string name="prix_en_menu">Prix en menu</string>
     <string name="exit_app">Quitter l\'application</string>
     <string name="msg_exit">Voulez-vous quitter l\'application ?</string>
+    <string name="version_display">Version </string>
 
     <!-- String SplashScreen-->
     <string name="splash_recup_ft">Récupération de la liste des Foods Truck en cours.</string>
@@ -79,7 +81,7 @@
     <string name="objet_contact">Objet</string>
     <string name="formulaire_contact">Formulaire de contact</string>
     <string name="mail_dev_contact">Me contacter directement par mail</string>
-    <string name="contenu_contact">Indiquez votre demande...</string>
+    <string name="contenu_contact">Indiquez votre demande…</string>
     <string name="button_envoyer">Envoyer</string>
     <string name="error_adresse_mail">Adresse mail incorrecte</string>
     <string name="error_contenu_mail">Message vide ou incorrecte</string>

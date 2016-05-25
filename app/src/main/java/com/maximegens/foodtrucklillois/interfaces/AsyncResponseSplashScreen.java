@@ -5,7 +5,7 @@ import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import java.util.List;
 
 /**
- * Created by Maxime on 23/04/2016.
+ * Asynctask de reponse à l'ecran splashscreen lorsque le chargement est terminé.
  */
 public interface AsyncResponseSplashScreen {
 

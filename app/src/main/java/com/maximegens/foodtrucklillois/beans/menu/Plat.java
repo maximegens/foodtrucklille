@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by a627520 on 04/03/2016.
+ * Bean représentant un plat du Food Truck.
  */
 public class Plat implements Parcelable {
 

@@ -178,13 +178,4 @@ public class PlanningAdapter extends RecyclerView.Adapter<PlanningAdapter.ViewHo
         }
     }
 
-    /**
-     * Modification des foods trucks dans la liste.
-     * @param fts les foods trucks.
-     */
-    public void setFTs(List<FoodTruck> fts) {
-        lesFts = new ArrayList<>(fts);
-        notifyDataSetChanged();
-    }
-
 }

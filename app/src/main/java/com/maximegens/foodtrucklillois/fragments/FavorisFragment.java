@@ -1,7 +1,6 @@
 package com.maximegens.foodtrucklillois.fragments;
 
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -28,10 +27,6 @@ import java.util.Map;
 
 public class FavorisFragment extends Fragment {
 
-    private ListeFTAdapter listeFTAdapter;
-    private RecyclerView recyclerViewFavoris;
-    private TextView aucunFavoris;
-
     /**
      * Creation du Fragment.
      * @return Une instance de FavorisFoodTruckFragment.
@@ -56,12 +51,12 @@ public class FavorisFragment extends Fragment {
 
         getActivity().setTitle(getString(R.string.title_favoris));
 
-        recyclerViewFavoris = (RecyclerView) view.findViewById(R.id.recycler_view_liste_ft_favorite);
-        aucunFavoris = (TextView) view.findViewById(R.id.aucun_favoris);
+        RecyclerView recyclerViewFavoris = (RecyclerView) view.findViewById(R.id.recycler_view_liste_ft_favorite);
+        TextView aucunFavoris = (TextView) view.findViewById(R.id.aucun_favoris);
         recyclerViewFavoris.setHasFixedSize(true);
 
         // Creation de l'adapter.
-        listeFTAdapter = new ListeFTAdapter(null, getContext(),true);
+        ListeFTAdapter listeFTAdapter = new ListeFTAdapter(null, getContext(), true);
         recyclerViewFavoris.setAdapter(listeFTAdapter);
 
         // Récupération des Foods Trucks mis en favoris.
@@ -96,16 +91,6 @@ public class FavorisFragment extends Fragment {
             recyclerViewFavoris.setVisibility(View.VISIBLE);
         }
 
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
 }

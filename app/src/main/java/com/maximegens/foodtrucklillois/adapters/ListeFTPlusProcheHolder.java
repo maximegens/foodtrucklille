@@ -31,7 +31,7 @@ class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
     private final Button go;
     private final TextView ouverture;
     private final TextView distance;
-    private ProgressBar loader;
+    private final ProgressBar loader;
     private final TextView horaireOuverture;
     private final ImageView imageView;
 
@@ -55,7 +55,7 @@ class ListeFTPlusProcheHolder extends RecyclerView.ViewHolder {
     /**
      * Fonction pour remplir la cellule en fonction d'un FoodTruck.
      */
-    public void bind(final FoodTruck ft,int position){
+    public void bind(final FoodTruck ft){
         textViewNom.setText(ft.getNom());
         Resources res = context.getResources();
         loader.setVisibility(View.VISIBLE);

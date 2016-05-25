@@ -50,7 +50,7 @@ class ListeFTHolder extends RecyclerView.ViewHolder {
     /**
      * Fonction pour remplir la cellule en fonction d'un FoodTruck.
      */
-    public void bind(FoodTruck ft,int position,boolean rechercheEnCours){
+    public void bind(FoodTruck ft){
 
         Resources res = context.getResources();
 

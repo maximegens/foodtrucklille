@@ -31,9 +31,6 @@ import java.util.List;
 public class SplashScreenActivity extends AppCompatActivity implements AsyncResponseSplashScreen{
 
     public static final String DATA_A_JOUR = "dataAjour";
-    private ProgressBar loader;
-    private TextView indicationLoarder;
-    private Context context;
     private AdView mAdView;
     private InterstitialAd mInterstitialAd;
 
@@ -44,17 +41,19 @@ public class SplashScreenActivity extends AppCompatActivity implements AsyncResp
 
         App.tracker.setScreenName(getString(R.string.ga_title_splashscreen));
 
-        context = getApplicationContext();
+        Context context = getApplicationContext();
 
         // Téléchargement et affichage de la publicité
         //TODO reactiver pub
         loadPub(context);
 
-        loader = (ProgressBar) findViewById(R.id.loader_splash_screen);
-        indicationLoarder = (TextView) findViewById(R.id.text_view_chargement_splashscreen);
+        ProgressBar loader = (ProgressBar) findViewById(R.id.loader_splash_screen);
+        TextView indicationLoarder = (TextView) findViewById(R.id.text_view_chargement_splashscreen);
 
         // Changement de la couleur du loader
-        loader.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context,R.color.white), android.graphics.PorterDuff.Mode.SRC_IN);
+        if(loader != null && loader.getIndeterminateDrawable() != null){
+            loader.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(context,R.color.white), android.graphics.PorterDuff.Mode.SRC_IN);
+        }
 
         // Lancement d'une asynstack pour récupérer les Foods trucks.
         RetreiveJSONListeFTSplash retreiveJSONListeFTSplash = new RetreiveJSONListeFTSplash(this, loader, indicationLoarder);

@@ -12,7 +12,6 @@ public class Constantes {
 
     public static List<FoodTruck> lesFTs = new ArrayList<>();
     public static final String URL_SERVEUR = "https://dl.dropboxusercontent.com";
-    public static String URL_SERVEUR_FT = "https://dl.dropboxusercontent.com/u/61408511/FoodTrucksApp.json";
     public static final String PHOTO_NOT_AVAILABLE = "photonotavailable";
     public static final String FICHIER_JSON_ASSET = "FoodTrucksApp.json";
     public static final String FAVORITE_SHAREPREFERENCE = "FAVORITE";

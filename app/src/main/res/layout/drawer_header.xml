@@ -28,7 +28,6 @@
     <TextView
         android:id="@+id/header_sub_title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="version" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by a627520 on 04/03/2016.
+ * Bean représentant le menu d'un food truck.
  */
 public class Menu implements Parcelable{
 

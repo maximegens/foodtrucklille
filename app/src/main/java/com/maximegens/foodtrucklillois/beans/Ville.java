@@ -3,7 +3,7 @@ package com.maximegens.foodtrucklillois.beans;
 import java.util.List;
 
 /**
- * Created by Maxime on 25/02/2016.
+ * Bean représentant une ville contenant un ensemble de Food Truck.
  */
 public class Ville {
 

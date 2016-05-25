@@ -23,10 +23,7 @@ import java.util.List;
  */
 public class MenuDetailFragment extends Fragment {
 
-    private Button buttonRetourMenu;
     private CategoriePlat categoriePlat;
-    private RecyclerView recyclerViewPlat;
-    private ListePlatMenuAdapter adapterPlatMenu;
     private RecyclerViewListePlatListener callback;
     private List<Plat> lesPlats = new ArrayList<>();
     public static final String TAG_MENU_DETAIL_FRAGMENT = "MenuDetailFragment";
@@ -52,8 +49,8 @@ public class MenuDetailFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        recyclerViewPlat = (RecyclerView)view.findViewById(R.id.recycler_view_plat_menu);
-        buttonRetourMenu = (Button)view.findViewById(R.id.button_retour_menu);
+        RecyclerView recyclerViewPlat = (RecyclerView) view.findViewById(R.id.recycler_view_plat_menu);
+        Button buttonRetourMenu = (Button) view.findViewById(R.id.button_retour_menu);
         callback = (RecyclerViewListePlatListener) getParentFragment();
 
         // Récuperation de la categorie selectionnée.
@@ -68,7 +65,7 @@ public class MenuDetailFragment extends Fragment {
 
         // Ajout des plats à la liste.
         recyclerViewPlat.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapterPlatMenu = new ListePlatMenuAdapter(lesPlats,getParentFragment());
+        ListePlatMenuAdapter adapterPlatMenu = new ListePlatMenuAdapter(lesPlats, getParentFragment());
         recyclerViewPlat.setAdapter(adapterPlatMenu);
 
         // Clique sur le button retour au menu

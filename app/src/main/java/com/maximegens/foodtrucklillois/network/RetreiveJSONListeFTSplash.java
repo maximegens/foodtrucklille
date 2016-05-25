@@ -31,7 +31,6 @@ public class RetreiveJSONListeFTSplash extends AsyncTask<Boolean, String, FoodTr
     private final ProgressBar loader;
     private final TextView indicationLoader;
     private final GestionJsonAPI apiJson;
-    private final Activity activity;
     private final Context context;
     private AsyncResponseSplashScreen responseAsynctask = null;
     private boolean isAJour;
@@ -42,12 +41,11 @@ public class RetreiveJSONListeFTSplash extends AsyncTask<Boolean, String, FoodTr
      * @param activity le activity.
      */
     public RetreiveJSONListeFTSplash(Activity activity, ProgressBar loader, TextView indicationLoader){
-        this.activity = activity;
         this.context = activity.getApplicationContext();
-        this.apiJson = new GestionJsonAPI(this.activity);
+        this.apiJson = new GestionJsonAPI(activity);
         this.loader = loader;
         this.indicationLoader = indicationLoader;
-        this.responseAsynctask = (AsyncResponseSplashScreen) this.activity;
+        this.responseAsynctask = (AsyncResponseSplashScreen) activity;
     }
 
 

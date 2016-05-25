@@ -71,64 +71,31 @@ public class FoodTruck implements Parcelable{
         return nom;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
 
     public String getSiteWeb() {
         return siteWeb;
     }
 
-    public void setSiteWeb(String siteWeb) {
-        this.siteWeb = siteWeb;
-    }
 
     public String getUrlPageFacebook() {
         return urlPageFacebook;
-    }
-
-    public void setUrlPageFacebook(String urlPageFacebook) {
-        this.urlPageFacebook = urlPageFacebook;
     }
 
     public String getDescriptionBreve() {
         return descriptionBreve;
     }
 
-    public void setDescriptionBreve(String descriptionBreve) {
-        this.descriptionBreve = descriptionBreve;
-    }
-
     public String getDescriptionLongue() {
         return descriptionLongue;
     }
 
-    public void setDescriptionLongue(String description) {
-        this.descriptionLongue = descriptionLongue;
-    }
 
     public String getGammeDePrixprix() {
         return gammeDePrixprix;
     }
 
-    public void setGammeDePrixprix(String gammeDePrixprix) {
-        this.gammeDePrixprix = gammeDePrixprix;
-    }
-
-    public String getTenueVestimentaire() {
-        return tenueVestimentaire;
-    }
-
-    public void setTenueVestimentaire(String tenueVestimentaire) {
-        this.tenueVestimentaire = tenueVestimentaire;
-    }
-
     public String getMoyensDePaiement() {
         return moyensDePaiement;
-    }
-
-    public void setMoyensDePaiement(String moyensDePaiement) {
-        this.moyensDePaiement = moyensDePaiement;
     }
 
     public String getServices() {
@@ -143,48 +110,24 @@ public class FoodTruck implements Parcelable{
         return specialites;
     }
 
-    public void setSpecialites(String specialites) {
-        this.specialites = specialites;
-    }
-
     public String getCuisine() {
         return cuisine;
-    }
-
-    public void setCuisine(String cuisine) {
-        this.cuisine = cuisine;
     }
 
     public String getTelephone() {
         return telephone;
     }
 
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getDateOuverture() {
         return dateOuverture;
     }
 
-    public void setDateOuverture(String dateOuverture) {
-        this.dateOuverture = dateOuverture;
-    }
-
     public String getServicePrive() {
         return servicePrive;
-    }
-
-    public void setServicePrive(String servicePrive) {
-        this.servicePrive = servicePrive;
     }
 
     public String getLogo() {
@@ -197,10 +140,6 @@ public class FoodTruck implements Parcelable{
 
     public String getUrlLogo() {
         return urlLogo;
-    }
-
-    public void setUrlLogo(String urlLogo) {
-        this.urlLogo = urlLogo;
     }
 
     public Menu getMenu() {

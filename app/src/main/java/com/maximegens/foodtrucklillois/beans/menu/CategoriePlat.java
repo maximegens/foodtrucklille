@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by a627520 on 04/03/2016.
+ * Bean représentant les catégories des plats du menu.
  */
 public class CategoriePlat implements Parcelable{
     private final String nomCategoriePlat;

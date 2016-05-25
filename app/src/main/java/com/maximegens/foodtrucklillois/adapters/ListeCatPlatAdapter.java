@@ -21,15 +21,13 @@ public class ListeCatPlatAdapter extends RecyclerView.Adapter<ListeCatPlatAdapte
 
     private final RecyclerViewListeCatePlatListener callback;
     private final List<CategoriePlat> lesCategories;
-    private final Fragment context;
 
     /**
      * Constructeur prenant en entrée une liste.
      */
     public ListeCatPlatAdapter(List<CategoriePlat> lesCategories, Fragment context) {
         this.lesCategories = lesCategories;
-        this.context = context;
-        this.callback = (RecyclerViewListeCatePlatListener) this.context;
+        this.callback = (RecyclerViewListeCatePlatListener) context;
     }
 
     /**

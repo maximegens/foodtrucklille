@@ -1,6 +1,5 @@
 package com.maximegens.foodtrucklillois.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
@@ -19,9 +18,9 @@ import java.util.List;
  */
 public class GestionJsonAPI {
 
-    private final Activity ctx;
+    private final Context ctx;
 
-    public GestionJsonAPI(Activity ctx){
+    public GestionJsonAPI(Context ctx){
         this.ctx = ctx;
     }
 

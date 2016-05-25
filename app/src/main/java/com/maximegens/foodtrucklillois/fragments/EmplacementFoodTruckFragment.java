@@ -52,7 +52,6 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
     public static final String TITLE = "Map";
     private TextView noConnexion;
     private RelativeLayout lienPageFacebook;
-    private Button buttonPageFacebook;
     private FoodTruck ft = null;
     private SupportMapFragment mapFragment;
     private static View view;
@@ -102,7 +101,7 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
 
         noConnexion = (TextView) view.findViewById(R.id.no_connexion_map);
         lienPageFacebook = (RelativeLayout) view.findViewById(R.id.lien_page_facebook);
-        buttonPageFacebook = (Button) view.findViewById(R.id.button_page_facebook);
+        Button buttonPageFacebook = (Button) view.findViewById(R.id.button_page_facebook);
         mapFragment = SupportMapFragment.newInstance();
 
         // On affiche la map si le device posséde une connexion internet.
@@ -184,16 +183,6 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
         noConnexion.setVisibility(View.GONE);
         lienPageFacebook.setVisibility(View.GONE);
         mapFragment.getMapAsync(this);
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     @Override

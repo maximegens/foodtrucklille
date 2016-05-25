@@ -1,7 +1,6 @@
 package com.maximegens.foodtrucklillois.fragments;
 
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -29,9 +28,7 @@ import java.util.List;
 
 public class PlanningFragment extends Fragment implements AdapterView.OnItemSelectedListener{
 
-    private Spinner spinnerJour;
     private RecyclerView recyclerViewPlanning;
-    private ArrayAdapter<CharSequence> adapterJourPlanning;
     private PlanningAdapter adapterPlanning;
 
     /**
@@ -58,10 +55,10 @@ public class PlanningFragment extends Fragment implements AdapterView.OnItemSele
 
         getActivity().setTitle(getString(R.string.title_planning));
 
-        spinnerJour = (Spinner) view.findViewById(R.id.spinner_planning);
+        Spinner spinnerJour = (Spinner) view.findViewById(R.id.spinner_planning);
         recyclerViewPlanning = (RecyclerView) view.findViewById(R.id.recycler_view_planning);
 
-        adapterJourPlanning = ArrayAdapter.createFromResource(getContext(), R.array.semaine_array_jour_today, R.layout.spinner_item_planning);
+        ArrayAdapter<CharSequence> adapterJourPlanning = ArrayAdapter.createFromResource(getContext(), R.array.semaine_array_jour_today, R.layout.spinner_item_planning);
         adapterJourPlanning.setDropDownViewResource(R.layout.layout_drop_list);
 
         adapterPlanning = new PlanningAdapter(new ArrayList<FoodTruck>(), getContext(), 0);
@@ -71,16 +68,6 @@ public class PlanningFragment extends Fragment implements AdapterView.OnItemSele
         spinnerJour.setAdapter(adapterJourPlanning);
         spinnerJour.setOnItemSelectedListener(this);
 
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
     }
 
     @Override

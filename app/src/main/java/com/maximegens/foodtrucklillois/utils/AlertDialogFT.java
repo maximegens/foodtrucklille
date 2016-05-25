@@ -11,7 +11,7 @@ import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 
 /**
- * Created by a627520 on 13/04/2016.
+ * Classe contenant les AlertDialog.
  */
 public class AlertDialogFT {
 
