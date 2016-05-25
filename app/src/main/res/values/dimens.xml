@@ -19,5 +19,7 @@
     <dimen name="title_screen">20sp</dimen>
     <dimen name="size_flat_button">12sp</dimen>
 
+    <dimen name="nav_header_height">160dp</dimen>
+
 
 </resources>

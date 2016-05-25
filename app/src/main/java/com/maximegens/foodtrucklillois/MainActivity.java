@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.fragments.AProposFragment;
@@ -72,11 +73,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
         // Recuperation de la toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar_list_ft);
 
-        // Récuperation du DrawerLayout
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
         // Récuperation du NavigationView
         nav = (NavigationView) findViewById(R.id.nav_view);
+
+        // Récuperation du DrawerLayout
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        View hView =  nav.getHeaderView(0);
+        TextView headerSubTitle = (TextView) hView.findViewById(R.id.header_sub_title);
+        headerSubTitle.setText("Version " + getString(R.string.app_version));
 
         // Definition de la toolbar en tant qu'actionBar
         setSupportActionBar(toolbar);
@@ -221,17 +225,23 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
 
     @Override
     public void onBackPressed(){
-        AlertDialog.Builder builder =
-                new AlertDialog.Builder(MainActivity.this, R.style.AppCompatAlertDialogStyle);
-        builder.setTitle(context.getString(R.string.exit_app));
-        builder.setMessage(context.getString(R.string.msg_exit));
-        builder.setPositiveButton(context.getString(R.string.oui), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                MainActivity.this.finish();
-            }
-        });
-        builder.setNegativeButton(context.getString(R.string.non), null);
-        builder.show();
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            AlertDialog.Builder builder =
+                    new AlertDialog.Builder(MainActivity.this, R.style.AppCompatAlertDialogStyle);
+            builder.setTitle(context.getString(R.string.exit_app));
+            builder.setMessage(context.getString(R.string.msg_exit));
+            builder.setPositiveButton(context.getString(R.string.oui), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    MainActivity.this.finish();
+                }
+            });
+            builder.setNegativeButton(context.getString(R.string.non), null);
+            builder.show();
+        }
     }
 }

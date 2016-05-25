@@ -10,6 +10,7 @@
     <string name="key_api_google_map">AIzaSyDASrlPPti8U3qoqoj8V0O3VVZ-cBCYwkc</string>
     <string name="id_google_analytics">UA-77292854-1</string>
     <string name="id_interstitiel">ca-app-pub-3668885861238587/2245159357</string>
+    <string name="id_banner_ap_propos">ca-app-pub-3668885861238587/2823471751</string>
     <string name="adresse_mail_developpeur"><u>maximegens.developpement@gmail.com</u></string>
 
     <!-- String globaux-->
@@ -126,8 +127,8 @@
 
     <!-- Strings du drawer -->
     <string name="drawer_liste_ft">Voir les Food Trucks</string>
-    <string name="drawer_planning">Planning de la semaine</string>
-    <string name="drawer_emplacement">Emplacement des Food Trucks</string>
+    <string name="drawer_planning">Planning des Food Trucks</string>
+    <string name="drawer_emplacement">Les Emplacements</string>
     <string name="drawer_favoris">Mes Favoris</string>
     <string name="drawer_a_propos">A propos</string>
     <string name="drawer_contact">Contact</string>

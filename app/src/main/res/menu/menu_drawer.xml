@@ -5,19 +5,24 @@
                 <item
                     android:id="@+id/navigation_item_liste_ft"
                     android:checked="false"
-                    android:title="@string/drawer_liste_ft" />
+                    android:title="@string/drawer_liste_ft"
+                    android:icon="@drawable/ic_ft_24dp"
+                    />
                 <item
                     android:id="@+id/navigation_item_planning"
                     android:checked="false"
-                    android:title="@string/drawer_planning" />
+                    android:title="@string/drawer_planning"
+                    android:icon="@drawable/ic_clock_24dp"/>
                 <item
                     android:id="@+id/navigation_item_emplacement"
                     android:checked="false"
-                    android:title="@string/drawer_emplacement" />
+                    android:title="@string/drawer_emplacement"
+                    android:icon="@drawable/ic_emplacement_24dp"/>
                 <item
                     android:id="@+id/navigation_item_favori"
                     android:checked="false"
-                    android:title="@string/drawer_favoris" />
+                    android:title="@string/drawer_favoris"
+                    android:icon="@drawable/ic_grade_24dp"/>
         </group>
 
     <group
@@ -26,11 +31,13 @@
         <item
             android:id="@+id/navigation_item_contact"
             android:checked="false"
-            android:title="@string/drawer_contact" />
+            android:title="@string/drawer_contact"
+            android:icon="@drawable/ic_send_24dp"/>
         <item
             android:id="@+id/navigation_item_a_propos"
             android:checked="false"
-            android:title="@string/drawer_a_propos" />
+            android:title="@string/drawer_a_propos"
+            android:icon="@drawable/ic_a_propos_24dp"/>
 
     </group>
 </menu>

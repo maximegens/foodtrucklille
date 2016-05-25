@@ -2,6 +2,7 @@
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -219,6 +220,15 @@
                 android:text="@string/copyright"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/black"/>
+
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adView_banner_apropos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                ads:adSize="BANNER"
+                ads:adUnitId="@string/id_banner_ap_propos"/>
 
         </LinearLayout>
 
