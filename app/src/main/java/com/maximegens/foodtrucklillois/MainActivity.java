@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
         if(nav != null){
             View hView =  nav.getHeaderView(0);
             TextView headerSubTitle = (TextView) hView.findViewById(R.id.header_sub_title);
-            headerSubTitle.setText(getString(R.string.version_display) + getString(R.string.app_version));
+            headerSubTitle.setText(getString(R.string.version_display) +" "+ getString(R.string.app_version));
         }
 
         // Definition de la toolbar en tant qu'actionBar
