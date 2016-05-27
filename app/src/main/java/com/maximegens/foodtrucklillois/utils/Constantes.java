@@ -35,7 +35,7 @@ public class Constantes {
     public static final String SOIR = "soir";
     public static final String FERMER = "Fermé";
     public static final String KM = "km";
-    public static final String TOUS_FT = "Tous les food trucks";
+    public static final String TOUS_FT = "Tous les Food Trucks";
     public static final String ET = " et ";
     public static final float FT_FERMER_DISTANCE = 0;
 

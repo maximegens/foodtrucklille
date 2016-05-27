@@ -36,6 +36,7 @@ public class MenuFoodTruckFragment extends Fragment implements RecyclerViewListe
      */
     public static MenuFoodTruckFragment newInstance(FoodTruck ft) {
         MenuFoodTruckFragment fragment = new MenuFoodTruckFragment();
+        fragment.getTag();
         Bundle args = new Bundle();
         args.putParcelable(FoodTruckActivity.KEY_FOODTRUCK_SELECTIONNER, ft);
         fragment.setArguments(args);

@@ -27,7 +27,7 @@
     <string name="version_display">Version </string>
 
     <!-- String SplashScreen-->
-    <string name="splash_recup_ft">Récupération de la liste des Foods Truck en cours.</string>
+    <string name="splash_recup_ft">Récupération de la liste des Food Truck en cours.</string>
     <string name="splash_lancement_ft">Téléchargement terminé, ouverture de l\'application en cours.</string>
     <string name="chargement">Chargement</string>
 
@@ -98,23 +98,23 @@
     <string name="a_propos_du_developpeur">A propos du développeur</string>
     <string name="a_propos_des_aides">Personnes ayant collaboré</string>
     <string name="contenu_a_propos_de_app">L\’application Food Truck Lillois est une application permettant de lister et de consulter tous les Food Trucks existant sur la région Lillois.
-        \n\nL\’idée de cette application m\'est venue quelque temps après la fin de mes études, lorsqu’une fois dans le monde professionnel j’ai découvert l\’existant de ces camions ambulants sur mon lieu de travail.
+        \n\nL\’idée de cette application m\'est venue quelques temps après la fin de mes études, lorsqu’une fois dans le monde professionnel j’ai découvert l\’existant de ces camions ambulants sur mon lieu de travail.
         J’ai directement adoré le concept de nourriture moyen/haute de gamme accessible facilement à tous.
-        \n\nSeulement je me suis vite aperçu que les Food Truck devenez de plus en plus nombreux sur la métropole Lilloise et qu\’il n’existé pas de moyen facile et rapide d\’avoir accès à l’ensemble des Food Trucks
-        ainsi que leur emplacement au jour le jour.
+        \n\nSeulement je me suis vite aperçu que les Food Trucks devenez de plus en plus nombreux sur la métropole Lilloise et qu\’il n’existait pas de moyen facile et rapide d\’avoir accès à l’ensemble des Food Trucks
+        ainsi qu\'à leurs emplacements au jour le jour.
         \n\nCette application est donc la première application mobile Android en France à répertorier l\’ensemble des Food Trucks sur la métropole Lilloise.
     </string>
 
     <string name="contenu_a_propos_du_developpeur">Application conçue et développé par Maxime Gens.
             \n\nIngénieur développeur Mobile Android de 26 ans.
-            \nJe suis actuellement en poste en tant qu\'Ingénieur Etudes et Développement spécialisé dans la technologie Android.
+            \nJe suis actuellement en poste en tant qu\'Ingénieur Etudes et Développement spécialisé dans la technologie mobile Android.
             \n\nJ\'ai effectué mes études à l\'IUT de Calais-Boulogne afin d\'obtenir un D.U.T Informatique en 2010.
             \nJe suis ensuite parti sur Lille afin d\'obtenir un Master Informatique spécialité E-Services à L\'université des Sciences et Technologies de Lille 1 en 2014.
-            \n\nCe master s\'articule autour de la conception et du développement des e-services, c\'est-à-dire les services accessibles au travers des moyens de communication numérique,
+            \n\nJ\ai choisi ce master car il s\'articule autour de la conception et du développement des e-services, c\'est-à-dire les services accessibles au travers des moyens de communication numérique,
             notamment l\'Internet, mais également tous les nouveaux équipements de l\'informatique ubiquitaires, smart phones, interfaces multi-touch, interfaces vocales.
     </string>
     <string name="aides_saisie">Aide à la saisie des données</string>
-    <string name="personne_aides_saisies_1">Alicia Laneeuw</string>
+    <string name="personne_aides_saisies_1">Alicia Laneeuw\nBenjamin Flahauw</string>
 
     <string name="realisation_logo">Création et réalisation du logo</string>
     <string name="personne_realisation_logo">Elisa Vanhoucke</string>
@@ -134,7 +134,6 @@
     <string name="drawer_favoris">Mes Favoris</string>
     <string name="drawer_a_propos">A propos</string>
     <string name="drawer_contact">Contact</string>
-    <string name="drawer_faire_don">Faire un don</string>
     <string name="openDrawer">Ouverture du menu</string>
     <string name="closeDrawer">Fermeture du menu</string>
 
@@ -145,13 +144,13 @@
     <!-- Nom pour Google Analytics -->
     <string name="ga_title_splashscreen">SplashScreen</string>
     <string name="ga_title_main_activity">MainActivity</string>
-    <string name="ga_title_food_truck">FoodTruck</string>
+    <string name="ga_title_food_truck">Food Truck</string>
     <string name="ga_title_favori">Favori</string>
     <string name="ga_title_a_propos">A Propos</string>
     <string name="ga_title_contact">Contact</string>
     <string name="ga_title_planning">Planning des Food Trucks</string>
-    <string name="ga_title_description_food_truck">Description du FoodTruck</string>
-    <string name="ga_title_menu_food_truck">Menu du FoodTruck</string>
-    <string name="ga_title_map_food_truck">Emplacement du FoodTruck</string>
+    <string name="ga_title_description_food_truck">Description du Food Truck</string>
+    <string name="ga_title_menu_food_truck">Menu du Food Truck</string>
+    <string name="ga_title_map_food_truck">Emplacement du Food Truck</string>
 
 </resources>

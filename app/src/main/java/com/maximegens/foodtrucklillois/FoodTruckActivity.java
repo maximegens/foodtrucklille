@@ -12,6 +12,8 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -23,9 +25,13 @@ import com.maximegens.foodtrucklillois.adapters.ViewPagerAdapter;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.fragments.DescriptionFoodTruckFragment;
 import com.maximegens.foodtrucklillois.fragments.EmplacementFoodTruckFragment;
+import com.maximegens.foodtrucklillois.fragments.MenuCategorieFragment;
+import com.maximegens.foodtrucklillois.fragments.MenuDetailFragment;
 import com.maximegens.foodtrucklillois.fragments.MenuFoodTruckFragment;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 public class FoodTruckActivity extends AppCompatActivity{
 
@@ -178,5 +184,18 @@ public class FoodTruckActivity extends AppCompatActivity{
                 editor.putString(KEY_ID, KEY_ID).apply();
             }
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+
+//        List<Fragment> listeFrag = getSupportFragmentManager().getFragments();
+//        Fragment fragMenu = listeFrag.get(0);
+//        if(fragMenu != null && fragMenu.isMenuVisible()){
+//            fragMenu.getChildFragmentManager().popBackStack();
+//        }else{
+            super.onBackPressed();
+//        }
+
     }
 }
