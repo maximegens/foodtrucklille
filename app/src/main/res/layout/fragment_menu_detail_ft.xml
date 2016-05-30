@@ -14,17 +14,17 @@
         android:layout_alignParentLeft="true"/>
 
     <TextView
+        android:layout_below="@id/button_retour_menu"
         android:id="@+id/information_menu_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:gravity="center"
         android:background="?android:selectableItemBackground"
         android:fontFamily="sans-serif"
         android:textColor="@color/black"
         android:layout_centerHorizontal="true"
         android:textSize="@dimen/title_screen"
-        android:ellipsize="end"
-        android:singleLine="true"
         android:padding="10dp"
         android:visibility="gone"
         />
