@@ -22,6 +22,9 @@ public class CategoriePlat implements Parcelable{
         return listePlats;
     }
 
+    public String getInformations() {
+        return informations;
+    }
 
     @Override
     public int describeContents() {

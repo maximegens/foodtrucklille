@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.adapters.ListePlatMenuAdapter;
@@ -61,6 +62,12 @@ public class MenuDetailFragment extends Fragment {
         // Récupération des plats de la categorie.
         if(categoriePlat != null && categoriePlat.getListePlats() != null){
             lesPlats = categoriePlat.getListePlats();
+        }
+
+        if(categoriePlat.getInformations() != null && !categoriePlat.getInformations().isEmpty()){
+            TextView info = (TextView) view.findViewById(R.id.information_menu_detail);
+            info.setText(categoriePlat.getInformations());
+            info.setVisibility(View.VISIBLE);
         }
 
         // Ajout des plats à la liste.

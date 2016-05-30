@@ -13,6 +13,22 @@
         android:theme="@style/ButtonRetourMenu"
         android:layout_alignParentLeft="true"/>
 
+    <TextView
+        android:id="@+id/information_menu_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="?android:selectableItemBackground"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/black"
+        android:layout_centerHorizontal="true"
+        android:textSize="@dimen/title_screen"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:padding="10dp"
+        android:visibility="gone"
+        />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_plat_menu"
         android:layout_width="match_parent"

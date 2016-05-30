@@ -119,6 +119,11 @@ public class DescriptionFoodTruckFragment extends Fragment {
             if(ft.getDescriptionBreve() != null){
                 descriptionBreve.setText(ft.getDescriptionBreve());
             }
+            if(ft.getDescriptionLongue() != null && !ft.getDescriptionLongue().isEmpty()){
+                voirDescriptionLongue.setVisibility(View.VISIBLE);
+            }else{
+                voirDescriptionLongue.setVisibility(View.GONE);
+            }
             // affichage de l'ouverture du food truck
             afficheOuvertureDistance();
 
