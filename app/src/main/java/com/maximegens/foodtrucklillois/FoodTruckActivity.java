@@ -29,6 +29,7 @@ import com.maximegens.foodtrucklillois.fragments.EmplacementFoodTruckFragment;
 import com.maximegens.foodtrucklillois.fragments.MenuCategorieFragment;
 import com.maximegens.foodtrucklillois.fragments.MenuDetailFragment;
 import com.maximegens.foodtrucklillois.fragments.MenuFoodTruckFragment;
+import com.maximegens.foodtrucklillois.network.Internet;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.squareup.picasso.Picasso;
 
@@ -81,15 +82,16 @@ public class FoodTruckActivity extends AppCompatActivity{
             }
         });
 
-        // Ajout de l'image de fond et du logo represantant le FoodTruck.
-        ImageView banniere = (ImageView)findViewById(R.id.backgroundImageView_food_truck);
-        ImageView logo = (ImageView)findViewById(R.id.background_logo_food_truck);
 
         //Ajout du nom du ft et de la cusine
         TextView nomFT = (TextView)findViewById(R.id.backgroundTextView_food_truck);
         nomFT.setText(ft.getNom());
         TextView cuisineFT = (TextView)findViewById(R.id.background_cuisine_food_truck);
         cuisineFT.setText(ft.getCuisine() != null ? ft.getCuisine() : "");
+
+        // Ajout de l'image de fond et du logo represantant le FoodTruck.
+        ImageView banniere = (ImageView)findViewById(R.id.backgroundImageView_food_truck);
+        ImageView logo = (ImageView)findViewById(R.id.background_logo_food_truck);
 
         Resources res = getResources();
         int resIDBanniere = 0;
@@ -109,10 +111,14 @@ public class FoodTruckActivity extends AppCompatActivity{
         if(banniere != null && resIDBanniere != 0){
             banniere.setImageDrawable(ContextCompat.getDrawable(this, resIDBanniere));
             Picasso.with(getBaseContext()).load(resIDBanniere).fit().centerCrop().into(banniere);
+        }else if(ft.getUrlBanniere() != null && !ft.getUrlBanniere().isEmpty() && Internet.isNetworkAvailable(getApplicationContext())){
+            Picasso.with(getBaseContext()).load(ft.getUrlBanniere()).fit().centerCrop().into(banniere);
         }
         if(logo != null && resIDLogo != 0){
             logo.setImageDrawable(ContextCompat.getDrawable(this, resIDLogo));
             Picasso.with(getBaseContext()).load(resIDLogo).fit().centerCrop().into(logo);
+        }else if(ft.getUrlLogo() != null && !ft.getUrlLogo().isEmpty() && Internet.isNetworkAvailable(getApplicationContext())){
+            Picasso.with(getBaseContext()).load(ft.getUrlLogo()).fit().centerCrop().into(banniere);
         }
 
         // Creation du ViewPager

@@ -147,6 +147,10 @@ public class FoodTruck implements Parcelable{
         return banniere;
     }
 
+    public String getUrlBanniere() {
+        return urlBanniere;
+    }
+
     public Menu getMenu() {
         return menu;
     }
@@ -265,6 +269,7 @@ public class FoodTruck implements Parcelable{
         this.urlLogo = in.readString();
         this.banniere = in.readString();
         this.urlBanniere = in.readString();
+
         this.menu = in.readParcelable(Menu.class.getClassLoader());
         this.planning = new ArrayList<>();
         in.readTypedList(planning,PlanningFoodTruck.CREATOR);

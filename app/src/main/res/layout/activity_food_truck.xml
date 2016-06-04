@@ -63,8 +63,9 @@
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
                             android:textColor="@color/white"
-                            android:ellipsize="marquee"
+                            android:ellipsize="end"
                             android:maxLines="1"
+                            android:lines="1"
                             android:textSize="16sp"/>
 
                         <TextView
@@ -72,8 +73,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/white"
-                            android:ellipsize="marquee"
+                            android:ellipsize="end"
                             android:maxLines="1"
+                            android:lines="1"
                             android:layout_below="@id/backgroundTextView_food_truck"
                             android:textSize="12sp"/>
 
