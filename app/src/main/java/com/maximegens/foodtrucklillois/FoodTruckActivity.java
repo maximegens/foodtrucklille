@@ -20,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.maximegens.foodtrucklillois.adapters.ViewPagerAdapter;
 import com.maximegens.foodtrucklillois.beans.FoodTruck;
@@ -60,7 +61,6 @@ public class FoodTruckActivity extends AppCompatActivity{
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-
         appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
 
         // Recuperation du FoodTruck sélectionné.
@@ -81,20 +81,38 @@ public class FoodTruckActivity extends AppCompatActivity{
             }
         });
 
-        // Ajout de l'image de fond represantant le FoodTruck.
-        ImageView fond = (ImageView)findViewById(R.id.backgroundImageView_food_truck);
+        // Ajout de l'image de fond et du logo represantant le FoodTruck.
+        ImageView banniere = (ImageView)findViewById(R.id.backgroundImageView_food_truck);
+        ImageView logo = (ImageView)findViewById(R.id.background_logo_food_truck);
+
+        //Ajout du nom du ft et de la cusine
+        TextView nomFT = (TextView)findViewById(R.id.backgroundTextView_food_truck);
+        nomFT.setText(ft.getNom());
+        TextView cuisineFT = (TextView)findViewById(R.id.background_cuisine_food_truck);
+        cuisineFT.setText(ft.getCuisine() != null ? ft.getCuisine() : "");
 
         Resources res = getResources();
-        int resID = 0;
+        int resIDBanniere = 0;
+        int resIDLogo = 0;
+
         if(ft.getLogo() != null && res != null) {
-            resID = res.getIdentifier(ft.getLogo(), "mipmap", getPackageName());
+            resIDLogo = res.getIdentifier(ft.getLogo(), "mipmap", getPackageName());
         }else if(res != null){
-            resID = res.getIdentifier(Constantes.PHOTO_NOT_AVAILABLE, "mipmap", getPackageName());
+            resIDLogo = res.getIdentifier(Constantes.PHOTO_NOT_AVAILABLE, "mipmap", getPackageName());
         }
-        if(fond != null && resID != 0){
-            fond.setColorFilter(Color.RED, PorterDuff.Mode.LIGHTEN);
-            fond.setImageDrawable(ContextCompat.getDrawable(this, resID));
-            Picasso.with(getBaseContext()).load(resID).fit().centerCrop().into(fond);
+        if(ft.getBanniere() != null && res != null) {
+            resIDBanniere = res.getIdentifier(ft.getBanniere(), "mipmap", getPackageName());
+        }else if(res != null){
+            resIDBanniere = res.getIdentifier(Constantes.PHOTO_NOT_AVAILABLE, "mipmap", getPackageName());
+        }
+
+        if(banniere != null && resIDBanniere != 0){
+            banniere.setImageDrawable(ContextCompat.getDrawable(this, resIDBanniere));
+            Picasso.with(getBaseContext()).load(resIDBanniere).fit().centerCrop().into(banniere);
+        }
+        if(logo != null && resIDLogo != 0){
+            logo.setImageDrawable(ContextCompat.getDrawable(this, resIDLogo));
+            Picasso.with(getBaseContext()).load(resIDLogo).fit().centerCrop().into(logo);
         }
 
         // Creation du ViewPager

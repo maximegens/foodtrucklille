@@ -25,13 +25,79 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
         <!-- l'image affichée en fond -->
-        <ImageView
-            android:id="@+id/backgroundImageView_food_truck"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:fitsSystemWindows="true"
-            android:scaleType="centerCrop"
-            app:layout_collapseMode="parallax" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="true"
+                app:layout_collapseMode="parallax" >
+
+                <ImageView
+                    android:id="@+id/backgroundImageView_food_truck"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/encadrer_background_ft"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal"
+                    android:background="@color/grey_700"
+                    android:gravity="center_vertical"
+                    android:layout_below="@id/backgroundImageView_food_truck"
+                    android:paddingLeft="15dp"
+                    android:weightSum="4"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/backgroundTextView_food_truck"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:ellipsize="marquee"
+                            android:maxLines="1"
+                            android:textSize="16sp"/>
+
+                        <TextView
+                            android:id="@+id/background_cuisine_food_truck"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:ellipsize="marquee"
+                            android:maxLines="1"
+                            android:layout_below="@id/backgroundTextView_food_truck"
+                            android:textSize="12sp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:gravity="center"
+                        android:layout_weight="3">
+
+                        <ImageView
+                            android:id="@+id/background_logo_food_truck"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:scaleType="centerCrop"
+                            android:layout_gravity="center_vertical"
+                            />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_food_truck"

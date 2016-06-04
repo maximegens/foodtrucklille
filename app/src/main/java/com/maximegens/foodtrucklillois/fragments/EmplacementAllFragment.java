@@ -355,17 +355,17 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
             markerOptions.position(new LatLng(latitude, longitude));
 
             // Creation de l'icone.
-            if (ft.getLogo() != null) {
+            if (ft.getLogo() != null && getResources().getIdentifier(ft.getLogo(), "mipmap", getContext().getPackageName()) != 0) {
 
                 int resID = getResources().getIdentifier(ft.getLogo(), "mipmap", getContext().getPackageName());
+
                 Marker marker = googleMap.addMarker(markerOptions);
                 if (marker != null) {
                     PicassoMarker picassoMarker = new PicassoMarker(marker, planning, adresse, periode);
                     protectedFromGarbageCollectorTargets.add(picassoMarker);
 
                     ImageView image = new ImageView(getActivity());
-                    int res = getResources().getIdentifier(ft.getLogo(),"mipmap", getContext().getPackageName());
-                    image.setImageResource(res);
+                    image.setImageResource(resID);
 
                     DisplayMetrics displaymetrics = new DisplayMetrics();
                     getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);

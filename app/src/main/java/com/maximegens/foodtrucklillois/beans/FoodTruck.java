@@ -36,6 +36,8 @@ public class FoodTruck implements Parcelable{
     private String servicePrive;
     private String logo;
     private String urlLogo;
+    private String banniere;
+    private String urlBanniere;
     private Menu menu;
     private List<PlanningFoodTruck> planning;
 
@@ -89,7 +91,6 @@ public class FoodTruck implements Parcelable{
         return descriptionLongue;
     }
 
-
     public String getGammeDePrixprix() {
         return gammeDePrixprix;
     }
@@ -140,6 +141,10 @@ public class FoodTruck implements Parcelable{
 
     public String getUrlLogo() {
         return urlLogo;
+    }
+
+    public String getBanniere() {
+        return banniere;
     }
 
     public Menu getMenu() {
@@ -215,6 +220,8 @@ public class FoodTruck implements Parcelable{
         dest.writeString(servicePrive);
         dest.writeString(logo);
         dest.writeString(urlLogo);
+        dest.writeString(banniere);
+        dest.writeString(urlBanniere);
         dest.writeParcelable(menu, flags);
         dest.writeTypedList(planning);
         dest.writeFloat(distanceFromUser);
@@ -256,6 +263,8 @@ public class FoodTruck implements Parcelable{
         this.servicePrive = in.readString();
         this.logo = in.readString();
         this.urlLogo = in.readString();
+        this.banniere = in.readString();
+        this.urlBanniere = in.readString();
         this.menu = in.readParcelable(Menu.class.getClassLoader());
         this.planning = new ArrayList<>();
         in.readTypedList(planning,PlanningFoodTruck.CREATOR);
