@@ -12,10 +12,11 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        android:src="@mipmap/icon_truck" />
+        android:src="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/header_title"
