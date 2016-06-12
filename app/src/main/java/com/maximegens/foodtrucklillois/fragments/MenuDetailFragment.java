@@ -64,7 +64,7 @@ public class MenuDetailFragment extends Fragment {
             lesPlats = categoriePlat.getListePlats();
         }
 
-        if(categoriePlat.getInformations() != null && !categoriePlat.getInformations().isEmpty()){
+        if(categoriePlat != null && categoriePlat.getInformations() != null && !categoriePlat.getInformations().isEmpty()){
             TextView info = (TextView) view.findViewById(R.id.information_menu_detail);
             info.setText(categoriePlat.getInformations());
             info.setVisibility(View.VISIBLE);

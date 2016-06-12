@@ -4450,6 +4450,214 @@
               "soir": null
             }
           ]
+        },
+        {
+          "id": 117,
+          "nom": "Le Camion Rouge",
+          "siteWeb": null,
+          "urlPageFacebook": "https://www.facebook.com/lecamionrougelille/",
+          "descriptionBreve" : "Le camion Rouge - Steakhouse",
+          "descriptionLongue": null,
+          "gammeDePrixprix" : null,
+          "tenueVestimentaire" : null,
+          "moyensDePaiement" : null,
+          "services" : null,
+          "specialites":null,
+          "cuisine":"Grill · Restauration mobile",
+          "equipe_culinaire" : null,
+          "telephone":"06 72 84 86 74",
+          "email":"",
+          "dateOuverture": null,
+          "servicePrive" : "Oui nous contacter",
+          "logo": "logo_le_camion_rouge",
+          "urlLogo" : "https://scontent-cdg2-1.xx.fbcdn.net/v/t1.0-9/12345587_1129139347105882_5608749977572037066_n.png?oh=ca5827a5768929d03e2f91fdd6b11e24&oe=57D0EB6C",
+          "banniere" : "banniere_le_camion_rouge",
+          "urlBanniere" : "https://scontent-cdg2-1.xx.fbcdn.net/v/t1.0-9/1935720_1190264974326652_1504530823864318846_n.jpg?oh=4958aafe0c9dc5220700232be73ac94c&oe=57D37AB6",
+          "menu": {
+            "lesCategorieDePlat" : [
+              {
+                "nomCategoriePlat" : "Brochettes",
+                "informations" : null,
+                "listePlats" : [
+                  {
+                    "nomPlat" : "Brochette boeuf",
+                    "urlPhoto" : "https://scontent-cdg2-1.xx.fbcdn.net/v/t1.0-9/12278737_1119669794719504_590682931224895555_n.jpg?oh=3ce574f4a94f8963bf1e5dbf9ee003dc&oe=57D0EEFF",
+                    "descriptionPlat" : "Une brochette de boeuf",
+                    "prix" : null,
+                    "prixEnMenu" : null,
+                    "disponible" : "true"
+                  },
+                  {
+                    "nomPlat" : "brochette poulet",
+                    "urlPhoto" : null,
+                    "descriptionPlat" : "Une brochette de poulet",
+                    "prix" : null,
+                    "prixEnMenu" : null,
+                    "disponible" : "true"
+                  }
+                ]
+              },
+              {
+                "nomCategoriePlat" : "Accompagnements",
+                "informations" : null,
+                "listePlats" : [
+                  {
+                    "nomPlat" : "Super pommes de terre",
+                    "urlPhoto" : null,
+                    "descriptionPlat" : "Nos super pommes de terre",
+                    "prix" : null,
+                    "prixEnMenu" : null,
+                    "disponible" : "true"
+                  },
+                  {
+                    "nomPlat" : "Salade",
+                    "urlPhoto" : null,
+                    "descriptionPlat" : "Une belle salade",
+                    "prix" : null,
+                    "prixEnMenu" : null,
+                    "disponible" : "true"
+                  },
+                  {
+                    "nomPlat" : "Bacon",
+                    "urlPhoto" : null,
+                    "descriptionPlat" : "Du bacon",
+                    "prix" : null,
+                    "prixEnMenu" : null,
+                    "disponible" : "true"
+                  }	,
+                  {
+                    "nomPlat" : "Aubergine poelée",
+                    "urlPhoto" : null,
+                    "descriptionPlat" : "Une aubergine poelée",
+                    "prix" : null,
+                    "prixEnMenu" : null,
+                    "disponible" : "true"
+                  }		,
+                  {
+                    "nomPlat" : "Champignons mignon",
+                    "urlPhoto" : null,
+                    "descriptionPlat" : "Des champignons mignon",
+                    "prix" : null,
+                    "prixEnMenu" : null,
+                    "disponible" : "true"
+                  }
+                ]
+              }	,
+              {
+                "nomCategoriePlat" : "Sauces fromage maison",
+                "informations" : null,
+                "listePlats" : [
+                  {
+                    "nomPlat" : "Maroilles",
+                    "urlPhoto" : null,
+                    "descriptionPlat" : "Une sauce au Maroille",
+                    "prix" : null,
+                    "prixEnMenu" : null,
+                    "disponible" : "true"
+                  },
+                  {
+                    "nomPlat" : "Blue cheese et honey",
+                    "urlPhoto" : null,
+                    "descriptionPlat" : "Une sauce au Blue cheese et honey",
+                    "prix" : null,
+                    "prixEnMenu" : null,
+                    "disponible" : "true"
+                  }
+                ]
+              }
+            ],
+            "idFoodTruck" : null,
+            "information" : null,
+            "descriptionMenu" : "Prix unique 10€\n 2 Brochette boeuf/poulet + patatoes + salade + toppings"
+          },
+          "planning":[
+            {
+              "nomJour":"lundi",
+              "numJour":1,
+              "midi":null,
+              "soir":null
+            },
+            {
+              "nomJour":"mardi",
+              "numJour":2,
+              "midi":{
+                "horaireOuverture" : "1990-01-01 12:00:00",
+                "horaireFermeture" : "1990-01-01 13:30:00",
+                "adresses":[
+                  {
+                    "map": null,
+                    "latitude" : "50.641609",
+                    "longitude" : "3.147969",
+                    "adresse": "35 Rue de la Cimaise, 59650 Villeneuve-d'Ascq"
+                  }
+                ]
+              },
+              "soir":null
+            },
+            {
+              "nomJour":"mercredi",
+              "numJour":3,
+              "midi":{
+                "horaireOuverture" : "1990-01-01 12:00:00",
+                "horaireFermeture" : "1990-01-01 13:30:00",
+                "adresses":[
+                  {
+                    "map": null,
+                    "latitude" : "50.613810",
+                    "longitude" : "3.129780",
+                    "adresse": "59 Boulevard de Tournai, 59650 Villeneuve-d'Ascq"
+                  }
+                ]
+              },
+              "soir":null
+            },
+            {
+              "nomJour":"jeudi",
+              "numJour":4,
+              "midi":{
+                "horaireOuverture" : "1990-01-01 12:00:00",
+                "horaireFermeture" : "1990-01-01 13:30:00",
+                "adresses":[
+                  {
+                    "map": null,
+                    "latitude" : "50.605746",
+                    "longitude" : "3.132231",
+                    "adresse": "191 Rue Nicolas Appert 59650 Villeneuve-d'Ascq"
+                  }
+                ]
+              },
+              "soir":null
+            },
+            {
+              "nomJour":"vendredi",
+              "numJour":5,
+              "midi":{
+                "horaireOuverture" : "1990-01-01 12:00:00",
+                "horaireFermeture" : "1990-01-01 13:30:00",
+                "adresses":[
+                  {
+                    "map": null,
+                    "latitude" : "50.683323",
+                    "longitude" : "3.125951",
+                    "adresse": "18 Avenue du Grand Cottignies, 59290 Wasquehal"
+                  }
+                ]
+              },
+              "soir":null
+            },
+            {
+              "nomJour":"samedi",
+              "numJour":6,
+              "midi":null,
+              "soir":null
+            },
+            {
+              "nomJour":"dimanche",
+              "numJour":7,
+              "midi":null,
+              "soir":null
+            }
+          ]
         }
       ]
     }

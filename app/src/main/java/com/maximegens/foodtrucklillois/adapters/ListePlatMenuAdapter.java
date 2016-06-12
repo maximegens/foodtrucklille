@@ -60,7 +60,7 @@ public class ListePlatMenuAdapter extends RecyclerView.Adapter<ListePlatMenuAdap
             holder.titlePlat.setText(plat.getNomPlat());
             holder.loader.setVisibility(View.VISIBLE);
 
-            if(url != null && fragment != null){
+            if(url != null && fragment != null && !url.isEmpty()){
                 Picasso.with(fragment.getContext())
                         .load(url)
                         .error(R.mipmap.photonotavailable)
