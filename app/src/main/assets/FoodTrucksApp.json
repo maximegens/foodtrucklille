@@ -4466,7 +4466,7 @@
           "cuisine":"Grill · Restauration mobile",
           "equipe_culinaire" : null,
           "telephone":"06 72 84 86 74",
-          "email":"",
+          "email":null,
           "dateOuverture": null,
           "servicePrive" : "Oui nous contacter",
           "logo": "logo_le_camion_rouge",
