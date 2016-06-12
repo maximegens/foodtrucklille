@@ -4,7 +4,7 @@
     <string name="app_name">Food Truck Lillois</string>
     <string name="app_version">1.0</string>
     <string name="app_name_developper">Maxime Gens</string>
-    <string name="app_date_publication">1 juin 2016</string>
+    <string name="app_date_publication">20 juin 2016</string>
     <string name="title_main_activity">MainActivity</string>
     <string name="title_activity_food_truck">FoodTruckActivity</string>
     <string name="key_api_google_map">AIzaSyDASrlPPti8U3qoqoj8V0O3VVZ-cBCYwkc</string>
