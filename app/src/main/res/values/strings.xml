@@ -94,12 +94,12 @@
     <string name="copyright">© Copyright - Tous droits réservés.</string>
     <string name="a_propos_du_developpeur">A propos du développeur</string>
     <string name="a_propos_des_aides">Personnes ayant collaboré</string>
-    <string name="contenu_a_propos_de_app">L\’application Food Truck Lillois est une application permettant de lister et de consulter tous les Food Trucks existant sur la région Lillois.
-        \n\nL\’idée de cette application m\'est venue quelques temps après la fin de mes études, lorsqu’une fois dans le monde professionnel j’ai découvert l\’existant de ces camions ambulants sur mon lieu de travail.
-        J’ai directement adoré le concept de nourriture moyen/haute de gamme accessible facilement à tous.
-        \n\nSeulement je me suis vite aperçu que les Food Trucks devenez de plus en plus nombreux sur la métropole Lilloise et qu\’il n’existait pas de moyen facile et rapide d\’avoir accès à l’ensemble des Food Trucks
+    <string name="contenu_a_propos_de_app">L\'application Food Truck Lillois est une application permettant de lister et de consulter tous les Food Trucks existant sur la région Lilloise.
+        \n\nL\'idée de cette application m\'est venue quelques temps après la fin de mes études, lorsqu’une fois dans le monde professionnel j’ai découvert l\'existant de ces camions ambulants sur mon lieu de travail.
+        J\'ai directement adoré le concept de nourriture moyen/haute de gamme accessible facilement à tous.
+        \n\nSeulement je me suis vite aperçu que les Food Trucks devenez de plus en plus nombreux sur la métropole Lilloise et qu\'il n’existait pas de moyen facile et rapide d\'avoir accès à l’ensemble des Food Trucks
         ainsi qu\'à leurs emplacements au jour le jour.
-        \n\nCette application est donc la première application mobile Android en France à répertorier l\’ensemble des Food Trucks sur la métropole Lilloise.
+        \n\nCette application permet donc de répertorier l\'ensemble des Food Trucks sur la métropole Lilloise.
     </string>
 
     <string name="contenu_a_propos_du_developpeur">Application conçue et développé par Maxime Gens.
@@ -107,7 +107,7 @@
             \nJe suis actuellement en poste en tant qu\'Ingénieur Etudes et Développement spécialisé dans la technologie mobile Android.
             \n\nJ\'ai effectué mes études à l\'IUT de Calais-Boulogne afin d\'obtenir un D.U.T Informatique en 2010.
             \nJe suis ensuite parti sur Lille afin d\'obtenir un Master Informatique spécialité E-Services à L\'université des Sciences et Technologies de Lille 1 en 2014.
-            \n\nJ\ai choisi ce master car il s\'articule autour de la conception et du développement des e-services, c\'est-à-dire les services accessibles au travers des moyens de communication numérique,
+            \n\nJ\'ai choisi ce master car il s\'articule autour de la conception et du développement des e-services, c\'est-à-dire les services accessibles au travers des moyens de communication numérique,
             notamment l\'Internet, mais également tous les nouveaux équipements de l\'informatique ubiquitaires, smart phones, interfaces multi-touch, interfaces vocales.
     </string>
     <string name="aides_saisie">Aide à la saisie des données</string>

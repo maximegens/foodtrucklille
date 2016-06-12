@@ -577,7 +577,7 @@
           "siteWeb": "http://www.el-camion.fr/",
           "urlPageFacebook": "https://www.facebook.com/ElCamionCantinaMexicana/",
           "descriptionBreve": "Le Food truck mexicain de Lille ! Spécialités mexicaines: Burritos, Tacos et Quesadillas Service rapido au pied du bureau !",
-          "descriptionLongue": "Le mexicain ça pique, ou pas !Peur de vous transformer en dragon cracheur de feu ? Aventurier du goût ou timide des papilles, demandez nous conseil pour trouver les saveurs qui vous conviendront !Nos plats sont préparés avec vous selon les ingrédients que vous choisirez en fonction de vos goûts.\nBurritos et Soft Tacos au boeuf ou poulet mariné puis braisé\nGuacamole maison délicatement épicé\nNachos\nQuesadillas au poulet émincé\nQuesadillas au chorizo\nNous sommes également disponibles pour vos événements privés : Concert, mariage, BDE... et notre spécialité: 'fiesta mexicana' clé en main !\nContactez nous pour un tarif.\n\n",
+          "descriptionLongue": "Le mexicain ça pique, ou pas !Peur de vous transformer en dragon cracheur de feu ?\nAventurier du goût ou timide des papilles, demandez nous conseil pour trouver les saveurs qui vous conviendront !Nos plats sont préparés avec vous selon les ingrédients que vous choisirez en fonction de vos goûts.\n\nBurritos et Soft Tacos au boeuf ou poulet mariné puis braisé\nGuacamole maison délicatement épicé\nNachos\nQuesadillas au poulet émincé\nQuesadillas au chorizo\n\nNous sommes également disponibles pour vos événements privés : Concert, mariage, BDE... et notre spécialité: 'fiesta mexicana' clé en main !\nContactez nous pour un tarif.\n\n",
           "gammeDePrixprix": "€",
           "tenueVestimentaire": "Décontracté",
           "moyensDePaiement": "Visa",
@@ -1300,7 +1300,7 @@
                     "nomPlat": "Brownie maison bien fondant",
                     "urlPhoto": null,
                     "descriptionPlat": null,
-                    "prix": "3.5",
+                    "prix": "3.5€",
                     "prixEnMenu": null,
                     "disponible": "true"
                   },
@@ -1308,7 +1308,7 @@
                     "nomPlat": "Cheesecake crémeux",
                     "urlPhoto": null,
                     "descriptionPlat": null,
-                    "prix": "3.5",
+                    "prix": "3.5€",
                     "prixEnMenu": null,
                     "disponible": "true"
                   },
@@ -1316,7 +1316,7 @@
                     "nomPlat": "Cookies généreux",
                     "urlPhoto": null,
                     "descriptionPlat": null,
-                    "prix": "3",
+                    "prix": "3€",
                     "prixEnMenu": null,
                     "disponible": "true"
                   }
@@ -1437,40 +1437,40 @@
                     "nomPlat": "Galette complète",
                     "urlPhoto": null,
                     "descriptionPlat": "une galette garnie d'un œuf, jambon, et emmental",
-                    "prix": "5",
-                    "prixEnMenu": "8",
+                    "prix": "5€",
+                    "prixEnMenu": "8€",
                     "disponible": "true"
                   },
                   {
                     "nomPlat": "Galette Sucrée Salée",
                     "urlPhoto": null,
                     "descriptionPlat": "Un classico végétarien ! galette garnie de chèvre, oignons confits, miel et noix",
-                    "prix": "5",
-                    "prixEnMenu": "8",
+                    "prix": "5€",
+                    "prixEnMenu": "8€",
                     "disponible": "true"
                   },
                   {
                     "nomPlat": "Galette 3 fromages",
                     "urlPhoto": null,
                     "descriptionPlat": "Galette douce et crémeuse, garnie à l'emmental, chèvre et gorgonzola",
-                    "prix": "5",
-                    "prixEnMenu": "8",
+                    "prix": "5€",
+                    "prixEnMenu": "8€",
                     "disponible": "true"
                   },
                   {
                     "nomPlat": "l'Italia",
                     "urlPhoto": null,
                     "descriptionPlat": "Emmental, mozza, jambon parme et légumes grillés",
-                    "prix": null,
-                    "prixEnMenu": "8",
+                    "prix": "5€",
+                    "prixEnMenu": "8€",
                     "disponible": "true"
                   },
                   {
                     "nomPlat": "Galette du Mercredi",
                     "urlPhoto": null,
                     "descriptionPlat": "Voir sur le tableau noir",
-                    "prix": null,
-                    "prixEnMenu": "8",
+                    "prix": "5€",
+                    "prixEnMenu": "8€",
                     "disponible": "true"
                   }
                 ]
@@ -1483,8 +1483,8 @@
                     "nomPlat": "Galette Rennaise",
                     "urlPhoto": null,
                     "descriptionPlat": "saucisse bretonne au oignons et herbes, emmental et crème de moutarde à l'ancienne",
-                    "prix": "6",
-                    "prixEnMenu": "8",
+                    "prix": "6€",
+                    "prixEnMenu": "8€",
                     "disponible": "true"
                   }
                 ]
@@ -1497,16 +1497,16 @@
                     "nomPlat": "Crêpe au choix",
                     "urlPhoto": null,
                     "descriptionPlat": "Sucre, Cassonade, Nutella, Chocolat maison, Caramel beurre salé, Confiture, Sirop d'érable, Miel, Citron, Spéculos",
-                    "prix": null,
-                    "prixEnMenu": "8",
+                    "prix": "voir sur place",
+                    "prixEnMenu": "8€",
                     "disponible": "true"
                   },
                   {
                     "nomPlat": "Dessert du mercredi",
                     "urlPhoto": null,
                     "descriptionPlat": "Voir sur le tableau noir",
-                    "prix": null,
-                    "prixEnMenu": "8",
+                    "prix": "voir sur place",
+                    "prixEnMenu": "8€",
                     "disponible": "true"
                   }
                 ]
@@ -1622,7 +1622,7 @@
           "siteWeb": null,
           "urlPageFacebook": "https://www.facebook.com/Supercuisine-160820487437828/",
           "descriptionBreve": "La restauration de rue de qualité. Avec SuperCuisine nous déjeunerons autrement :\n\nbon, bio, équilibré...simplement",
-          "descriptionLongue": "Ce que je propose, c’est une cuisine rapide, bio, et délicieuse, aux saveurs affirmées et originales, entièrement “maison”.\nLes produits, choisis avec soin, sont frais et de qualité, préparés le jour de la vente. Pain frais bio au levain naturel, viandes et poissons frais, soupes et desserts variés avec ou sans gluten, boissons bio: tout est fait maison.\nNous voulons rendre possible une restauration où le temps ne soit plus une contrainte pour manger bon, bio, équilibré, simplement et pas cher. Un food truck qui allie plaisir et santé, sensible à l'agriculture biologique, soucieux d'encourager les producteurs et artisans locaux (fruits, légumes, viandes, pain, yaourts).\nNotre challenge est de faire arrêter le temps pour nos clients pressés et parfois stressés grâce à la saveur de nos préparations. Déjeuner chez SUPERCUISINE sera source de plaisir, de voyage, de garanties diététiques et gage de rapidité pour plus d'efficacité.",
+          "descriptionLongue": "Ce que je propose, c’est une cuisine rapide, bio, et délicieuse, aux saveurs affirmées et originales, entièrement “maison”.\n\nLes produits, choisis avec soin, sont frais et de qualité, préparés le jour de la vente. Pain frais bio au levain naturel, viandes et poissons frais, soupes et desserts variés avec ou sans gluten, boissons bio: tout est fait maison.\n\nNous voulons rendre possible une restauration où le temps ne soit plus une contrainte pour manger bon, bio, équilibré, simplement et pas cher.\n\nUn food truck qui allie plaisir et santé, sensible à l'agriculture biologique, soucieux d'encourager les producteurs et artisans locaux (fruits, légumes, viandes, pain, yaourts).\n\nNotre challenge est de faire arrêter le temps pour nos clients pressés et parfois stressés grâce à la saveur de nos préparations. Déjeuner chez SUPERCUISINE sera source de plaisir, de voyage, de garanties diététiques et gage de rapidité pour plus d'efficacité.",
           "gammeDePrixprix": "€",
           "tenueVestimentaire": null,
           "moyensDePaiement": "Visa, American Express, Mastercard et Espèces",
@@ -1935,32 +1935,32 @@
                     "nomPlat": "L’original",
                     "urlPhoto": null,
                     "descriptionPlat": "Buns, Boeuf Haché, Tomme de Savoie, Sauce Cocktail Maison, Oignons Rouges, Salades.",
-                    "prix": "7.5",
-                    "prixEnMenu": "8.50 / 10.50",
+                    "prix": "7.5€",
+                    "prixEnMenu": "8.50€ / 10.50€",
                     "disponible": "true"
                   },
                   {
                     "nomPlat": "Classic Cheddar",
                     "urlPhoto": null,
                     "descriptionPlat": "Buns, Boeuf Haché, Cheddar, Sauce BBQ, Lard Grillé, Oignons Rouges, Salades.",
-                    "prix": "7.5",
-                    "prixEnMenu": "8.50 / 10.50",
+                    "prix": "7.5€",
+                    "prixEnMenu": "8.50€ / 10.50€",
                     "disponible": "true"
                   },
                   {
                     "nomPlat": "Le Végèt",
                     "urlPhoto": null,
                     "descriptionPlat": "Buns, Poêlé de Champignon de Paname, Tomme de Savoie, Sauce Cocktail Maison, Confit d’oignons,  Oignons Rouges, Salades",
-                    "prix": "7.5",
-                    "prixEnMenu": "8.50 / 10.50",
+                    "prix": "7.5€",
+                    "prixEnMenu": "8.50€ / 10.50€",
                     "disponible": "true"
                   },
                   {
                     "nomPlat": "El Pancho",
                     "urlPhoto": null,
                     "descriptionPlat": "Boeuf Haché, Gouda, Avocat, Oignons Rouges, Salades, Sauce Chipotle Maison (légèrement fumé et épicé).",
-                    "prix": "7.5",
-                    "prixEnMenu": "8.50 / 10.50",
+                    "prix": "7.5€",
+                    "prixEnMenu": "8.50€ / 10.50€",
                     "disponible": "true"
                   }
                 ]
@@ -2113,7 +2113,7 @@
                     "nomPlat": "Veloutés, GAZPACHOS",
                     "urlPhoto": null,
                     "descriptionPlat": "Choix d'entrées à découvrir lorsque vous passez commande ou sur Internet (notre site Web ou notre page Facebook)",
-                    "prix": "2.5",
+                    "prix": "2.5€",
                     "prixEnMenu": null,
                     "disponible": "true"
                   },
@@ -2121,7 +2121,7 @@
                     "nomPlat": "Salades de saison",
                     "urlPhoto": null,
                     "descriptionPlat": null,
-                    "prix": "2.5",
+                    "prix": "2.5€",
                     "prixEnMenu": null,
                     "disponible": "true"
                   }
@@ -2208,7 +2208,7 @@
                     "nomPlat": "Frites fraîches maison",
                     "urlPhoto": null,
                     "descriptionPlat": null,
-                    "prix": "2.5",
+                    "prix": "2.5€",
                     "prixEnMenu": null,
                     "disponible": "true"
                   },
@@ -2216,7 +2216,7 @@
                     "nomPlat": "Une entrée",
                     "urlPhoto": null,
                     "descriptionPlat": "Les entrées peuvent aussi être servies en guise d’accompagnement à la place des frites",
-                    "prix": "2.5",
+                    "prix": "2.5€",
                     "prixEnMenu": null,
                     "disponible": "true"
                   }
@@ -2230,7 +2230,7 @@
                     "nomPlat": "Yaourt fermier",
                     "urlPhoto": null,
                     "descriptionPlat": "Au choix : nature, vergeoise ou diverses confitures",
-                    "prix": "2.5",
+                    "prix": "2.5€",
                     "prixEnMenu": null,
                     "disponible": "true"
                   },
@@ -2238,7 +2238,7 @@
                     "nomPlat": "Dessert(s) du jour",
                     "urlPhoto": null,
                     "descriptionPlat": "Choix de dessert à découvrir lorsque vous passez commande ou sur internet (notre site Web ou notre page Facebook)",
-                    "prix": "2.5",
+                    "prix": "2.5€",
                     "prixEnMenu": null,
                     "disponible": "true"
                   }
@@ -2252,7 +2252,7 @@
                     "nomPlat": "Eau d’Opaline Saveur en Or",
                     "urlPhoto": null,
                     "descriptionPlat": null,
-                    "prix": "2.5",
+                    "prix": "2.5€",
                     "prixEnMenu": null,
                     "disponible": "true"
                   },
@@ -2260,7 +2260,7 @@
                     "nomPlat": "Eau de Saint-Amand gazeuse (50 cl)",
                     "urlPhoto": null,
                     "descriptionPlat": null,
-                    "prix": "2.5",
+                    "prix": "2.5€",
                     "prixEnMenu": null,
                     "disponible": "true"
                   },
@@ -2268,7 +2268,7 @@
                     "nomPlat": "Jus de fruit artisanal de l’Institut de Genech (25 cl)",
                     "urlPhoto": null,
                     "descriptionPlat": "Pomme / Pomme poire / Pomme fraise / Pomme / melon / Pomme carotte",
-                    "prix": "2.5",
+                    "prix": "2.5€",
                     "prixEnMenu": null,
                     "disponible": "true"
                   },
@@ -2276,7 +2276,7 @@
                     "nomPlat": "Chtilà cola, le Cola deuch’Nord ! (33 cl)",
                     "urlPhoto": null,
                     "descriptionPlat": null,
-                    "prix": "2.5",
+                    "prix": "2.5€",
                     "prixEnMenu": null,
                     "disponible": "true"
                   },
@@ -2284,7 +2284,7 @@
                     "nomPlat": "Limonade BD (33 cl)",
                     "urlPhoto": null,
                     "descriptionPlat": null,
-                    "prix": "2.5",
+                    "prix": "2.5€",
                     "prixEnMenu": null,
                     "disponible": "true"
                   }
@@ -3667,7 +3667,7 @@
                     "nomPlat": "Le Chticrock",
                     "urlPhoto": "https://scontent-cdg2-1.xx.fbcdn.net/v/t1.0-0/q84/s480x480/13226882_1069178443155281_4310294213477626564_n.jpg?oh=778e36ed2f6a438df4ad937964895847&oe=57C7BC26",
                     "descriptionPlat": "Voici le croque-monsieur à ma façon comme un Welsh mais le Cheddar est dedins l'pain avec ses oignons confits à la bière et sa sauce moutardée.",
-                    "prix": "7.00 €",
+                    "prix": "7.00€",
                     "prixEnMenu": null,
                     "disponible": "true"
                   },
@@ -3675,7 +3675,7 @@
                     "nomPlat": "Le Chticrock au lard",
                     "urlPhoto": "https://scontent-cdg2-1.xx.fbcdn.net/v/t1.0-9/13254491_1075859155820543_8624324791222863044_n.jpg?oh=fe0c2f7a2564bf70aa6dca1f4ad8f919&oe=57DD4825",
                     "descriptionPlat": "Avec du lard eud porchiau, c'est tut di bon !",
-                    "prix": "8.00 €",
+                    "prix": "8.00€",
                     "prixEnMenu": null,
                     "disponible": "true"
                   },
@@ -3683,7 +3683,7 @@
                     "nomPlat": "Le Chticrok de caractère",
                     "urlPhoto": null,
                     "descriptionPlat": "J'rajoute du fromache bin fort de notre région, du Maroilles, de la baguette Laonnaise, du Vieux Lille ou de la boulette d'Avesnes c'est selon c'que jos dans l'carette\n\n(Un consel, va pas draguer après parc'que bonjour l'odeur din't bouk!)",
-                    "prix": "8.00 €",
+                    "prix": "8.00€",
                     "prixEnMenu": null,
                     "disponible": "true"
                   },
@@ -3691,7 +3691,7 @@
                     "nomPlat": "Le Chticrock del cinsière",
                     "urlPhoto": null,
                     "descriptionPlat": "T'auras dedins en plus un oeuf de glaine d'une cinse des Flandres",
-                    "prix": "8.00 €",
+                    "prix": "8.00€",
                     "prixEnMenu": null,
                     "disponible": "true"
                   },
@@ -3699,7 +3699,7 @@
                     "nomPlat": "Le Chticrock Frediche",
                     "urlPhoto": null,
                     "descriptionPlat": "Avec tudis dedins (lard, oeuf, et fromach bin fort)",
-                    "prix": "9.00 €",
+                    "prix": "9.00€",
                     "prixEnMenu": null,
                     "disponible": "true"
                   },
@@ -3707,7 +3707,7 @@
                     "nomPlat": "Le Chticrok d achtheure",
                     "urlPhoto": null,
                     "descriptionPlat": "Croque-monsieur à base de plats régionaux que je fos en fonction des produits fro de not'coin et de mintenint",
-                    "prix": "8.50 €",
+                    "prix": "8.50€",
                     "prixEnMenu": null,
                     "disponible": "true"
                   }
@@ -3721,7 +3721,7 @@
                     "nomPlat": "Briquet",
                     "urlPhoto": null,
                     "descriptionPlat": null,
-                    "prix": "10.00 €",
+                    "prix": "10.00€",
                     "prixEnMenu": "avec le dessert d'à cht'heure + 1€\navec Bière + 1.5€",
                     "disponible": "true"
                   },
@@ -3729,7 +3729,7 @@
                     "nomPlat": "Briquet au lard / Del cinsière / Eud caractère",
                     "urlPhoto": null,
                     "descriptionPlat": null,
-                    "prix": "11 €",
+                    "prix": "11€",
                     "prixEnMenu": "avec le dessert d'à cht'heure + 1€\navec Bière + 1.5€",
                     "disponible": "true"
                   },
@@ -3737,7 +3737,7 @@
                     "nomPlat": "Briquet Frediche ",
                     "urlPhoto": null,
                     "descriptionPlat": null,
-                    "prix": "12 €",
+                    "prix": "12€",
                     "prixEnMenu": "avec le dessert d'à cht'heure + 1€\navec Bière + 1.5€",
                     "disponible": "true"
                   },
@@ -3745,7 +3745,7 @@
                     "nomPlat": "Briquet d'à cht'heure",
                     "urlPhoto": null,
                     "descriptionPlat": null,
-                    "prix": "12.5 €",
+                    "prix": "12.5€",
                     "prixEnMenu": "avec le dessert d'à cht'heure + 1€\navec Bière + 1.5€",
                     "disponible": "true"
                   }
@@ -4154,7 +4154,7 @@
                   },
                   {
                     "nomPlat": "L'Eclair Intense",
-                    "urlPhoto": "https://image.jimcdn.com/app/cms/image/transf/dimension=375x1024:format=jpg/path/sb804ca847c7c3a37/image/id3585db303342bb8/version/1457948038/image.jpg",
+                    "urlPhoto": "https://image.jimcdn.com/app/cms/image/transf/dimension=375x1024:format=jpg/path/sb804ca847c7c3a37/image/idf86551c1d785dc0/version/1443192351/image.jpg",
                     "descriptionPlat": "Pâte à choux, craquant, crème chocolat intense,  Glaçage Chocolat noir, Eclats de fèves de Cacao.",
                     "prix": null,
                     "prixEnMenu": null,
