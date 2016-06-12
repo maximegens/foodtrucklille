@@ -14,9 +14,13 @@ import com.maximegens.foodtrucklillois.beans.FoodTruckApp;
 import com.maximegens.foodtrucklillois.interfaces.AsyncResponseSplashScreen;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 import com.maximegens.foodtrucklillois.utils.GestionJsonAPI;
+import com.maximegens.foodtrucklillois.utils.SortFtByNom;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit.RestAdapter;
@@ -112,6 +116,9 @@ public class RetreiveJSONListeFTSplash extends AsyncTask<Boolean, String, FoodTr
 
         // Pour l'instant on sélection la ville de Lille à l'index 0.
         List<FoodTruck> lesFts = apiJson.getListeFTByVille(foodTruckApp,0);
+
+        // Trie des FT
+        Collections.sort(lesFts, new SortFtByNom());
 
         // On masque le loader.
         loader.setVisibility(View.INVISIBLE);
