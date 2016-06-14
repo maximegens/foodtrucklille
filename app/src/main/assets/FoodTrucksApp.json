@@ -577,7 +577,7 @@
           "siteWeb": "http://www.el-camion.fr/",
           "urlPageFacebook": "https://www.facebook.com/ElCamionCantinaMexicana/",
           "descriptionBreve": "Le Food truck mexicain de Lille ! Spécialités mexicaines: Burritos, Tacos et Quesadillas Service rapido au pied du bureau !",
-          "descriptionLongue": "Le mexicain ça pique, ou pas !Peur de vous transformer en dragon cracheur de feu ?\nAventurier du goût ou timide des papilles, demandez nous conseil pour trouver les saveurs qui vous conviendront !Nos plats sont préparés avec vous selon les ingrédients que vous choisirez en fonction de vos goûts.\n\nBurritos et Soft Tacos au boeuf ou poulet mariné puis braisé\nGuacamole maison délicatement épicé\nNachos\nQuesadillas au poulet émincé\nQuesadillas au chorizo\n\nNous sommes également disponibles pour vos événements privés : Concert, mariage, BDE... et notre spécialité: 'fiesta mexicana' clé en main !\nContactez nous pour un tarif.\n\n",
+          "descriptionLongue": "Le mexicain ça pique, ou pas ! Peur de vous transformer en dragon cracheur de feu ?\nAventurier du goût ou timide des papilles, demandez nous conseil pour trouver les saveurs qui vous conviendront ! Nos plats sont préparés avec vous selon les ingrédients que vous choisirez en fonction de vos goûts.\n\nBurritos et Soft Tacos au boeuf ou poulet mariné puis braisé\nGuacamole maison délicatement épicé\nNachos\nQuesadillas au poulet émincé\nQuesadillas au chorizo\n\nNous sommes également disponibles pour vos événements privés : Concert, mariage, BDE... et notre spécialité: 'fiesta mexicana' clé en main !\nContactez nous pour un tarif.\n\n",
           "gammeDePrixprix": "€",
           "tenueVestimentaire": "Décontracté",
           "moyensDePaiement": "Visa",
@@ -742,7 +742,7 @@
             ],
             "idFoodTruck": null,
             "information": null,
-            "descriptionMenu": "Burrito + Boisson : 8.5€\nBurrito + Boisson + dessert : 10.5€\nBurrito + Boisson + entrée : 11€\n2 Tacos + boisson : 8€\n1 Taco + 1 quesadilla + boisson : 6€"
+            "descriptionMenu": "Burrito + Boisson : 8.5€;\nBurrito + Boisson + dessert : 10.5€;\nBurrito + Boisson + entrée : 11€;\n2 Tacos + boisson : 8€;\n1 Taco + 1 quesadilla + boisson : 6€"
           },
           "planning": [
             {

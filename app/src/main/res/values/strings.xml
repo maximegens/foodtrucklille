@@ -35,7 +35,7 @@
     <string name="msg_data_no_update">Attention la liste n\'a pas été mise à jour.</string>
     <string name="title_liste_food_truck">Les Food Trucks</string>
     <string name="ft_plus_proche">Food Truck le plus proche</string>
-    <string name="recherche_plus_proche_en_cours">Recherche des Food Trucks les plus proche en cours…</string>
+    <string name="recherche_plus_proche_en_cours">Recherche des Food Trucks les plus proches en cours…</string>
     <string name="liste_ft_vide">Il n\'y a pas de Food Trucks</string>
     <string name="gps_desactive">Activer le GPS pour afficher les Food Trucks les plus proches</string>
     <string name="activer_gps">Activer GPS</string>
@@ -57,7 +57,7 @@
     <string name="specialite">Spécialité</string>
     <string name="service">Service</string>
     <string name="service_prive">Service privé</string>
-    <string name="voir_description_complete">Voir description compléte</string>
+    <string name="voir_description_complete">Voir description complète</string>
     <string name="consulter_horaire">Consulter les horaires</string>
     <string name="consulter_facebook">Consulter la page Facebook</string>
     <string name="champ_non_communique">Non communiqué</string>
@@ -83,7 +83,7 @@
     <string name="contenu_contact">Indiquez votre demande…</string>
     <string name="button_envoyer">Envoyer</string>
     <string name="error_contenu_mail">Message vide ou incorrecte</string>
-    <string name="description_contact_food_truck">Si les informations d\'un Food Truck sont incorrectes, qu\'un Food Truck n\'est pas renseigné ou si vous etez le propriétaire d\'un Food Truck et que vous souhaitez mettre à jour des informations merci de me contacter.</string>
+    <string name="description_contact_food_truck">Si les informations d\'un Food Truck sont incorrectes, qu\'un Food Truck n\'est pas renseigné ou si vous etes propriétaire d\'un Food Truck, merci de me contacter.</string>
 
     <!-- String A Propos -->
     <string name="title_a_propos">A propos</string>
@@ -95,9 +95,9 @@
     <string name="a_propos_du_developpeur">A propos du développeur</string>
     <string name="a_propos_des_aides">Personnes ayant collaboré</string>
     <string name="contenu_a_propos_de_app">L\'application Food Truck Lillois est une application permettant de lister et de consulter tous les Food Trucks existant sur la région Lilloise.
-        \n\nL\'idée de cette application m\'est venue quelques temps après la fin de mes études, lorsqu’une fois dans le monde professionnel j’ai découvert l\'existant de ces camions ambulants sur mon lieu de travail.
-        J\'ai directement adoré le concept de nourriture moyen/haute de gamme accessible facilement à tous.
-        \n\nSeulement je me suis vite aperçu que les Food Trucks devenez de plus en plus nombreux sur la métropole Lilloise et qu\'il n’existait pas de moyen facile et rapide d\'avoir accès à l’ensemble des Food Trucks
+        \n\nL\'idée de cette application m\'est venue quelques temps après la fin de mes études, lorsqu’une fois dans le monde professionnel j’ai découvert l\'existance de ces camions ambulants sur mon lieu de travail.
+        J\'ai directement adoré le concept de nourriture haute de gamme accessible facilement à tous.
+        \n\nSeulement je me suis vite aperçu que les Food Trucks devenaient de plus en plus nombreux sur la métropole Lilloise et qu\'il n’existait pas de moyen facile et rapide d\'avoir accès à l’ensemble des Food Trucks
         ainsi qu\'à leurs emplacements au jour le jour.
         \n\nCette application permet donc de répertorier l\'ensemble des Food Trucks sur la métropole Lilloise.
     </string>
