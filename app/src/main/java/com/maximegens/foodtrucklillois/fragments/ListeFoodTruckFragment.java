@@ -11,6 +11,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -53,6 +55,7 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
     private LinearLayout linearPlusProcheEnCours;
     private RecyclerView recyclerViewListeFT;
     private GridLayoutManagerFoodTruck layoutManagerFT;
+    private CoordinatorLayout coordinatorListeFt;
 
     /**
      * Creation du Fragment.
@@ -96,12 +99,10 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         linearActiveGPS = (LinearLayout) view.findViewById(R.id.linear_gps_desactive);
         Button activateGPS = (Button) view.findViewById(R.id.button_activer_gps);
         linearPlusProcheEnCours = (LinearLayout) view.findViewById(R.id.linear_recherche_ft);
+        coordinatorListeFt = (CoordinatorLayout) view.findViewById(R.id.coordinator_liste_ft);
         recyclerViewListeFT.setHasFixedSize(true);
 
         // Abonnement aux receiver du GPS.
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
         // Affichage du message d'information d'activation du GPS et de la recherche la plus proche
@@ -210,10 +211,6 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
     public void onLocationChanged(Location location) {
         boolean tousFermer = true;
 
-        // Demande de permission pour Android 6.0 (API 23).
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
         Calendar cal = GestionnaireHoraire.createCalendarToday();
         boolean isMidiOrBeforeMidi = GestionnaireHoraire.isMidiOrBeforeMidi();
         boolean isSoirOrBeforeSoirButAfterMidi= GestionnaireHoraire.isSoirOrBeforeSoirButAfterMidi();
@@ -382,10 +379,6 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
      */
     private void removeUpdatesLocation() {
         if(locationManager != null){
-            // Demande de permission pour Android 6.0 (API 23).
-            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
             locationManager.removeUpdates(this);
         }
     }
@@ -397,10 +390,6 @@ public class ListeFoodTruckFragment extends Fragment implements LocationListener
         boolean gps = false;
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            // Demande de permission pour Android 6.0 (API 23).
-            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
             linearPlusProcheEnCours.setVisibility(View.VISIBLE);
             linearActiveGPS.setVisibility(View.GONE);
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, Constantes.TIME_BETWEEN_UPDATE_GPS, 0, this);

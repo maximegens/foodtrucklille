@@ -396,9 +396,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
         LatLng CENTRE = new LatLng(Double.parseDouble(Constantes.GPS_CENTRE_CARTE_MARC_BAROEUL_LATITUDE), Double.parseDouble(Constantes.GPS_CENTRE_CARTE_MARC_BAROEUL_LONGITUDE));
 
         // Affiche le bouton permettant de localiser l'utilisateur.
-        if (!(ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
-            googleMap.setMyLocationEnabled(true);
-        }
+        googleMap.setMyLocationEnabled(true);
 
         // Centre la google map avec animation de zoom.
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CENTRE, 11));
