@@ -11,7 +11,7 @@ import java.util.List;
 public class Constantes {
 
     public static List<FoodTruck> lesFTs = new ArrayList<>();
-    public static final String URL_SERVEUR = "https://dl.dropboxusercontent.com";
+    public static final String URL_SERVEUR = "https://doc-04-64-docs.googleusercontent.com";
     public static final String PHOTO_NOT_AVAILABLE = "photonotavailable";
     public static final String FICHIER_JSON_ASSET = "FoodTrucksApp.json";
     public static final String FAVORITE_SHAREPREFERENCE = "FAVORITE";
@@ -33,7 +33,7 @@ public class Constantes {
 
     public static final String MIDI = "midi";
     public static final String SOIR = "soir";
-    public static final String FERMER = "FermÃ©";
+    public static final String FERMER = "Fermé";
     public static final String KM = "km";
     public static final String TOUS_FT = "Tous les Food Trucks";
     public static final String ET = " et ";
