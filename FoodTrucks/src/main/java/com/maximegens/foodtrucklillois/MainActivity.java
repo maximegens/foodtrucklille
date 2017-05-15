@@ -4,6 +4,8 @@ package com.maximegens.foodtrucklillois;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -13,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -77,9 +80,15 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewListe
         // Récuperation du DrawerLayout
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         if(nav != null){
-            View hView =  nav.getHeaderView(0);
-            TextView headerSubTitle = (TextView) hView.findViewById(R.id.header_sub_title);
-            headerSubTitle.setText(getString(R.string.version_display) +" "+ getString(R.string.app_version));
+            // Récupération du versionName
+            try {
+                PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+                TextView headerSubTitle = (TextView) nav.getHeaderView(0).findViewById(R.id.header_sub_title);
+                headerSubTitle.setText(getString(R.string.version_display) +" "+ pInfo.versionName);
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+                Log.d("VersionName","Impossible de récupérer le versionName de l'application");
+            }
         }
 
         // Definition de la toolbar en tant qu'actionBar

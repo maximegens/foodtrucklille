@@ -46,6 +46,8 @@ import com.maximegens.foodtrucklillois.broadcastReceiver.NetworkBroadcast;
 import com.maximegens.foodtrucklillois.network.Internet;
 import com.maximegens.foodtrucklillois.utils.Constantes;
 
+import java.util.Calendar;
+
 
 public class EmplacementFoodTruckFragment extends Fragment implements OnMapReadyCallback, AdapterView.OnItemSelectedListener {
 
@@ -230,6 +232,10 @@ public class EmplacementFoodTruckFragment extends Fragment implements OnMapReady
 
             StringBuilder snippet = new StringBuilder();
             snippet.append("Ouvert uniquement le ").append(planning.getNomJour()).append(" ").append(periode);
+            // code spécial pour effet gourmet et ses semaines impaires.
+            if(ft != null && ft.getId() == 113 && (planning.getNumJour() == 2 || planning.getNumJour() == 5)){
+                snippet.append(" et les semaines impaires");
+            }
             if (adresse.getAdresse() != null) {
                 snippet.append(Constantes.RETOUR_CHARIOT).append(Constantes.RETOUR_CHARIOT).append(adresse.getAdresse());
             }

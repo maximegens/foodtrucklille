@@ -12,10 +12,11 @@ public class Utils {
 
     /**
      * Convertie la distance de métre en kilométre.
+     *
      * @param metre La distance en métre
      * @return float La distance en kilométre.
      */
-    public static float metreToKm(float metre){
+    public static float metreToKm(float metre) {
         String result;
         DecimalFormat df = new DecimalFormat("#####.##");
         result = df.format(metre * 0.001);
@@ -24,6 +25,7 @@ public class Utils {
 
     /**
      * Retourne le nombre de colonne pour la recyclerView en fonction de l'orientation du téléphone.
+     *
      * @return le nombre de colonnes.
      */
     public static int getNbColonneForScreen(Context ctx) {

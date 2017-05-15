@@ -7,6 +7,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Marker;
 import com.maximegens.foodtrucklillois.R;
 import com.maximegens.foodtrucklillois.beans.AdresseFoodTruck;
+import com.maximegens.foodtrucklillois.beans.FoodTruck;
 import com.maximegens.foodtrucklillois.beans.PlanningFoodTruck;
 import com.maximegens.foodtrucklillois.fragments.EmplacementAllFragment;
 import com.squareup.picasso.Picasso;
@@ -22,10 +23,12 @@ public class PicassoMarker implements Target {
     private final PlanningFoodTruck planning;
     private final AdresseFoodTruck adresse;
     private final String periode;
+    private final FoodTruck ft;
 
-    public PicassoMarker(Marker marker,PlanningFoodTruck planning, AdresseFoodTruck adresse, String periode) {
+    public PicassoMarker(Marker marker, FoodTruck ft, PlanningFoodTruck planning, AdresseFoodTruck adresse, String periode) {
         mMarker = marker;
         this.planning = planning;
+        this.ft = ft;
         this.adresse = adresse;
         this.periode = periode;
         mMarker.setSnippet(creationInfoBulle());
@@ -71,6 +74,10 @@ public class PicassoMarker implements Target {
         // Creation du snippet affichant l'adresse et l'ouverture.
         StringBuilder snippet = new StringBuilder();
         snippet.append("Ouvert uniquement le ").append(planning.getNomJour()).append(" ").append(periode);
+        // code spécial pour effet gourmet et ses semaines impaires.
+        if(ft != null && ft.getId() == 113 && (planning.getNumJour() == 2 || planning.getNumJour() == 5)){
+            snippet.append(" et les semaines impaires");
+        }
         if (adresse.getAdresse() != null) {
             snippet.append(Constantes.RETOUR_CHARIOT).append(Constantes.RETOUR_CHARIOT).append(adresse.getAdresse());
         }

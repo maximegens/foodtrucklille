@@ -16,6 +16,11 @@ public class PlanningFoodTruck implements Parcelable{
     private String nomJour;
     private int numJour;
     private PlageHoraireFoodTruck midi;
+
+    public int getNumJour() {
+        return numJour;
+    }
+
     private PlageHoraireFoodTruck soir;
 
     public String getNomJour() {

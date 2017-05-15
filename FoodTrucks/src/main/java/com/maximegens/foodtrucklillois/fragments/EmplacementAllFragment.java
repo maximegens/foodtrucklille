@@ -361,7 +361,7 @@ public class EmplacementAllFragment extends Fragment implements OnMapReadyCallba
 
                 Marker marker = googleMap.addMarker(markerOptions);
                 if (marker != null) {
-                    PicassoMarker picassoMarker = new PicassoMarker(marker, planning, adresse, periode);
+                    PicassoMarker picassoMarker = new PicassoMarker(marker, ft, planning, adresse, periode);
                     protectedFromGarbageCollectorTargets.add(picassoMarker);
 
                     ImageView image = new ImageView(getActivity());

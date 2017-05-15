@@ -71,13 +71,13 @@
                     android:textColor="@color/black" />
 
                 <TextView
+                    android:id="@+id/version_apropos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@id/text_view_version_a_propos"
                     android:gravity="left"
-                    android:text="@string/app_version"
                     android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             </RelativeLayout>
